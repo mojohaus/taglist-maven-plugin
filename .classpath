@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src/main/java"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="var" path="M2_REPO/org/apache/maven/reporting/maven-reporting-api/2.0-alpha-3/maven-reporting-api-2.0-alpha-3.jar"/>
+	<classpathentry kind="var" path="M2_REPO/doxia/doxia-core/1.0-alpha-3/doxia-core-1.0-alpha-3.jar"/>
+	<classpathentry kind="var" path="M2_REPO/org/apache/maven/maven-project/2.0-alpha-3/maven-project-2.0-alpha-3.jar"/>
+	<classpathentry kind="var" path="M2_REPO/org/apache/maven/maven-plugin-api/2.0-alpha-3/maven-plugin-api-2.0-alpha-3.jar"/>
+	<classpathentry kind="var" path="M2_REPO/org/apache/maven/maven-model/2.0-alpha-3/maven-model-2.0-alpha-3.jar"/>
+	<classpathentry kind="var" path="M2_REPO/plexus/plexus-utils/1.0.0/plexus-utils-1.0.0.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

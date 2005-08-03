@@ -1,0 +1,285 @@
+package org.apache.maven.plugin.taglist;
+
+/*
+ * Copyright 2004-2005 The Apache Software Foundation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.maven.plugin.logging.Log;
+import org.apache.maven.plugin.taglist.beans.FileReport;
+import org.apache.maven.plugin.taglist.beans.TagReport;
+import org.apache.maven.project.MavenProject;
+import org.apache.maven.reporting.MavenReportException;
+import org.codehaus.plexus.util.FileUtils;
+import org.codehaus.plexus.util.IOUtil;
+
+/**
+ * Class that analyses a file with a special comment tag.
+ * For instance :
+ *  "// TODO: Improve that algorithm"
+ * 
+ * @author <a href="mailto:bellingard@gmail.com">Fabrice Bellingard </a>
+ */
+public class FileAnalyser
+{
+
+    /**
+     * String that is used for beginning a comment line 
+     */
+    private final static String STAR_COMMENT = "*";
+
+    /**
+     * String that is used for beginning a comment line 
+     */
+    private final static String SLASH_COMMENT = "//";
+
+    /**
+     * The Maven project being built 
+     */
+    private MavenProject mavenProject;
+
+    /**
+     * Log for debug output
+     */
+    private Log log;
+
+    /**
+     * Map containing tag names as keys ("TODO" or "@todo" for instance), 
+     * and a TagReport object as value.
+     */
+    private Map tagReportsMap;
+
+    /**
+     * Set to true if the analyser should look for multiple line
+     * comments.
+     */
+    private boolean multipleLineCommentsOn;
+
+    /**
+     * Constructor
+     * @param the MOJO that is using this analyser 
+     */
+    public FileAnalyser( TagListReport report )
+    {
+        multipleLineCommentsOn = report.isMultipleLineComments();
+        log = report.getLog();
+        mavenProject = report.getProject();
+        // init the map of tag reports
+        tagReportsMap = new HashMap( report.getTags().size() );
+        for ( Iterator iter = report.getTags().iterator(); iter.hasNext(); )
+        {
+            String tagName = (String) iter.next();
+            TagReport tagReport = new TagReport( tagName );
+            tagReportsMap.put( tagName, tagReport );
+        }
+    }
+
+    /**
+     * Execute the analysis for the configuration given by the TagListReport.
+     * @return a collection of TagReport objects
+     */
+    public Collection execute()
+        throws MavenReportException
+    {
+        List fileList = findFilesToScan();
+
+        for ( Iterator iter = fileList.iterator(); iter.hasNext(); )
+        {
+            File file = (File) iter.next();
+            if ( file.exists() )
+            {
+                scanFile( file );
+            }
+        }
+
+        return tagReportsMap.values();
+    }
+
+    /**
+     * Gives the list of files to scan
+     * @return a List of File objects
+     */
+    private List findFilesToScan()
+        throws MavenReportException
+    {
+        List filesList = null;
+        try
+        {
+            String sourceDirectory = mavenProject.getBuild().getSourceDirectory();
+            filesList = FileUtils.getFiles( new File( sourceDirectory ), "**/*.java", null );
+        }
+        catch ( IOException e )
+        {
+            throw new MavenReportException( "Error while trying to find the files to scan.", e );
+        }
+        return filesList;
+    }
+
+    /**
+     * Scans a file to look for task tags. 
+     * @param file the file to scan
+     */
+    public void scanFile( File file )
+    {
+        BufferedReader reader = null;
+
+        try
+        {
+            reader = new BufferedReader( new FileReader( file ) );
+
+            String currentLine = reader.readLine();
+            int lineCount = 1;
+            while ( currentLine != null )
+            {
+                int index = -1;
+                String tagName = null;
+                // look for a tag on this line
+                for ( Iterator iter = tagReportsMap.keySet().iterator(); iter.hasNext(); )
+                {
+                    tagName = (String) iter.next();
+                    index = currentLine.indexOf( tagName );
+                    if ( index > -1 )
+                    {
+                        // tag found
+                        break;
+                    }
+                }
+
+                if ( index < 0 || tagName == null )
+                {
+                    // no tag on this line: just go on next line
+                    currentLine = reader.readLine();
+                    lineCount++;
+                    continue;
+                }
+
+                // there's a tag on this line
+                String commentType = extractCommentType( currentLine, index );
+                if ( commentType == null )
+                {
+                    // this is not a valid comment tag: go to the next line
+                    currentLine = reader.readLine();
+                    lineCount++;
+                    continue;
+                }
+
+                int tagLength = tagName.length();
+                int commentStartIndex = lineCount;
+                StringBuffer comment = new StringBuffer();
+
+                String firstLine = currentLine.substring( index + tagLength ).trim();
+                if ( firstLine.length() == 0 )
+                {
+                    // this is not a valid comment tag: nothing is written there
+                    currentLine = reader.readLine();
+                    lineCount++;
+                    continue;
+                }
+                if ( firstLine.charAt( 0 ) == ':' )
+                {
+                    comment.append( firstLine.substring( 1 ).trim() );
+                }
+                else
+                {
+                    comment.append( firstLine );
+                }
+
+                // next line
+                currentLine = reader.readLine();
+                lineCount++;
+
+                if ( multipleLineCommentsOn )
+                {
+                    // we're looking for multiple line comments
+                    while ( currentLine.trim().startsWith( commentType ) && currentLine.indexOf( tagName ) < 0 )
+                    {
+                        String currentComment = currentLine.substring(
+                                                                       currentLine.indexOf( commentType )
+                                                                           + commentType.length() ).trim();
+                        if ( currentComment.startsWith( "@" ) || currentComment.equals( "" )
+                            || currentComment.equals( "/" ) )
+                        {
+                            // the comment is finished
+                            break;
+                        }
+                        // try to look if the next line is not a new tag
+                        boolean newTagFound = false;
+                        for ( Iterator iter = tagReportsMap.keySet().iterator(); iter.hasNext(); )
+                        {
+                            String currentTagName = (String) iter.next();
+                            if ( currentComment.startsWith( currentTagName ) )
+                            {
+                                newTagFound = true;
+                            }
+                        }
+                        if ( newTagFound )
+                        {
+                            // this is a new comment: stop here the current comment
+                            break;
+                        }
+                        // nothing was found: this means the comment is going on this line
+                        comment.append( " " );
+                        comment.append( currentComment );
+                        currentLine = reader.readLine();
+                        lineCount++;
+                    }
+                }
+
+                TagReport tagReport = (TagReport) tagReportsMap.get( tagName );
+                FileReport fileReport = tagReport.getFileReport( file );
+                fileReport.addComment( comment.toString(), commentStartIndex );
+            }
+        }
+        catch ( IOException e )
+        {
+            log.error( "Error while scanning the file " + file.getPath(), e );
+        }
+        finally
+        {
+            IOUtil.close(reader);
+        }
+    }
+
+    /**
+     * Finds the type of comment the tag is in.
+     * @param currentLine the liento analyse
+     * @param index the index of the tag in the line
+     * @return "*" or "//" or null
+     */
+    private String extractCommentType( String currentLine, int index )
+    {
+        String commentType = null;
+        String beforeTag = currentLine.substring( 0, index ).trim();
+        if ( beforeTag.endsWith( SLASH_COMMENT ) )
+        {
+            commentType = SLASH_COMMENT;
+        }
+        else if ( beforeTag.endsWith( STAR_COMMENT ) )
+        {
+            commentType = STAR_COMMENT;
+        }
+        return commentType;
+    }
+
+}
