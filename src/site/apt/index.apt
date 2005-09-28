@@ -1,0 +1,36 @@
+ ------
+ Maven 2 (NAME) plugin 
+ ------
+ <author@somewhere.org>
+ ------
+ July 27 2005
+ ------
+
+ <description>
+ 
+Available Configuration Options: (param - default value)
+ 
+ * foo - bar
+
+ * zit - zat:
+ 
+ []
+ 
+Usage:
+
+-------------------
+<project>
+   ...
+      <build>
+         <plugins>
+            <plugin>
+               <groupId>org.codehaus.mojo</groupId>
+               <artifactId>(NAME)-maven-plugin</artifactId>
+               <version>XXXX</version>
+            </plugin>
+         </plugins>
+         ...
+      </build>
+   ...
+</project>
+-------------------
