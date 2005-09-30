@@ -1,36 +1,71 @@
  ------
- Maven 2 (NAME) plugin 
+ Maven 2 Taglist Plugin
  ------
- <author@somewhere.org>
+ Fabrice Bellingard
+ <bellingard.NO-SPAM@gmail.com>
  ------
- July 27 2005
- ------
+ September 30, 2005
 
- <description>
- 
-Available Configuration Options: (param - default value)
- 
- * foo - bar
+Maven 2 Taglist Plugin
 
- * zit - zat:
+ This plug-in produces a report on various tags found in the code, like @todo or //TODO tags.
  
- []
+*Available Configuration Options
  
-Usage:
+ You can refer to the {{{taglist-mojo.html}MOJO generated documentation}} to discover the different configuration options for this report.
+
+*How to Use
+
+ 
+  In the pom.xml, insert this segment.
 
 -------------------
 <project>
    ...
       <build>
-         <plugins>
-            <plugin>
-               <groupId>org.codehaus.mojo</groupId>
-               <artifactId>(NAME)-maven-plugin</artifactId>
-               <version>XXXX</version>
-            </plugin>
-         </plugins>
          ...
       </build>
+
+      <reporting>
+          <plugins>
+              <plugin>
+                  <groupId>org.codehaus.mojo</groupId>
+                  <artifactId>taglist-maven-plugin</artifactId>
+                  <version>2.0-beta-1</version>
+	          </plugin>
+	      </plugins>
+      </reporting>
+   ...
+</project>
+-------------------
+
+  The report will be generated when executing the m2 site plugin.
+
+-------------------
+  m2 site:site
+-------------------
+
+  You can easily customise the tags you want to look for. For instance:
+  
+-------------------
+<project>
+   ...
+      <build>
+         ...
+      </build>
+
+      <reporting>
+          <plugins>
+              <plugin>
+                  <groupId>org.codehaus.mojo</groupId>
+                  <artifactId>taglist-maven-plugin</artifactId>
+                  <version>2.0-beta-1</version>
+                  <configuration>
+                      <tags>TODO, @todo, FIXME, @deprecated</tags>
+                  </configuration>
+	          </plugin>
+	      </plugins>
+      </reporting>
    ...
 </project>
 -------------------

@@ -17,7 +17,6 @@ package org.apache.maven.plugin.taglist;
  */
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Locale;
@@ -27,7 +26,6 @@ import java.util.StringTokenizer;
 import org.apache.maven.project.MavenProject;
 import org.apache.maven.reporting.AbstractMavenReport;
 import org.apache.maven.reporting.MavenReportException;
-import org.codehaus.doxia.sink.Sink;
 import org.codehaus.doxia.site.renderer.SiteRenderer;
 
 /**
@@ -53,20 +51,21 @@ public class TagListReport
     private SiteRenderer siteRenderer;
 
     /**
+     * Output folder where the report will be copied to.
      * @parameter expression="${project.build.directory}/site"
      * @required
      */
     private String outputDirectory;
 
     /**
-     * Comma-separated list of tags to look for. <br>
+     * Comma-separated list of tags to look for.
      * The tags can be either:
      * <ul>
      * <li>Javadoc tags: "@todo" for instance</li>
      * <li>Simple tags: "TODO" for instance. In this case, the tags will be
      * searched in any Java comment (//, /* or /**).</li>
      * </ul>
-     * Example for this parameter : "TODO,@todo"
+     * Example for this parameter : "TODO,@todo,FIXME"
      * 
      * @parameter default-value="TODO,@todo"
      */
@@ -108,28 +107,7 @@ public class TagListReport
         Collection tagReports = fileAnalyser.execute();
 
         // Renders the report
-        generateReport( tagReports, locale );
-    }
-
-    /**
-     * Generates the whole report using each tag reports made during the analysis.
-     * 
-     * @param tagReports a Collection of TagReport objects
-     * @param locale the user locale
-     */
-    private void generateReport( Collection tagReports, Locale locale )
-        throws MavenReportException
-    {
-        Sink sink;
-        try
-        {
-            sink = getSink();
-        }
-        catch ( IOException e )
-        {
-            throw new MavenReportException( "Error while getting the sink to generate the report.", e );
-        }
-        ReportGenerator.generateReport( tagReports, getBundle( locale ), sink );
+        ReportGenerator.generateReport( tagReports, getBundle( locale ), getSink() );
     }
 
     /**

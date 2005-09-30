@@ -201,7 +201,6 @@ public class ReportGenerator
         sink.text( fileReport.getComment( lineNumber ) );
         sink.tableCell_();
         sink.tableCell();
-        // TODO : check the link when the JXR plugin in ported to m2
         sink.link( "xref/" + fileReport.getClassNameWithSlash() + ".html#" + lineNumber );
         sink.text( lineNumber + "" );
         sink.link_();

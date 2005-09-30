@@ -14,9 +14,15 @@
          <item name="Mojo" href="http://mojo.codehaus.org"/>
          <item name="Maven" href="http://maven.apache.org/maven2"/>
       </links>
+
       <menu name="Mojo">
          <item name="mojo" href="http://mojo.codehaus.org"/>
       </menu>
+
+	  <menu name="Taglist QuickStart">
+		 <item name="Configuration Options" href="taglist-mojo.html"/>
+		 <item name="Taglist Sample Report" href="example/taglist.html"/>
+	  </menu>
       ${reports}
    </body>
 </project>

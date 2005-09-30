@@ -37,7 +37,8 @@ import org.codehaus.plexus.util.IOUtil;
 /**
  * Class that analyses a file with a special comment tag.
  * For instance :
- *  "// TODO: Improve that algorithm"
+ * // TODO: Example of an Eclipse/IntelliJ-like "todo" tag
+ * @todo : This is another example of "todo" tag
  * 
  * @author <a href="mailto:bellingard@gmail.com">Fabrice Bellingard </a>
  */
