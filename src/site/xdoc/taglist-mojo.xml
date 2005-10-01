@@ -1,0 +1,92 @@
+<document>
+  <properties>
+    <title>taglist-maven-plugin - taglist:taglist</title>
+  </properties>
+  <body>
+    <section name="taglist:taglist">
+      <p>MOJO for the tag list report.</p>
+      <p>Parameters for the goal: </p>
+      <table>
+        <tr>
+          <th>Parameter</th>
+          <th>Type</th>
+          <th>Expression</th>
+          <th>Default Value</th>
+          <th>Description</th>
+        </tr>
+        <tr>
+          <td>
+            <code>multipleLineComments</code> <i>(Optional)</i></td>
+          <td>
+            <code title="boolean">boolean</code>
+          </td>
+          <td>
+            <code>-</code>
+          </td>
+          <td>
+            <code>true</code>
+          </td>
+          <td>This parameter indicates whether for simple tags (like "TODO"), the analyser should look for multiple line comments.</td>
+        </tr>
+        <tr>
+          <td>
+            <code>outputDirectory</code>
+          </td>
+          <td>
+            <code title="java.lang.String">String</code>
+          </td>
+          <td>
+            <code>${project.build.directory}/site</code>
+          </td>
+          <td>
+            <code>-</code>
+          </td>
+          <td>Output folder where the report will be copied to.</td>
+        </tr>
+        <tr>
+          <td>
+            <code>project</code>
+          </td>
+          <td>
+            <code title="org.apache.maven.project.MavenProject">MavenProject</code>
+          </td>
+          <td>
+            <code>${project}</code>
+          </td>
+          <td>
+            <code>-</code>
+          </td>
+          <td>No description.</td>
+        </tr>
+        <tr>
+          <td>
+            <code>siteRenderer</code> <i>(Discovered)</i></td>
+          <td>
+            <code title="org.codehaus.doxia.site.renderer.SiteRenderer">SiteRenderer</code>
+          </td>
+          <td>
+            <code>-</code>
+          </td>
+          <td>
+            <code>-</code>
+          </td>
+          <td>No description.</td>
+        </tr>
+        <tr>
+          <td>
+            <code>tags</code> <i>(Optional)</i></td>
+          <td>
+            <code title="java.lang.String">String</code>
+          </td>
+          <td>
+            <code>-</code>
+          </td>
+          <td>
+            <code>TODO,@todo</code>
+          </td>
+          <td>Comma-separated list of tags to look for. The tags can be either: <ul> <li>Javadoc tags: "@todo" for instance</li> <li>Simple tags: "TODO" for instance. In this case, the tags will be searched in any Java comment (//, /* or /**).</li> </ul> Example for this parameter : "TODO,@todo,FIXME"</td>
+        </tr>
+      </table>
+    </section>
+  </body>
+</document>
