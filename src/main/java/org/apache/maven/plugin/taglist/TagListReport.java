@@ -51,6 +51,14 @@ public class TagListReport
     private SiteRenderer siteRenderer;
 
     /**
+     * Specifies the location of the source files to be used for Checkstyle
+     *
+     * @parameter expression="${project.build.sourceDirectory}"
+     * @required
+     */
+    private String sourceDirectory;
+
+    /**
      * Output folder where the report will be copied to.
      * @parameter expression="${project.build.directory}/site"
      * @required
@@ -101,6 +109,14 @@ public class TagListReport
                 throw new MavenReportException( "Folder " + outputDirectory + " could not be created." );
             }
         }
+
+        File srcDir = new File( sourceDirectory );
+        if ( !srcDir.exists() )
+        {
+            closeReport();
+            return;
+        }
+
 
         // let's proceed to the analysis
         FileAnalyser fileAnalyser = new FileAnalyser( this );
