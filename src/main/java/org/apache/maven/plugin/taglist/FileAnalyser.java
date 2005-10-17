@@ -40,7 +40,7 @@ import org.codehaus.plexus.util.IOUtil;
  * // TODO: Example of an Eclipse/IntelliJ-like "todo" tag
  * @todo : This is another example of "todo" tag
  * 
- * @author <a href="mailto:bellingard@gmail.com">Fabrice Bellingard </a>
+ * @author <a href="mailto:bellingard.NO-SPAM@gmail.com">Fabrice Bellingard </a>
  */
 public class FileAnalyser
 {

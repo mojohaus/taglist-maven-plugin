@@ -30,7 +30,7 @@ import org.codehaus.doxia.sink.Sink;
 /**
  * Generates the taglist report using Doxia.
  * 
- * @author <a href="mailto:bellingard@gmail.com">Fabrice Bellingard </a>
+ * @author <a href="mailto:bellingard.NO-SPAM@gmail.com">Fabrice Bellingard </a>
  */
 
 public class ReportGenerator

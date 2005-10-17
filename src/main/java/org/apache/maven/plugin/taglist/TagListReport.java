@@ -32,7 +32,7 @@ import org.codehaus.doxia.site.renderer.SiteRenderer;
  * MOJO for the tag list report.
  * 
  * @goal taglist
- * @author <a href="mailto:bellingard@gmail.com">Fabrice Bellingard </a>
+ * @author <a href="mailto:bellingard.NO-SPAM@gmail.com">Fabrice Bellingard </a>
  */
 public class TagListReport
     extends AbstractMavenReport
@@ -110,20 +110,27 @@ public class TagListReport
             }
         }
 
-        File srcDir = new File( sourceDirectory );
-        if ( !srcDir.exists() )
-        {
-            closeReport();
-            return;
-        }
-
-
         // let's proceed to the analysis
         FileAnalyser fileAnalyser = new FileAnalyser( this );
         Collection tagReports = fileAnalyser.execute();
 
         // Renders the report
         ReportGenerator.generateReport( tagReports, getBundle( locale ), getSink() );
+    }
+
+    /**
+     * Cf. overriden method documentation.
+     * 
+     * @see org.apache.maven.reporting.MavenReport#canGenerateReport()
+     */
+    public boolean canGenerateReport()
+    {
+        File srcDir = new File( sourceDirectory );
+        if ( !srcDir.exists() )
+        {
+            return false;
+        }
+        return true;
     }
 
     /**

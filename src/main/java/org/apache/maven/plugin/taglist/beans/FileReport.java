@@ -31,7 +31,7 @@ import org.codehaus.plexus.util.IOUtil;
 /**
  * Report for a file.
  * 
- * @author <a href="mailto:bellingard@gmail.com">Fabrice Bellingard </a>
+ * @author <a href="mailto:bellingard.NO-SPAM@gmail.com">Fabrice Bellingard </a>
  */
 public class FileReport
     implements Comparable

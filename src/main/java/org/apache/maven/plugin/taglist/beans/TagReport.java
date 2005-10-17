@@ -25,7 +25,7 @@ import java.util.Map;
 /**
  * Report of the scan for a specific tag
  * 
- * @author <a href="mailto:bellingard@gmail.com">Fabrice Bellingard </a>
+ * @author <a href="mailto:bellingard.NO-SPAM@gmail.com">Fabrice Bellingard </a>
  */
 public class TagReport
     implements Comparable
