@@ -42,7 +42,7 @@ Maven 2 Taglist Plugin
   The report will be generated when executing the m2 site plugin.
 
 -------------------
-  m2 site:site
+  mvn site:site
 -------------------
 
   You can easily customise the tags you want to look for. For instance:
