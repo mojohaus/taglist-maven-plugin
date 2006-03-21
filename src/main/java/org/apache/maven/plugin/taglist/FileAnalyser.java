@@ -87,10 +87,11 @@ public class FileAnalyser
         log = report.getLog();
         mavenProject = report.getProject();
         // init the map of tag reports
-        tagReportsMap = new HashMap( report.getTags().size() );
-        for ( Iterator iter = report.getTags().iterator(); iter.hasNext(); )
+        String[] tags = report.getTags();
+        tagReportsMap = new HashMap( tags.length );
+        for ( int i = 0; i < tags.length; i++ )
         {
-            String tagName = (String) iter.next();
+            String tagName = tags[i];
             TagReport tagReport = new TagReport( tagName );
             tagReportsMap.put( tagName, tagReport );
         }
@@ -258,7 +259,7 @@ public class FileAnalyser
         }
         finally
         {
-            IOUtil.close(reader);
+            IOUtil.close( reader );
         }
     }
 

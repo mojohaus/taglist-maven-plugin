@@ -2,9 +2,8 @@
  Maven 2 Taglist Plugin
  ------
  Fabrice Bellingard
- <bellingard.NO-SPAM@gmail.com>
  ------
- September 30, 2005
+
 
 Maven 2 Taglist Plugin
 
@@ -12,7 +11,7 @@ Maven 2 Taglist Plugin
  
 *Available Configuration Options
  
- You can refer to the {{{taglist-mojo.html}MOJO generated documentation}} to discover the different configuration options for this report.
+ You can refer to the {{{index.html}MOJO generated documentation}} to discover the different configuration options for this report.
 
 *How to Use
 
@@ -31,7 +30,6 @@ Maven 2 Taglist Plugin
               <plugin>
                   <groupId>org.codehaus.mojo</groupId>
                   <artifactId>taglist-maven-plugin</artifactId>
-                  <version>2.0-beta-1</version>
 	          </plugin>
 	      </plugins>
       </reporting>
@@ -42,7 +40,7 @@ Maven 2 Taglist Plugin
   The report will be generated when executing the m2 site plugin.
 
 -------------------
-  mvn site:site
+  mvn site
 -------------------
 
   You can easily customise the tags you want to look for. For instance:
@@ -59,9 +57,13 @@ Maven 2 Taglist Plugin
               <plugin>
                   <groupId>org.codehaus.mojo</groupId>
                   <artifactId>taglist-maven-plugin</artifactId>
-                  <version>2.0-beta-1</version>
                   <configuration>
-                      <tags>TODO, @todo, FIXME, @deprecated</tags>
+                      <tags>
+                          <tag>TODO</tag>
+                          <tag>FIXME</tag>
+                          <tag>@todo</tag>
+                          <tag>@deprecated</tag>
+                      </tags>
                   </configuration>
 	          </plugin>
 	      </plugins>

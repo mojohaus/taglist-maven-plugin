@@ -17,11 +17,9 @@ package org.apache.maven.plugin.taglist;
  */
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Locale;
 import java.util.ResourceBundle;
-import java.util.StringTokenizer;
 
 import org.apache.maven.project.MavenProject;
 import org.apache.maven.reporting.AbstractMavenReport;
@@ -66,18 +64,17 @@ public class TagListReport
     private String outputDirectory;
 
     /**
-     * Comma-separated list of tags to look for.
+     * List of tags to look for, specified as &lt;tag&gt; tags.
      * The tags can be either:
      * <ul>
      * <li>Javadoc tags: "@todo" for instance</li>
      * <li>Simple tags: "TODO" for instance. In this case, the tags will be
      * searched in any Java comment (//, /* or /**).</li>
      * </ul>
-     * Example for this parameter : "TODO,@todo,FIXME"
      * 
-     * @parameter default-value="TODO,@todo"
+     * @parameter
      */
-    private String tags;
+    private String[] tags;
 
     /**
      * This parameter indicates whether for simple tags (like "TODO"), the
@@ -97,7 +94,7 @@ public class TagListReport
     {
         if ( tags == null || tags.equals( "" ) )
         {
-            throw new MavenReportException( "Tag list should not be empty." );
+            tags = new String[] { "@todo", "TODO" };
         }
 
         File outputDir = new File( outputDirectory );
@@ -137,14 +134,9 @@ public class TagListReport
      * Returns the tags to look for.
      * @return a collection of String objects representing the tag names.
      */
-    public Collection getTags()
+    public String[] getTags()
     {
-        Collection tagList = new ArrayList();
-        for ( StringTokenizer tokenizer = new StringTokenizer( tags, "," ); tokenizer.hasMoreElements(); )
-        {
-            tagList.add( tokenizer.nextToken().trim() );
-        }
-        return tagList;
+        return tags;
     }
 
     /**
