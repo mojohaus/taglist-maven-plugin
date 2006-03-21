@@ -21,8 +21,8 @@
 
 	  <menu name="Taglist QuickStart">
 		 <item name="Overview" href="howto.html"/>
-		 <item name="Configuration Options" href="taglist-mojo.html"/>
-		 <item name="Taglist Sample Report" href="example/taglist.html"/>
+		 <item name="Configuration Options" href="index.html"/>
+		 <item name="Taglist Sample Report" href="taglist.html"/>
 	  </menu>
       ${reports}
    </body>
