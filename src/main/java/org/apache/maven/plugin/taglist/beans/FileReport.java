@@ -16,6 +16,8 @@ package org.apache.maven.plugin.taglist.beans;
  * limitations under the License.
  */
 
+import org.codehaus.plexus.util.IOUtil;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -26,11 +28,9 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.codehaus.plexus.util.IOUtil;
-
 /**
  * Report for a file.
- * 
+ *
  * @author <a href="mailto:bellingard.NO-SPAM@gmail.com">Fabrice Bellingard </a>
  */
 public class FileReport
@@ -49,13 +49,14 @@ public class FileReport
 
     /**
      * Pair values of a line number and a comment.
-     * Map of [Integer,String]  
+     * Map of [Integer,String]
      */
     private Map tagListing;
 
     /**
      * Constructor
-     * @param className the complete name of analysed class 
+     *
+     * @param className  the complete name of analysed class
      * @param tagListing Map of the comments
      */
     public FileReport( File file )
@@ -66,6 +67,7 @@ public class FileReport
 
     /**
      * Adds a new entry to the list of tags found for this file report
+     *
      * @param comment
      * @param lineIndex
      */
@@ -77,6 +79,7 @@ public class FileReport
     /**
      * Returns the path corresponding to the analysed class,
      * for instance: org/apache/maven/plugins/taglist/beans/FileReport
+     *
      * @return the file path
      */
     public String getClassNameWithSlash()
@@ -87,6 +90,7 @@ public class FileReport
     /**
      * Returns the complete name of the analysed class,
      * for instance: org.apache.maven.plugin.taglist.beans.FileReport
+     *
      * @return the full class name
      */
     public String getClassName()
@@ -118,7 +122,7 @@ public class FileReport
         }
         finally
         {
-            IOUtil.close(reader);
+            IOUtil.close( reader );
         }
 
         className = packageName + "." + file.getName().replaceAll( ".java", "" );
@@ -128,6 +132,7 @@ public class FileReport
 
     /**
      * Returns the list of the comment line indexes
+     *
      * @return Collection of Integer
      */
     public Collection getLineIndexes()
@@ -140,6 +145,7 @@ public class FileReport
 
     /**
      * Returns the comment for the corresponding line index
+     *
      * @param lineIndex the index of the line
      * @return the comment
      */
@@ -148,9 +154,10 @@ public class FileReport
         return (String) tagListing.get( lineIndex );
     }
 
-    /** 
+    /**
      * Cf. overriden method documentation.
-     * @see java.lang.Comparable#compareTo(java.lang.Object)
+     *
+     * @see Comparable#compareTo(Object)
      */
     public int compareTo( Object o )
     {

@@ -24,7 +24,7 @@ import java.util.Map;
 
 /**
  * Report of the scan for a specific tag
- * 
+ *
  * @author <a href="mailto:bellingard.NO-SPAM@gmail.com">Fabrice Bellingard </a>
  */
 public class TagReport
@@ -49,6 +49,7 @@ public class TagReport
 
     /**
      * Constructor
+     *
      * @param tagName
      * @param fileReports
      */
@@ -62,6 +63,7 @@ public class TagReport
     /**
      * Returns the FileReport object corresponding to this file.
      * If it does not exist yet, it will be created.
+     *
      * @param file the file being analysed
      * @return a FileReport object for this file
      */
@@ -82,6 +84,7 @@ public class TagReport
 
     /**
      * Returns the collection of file reports for the tag.
+     *
      * @return a Collection of FileReport objects.
      */
     public Collection getFileReports()
@@ -91,6 +94,7 @@ public class TagReport
 
     /**
      * Returns the name of the tag that was looked for.
+     *
      * @return the name of the tag.
      */
     public String getTagName()
@@ -100,6 +104,7 @@ public class TagReport
 
     /**
      * Gives the number of comments found for that tag.
+     *
      * @return the number of comments
      */
     public int getTagCount()
@@ -118,9 +123,10 @@ public class TagReport
         return tagCount;
     }
 
-    /** 
+    /**
      * Cf. overriden method documentation.
-     * @see java.lang.Comparable#compareTo(java.lang.Object)
+     *
+     * @see Comparable#compareTo(Object)
      */
     public int compareTo( Object o )
     {

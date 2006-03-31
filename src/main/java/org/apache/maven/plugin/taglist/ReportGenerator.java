@@ -16,20 +16,20 @@ package org.apache.maven.plugin.taglist;
  * limitations under the License.
  */
 
+import org.apache.maven.plugin.taglist.beans.FileReport;
+import org.apache.maven.plugin.taglist.beans.TagReport;
+import org.apache.maven.reporting.MavenReportException;
+import org.codehaus.doxia.sink.Sink;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.ResourceBundle;
 
-import org.apache.maven.plugin.taglist.beans.FileReport;
-import org.apache.maven.plugin.taglist.beans.TagReport;
-import org.apache.maven.reporting.MavenReportException;
-import org.codehaus.doxia.sink.Sink;
-
 /**
  * Generates the taglist report using Doxia.
- * 
+ *
  * @author <a href="mailto:bellingard.NO-SPAM@gmail.com">Fabrice Bellingard </a>
  */
 
@@ -39,11 +39,9 @@ public class ReportGenerator
     /**
      * Generates the whole report using each tag reports made during the
      * analysis.
-     * 
-     * @param tagReports
-     *            a Collection of TagReport objects
-     * @param locale
-     *            the user locale
+     *
+     * @param tagReports a Collection of TagReport objects
+     * @param locale     the user locale
      */
     public static void generateReport( Collection tagReports, ResourceBundle bundle, Sink sink )
         throws MavenReportException

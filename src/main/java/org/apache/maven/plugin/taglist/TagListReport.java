@@ -16,21 +16,21 @@ package org.apache.maven.plugin.taglist;
  * limitations under the License.
  */
 
-import java.io.File;
-import java.util.Collection;
-import java.util.Locale;
-import java.util.ResourceBundle;
-
 import org.apache.maven.project.MavenProject;
 import org.apache.maven.reporting.AbstractMavenReport;
 import org.apache.maven.reporting.MavenReportException;
 import org.codehaus.doxia.site.renderer.SiteRenderer;
 
+import java.io.File;
+import java.util.Collection;
+import java.util.Locale;
+import java.util.ResourceBundle;
+
 /**
  * MOJO for the tag list report.
- * 
- * @goal taglist
+ *
  * @author <a href="mailto:bellingard.NO-SPAM@gmail.com">Fabrice Bellingard </a>
+ * @goal taglist
  */
 public class TagListReport
     extends AbstractMavenReport
@@ -58,6 +58,7 @@ public class TagListReport
 
     /**
      * Output folder where the report will be copied to.
+     *
      * @parameter expression="${project.build.directory}/site"
      * @required
      */
@@ -71,7 +72,7 @@ public class TagListReport
      * <li>Simple tags: "TODO" for instance. In this case, the tags will be
      * searched in any Java comment (//, /* or /**).</li>
      * </ul>
-     * 
+     *
      * @parameter
      */
     private String[] tags;
@@ -79,14 +80,14 @@ public class TagListReport
     /**
      * This parameter indicates whether for simple tags (like "TODO"), the
      * analyser should look for multiple line comments.
-     * 
+     *
      * @parameter default-value="true"
      */
     private boolean multipleLineComments;
 
     /**
      * Cf. overriden method documentation.
-     * 
+     *
      * @see org.apache.maven.reporting.AbstractMavenReport#executeReport(java.util.Locale)
      */
     protected void executeReport( Locale locale )
@@ -94,7 +95,7 @@ public class TagListReport
     {
         if ( tags == null || tags.equals( "" ) )
         {
-            tags = new String[] { "@todo", "TODO" };
+            tags = new String[]{"@todo", "TODO"};
         }
 
         File outputDir = new File( outputDirectory );
@@ -117,7 +118,7 @@ public class TagListReport
 
     /**
      * Cf. overriden method documentation.
-     * 
+     *
      * @see org.apache.maven.reporting.MavenReport#canGenerateReport()
      */
     public boolean canGenerateReport()
@@ -132,6 +133,7 @@ public class TagListReport
 
     /**
      * Returns the tags to look for.
+     *
      * @return a collection of String objects representing the tag names.
      */
     public String[] getTags()
@@ -140,7 +142,8 @@ public class TagListReport
     }
 
     /**
-     * Tells whether we should look for comments over multiple lines 
+     * Tells whether we should look for comments over multiple lines
+     *
      * @return Returns true if the analyser should look for multiple lines.
      */
     public boolean isMultipleLineComments()
@@ -150,7 +153,7 @@ public class TagListReport
 
     /**
      * Cf. overriden method documentation.
-     * 
+     *
      * @see org.apache.maven.reporting.AbstractMavenReport#getSiteRenderer()
      */
     protected SiteRenderer getSiteRenderer()
@@ -160,7 +163,7 @@ public class TagListReport
 
     /**
      * Cf. overriden method documentation.
-     * 
+     *
      * @see org.apache.maven.reporting.AbstractMavenReport#getOutputDirectory()
      */
     protected String getOutputDirectory()
@@ -170,7 +173,7 @@ public class TagListReport
 
     /**
      * Cf. overriden method documentation.
-     * 
+     *
      * @see org.apache.maven.reporting.AbstractMavenReport#getProject()
      */
     public MavenProject getProject()
@@ -180,7 +183,7 @@ public class TagListReport
 
     /**
      * Cf. overriden method documentation.
-     * 
+     *
      * @see org.apache.maven.reporting.MavenReport#getDescription(java.util.Locale)
      */
     public String getDescription( Locale locale )
@@ -190,7 +193,7 @@ public class TagListReport
 
     /**
      * Cf. overriden method documentation.
-     * 
+     *
      * @see org.apache.maven.reporting.MavenReport#getName(java.util.Locale)
      */
     public String getName( Locale locale )
@@ -200,7 +203,7 @@ public class TagListReport
 
     /**
      * Cf. overriden method documentation.
-     * 
+     *
      * @see org.apache.maven.reporting.MavenReport#getOutputName()
      */
     public String getOutputName()
@@ -210,9 +213,9 @@ public class TagListReport
 
     /**
      * Returns the correct resource bundle according to the locale
-     * 
+     *
      * @param locale :
-     *            the locale of the user
+     *               the locale of the user
      * @return the bundle correponding to the locale
      */
     private ResourceBundle getBundle( Locale locale )
