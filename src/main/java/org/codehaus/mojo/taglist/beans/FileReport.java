@@ -1,4 +1,4 @@
-package org.apache.maven.plugin.taglist.beans;
+package org.codehaus.mojo.taglist.beans;
 
 /*
  * Copyright 2004-2005 The Apache Software Foundation.
@@ -89,7 +89,7 @@ public class FileReport
 
     /**
      * Returns the complete name of the analysed class,
-     * for instance: org.apache.maven.plugin.taglist.beans.FileReport
+     * for instance: org.codehaus.mojo.taglist.beans.FileReport
      *
      * @return the full class name
      */

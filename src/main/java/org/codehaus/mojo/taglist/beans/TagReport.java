@@ -1,4 +1,4 @@
-package org.apache.maven.plugin.taglist.beans;
+package org.codehaus.mojo.taglist.beans;
 
 /*
  * Copyright 2004-2005 The Apache Software Foundation.

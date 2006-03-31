@@ -8,7 +8,7 @@
     <component>
       <role>org.apache.maven.reporting.MavenReport</role>
       <role-hint>taglist</role-hint>
-      <implementation>org.apache.maven.plugin.taglist.TagListReport</implementation>
+      <implementation>org.codehaus.mojo.taglist.TagListReport</implementation>
       <instantiation-strategy>per-lookup</instantiation-strategy>
     </component>
   </components>

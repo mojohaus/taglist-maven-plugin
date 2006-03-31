@@ -1,4 +1,4 @@
-package org.apache.maven.plugin.taglist;
+package org.codehaus.mojo.taglist;
 
 /*
  * Copyright 2004-2005 The Apache Software Foundation.
@@ -17,10 +17,10 @@ package org.apache.maven.plugin.taglist;
  */
 
 import org.apache.maven.plugin.logging.Log;
-import org.apache.maven.plugin.taglist.beans.FileReport;
-import org.apache.maven.plugin.taglist.beans.TagReport;
 import org.apache.maven.project.MavenProject;
 import org.apache.maven.reporting.MavenReportException;
+import org.codehaus.mojo.taglist.beans.FileReport;
+import org.codehaus.mojo.taglist.beans.TagReport;
 import org.codehaus.plexus.util.FileUtils;
 import org.codehaus.plexus.util.IOUtil;
 
