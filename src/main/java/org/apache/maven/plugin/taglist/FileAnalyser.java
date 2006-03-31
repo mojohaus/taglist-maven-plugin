@@ -16,6 +16,14 @@ package org.apache.maven.plugin.taglist;
  * limitations under the License.
  */
 
+import org.apache.maven.plugin.logging.Log;
+import org.apache.maven.plugin.taglist.beans.FileReport;
+import org.apache.maven.plugin.taglist.beans.TagReport;
+import org.apache.maven.project.MavenProject;
+import org.apache.maven.reporting.MavenReportException;
+import org.codehaus.plexus.util.FileUtils;
+import org.codehaus.plexus.util.IOUtil;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -26,37 +34,28 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.maven.plugin.logging.Log;
-import org.apache.maven.plugin.taglist.beans.FileReport;
-import org.apache.maven.plugin.taglist.beans.TagReport;
-import org.apache.maven.project.MavenProject;
-import org.apache.maven.reporting.MavenReportException;
-import org.codehaus.plexus.util.FileUtils;
-import org.codehaus.plexus.util.IOUtil;
-
 /**
- * Class that analyses a file with a special comment tag.
- * For instance :
- * // TODO: Example of an Eclipse/IntelliJ-like "todo" tag
- * @todo : This is another example of "todo" tag
- * 
+ * Class that analyses a file with a special comment tag. For instance : //
+ * TODO: Example of an Eclipse/IntelliJ-like "todo" tag
+ *
  * @author <a href="mailto:bellingard.NO-SPAM@gmail.com">Fabrice Bellingard </a>
+ * @todo : This is another example of "todo" tag
  */
 public class FileAnalyser
 {
 
     /**
-     * String that is used for beginning a comment line 
+     * String that is used for beginning a comment line
      */
     private final static String STAR_COMMENT = "*";
 
     /**
-     * String that is used for beginning a comment line 
+     * String that is used for beginning a comment line
      */
     private final static String SLASH_COMMENT = "//";
 
     /**
-     * The Maven project being built 
+     * The Maven project being built
      */
     private MavenProject mavenProject;
 
@@ -66,20 +65,20 @@ public class FileAnalyser
     private Log log;
 
     /**
-     * Map containing tag names as keys ("TODO" or "@todo" for instance), 
-     * and a TagReport object as value.
+     * Map containing tag names as keys ("TODO" or "@todo" for instance), and a
+     * TagReport object as value.
      */
     private Map tagReportsMap;
 
     /**
-     * Set to true if the analyser should look for multiple line
-     * comments.
+     * Set to true if the analyser should look for multiple line comments.
      */
     private boolean multipleLineCommentsOn;
 
     /**
      * Constructor
-     * @param the MOJO that is using this analyser 
+     *
+     * @param report the MOJO that is using this analyser
      */
     public FileAnalyser( TagListReport report )
     {
@@ -99,6 +98,7 @@ public class FileAnalyser
 
     /**
      * Execute the analysis for the configuration given by the TagListReport.
+     *
      * @return a collection of TagReport objects
      */
     public Collection execute()
@@ -120,6 +120,7 @@ public class FileAnalyser
 
     /**
      * Gives the list of files to scan
+     *
      * @return a List of File objects
      */
     private List findFilesToScan()
@@ -139,7 +140,8 @@ public class FileAnalyser
     }
 
     /**
-     * Scans a file to look for task tags. 
+     * Scans a file to look for task tags.
+     *
      * @param file the file to scan
      */
     public void scanFile( File file )
@@ -156,19 +158,27 @@ public class FileAnalyser
             {
                 int index = -1;
                 String tagName = null;
+
+                int[] indices = new int[tagReportsMap.keySet().size()];
+                String[] tagNames = new String[tagReportsMap.keySet().size()];
+                int counter = 0;
+                boolean found = false;
                 // look for a tag on this line
                 for ( Iterator iter = tagReportsMap.keySet().iterator(); iter.hasNext(); )
                 {
                     tagName = (String) iter.next();
                     index = currentLine.indexOf( tagName );
-                    if ( index > -1 )
+                    tagNames[counter] = tagName;
+                    indices[counter] = index;
+                    if ( index >= 0 )
                     {
-                        // tag found
-                        break;
+                        found = true;
                     }
+
+                    counter++;
                 }
 
-                if ( index < 0 || tagName == null )
+                if ( !found || tagName == null )
                 {
                     // no tag on this line: just go on next line
                     currentLine = reader.readLine();
@@ -177,9 +187,24 @@ public class FileAnalyser
                 }
 
                 // there's a tag on this line
-                String commentType = extractCommentType( currentLine, index );
+                String commentType = null;
+                for ( int i = 0; i < indices.length; i++ )
+                {
+                    if ( indices[i] >= 0 )
+                    {
+                        commentType = extractCommentType( currentLine, indices[i] );
+                    }
+                    if ( commentType != null )
+                    {
+                        index = indices[i];
+                        tagName = tagNames[i];
+                        break;
+                    }
+                }
+
                 if ( commentType == null )
                 {
+
                     // this is not a valid comment tag: go to the next line
                     currentLine = reader.readLine();
                     lineCount++;
@@ -216,11 +241,10 @@ public class FileAnalyser
                     // we're looking for multiple line comments
                     while ( currentLine.trim().startsWith( commentType ) && currentLine.indexOf( tagName ) < 0 )
                     {
-                        String currentComment = currentLine.substring(
-                                                                       currentLine.indexOf( commentType )
-                                                                           + commentType.length() ).trim();
-                        if ( currentComment.startsWith( "@" ) || currentComment.equals( "" )
-                            || currentComment.equals( "/" ) )
+                        String currentComment =
+                            currentLine.substring( currentLine.indexOf( commentType ) + commentType.length() ).trim();
+                        if ( currentComment.startsWith( "@" ) || currentComment.equals( "" ) ||
+                            currentComment.equals( "/" ) )
                         {
                             // the comment is finished
                             break;
@@ -237,10 +261,12 @@ public class FileAnalyser
                         }
                         if ( newTagFound )
                         {
-                            // this is a new comment: stop here the current comment
+                            // this is a new comment: stop here the current
+                            // comment
                             break;
                         }
-                        // nothing was found: this means the comment is going on this line
+                        // nothing was found: this means the comment is going on
+                        // this line
                         comment.append( " " );
                         comment.append( currentComment );
                         currentLine = reader.readLine();
@@ -265,8 +291,9 @@ public class FileAnalyser
 
     /**
      * Finds the type of comment the tag is in.
+     *
      * @param currentLine the liento analyse
-     * @param index the index of the tag in the line
+     * @param index       the index of the tag in the line
      * @return "*" or "//" or null
      */
     private String extractCommentType( String currentLine, int index )
