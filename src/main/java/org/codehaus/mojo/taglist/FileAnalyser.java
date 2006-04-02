@@ -43,16 +43,15 @@ import java.util.Map;
  */
 public class FileAnalyser
 {
+    /**
+     * String that is used for beginning a comment line
+     */
+    private static final String STAR_COMMENT = "*";
 
     /**
      * String that is used for beginning a comment line
      */
-    private final static String STAR_COMMENT = "*";
-
-    /**
-     * String that is used for beginning a comment line
-     */
-    private final static String SLASH_COMMENT = "//";
+    private static final String SLASH_COMMENT = "//";
 
     /**
      * The Maven project being built
@@ -126,7 +125,7 @@ public class FileAnalyser
     private List findFilesToScan()
         throws MavenReportException
     {
-        List filesList = null;
+        List filesList;
         try
         {
             String sourceDirectory = mavenProject.getBuild().getSourceDirectory();
@@ -243,8 +242,8 @@ public class FileAnalyser
                     {
                         String currentComment =
                             currentLine.substring( currentLine.indexOf( commentType ) + commentType.length() ).trim();
-                        if ( currentComment.startsWith( "@" ) || currentComment.equals( "" ) ||
-                            currentComment.equals( "/" ) )
+                        if ( currentComment.startsWith( "@" ) || "".equals( currentComment ) ||
+                            "/".equals( currentComment ) )
                         {
                             // the comment is finished
                             break;

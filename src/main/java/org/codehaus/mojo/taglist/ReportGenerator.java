@@ -16,7 +16,6 @@ package org.codehaus.mojo.taglist;
  * limitations under the License.
  */
 
-import org.apache.maven.reporting.MavenReportException;
 import org.codehaus.doxia.sink.Sink;
 import org.codehaus.mojo.taglist.beans.FileReport;
 import org.codehaus.mojo.taglist.beans.TagReport;
@@ -25,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.List;
 import java.util.ResourceBundle;
 
 /**
@@ -35,16 +35,27 @@ import java.util.ResourceBundle;
 
 public class ReportGenerator
 {
+    private String xrefLocation;
+
+    private Sink sink;
+
+    private ResourceBundle bundle;
+
+    private List sortedTagReports;
+
+    public ReportGenerator( Collection tagReports, ResourceBundle bundle, Sink sink )
+    {
+        sortedTagReports = new ArrayList( tagReports );
+        Collections.sort( sortedTagReports );
+        this.bundle = bundle;
+        this.sink = sink;
+    }
 
     /**
      * Generates the whole report using each tag reports made during the
      * analysis.
-     *
-     * @param tagReports a Collection of TagReport objects
-     * @param locale     the user locale
      */
-    public static void generateReport( Collection tagReports, ResourceBundle bundle, Sink sink )
-        throws MavenReportException
+    public void generateReport()
     {
         sink.head();
         sink.title();
@@ -58,10 +69,6 @@ public class ReportGenerator
         sink.sectionTitle1();
         sink.text( bundle.getString( "report.taglist.mainTitle" ) );
         sink.sectionTitle1_();
-
-        // sort the tag reports by name
-        ArrayList sortedTagReports = new ArrayList( tagReports );
-        Collections.sort( sortedTagReports );
 
         // Summary section
         doSummarySection( sortedTagReports, bundle, sink );
@@ -114,7 +121,7 @@ public class ReportGenerator
         sink.link_();
         sink.tableCell_();
         sink.tableCell();
-        sink.text( tagReport.getTagCount() + "" );
+        sink.text( String.valueOf( tagReport.getTagCount() ) );
         sink.tableCell_();
         sink.tableRow_();
     }
@@ -123,7 +130,7 @@ public class ReportGenerator
      * @param tagReports
      * @param sink
      */
-    private static void doDetailSection( Collection tagReports, ResourceBundle bundle, Sink sink )
+    private void doDetailSection( Collection tagReports, ResourceBundle bundle, Sink sink )
     {
         sink.paragraph();
         sink.text( bundle.getString( "report.taglist.detail.description" ) );
@@ -139,7 +146,7 @@ public class ReportGenerator
      * @param sink
      * @param tagReport
      */
-    private static void doTagDetailedPart( Sink sink, TagReport tagReport, ResourceBundle bundle )
+    private void doTagDetailedPart( Sink sink, TagReport tagReport, ResourceBundle bundle )
     {
         sink.section2();
         sink.sectionTitle2();
@@ -154,7 +161,7 @@ public class ReportGenerator
         sink.paragraph_();
 
         Collection fileReports = tagReport.getFileReports();
-        ArrayList sortedFileReports = new ArrayList( fileReports );
+        List sortedFileReports = new ArrayList( fileReports );
         Collections.sort( sortedFileReports );
 
         for ( Iterator iter = sortedFileReports.iterator(); iter.hasNext(); )
@@ -169,7 +176,7 @@ public class ReportGenerator
      * @param sink
      * @param fileReport
      */
-    private static void doFileDetailedPart( Sink sink, FileReport fileReport, ResourceBundle bundle )
+    private void doFileDetailedPart( Sink sink, FileReport fileReport, ResourceBundle bundle )
     {
         sink.table();
         sink.tableRow();
@@ -192,18 +199,27 @@ public class ReportGenerator
      * @param fileReport
      * @param lineNumber
      */
-    private static void doCommentLine( Sink sink, FileReport fileReport, Integer lineNumber )
+    private void doCommentLine( Sink sink, FileReport fileReport, Integer lineNumber )
     {
         sink.tableRow();
         sink.tableCell();
         sink.text( fileReport.getComment( lineNumber ) );
         sink.tableCell_();
         sink.tableCell();
-        sink.link( "xref/" + fileReport.getClassNameWithSlash() + ".html#" + lineNumber );
-        sink.text( lineNumber + "" );
+        sink.link( xrefLocation + "/" + fileReport.getClassNameWithSlash() + ".html#" + lineNumber );
+        sink.text( String.valueOf( lineNumber ) );
         sink.link_();
         sink.tableCell_();
         sink.tableRow_();
     }
 
+    public void setXrefLocation( String xrefLocation )
+    {
+        this.xrefLocation = xrefLocation;
+    }
+
+    public String getXrefLocation()
+    {
+        return xrefLocation;
+    }
 }
