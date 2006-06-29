@@ -123,6 +123,21 @@ public class TagListReport
     private File testXrefLocation;
 
     /**
+     * The projects in the reactor for aggregation report.
+     *
+     * @parameter expression="${reactorProjects}"
+     * @readonly
+     */
+    protected List reactorProjects;
+
+    /**
+     * Whether to build an aggregated report at the root, or build individual reports.
+     *
+     * @parameter expression="${aggregate}" default-value="false"
+     */
+    protected boolean aggregate;
+
+    /**
      * The locale used for rendering the page
      */
     private Locale currentLocale;
@@ -214,7 +229,12 @@ public class TagListReport
      */
     public boolean canGenerateReport()
     {
-        return !constructSourceDirs().isEmpty();
+        boolean canGenerate = !constructSourceDirs().isEmpty();
+        if ( aggregate && !project.isExecutionRoot() )
+        {
+            canGenerate = false;
+        }
+        return canGenerate;
     }
 
     /**
@@ -276,6 +296,20 @@ public class TagListReport
     {
         List dirs = new ArrayList( sourceDirs );
         dirs.addAll( testSourceDirs );
+
+        if ( aggregate )
+        {
+            for ( Iterator i = reactorProjects.iterator(); i.hasNext(); )
+            {
+                MavenProject project = (MavenProject) i.next();
+
+                if ( "java".equals( project.getArtifact().getArtifactHandler().getLanguage() ) )
+                {
+                    sourceDirs.addAll( project.getCompileSourceRoots() );
+                    sourceDirs.addAll( project.getTestCompileSourceRoots() );
+                }
+            }
+        }
 
         dirs = pruneSourceDirs( dirs );
         return dirs;
