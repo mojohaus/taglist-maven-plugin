@@ -16,23 +16,23 @@ package org.codehaus.mojo.taglist;
  * limitations under the License.
  */
 
-import org.apache.maven.plugin.logging.Log;
-import org.apache.maven.project.MavenProject;
-import org.apache.maven.reporting.MavenReportException;
-import org.codehaus.mojo.taglist.beans.FileReport;
-import org.codehaus.mojo.taglist.beans.TagReport;
-import org.codehaus.plexus.util.FileUtils;
-import org.codehaus.plexus.util.IOUtil;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
+import org.apache.maven.plugin.logging.Log;
+import org.apache.maven.reporting.MavenReportException;
+import org.codehaus.mojo.taglist.beans.FileReport;
+import org.codehaus.mojo.taglist.beans.TagReport;
+import org.codehaus.plexus.util.FileUtils;
+import org.codehaus.plexus.util.IOUtil;
 
 /**
  * Class that analyses a file with a special comment tag. For instance : //
@@ -54,9 +54,9 @@ public class FileAnalyser
     private static final String SLASH_COMMENT = "//";
 
     /**
-     * The Maven project being built
+     * The directories to analyse
      */
-    private MavenProject mavenProject;
+    private Collection sourceDirs;
 
     /**
      * Log for debug output
@@ -83,7 +83,7 @@ public class FileAnalyser
     {
         multipleLineCommentsOn = report.isMultipleLineComments();
         log = report.getLog();
-        mavenProject = report.getProject();
+        sourceDirs = report.constructSourceDirs();
         // init the map of tag reports
         String[] tags = report.getTags();
         tagReportsMap = new HashMap( tags.length );
@@ -125,11 +125,13 @@ public class FileAnalyser
     private List findFilesToScan()
         throws MavenReportException
     {
-        List filesList;
+        List filesList = new ArrayList();
         try
         {
-            String sourceDirectory = mavenProject.getBuild().getSourceDirectory();
-            filesList = FileUtils.getFiles( new File( sourceDirectory ), "**/*.java", null );
+            for ( Iterator iter = sourceDirs.iterator(); iter.hasNext(); )
+            {
+                filesList.addAll( FileUtils.getFiles( new File( (String) iter.next() ), "**/*.java", null ) );
+            }
         }
         catch ( IOException e )
         {

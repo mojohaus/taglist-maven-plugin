@@ -16,16 +16,18 @@ package org.codehaus.mojo.taglist;
  * limitations under the License.
  */
 
-import org.codehaus.doxia.sink.Sink;
-import org.codehaus.mojo.taglist.beans.FileReport;
-import org.codehaus.mojo.taglist.beans.TagReport;
-
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
+
+import org.apache.maven.project.MavenProject;
+import org.codehaus.doxia.sink.Sink;
+import org.codehaus.mojo.taglist.beans.FileReport;
+import org.codehaus.mojo.taglist.beans.TagReport;
 
 /**
  * Generates the taglist report using Doxia.
@@ -37,18 +39,24 @@ public class ReportGenerator
 {
     private String xrefLocation;
 
+    private String testXrefLocation;
+
     private Sink sink;
 
     private ResourceBundle bundle;
 
+    private String siteOutputDirectory;
+
     private List sortedTagReports;
 
-    public ReportGenerator( Collection tagReports, ResourceBundle bundle, Sink sink )
+    public ReportGenerator( TagListReport report, Collection tagReports )
     {
         sortedTagReports = new ArrayList( tagReports );
         Collections.sort( sortedTagReports );
-        this.bundle = bundle;
-        this.sink = sink;
+        this.bundle = report.getBundle();
+        this.sink = report.getSink();
+        // TODO Do not hardcode this, retrieve it from the site plugin config
+        this.siteOutputDirectory = report.getProject().getBuild().getDirectory() + File.separator + "site";
     }
 
     /**
@@ -206,7 +214,20 @@ public class ReportGenerator
         sink.text( fileReport.getComment( lineNumber ) );
         sink.tableCell_();
         sink.tableCell();
-        sink.link( xrefLocation + "/" + fileReport.getClassNameWithSlash() + ".html#" + lineNumber );
+        if ( xrefLocation != null )
+        {
+            String fileLink = xrefLocation + "/" + fileReport.getClassNameWithSlash() + ".html";
+            File xrefFile = new File( siteOutputDirectory, fileLink.substring( 2 ) );
+            if ( xrefFile.exists() )
+            {
+                sink.link( fileLink + "#" + lineNumber );
+            }
+            else
+            {
+                // this is test-xref
+                sink.link( fileLink.replaceFirst( xrefLocation, testXrefLocation ) + "#" + lineNumber );
+            }
+        }
         sink.text( String.valueOf( lineNumber ) );
         sink.link_();
         sink.tableCell_();
@@ -221,5 +242,15 @@ public class ReportGenerator
     public String getXrefLocation()
     {
         return xrefLocation;
+    }
+
+    public String getTestXrefLocation()
+    {
+        return testXrefLocation;
+    }
+
+    public void setTestXrefLocation( String testXrefLocation )
+    {
+        this.testXrefLocation = testXrefLocation;
     }
 }
