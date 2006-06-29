@@ -101,6 +101,14 @@ public class TagListReport
     private boolean multipleLineComments;
 
     /**
+     * This parameter indicates whether to look for tags even if they don't
+     * have a comment.
+     *
+     * @parameter default-value="true"
+     */
+    private boolean emptyComments;
+
+    /**
      * Link the tag line numbers to the source xref. Defaults to true and will link
      * automatically if jxr plugin is being used.
      *
@@ -326,13 +334,23 @@ public class TagListReport
     }
 
     /**
-     * Tells whether we should look for comments over multiple lines
+     * Tells whether to look for comments over multiple lines
      *
      * @return Returns true if the analyser should look for multiple lines.
      */
     public boolean isMultipleLineComments()
     {
         return multipleLineComments;
+    }
+
+    /**
+     * Tells wether to look for tags without comments
+     * 
+     * @return the emptyComments
+     */
+    public boolean isEmptyComments()
+    {
+        return emptyComments;
     }
 
     /**

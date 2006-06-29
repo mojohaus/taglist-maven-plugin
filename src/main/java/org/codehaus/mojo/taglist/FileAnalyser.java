@@ -75,6 +75,16 @@ public class FileAnalyser
     private boolean multipleLineCommentsOn;
 
     /**
+     * Set to true if the analyser should look for tags without comments.
+     */
+    private boolean emptyCommentsOn;
+    
+    /**
+     * String used to indicate that there is no comment after the tag
+     */
+    private String noCommentString;
+
+    /**
      * Constructor
      *
      * @param report the MOJO that is using this analyser
@@ -82,8 +92,10 @@ public class FileAnalyser
     public FileAnalyser( TagListReport report )
     {
         multipleLineCommentsOn = report.isMultipleLineComments();
+        emptyCommentsOn = report.isEmptyComments();
         log = report.getLog();
         sourceDirs = report.constructSourceDirs();
+        noCommentString = report.getBundle().getString( "report.taglist.nocomment" );
         // init the map of tag reports
         String[] tags = report.getTags();
         tagReportsMap = new HashMap( tags.length );
@@ -222,8 +234,20 @@ public class FileAnalyser
                     // this is not a valid comment tag: nothing is written there
                     currentLine = reader.readLine();
                     lineCount++;
-                    continue;
+                    if ( emptyCommentsOn )
+                    {
+                        comment.append( "--" );
+                        comment.append( noCommentString );
+                        comment.append( "--" );
+                    }
+                    else
+                    {
+                        continue;
+                    }
                 }
+                else
+                {
+                    // this tag has a comment
                 if ( firstLine.charAt( 0 ) == ':' )
                 {
                     comment.append( firstLine.substring( 1 ).trim() );
@@ -273,6 +297,7 @@ public class FileAnalyser
                         currentLine = reader.readLine();
                         lineCount++;
                     }
+                }
                 }
 
                 TagReport tagReport = (TagReport) tagReportsMap.get( tagName );
