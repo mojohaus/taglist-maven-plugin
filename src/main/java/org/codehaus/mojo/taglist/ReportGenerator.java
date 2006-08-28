@@ -106,7 +106,7 @@ public class ReportGenerator
         sink.text( bundle.getString( "report.taglist.summary.tag" ) );
         sink.tableHeaderCell_();
         sink.tableHeaderCell();
-        sink.text( bundle.getString( "report.taglist.summary.occurences" ) );
+        sink.text( bundle.getString( "report.taglist.summary.occurrences" ) );
         sink.tableHeaderCell_();
         sink.tableRow_();
         for ( Iterator iter = tagReports.iterator(); iter.hasNext(); )
