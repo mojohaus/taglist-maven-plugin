@@ -56,8 +56,7 @@ public class FileReport
     /**
      * Constructor
      *
-     * @param className  the complete name of analysed class
-     * @param tagListing Map of the comments
+     * @param file The file to analyse
      */
     public FileReport( File file )
     {
@@ -113,7 +112,15 @@ public class FileReport
                     packageName = currentLine.substring( 8 ).trim().replaceAll( ";", "" ).trim();
                     break;
                 }
-                currentLine = reader.readLine().trim();
+                String nextLine = reader.readLine();
+                if ( nextLine == null )
+                {
+                    currentLine = nextLine;
+                }
+                else
+                {
+                    currentLine = nextLine.trim();
+                }
             }
         }
         catch ( IOException e )
