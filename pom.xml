@@ -5,12 +5,12 @@
   <parent>
     <artifactId>mojo</artifactId>
     <groupId>org.codehaus.mojo</groupId>
-    <version>12</version>
+    <version>13</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>taglist-maven-plugin</artifactId>
   <packaging>maven-plugin</packaging>
-  <name>Maven Tag List Plugin</name>
+  <name>Taglist Maven Plugin</name>
   <version>2.1-SNAPSHOT</version>
   <inceptionYear>2005</inceptionYear>
   <developers>
