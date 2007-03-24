@@ -12,6 +12,10 @@
   <packaging>maven-plugin</packaging>
   <name>Taglist Maven Plugin</name>
   <version>2.1-SNAPSHOT</version>
+  <description>Produce a tag list report.</description>
+  <prerequisites>
+    <maven>2.0</maven>
+  </prerequisites>
   <inceptionYear>2005</inceptionYear>
   <developers>
     <developer>
