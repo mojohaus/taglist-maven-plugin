@@ -1,43 +1,41 @@
  ------
- Maven 2 Taglist Plugin
+ Usage
  ------
  Fabrice Bellingard
  ------
 
 
-Maven 2 Taglist Plugin
+Usage
 
- This plug-in produces a report on various tags found in the code, like @todo or //TODO tags.
- 
 *Available Configuration Options
  
- You can refer to the {{{index.html}MOJO generated documentation}} to discover the different configuration options for this report.
+ You can refer to the {{{taglist-mojo.html}generated documentation}} to discover
+ the different configuration options for this plugin.
 
 *How to Use
 
- 
-  In the pom.xml, insert this segment.
+  In your <<<pom.xml>>>, insert this segment:
 
 -------------------
 <project>
-   ...
-      <build>
-         ...
-      </build>
+  ...
+  <build>
+    ...
+  </build>
 
-      <reporting>
-          <plugins>
-              <plugin>
-                  <groupId>org.codehaus.mojo</groupId>
-                  <artifactId>taglist-maven-plugin</artifactId>
-	          </plugin>
-	      </plugins>
-      </reporting>
-   ...
+  <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>taglist-maven-plugin</artifactId>
+	  </plugin>
+	</plugins>
+  </reporting>
+  ...
 </project>
 -------------------
 
-  The report will be generated when executing the m2 site plugin.
+  The report will be generated when executing the Maven site plugin, like this:
 
 -------------------
   mvn site
@@ -47,27 +45,27 @@ Maven 2 Taglist Plugin
   
 -------------------
 <project>
-   ...
-      <build>
-         ...
-      </build>
+  ...
+  <build>
+    ...
+  </build>
 
-      <reporting>
-          <plugins>
-              <plugin>
-                  <groupId>org.codehaus.mojo</groupId>
-                  <artifactId>taglist-maven-plugin</artifactId>
-                  <configuration>
-                      <tags>
-                          <tag>TODO</tag>
-                          <tag>FIXME</tag>
-                          <tag>@todo</tag>
-                          <tag>@deprecated</tag>
-                      </tags>
-                  </configuration>
-	          </plugin>
-	      </plugins>
-      </reporting>
-   ...
+  <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>taglist-maven-plugin</artifactId>
+        <configuration>
+          <tags>
+            <tag>TODO</tag>
+            <tag>FIXME</tag>
+            <tag>@todo</tag>
+            <tag>@deprecated</tag>
+          </tags>
+        </configuration>
+	  </plugin>
+	</plugins>
+  </reporting>
+  ...
 </project>
 -------------------

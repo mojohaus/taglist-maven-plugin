@@ -1,0 +1,29 @@
+ ------
+ Introduction
+ ------
+ Dennis Lundberg
+ ------
+ 24 March 2007
+ ------
+
+Taglist Maven Plugin
+
+ The Taglist Maven Plugin generates a report on various tags found in the code, like
+ <<<@todo>>> or <<<//TODO>>> tags.
+
+* Goals Overview
+
+   The Taglist Plugin has one goal:
+
+   * {{{taglist-mojo.html}taglist:taglist}} generates the taglist report.
+
+* Usage
+
+   Instructions on how to use the Taglist Plugin can be found {{{howto.html}here}}.
+
+* Examples
+
+   The following example show how to use the Taglist Plugin in more advanced use-cases:
+
+   * {{{taglist.html}Sample Report}}
+
