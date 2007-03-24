@@ -1,0 +1,71 @@
+ ------
+ Usage
+ ------
+ Fabrice Bellingard
+ ------
+
+
+Usage
+
+*Available Configuration Options
+ 
+ You can refer to the {{{taglist-mojo.html}generated documentation}} to discover
+ the different configuration options for this plugin.
+
+*How to Use
+
+  In your <<<pom.xml>>>, insert this segment:
+
+-------------------
+<project>
+  ...
+  <build>
+    ...
+  </build>
+
+  <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>taglist-maven-plugin</artifactId>
+	  </plugin>
+	</plugins>
+  </reporting>
+  ...
+</project>
+-------------------
+
+  The report will be generated when executing the Maven site plugin, like this:
+
+-------------------
+  mvn site
+-------------------
+
+  You can easily customise the tags you want to look for. For instance:
+  
+-------------------
+<project>
+  ...
+  <build>
+    ...
+  </build>
+
+  <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>taglist-maven-plugin</artifactId>
+        <configuration>
+          <tags>
+            <tag>TODO</tag>
+            <tag>FIXME</tag>
+            <tag>@todo</tag>
+            <tag>@deprecated</tag>
+          </tags>
+        </configuration>
+	  </plugin>
+	</plugins>
+  </reporting>
+  ...
+</project>
+-------------------
