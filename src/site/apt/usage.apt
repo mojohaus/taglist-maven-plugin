@@ -22,14 +22,14 @@ Usage
   <build>
     ...
   </build>
-
+  ...
   <reporting>
     <plugins>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>taglist-maven-plugin</artifactId>
-	  </plugin>
-	</plugins>
+      </plugin>
+    </plugins>
   </reporting>
   ...
 </project>
@@ -38,7 +38,7 @@ Usage
   The report will be generated when executing the Maven site plugin, like this:
 
 -------------------
-  mvn site
+mvn site
 -------------------
 
   You can easily customise the tags you want to look for. For instance:
@@ -49,7 +49,7 @@ Usage
   <build>
     ...
   </build>
-
+  ...
   <reporting>
     <plugins>
       <plugin>
@@ -63,8 +63,8 @@ Usage
             <tag>@deprecated</tag>
           </tags>
         </configuration>
-	  </plugin>
-	</plugins>
+  	  </plugin>
+	  </plugins>
   </reporting>
   ...
 </project>
