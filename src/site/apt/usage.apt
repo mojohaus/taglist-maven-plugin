@@ -63,8 +63,8 @@ mvn site
             <tag>@deprecated</tag>
           </tags>
         </configuration>
-  	  </plugin>
-	  </plugins>
+      </plugin>
+    </plugins>
   </reporting>
   ...
 </project>
