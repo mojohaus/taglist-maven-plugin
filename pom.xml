@@ -16,6 +16,10 @@
   <prerequisites>
     <maven>2.0</maven>
   </prerequisites>
+  <issueManagement>
+    <system>jira</system>
+    <url>http://jira.codehaus.org/browse/MTAGLIST</url>
+  </issueManagement>
   <inceptionYear>2005</inceptionYear>
   <developers>
     <developer>
