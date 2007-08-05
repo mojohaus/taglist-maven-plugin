@@ -204,7 +204,7 @@ public class TagListReport
                     if ( "maven-jxr-plugin".equals( artifactId ) || "jxr-maven-plugin".equals( artifactId ) )
                     {
                         generator.setXrefLocation( relativePath );
-                        generator.setXrefLocation( getRelativPath( testXrefLocation ) );
+                        generator.setTestXrefLocation( getRelativPath( testXrefLocation ) );
                     }
                 }
             }
