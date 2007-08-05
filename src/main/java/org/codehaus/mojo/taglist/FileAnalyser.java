@@ -267,7 +267,8 @@ public class FileAnalyser
                 if ( multipleLineCommentsOn )
                 {
                     // we're looking for multiple line comments
-                    while ( currentLine.trim().startsWith( commentType ) && currentLine.indexOf( tagName ) < 0 )
+                    while ( currentLine != null
+                        && currentLine.trim().startsWith( commentType ) && currentLine.indexOf( tagName ) < 0 )
                     {
                         String currentComment =
                             currentLine.substring( currentLine.indexOf( commentType ) + commentType.length() ).trim();
