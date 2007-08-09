@@ -47,22 +47,22 @@ import org.codehaus.plexus.util.IOUtil;
 public class FileAnalyser
 {
     /**
-     * String that is used for beginning a comment line
+     * String that is used for beginning a comment line.
      */
     private static final String STAR_COMMENT = "*";
 
     /**
-     * String that is used for beginning a comment line
+     * String that is used for beginning a comment line.
      */
     private static final String SLASH_COMMENT = "//";
 
     /**
-     * The directories to analyse
+     * The directories to analyse.
      */
     private Collection sourceDirs;
 
     /**
-     * Log for debug output
+     * Log for debug output.
      */
     private Log log;
 
@@ -83,12 +83,12 @@ public class FileAnalyser
     private boolean emptyCommentsOn;
     
     /**
-     * String used to indicate that there is no comment after the tag
+     * String used to indicate that there is no comment after the tag.
      */
     private String noCommentString;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param report the MOJO that is using this analyser
      */
@@ -133,7 +133,7 @@ public class FileAnalyser
     }
 
     /**
-     * Gives the list of files to scan
+     * Gives the list of files to scan.
      *
      * @return a List of File objects
      */
@@ -272,8 +272,8 @@ public class FileAnalyser
                     {
                         String currentComment =
                             currentLine.substring( currentLine.indexOf( commentType ) + commentType.length() ).trim();
-                        if ( currentComment.startsWith( "@" ) || "".equals( currentComment ) ||
-                            "/".equals( currentComment ) )
+                        if ( currentComment.startsWith( "@" ) || "".equals( currentComment )
+                            || "/".equals( currentComment ) )
                         {
                             // the comment is finished
                             break;
@@ -322,7 +322,7 @@ public class FileAnalyser
     /**
      * Finds the type of comment the tag is in.
      *
-     * @param currentLine the liento analyse
+     * @param currentLine the line to analyse
      * @param index       the index of the tag in the line
      * @return "*" or "//" or null
      */
