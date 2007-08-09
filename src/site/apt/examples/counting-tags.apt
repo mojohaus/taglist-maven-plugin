@@ -1,0 +1,88 @@
+ ------
+ Counting Tags
+ ------
+ Dennis Lundberg
+ ------
+ 2007-08-09
+ ------
+
+Counting Tags
+
+  This example is meant to show you how the Taglist Maven Plugin works, when it
+  finds and counts tags in your code.
+
+  The plugin is configured in the <<<pom.xml>>> file like this:
+
+-----
+  ...
+  <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>taglist-maven-plugin</artifactId>
+        <configuration>
+          <tags>
+            <tag>TODO</tag>
+            <tag>&lt;todo</tag>
+            <tag>FIXME</tag>
+            <tag>DOCUMENT_ME</tag>
+            <tag>NOT_YET_DOCUMENTED</tag>
+          </tags>
+        </configuration>
+      </plugin>
+      ...
+    </plugins>
+  </reporting>
+  ...
+-----
+
+  The java file we are analyzing is this one:
+
+-----
+ 1: package taglist;
+ 2:
+ 3: /**
+ 4:  * NOT_YET_DOCUMENTED
+ 5:  */
+ 6: public class Issue
+ 7: {
+ 8:   /**
+ 9:    * A method.
+10:    * FIXME Describe what this method does
+11:    *
+12:    * @param i DOCUMENT_ME
+13:    * @return Something useful
+14:    */
+15:   public double method(int i)
+16:   {
+17:     // <todo> must be implemented
+18:     return 0;
+19:   }
+20:
+21:   /**
+22:    * This method counts FIXME tags in the text.
+23:    */
+24:   private int countFixmeTags(String text)
+25:   {
+26:     // @todo Implement this later
+27:   }
+28: }
+-----
+
+  We'll go through the lines in the code and explain what happens and why.
+
+  <<Line 4:>> This line will <not> be counted, because it is empty - it isn't
+  followed by a desciptive text.
+
+  <<Line 10:>> This line will be counted.
+
+  <<Line 12:>> This line will <not> be counted, because it is located at the end
+  of the line with other text before it.
+
+  <<Line 17:>> This line will be counted.
+
+  <<Line 22:>> This line will <not> be counted, because it appears in the middle
+  of the line with other text before it.
+
+  <<Line 26:>> This line will <not> be counted, because the text <<<@todo>>> in
+  not one of the configured tags.
