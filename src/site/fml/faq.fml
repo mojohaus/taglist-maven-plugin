@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+
+<faqs id="FAQ" title="Frequently Asked Questions">
+  <part id="General">
+    <faq id="Where should a tag be placed to be considered in the report?">
+      <question>Where should a tag be placed to be considered in the report?</question>
+      <answer>
+        <p>
+          A tag has to be preceded by either "*" or "//", ignoring whitespace,
+          i.e. it has to be inside a single-line or mulit-line JavaDoc comment.
+          Otherwise it will be ignored in the report.
+        </p>
+      </answer>
+    </faq>
+    <faq id="When is a tag included in the report?">
+      <question>When is a tag included in the report?</question>
+      <answer>
+        <p>
+          For a tag to be included in the report, it has to "contain"
+          something, i.e. it has to be followed by some text. A tag without
+          content is not counted in the report.
+        </p>
+      </answer>
+    </faq>
+  </part>
+</faqs>
