@@ -107,7 +107,11 @@ public class FileReport
         try
         {
             reader = new BufferedReader( new FileReader( file ) );
-            String currentLine = reader.readLine().trim();
+            String currentLine = reader.readLine();
+            if ( currentLine != null )
+            {
+                currentLine = currentLine.trim();
+            }
             while ( currentLine != null )
             {
                 if ( currentLine.startsWith( "package" ) )
