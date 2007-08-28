@@ -30,6 +30,16 @@
       </roles>
       <timezone>+1</timezone>
     </developer>
+    <developer>
+      <id>dennisl</id>
+      <name>Dennis Lundberg</name>
+      <email>dennisl@apache.org</email>
+      <organization>ASF</organization>
+      <roles>
+        <role>Committer</role>
+      </roles>
+      <timezone>+1</timezone>
+    </developer>
   </developers>
   <licenses>
     <license>
@@ -38,6 +48,11 @@
       <distribution>repo</distribution>
     </license>
   </licenses>
+  <scm>
+    <connection>scm:svn:http://svn.codehaus.org/mojo/trunk/mojo/taglist-maven-plugin/</connection>
+    <developerConnection>scm:svn:https://svn.codehaus.org/mojo/trunk/mojo/taglist-maven-plugin/</developerConnection>
+    <url>http://svn.codehaus.org/mojo/trunk/mojo/taglist-maven-plugin/</url>
+  </scm>
   <dependencies>
     <dependency>
       <groupId>org.apache.maven.reporting</groupId>
