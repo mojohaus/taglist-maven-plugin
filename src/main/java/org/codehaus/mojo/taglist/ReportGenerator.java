@@ -47,7 +47,7 @@ public class ReportGenerator
 
     private ResourceBundle bundle;
 
-    private String siteOutputDirectory;
+    private File siteOutputDirectory;
 
     private List sortedTagReports;
 
@@ -57,8 +57,7 @@ public class ReportGenerator
         Collections.sort( sortedTagReports );
         this.bundle = report.getBundle();
         this.sink = report.getSink();
-        // TODO Do not hardcode this, retrieve it from the site plugin config
-        this.siteOutputDirectory = report.getProject().getBuild().getDirectory() + File.separator + "site";
+        this.siteOutputDirectory = report.getReportOutputDirectory();
     }
 
     /**

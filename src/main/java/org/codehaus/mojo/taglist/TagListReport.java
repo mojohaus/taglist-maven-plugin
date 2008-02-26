@@ -75,12 +75,14 @@ public class TagListReport
     private List testSourceDirs;
 
     /**
-     * Output folder where the report will be copied to.
-     *
-     * @parameter expression="${project.build.directory}/site"
+     * The output directory for the report. Note that this parameter is only evaluated if the goal is run directly from
+     * the command line or from a build lifecylce phase. If the goal is run indirectly as part of a site generation, the
+     * output directory configured in the Maven Site Plugin is used instead.
+     * 
+     * @parameter default-value="${project.reporting.outputDirectory}"
      * @required
      */
-    private String outputDirectory;
+    private File outputDirectory;
 
     /**
      * List of tags to look for, specified as &lt;tag&gt; tags.
@@ -122,14 +124,14 @@ public class TagListReport
     /**
      * Location of the Xrefs to link to.
      *
-     * @parameter default-value="${project.build.directory}/site/xref"
+     * @parameter default-value="${project.reporting.outputDirectory}/xref"
      */
     private File xrefLocation;
 
     /**
      * Location of the Test Xrefs to link to.
      *
-     * @parameter default-value="${project.build.directory}/site/xref-test"
+     * @parameter default-value="${project.reporting.outputDirectory}/xref-test"
      */
     private File testXrefLocation;
 
@@ -166,16 +168,6 @@ public class TagListReport
         if ( tags == null || tags.length == 0 )
         {
             tags = new String[] { "@todo", "TODO" };
-        }
-
-        File outputDir = new File( outputDirectory );
-        if ( !outputDir.exists() )
-        {
-            boolean success = outputDir.mkdirs();
-            if ( !success )
-            {
-                throw new MavenReportException( "Folder " + outputDirectory + " could not be created." );
-            }
         }
 
         // let's proceed to the analysis
@@ -224,7 +216,7 @@ public class TagListReport
      */
     private String getRelativPath( File location )
     {
-        String relativePath = PathTool.getRelativePath( outputDirectory, location.getAbsolutePath() );
+        String relativePath = PathTool.getRelativePath( getReportOutputDirectory().getAbsolutePath(), location.getAbsolutePath() );
         if ( StringUtils.isEmpty( relativePath ) )
         {
             relativePath = ".";
@@ -373,7 +365,7 @@ public class TagListReport
      */
     protected String getOutputDirectory()
     {
-        return outputDirectory;
+        return outputDirectory.getAbsolutePath();
     }
 
     /**
