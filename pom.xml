@@ -76,18 +76,6 @@
           </tags>
         </configuration>
       </plugin>
-      <plugin>
-        <artifactId>maven-jxr-plugin</artifactId>
-        <version>2.1</version>
-      </plugin>
-      <plugin>
-        <artifactId>maven-plugin-plugin</artifactId>
-        <version>2.3</version>
-      </plugin>
-      <plugin>
-        <artifactId>maven-javadoc-plugin</artifactId>
-        <version>2.3</version>
-      </plugin>
     </plugins>
   </reporting>
 </project>
