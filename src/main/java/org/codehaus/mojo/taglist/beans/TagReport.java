@@ -53,8 +53,7 @@ public class TagReport
     /**
      * Constructor
      *
-     * @param tagName
-     * @param fileReports
+     * @param tagName the tag's name.
      */
     public TagReport( String tagName )
     {
@@ -127,7 +126,7 @@ public class TagReport
     }
 
     /**
-     * Cf. overriden method documentation.
+     * Cf. overriden method documentation. {@inheritDoc}
      *
      * @see Comparable#compareTo(Object)
      */

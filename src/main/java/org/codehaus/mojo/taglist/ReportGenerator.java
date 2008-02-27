@@ -39,18 +39,42 @@ import org.codehaus.mojo.taglist.beans.TagReport;
 
 public class ReportGenerator
 {
+    /**
+     * The source code cross reference path.
+     */
     private String xrefLocation;
 
+    /**
+     * The test code cross reference path.
+     */
     private String testXrefLocation;
 
+    /**
+     * The sink used in this Maven build to generated the tag list page.
+     */
     private Sink sink;
 
+    /**
+     * The resource bundle used in this Maven build.
+     */
     private ResourceBundle bundle;
 
+    /**
+     * The output path of the site.
+     */
     private File siteOutputDirectory;
 
+    /**
+     * A list of sorted tag reports.
+     */
     private List sortedTagReports;
 
+    /**
+     * Constructor.
+     * 
+     * @param report the TagListReport object used in this build.
+     * @param tagReports a collection of tagReports to output.
+     */
     public ReportGenerator( TagListReport report, Collection tagReports )
     {
         sortedTagReports = new ArrayList( tagReports );
@@ -80,10 +104,10 @@ public class ReportGenerator
         sink.sectionTitle1_();
 
         // Summary section
-        doSummarySection( sortedTagReports, bundle, sink );
+        doSummarySection( sortedTagReports );
 
         // Detail section
-        doDetailSection( sortedTagReports, bundle, sink );
+        doDetailSection( sortedTagReports );
 
         sink.section1_();
         sink.body_();
@@ -92,10 +116,9 @@ public class ReportGenerator
     }
 
     /**
-     * @param tagReports
-     * @param sink
+     * @param tagReports a collection of tagReports to summarize.
      */
-    private static void doSummarySection( Collection tagReports, ResourceBundle bundle, Sink sink )
+    private void doSummarySection( Collection tagReports )
     {
         sink.paragraph();
         sink.text( bundle.getString( "report.taglist.summary.description" ) );
@@ -112,16 +135,15 @@ public class ReportGenerator
         sink.tableRow_();
         for ( Iterator iter = tagReports.iterator(); iter.hasNext(); )
         {
-            doTagSummary( sink, (TagReport) iter.next() );
+            doTagSummary( (TagReport) iter.next() );
         }
         sink.table_();
     }
 
     /**
-     * @param sink
-     * @param tagReport
+     * @param tagReport the tagReport to summarize.
      */
-    private static void doTagSummary( Sink sink, TagReport tagReport )
+    private void doTagSummary( TagReport tagReport )
     {
         sink.tableRow();
         sink.tableCell();
@@ -136,10 +158,9 @@ public class ReportGenerator
     }
 
     /**
-     * @param tagReports
-     * @param sink
+     * @param tagReports a collection of tagReports to be detailed in this section.
      */
-    private void doDetailSection( Collection tagReports, ResourceBundle bundle, Sink sink )
+    private void doDetailSection( Collection tagReports )
     {
         sink.paragraph();
         sink.text( bundle.getString( "report.taglist.detail.description" ) );
@@ -147,15 +168,14 @@ public class ReportGenerator
 
         for ( Iterator iter = tagReports.iterator(); iter.hasNext(); )
         {
-            doTagDetailedPart( sink, (TagReport) iter.next(), bundle );
+            doTagDetailedPart( (TagReport) iter.next() );
         }
     }
 
     /**
-     * @param sink
-     * @param tagReport
+     * @param tagReport to tagReport to detail.
      */
-    private void doTagDetailedPart( Sink sink, TagReport tagReport, ResourceBundle bundle )
+    private void doTagDetailedPart( TagReport tagReport )
     {
         sink.section2();
         sink.sectionTitle2();
@@ -175,17 +195,16 @@ public class ReportGenerator
 
         for ( Iterator iter = sortedFileReports.iterator(); iter.hasNext(); )
         {
-            doFileDetailedPart( sink, (FileReport) iter.next(), bundle );
+            doFileDetailedPart( (FileReport) iter.next() );
         }
 
         sink.section2_();
     }
 
     /**
-     * @param sink
-     * @param fileReport
+     * @param fileReport the FileReport to output for this detailed tag report.
      */
-    private void doFileDetailedPart( Sink sink, FileReport fileReport, ResourceBundle bundle )
+    private void doFileDetailedPart( FileReport fileReport )
     {
         sink.table();
         sink.tableRow();
@@ -198,17 +217,16 @@ public class ReportGenerator
         sink.tableRow_();
         for ( Iterator iter = fileReport.getLineIndexes().iterator(); iter.hasNext(); )
         {
-            doCommentLine( sink, fileReport, (Integer) iter.next() );
+            doCommentLine( fileReport, (Integer) iter.next() );
         }
         sink.table_();
     }
 
     /**
-     * @param sink
-     * @param fileReport
-     * @param lineNumber
+     * @param fileReport the FileReport for the current tag's comment.
+     * @param lineNumber the line number of the current tag's comment.
      */
-    private void doCommentLine( Sink sink, FileReport fileReport, Integer lineNumber )
+    private void doCommentLine( FileReport fileReport, Integer lineNumber )
     {
         sink.tableRow();
         sink.tableCell();
@@ -235,21 +253,37 @@ public class ReportGenerator
         sink.tableRow_();
     }
 
+    /**
+     * Set the source code cross reference location
+     * @param xrefLocation the location of the source code cross reference.
+     */
     public void setXrefLocation( String xrefLocation )
     {
         this.xrefLocation = xrefLocation;
     }
 
+    /**
+     * Get the source code cross reference location.
+     * @return the source code cross reference location.
+     */
     public String getXrefLocation()
     {
         return xrefLocation;
     }
 
+    /**
+     * Get the test code cross reference location.
+     * @return the test code cross reference location.
+     */
     public String getTestXrefLocation()
     {
         return testXrefLocation;
     }
 
+    /**
+     * Set the test code cross reference location
+     * @param testXrefLocation the location of the test code cross reference.
+     */
     public void setTestXrefLocation( String testXrefLocation )
     {
         this.testXrefLocation = testXrefLocation;

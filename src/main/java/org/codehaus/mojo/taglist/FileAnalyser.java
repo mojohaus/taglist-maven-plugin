@@ -114,6 +114,7 @@ public class FileAnalyser
      * Execute the analysis for the configuration given by the TagListReport.
      *
      * @return a collection of TagReport objects
+     * @throws MavenReportException the Maven report exception.
      */
     public Collection execute()
         throws MavenReportException
@@ -136,6 +137,7 @@ public class FileAnalyser
      * Gives the list of files to scan.
      *
      * @return a List of File objects
+     * @throws MavenReportException the Maven report exception.
      */
     private List findFilesToScan()
         throws MavenReportException
@@ -220,7 +222,6 @@ public class FileAnalyser
 
                 if ( commentType == null )
                 {
-
                     // this is not a valid comment tag: go to the next line
                     currentLine = reader.readLine();
                     lineCount++;
@@ -290,12 +291,10 @@ public class FileAnalyser
                         }
                         if ( newTagFound )
                         {
-                            // this is a new comment: stop here the current
-                            // comment
+                            // this is a new comment: stop here the current comment
                             break;
                         }
-                        // nothing was found: this means the comment is going on
-                        // this line
+                        // nothing was found: this means the comment is going on this line
                         comment.append( " " );
                         comment.append( currentComment );
                         currentLine = reader.readLine();

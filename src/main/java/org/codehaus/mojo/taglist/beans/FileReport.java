@@ -55,7 +55,12 @@ public class FileReport
      * Map of [Integer,String]
      */
     private Map tagListing;
-
+    
+    /**
+     * The package identification string.
+     */
+    private static final String PACKAGE_STR = "package";
+    
     /**
      * Constructor
      *
@@ -70,8 +75,8 @@ public class FileReport
     /**
      * Adds a new entry to the list of tags found for this file report
      *
-     * @param comment
-     * @param lineIndex
+     * @param comment the comment string containing the 'todo'.
+     * @param lineIndex the line number of the comment (or first line if multi-lined) 
      */
     public void addComment( String comment, int lineIndex )
     {
@@ -114,9 +119,10 @@ public class FileReport
             }
             while ( currentLine != null )
             {
-                if ( currentLine.startsWith( "package" ) )
+                if ( currentLine.startsWith( PACKAGE_STR ) )
                 {
-                    packageName = currentLine.substring( 8 ).trim().replaceAll( ";", "" ).trim();
+                    packageName = currentLine.substring( PACKAGE_STR.length() )
+                                  .trim().replaceAll( ";", "" ).trim();
                     break;
                 }
                 String nextLine = reader.readLine();
@@ -169,7 +175,7 @@ public class FileReport
     }
 
     /**
-     * Cf. overriden method documentation.
+     * Cf. overriden method documentation. {@inheritDoc}
      *
      * @see Comparable#compareTo(Object)
      */

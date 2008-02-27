@@ -141,14 +141,14 @@ public class TagListReport
      * @parameter expression="${reactorProjects}"
      * @readonly
      */
-    protected List reactorProjects;
+    private List reactorProjects;
 
     /**
      * Whether to build an aggregated report at the root, or build individual reports.
      *
      * @parameter expression="${aggregate}" default-value="false"
      */
-    protected boolean aggregate;
+    private boolean aggregate;
 
     /**
      * The locale used for rendering the page
@@ -156,7 +156,7 @@ public class TagListReport
     private Locale currentLocale;
 
     /**
-     * Cf. overriden method documentation.
+     * Cf. overriden method documentation. {@inheritDoc}
      *
      * @see org.apache.maven.reporting.AbstractMavenReport#executeReport(java.util.Locale)
      */
@@ -216,7 +216,8 @@ public class TagListReport
      */
     private String getRelativPath( File location )
     {
-        String relativePath = PathTool.getRelativePath( getReportOutputDirectory().getAbsolutePath(), location.getAbsolutePath() );
+        String relativePath =
+            PathTool.getRelativePath( getReportOutputDirectory().getAbsolutePath(), location.getAbsolutePath() );
         if ( StringUtils.isEmpty( relativePath ) )
         {
             relativePath = ".";
@@ -226,7 +227,7 @@ public class TagListReport
     }
 
     /**
-     * Cf. overriden method documentation.
+     * Cf. overriden method documentation. {@inheritDoc}
      *
      * @see org.apache.maven.reporting.MavenReport#canGenerateReport()
      */
@@ -242,13 +243,13 @@ public class TagListReport
 
     /**
      * Removes empty dirs from the list.
-     * @param sourceDirs the original list of directories
+     * @param sourceDirectories the original list of directories
      * @return a new list containing only non empty dirs
      */
-    private List pruneSourceDirs( List sourceDirs )
+    private List pruneSourceDirs( List sourceDirectories )
     {
-        List pruned = new ArrayList( sourceDirs.size() );
-        for ( Iterator i = sourceDirs.iterator(); i.hasNext(); )
+        List pruned = new ArrayList( sourceDirectories.size() );
+        for ( Iterator i = sourceDirectories.iterator(); i.hasNext(); )
         {
             String dir = (String) i.next();
             if ( !pruned.contains( dir ) && hasSources( new File( dir ) ) )
@@ -304,12 +305,12 @@ public class TagListReport
         {
             for ( Iterator i = reactorProjects.iterator(); i.hasNext(); )
             {
-                MavenProject project = (MavenProject) i.next();
+                MavenProject reactorProject = (MavenProject) i.next();
 
-                if ( "java".equals( project.getArtifact().getArtifactHandler().getLanguage() ) )
+                if ( "java".equals( reactorProject.getArtifact().getArtifactHandler().getLanguage() ) )
                 {
-                    sourceDirs.addAll( project.getCompileSourceRoots() );
-                    sourceDirs.addAll( project.getTestCompileSourceRoots() );
+                    sourceDirs.addAll( reactorProject.getCompileSourceRoots() );
+                    sourceDirs.addAll( reactorProject.getTestCompileSourceRoots() );
                 }
             }
         }
@@ -349,7 +350,7 @@ public class TagListReport
     }
 
     /**
-     * Cf. overriden method documentation.
+     * Cf. overriden method documentation. {@inheritDoc}
      *
      * @see org.apache.maven.reporting.AbstractMavenReport#getSiteRenderer()
      */
@@ -359,7 +360,7 @@ public class TagListReport
     }
 
     /**
-     * Cf. overriden method documentation.
+     * Cf. overriden method documentation. {@inheritDoc}
      *
      * @see org.apache.maven.reporting.AbstractMavenReport#getOutputDirectory()
      */
@@ -369,7 +370,7 @@ public class TagListReport
     }
 
     /**
-     * Cf. overriden method documentation.
+     * Cf. overriden method documentation. {@inheritDoc}
      *
      * @see org.apache.maven.reporting.AbstractMavenReport#getProject()
      */
@@ -379,7 +380,7 @@ public class TagListReport
     }
 
     /**
-     * Cf. overriden method documentation.
+     * Cf. overriden method documentation. {@inheritDoc}
      *
      * @see org.apache.maven.reporting.MavenReport#getDescription(java.util.Locale)
      */
@@ -389,7 +390,7 @@ public class TagListReport
     }
 
     /**
-     * Cf. overriden method documentation.
+     * Cf. overriden method documentation. {@inheritDoc}
      *
      * @see org.apache.maven.reporting.MavenReport#getName(java.util.Locale)
      */
@@ -399,7 +400,7 @@ public class TagListReport
     }
 
     /**
-     * Cf. overriden method documentation.
+     * Cf. overriden method documentation. {@inheritDoc}
      *
      * @see org.apache.maven.reporting.MavenReport#getOutputName()
      */
