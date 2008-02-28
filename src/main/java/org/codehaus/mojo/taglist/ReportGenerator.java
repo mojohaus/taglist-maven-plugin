@@ -70,6 +70,11 @@ public class ReportGenerator
     private List sortedTagReports;
 
     /**
+     * Display details for tags that contain zero occurrences.
+     */
+    private boolean showEmptyDetails;
+
+    /**
      * Constructor.
      * 
      * @param report the TagListReport object used in this build.
@@ -82,6 +87,7 @@ public class ReportGenerator
         this.bundle = report.getBundle();
         this.sink = report.getSink();
         this.siteOutputDirectory = report.getReportOutputDirectory();
+        this.showEmptyDetails = report.isShowEmptyDetails();
     }
 
     /**
@@ -146,9 +152,17 @@ public class ReportGenerator
     {
         sink.tableRow();
         sink.tableCell();
-        sink.link( "#" + tagReport.getTagName() );
-        sink.text( tagReport.getTagName() );
-        sink.link_();
+        // Create a hyperlink if the "showEmptyTags" flag is set or the tag contains 1 or more occurrences.
+        if ( showEmptyDetails || tagReport.getTagCount() > 0 )
+        {
+            sink.link( "#" + tagReport.getTagName() );
+            sink.text( tagReport.getTagName() );
+            sink.link_();
+        }
+        else
+        {
+            sink.text( tagReport.getTagName() );
+        }
         sink.tableCell_();
         sink.tableCell();
         sink.text( String.valueOf( tagReport.getTagCount() ) );
@@ -176,6 +190,12 @@ public class ReportGenerator
      */
     private void doTagDetailedPart( TagReport tagReport )
     {
+        // Create detailed section only if the "showEmptyTags" flag is set or the tag contains 1 or more occurrences.
+        if ( !showEmptyDetails && tagReport.getTagCount() <= 0 )
+        {
+            return;
+        }
+
         sink.section2();
         sink.sectionTitle2();
         sink.anchor( tagReport.getTagName() );

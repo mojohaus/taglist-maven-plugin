@@ -154,6 +154,14 @@ public class TagListReport
     private Locale currentLocale;
 
     /**
+     * This parameter indicates whether to generate details for tags with zero occurrences.
+     * 
+     * @parameter default-value="false"
+     * @since 2.2
+     */
+    private boolean showEmptyDetails;
+
+    /**
      * Cf. overriden method documentation. {@inheritDoc}
      * 
      * @see org.apache.maven.reporting.AbstractMavenReport#executeReport(java.util.Locale)
@@ -348,6 +356,16 @@ public class TagListReport
     public boolean isEmptyComments()
     {
         return emptyComments;
+    }
+
+    /**
+     * Tells whether to generate details for tags with zero occurrences.
+     * 
+     * @return the showEmptyTags.
+     */
+    public boolean isShowEmptyDetails()
+    {
+        return showEmptyDetails;
     }
 
     /**
