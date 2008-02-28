@@ -37,7 +37,7 @@ import org.codehaus.plexus.util.StringUtils;
 
 /**
  * MOJO for the tag list report.
- *
+ * 
  * @author <a href="mailto:bellingard.NO-SPAM@gmail.com">Fabrice Bellingard </a>
  * @goal taglist
  */
@@ -58,7 +58,7 @@ public class TagListReport
 
     /**
      * Source directories of the project.
-     *
+     * 
      * @parameter expression="${project.compileSourceRoots}"
      * @required
      * @readonly
@@ -67,7 +67,7 @@ public class TagListReport
 
     /**
      * Test directories of the project.
-     *
+     * 
      * @parameter expression="${project.testCompileSourceRoots}"
      * @required
      * @readonly
@@ -85,59 +85,57 @@ public class TagListReport
     private File outputDirectory;
 
     /**
-     * List of tags to look for, specified as &lt;tag&gt; tags.
-     * The tags can be either:
+     * List of tags to look for, specified as &lt;tag&gt; tags. The tags can be either:
      * <ul>
      * <li>Javadoc tags: "@todo" for instance</li>
-     * <li>Simple tags: "TODO" for instance. In this case, the tags will be
-     * searched in any Java comment (//, /* or /**).</li>
+     * <li>Simple tags: "TODO" for instance. In this case, the tags will be searched in any Java comment (//, /* or
+     * /**).</li>
      * </ul>
-     *
+     * 
      * @parameter
      */
     private String[] tags;
 
     /**
-     * This parameter indicates whether for simple tags (like "TODO"), the
-     * analyser should look for multiple line comments.
-     *
+     * This parameter indicates whether for simple tags (like "TODO"), the analyser should look for multiple line
+     * comments.
+     * 
      * @parameter default-value="true"
      */
     private boolean multipleLineComments;
 
     /**
-     * This parameter indicates whether to look for tags even if they don't
-     * have a comment.
-     *
+     * This parameter indicates whether to look for tags even if they don't have a comment.
+     * 
      * @parameter default-value="true"
      */
     private boolean emptyComments;
 
     /**
-     * Link the tag line numbers to the source xref. Defaults to true and will link
-     * automatically if jxr plugin is being used.
-     *
+     * Link the tag line numbers to the source xref. Defaults to true and will link automatically if jxr plugin is being
+     * used.
+     * 
      * @parameter expression="${linkXRef}" default-value="true"
      */
     private boolean linkXRef;
 
     /**
      * Location of the Xrefs to link to.
-     *
+     * 
      * @parameter default-value="${project.reporting.outputDirectory}/xref"
      */
     private File xrefLocation;
 
     /**
      * Location of the Test Xrefs to link to.
-     *
+     * 
      * @parameter default-value="${project.reporting.outputDirectory}/xref-test"
      */
     private File testXrefLocation;
 
     /**
      * The projects in the reactor for aggregation report.
-     *
+     * 
      * @parameter expression="${reactorProjects}"
      * @readonly
      */
@@ -145,19 +143,19 @@ public class TagListReport
 
     /**
      * Whether to build an aggregated report at the root, or build individual reports.
-     *
+     * 
      * @parameter expression="${aggregate}" default-value="false"
      */
     private boolean aggregate;
 
     /**
-     * The locale used for rendering the page
+     * The locale used for rendering the page.
      */
     private Locale currentLocale;
 
     /**
      * Cf. overriden method documentation. {@inheritDoc}
-     *
+     * 
      * @see org.apache.maven.reporting.AbstractMavenReport#executeReport(java.util.Locale)
      */
     protected void executeReport( Locale locale )
@@ -210,9 +208,10 @@ public class TagListReport
     }
 
     /**
-     * Returns the path relativ to the output directory
-     * @param location the location to make relativ
-     * @return the relativ path
+     * Returns the path relativ to the output directory.
+     * 
+     * @param location the location to make relativ.
+     * @return the relativ path.
      */
     private String getRelativPath( File location )
     {
@@ -228,7 +227,7 @@ public class TagListReport
 
     /**
      * Cf. overriden method documentation. {@inheritDoc}
-     *
+     * 
      * @see org.apache.maven.reporting.MavenReport#canGenerateReport()
      */
     public boolean canGenerateReport()
@@ -243,8 +242,9 @@ public class TagListReport
 
     /**
      * Removes empty dirs from the list.
-     * @param sourceDirectories the original list of directories
-     * @return a new list containing only non empty dirs
+     * 
+     * @param sourceDirectories the original list of directories.
+     * @return a new list containing only non empty dirs.
      */
     private List pruneSourceDirs( List sourceDirectories )
     {
@@ -262,9 +262,9 @@ public class TagListReport
 
     /**
      * Checks whether the given directory contains Java files.
-     *
-     * @param dir the source directory
-     * @return true if the folder or one of its subfolders coantins at least 1 Java file
+     * 
+     * @param dir the source directory.
+     * @return true if the folder or one of its subfolders coantins at least 1 Java file.
      */
     private boolean hasSources( File dir )
     {
@@ -293,8 +293,9 @@ public class TagListReport
     }
 
     /**
-     * Construct the list of source directories to analyse
-     * @return the list of dirs
+     * Construct the list of source directories to analyse.
+     * 
+     * @return the list of dirs.
      */
     public List constructSourceDirs()
     {
@@ -321,7 +322,7 @@ public class TagListReport
 
     /**
      * Returns the tags to look for.
-     *
+     * 
      * @return a collection of String objects representing the tag names.
      */
     public String[] getTags()
@@ -330,8 +331,8 @@ public class TagListReport
     }
 
     /**
-     * Tells whether to look for comments over multiple lines
-     *
+     * Tells whether to look for comments over multiple lines.
+     * 
      * @return Returns true if the analyser should look for multiple lines.
      */
     public boolean isMultipleLineComments()
@@ -340,9 +341,9 @@ public class TagListReport
     }
 
     /**
-     * Tells wether to look for tags without comments
+     * Tells whether to look for tags without comments.
      * 
-     * @return the emptyComments
+     * @return the emptyComments.
      */
     public boolean isEmptyComments()
     {
@@ -351,7 +352,7 @@ public class TagListReport
 
     /**
      * Cf. overriden method documentation. {@inheritDoc}
-     *
+     * 
      * @see org.apache.maven.reporting.AbstractMavenReport#getSiteRenderer()
      */
     protected SiteRenderer getSiteRenderer()
@@ -361,7 +362,7 @@ public class TagListReport
 
     /**
      * Cf. overriden method documentation. {@inheritDoc}
-     *
+     * 
      * @see org.apache.maven.reporting.AbstractMavenReport#getOutputDirectory()
      */
     protected String getOutputDirectory()
@@ -371,7 +372,7 @@ public class TagListReport
 
     /**
      * Cf. overriden method documentation. {@inheritDoc}
-     *
+     * 
      * @see org.apache.maven.reporting.AbstractMavenReport#getProject()
      */
     public MavenProject getProject()
@@ -381,7 +382,7 @@ public class TagListReport
 
     /**
      * Cf. overriden method documentation. {@inheritDoc}
-     *
+     * 
      * @see org.apache.maven.reporting.MavenReport#getDescription(java.util.Locale)
      */
     public String getDescription( Locale locale )
@@ -391,7 +392,7 @@ public class TagListReport
 
     /**
      * Cf. overriden method documentation. {@inheritDoc}
-     *
+     * 
      * @see org.apache.maven.reporting.MavenReport#getName(java.util.Locale)
      */
     public String getName( Locale locale )
@@ -401,7 +402,7 @@ public class TagListReport
 
     /**
      * Cf. overriden method documentation. {@inheritDoc}
-     *
+     * 
      * @see org.apache.maven.reporting.MavenReport#getOutputName()
      */
     public String getOutputName()
@@ -410,9 +411,9 @@ public class TagListReport
     }
 
     /**
-     * Returns the correct resource bundle according to the locale
-     *
-     * @return the bundle correponding to the locale used for rendering the report
+     * Returns the correct resource bundle according to the locale.
+     * 
+     * @return the bundle correponding to the locale used for rendering the report.
      */
     public ResourceBundle getBundle()
     {
@@ -420,11 +421,10 @@ public class TagListReport
     }
 
     /**
-     * Returns the correct resource bundle according to the locale
-     *
-     * @param locale :
-     *               the locale of the user
-     * @return the bundle correponding to the locale
+     * Returns the correct resource bundle according to the locale.
+     * 
+     * @param locale the locale of the user.
+     * @return the bundle correponding to the locale.
      */
     private ResourceBundle getBundle( Locale locale )
     {

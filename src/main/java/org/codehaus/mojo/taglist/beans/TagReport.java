@@ -27,7 +27,7 @@ import java.util.Map;
 
 /**
  * Report of the scan for a specific tag
- *
+ * 
  * @author <a href="mailto:bellingard.NO-SPAM@gmail.com">Fabrice Bellingard </a>
  */
 public class TagReport
@@ -35,13 +35,12 @@ public class TagReport
 {
 
     /**
-     * Tag name
+     * Tag name.
      */
     private String tagName;
 
     /**
-     * Map containing File objects as keys, and FileReport object
-     * as values.
+     * Map containing File objects as keys, and FileReport object as values.
      */
     private Map fileReportsMap;
 
@@ -51,8 +50,8 @@ public class TagReport
     private int tagCount;
 
     /**
-     * Constructor
-     *
+     * Constructor.
+     * 
      * @param tagName the tag's name.
      */
     public TagReport( String tagName )
@@ -63,11 +62,10 @@ public class TagReport
     }
 
     /**
-     * Returns the FileReport object corresponding to this file.
-     * If it does not exist yet, it will be created.
-     *
-     * @param file the file being analysed
-     * @return a FileReport object for this file
+     * Returns the FileReport object corresponding to this file. If it does not exist yet, it will be created.
+     * 
+     * @param file the file being analysed.
+     * @return a FileReport object for this file.
      */
     public FileReport getFileReport( File file )
     {
@@ -86,7 +84,7 @@ public class TagReport
 
     /**
      * Returns the collection of file reports for the tag.
-     *
+     * 
      * @return a Collection of FileReport objects.
      */
     public Collection getFileReports()
@@ -96,7 +94,7 @@ public class TagReport
 
     /**
      * Returns the name of the tag that was looked for.
-     *
+     * 
      * @return the name of the tag.
      */
     public String getTagName()
@@ -106,8 +104,8 @@ public class TagReport
 
     /**
      * Gives the number of comments found for that tag.
-     *
-     * @return the number of comments
+     * 
+     * @return the number of comments.
      */
     public int getTagCount()
     {
@@ -127,7 +125,7 @@ public class TagReport
 
     /**
      * Cf. overriden method documentation. {@inheritDoc}
-     *
+     * 
      * @see Comparable#compareTo(Object)
      */
     public int compareTo( Object o )

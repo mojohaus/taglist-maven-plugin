@@ -33,7 +33,7 @@ import org.codehaus.mojo.taglist.beans.TagReport;
 
 /**
  * Generates the taglist report using Doxia.
- *
+ * 
  * @author <a href="mailto:bellingard.NO-SPAM@gmail.com">Fabrice Bellingard </a>
  */
 
@@ -85,8 +85,7 @@ public class ReportGenerator
     }
 
     /**
-     * Generates the whole report using each tag reports made during the
-     * analysis.
+     * Generates the whole report using each tag reports made during the analysis.
      */
     public void generateReport()
     {
@@ -254,7 +253,8 @@ public class ReportGenerator
     }
 
     /**
-     * Set the source code cross reference location
+     * Set the source code cross reference location.
+     * 
      * @param xrefLocation the location of the source code cross reference.
      */
     public void setXrefLocation( String xrefLocation )
@@ -264,6 +264,7 @@ public class ReportGenerator
 
     /**
      * Get the source code cross reference location.
+     * 
      * @return the source code cross reference location.
      */
     public String getXrefLocation()
@@ -273,6 +274,7 @@ public class ReportGenerator
 
     /**
      * Get the test code cross reference location.
+     * 
      * @return the test code cross reference location.
      */
     public String getTestXrefLocation()
@@ -281,7 +283,8 @@ public class ReportGenerator
     }
 
     /**
-     * Set the test code cross reference location
+     * Set the test code cross reference location.
+     * 
      * @param testXrefLocation the location of the test code cross reference.
      */
     public void setTestXrefLocation( String testXrefLocation )

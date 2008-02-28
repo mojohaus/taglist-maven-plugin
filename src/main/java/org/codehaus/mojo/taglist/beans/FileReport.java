@@ -33,7 +33,7 @@ import java.util.Map;
 
 /**
  * Report for a file.
- *
+ * 
  * @author <a href="mailto:bellingard.NO-SPAM@gmail.com">Fabrice Bellingard </a>
  */
 public class FileReport
@@ -41,30 +41,29 @@ public class FileReport
 {
 
     /**
-     * The file being analysed
+     * The file being analysed.
      */
     private File file;
 
     /**
-     * The name of the class corresponding to this file
+     * The name of the class corresponding to this file.
      */
     private String className;
 
     /**
-     * Pair values of a line number and a comment.
-     * Map of [Integer,String]
+     * Pair values of a line number and a comment. Map of [Integer,String].
      */
     private Map tagListing;
-    
+
     /**
      * The package identification string.
      */
     private static final String PACKAGE_STR = "package";
-    
+
     /**
-     * Constructor
-     *
-     * @param file The file to analyse
+     * Constructor.
+     * 
+     * @param file The file to analyse.
      */
     public FileReport( File file )
     {
@@ -73,10 +72,10 @@ public class FileReport
     }
 
     /**
-     * Adds a new entry to the list of tags found for this file report
-     *
+     * Adds a new entry to the list of tags found for this file report.
+     * 
      * @param comment the comment string containing the 'todo'.
-     * @param lineIndex the line number of the comment (or first line if multi-lined) 
+     * @param lineIndex the line number of the comment (or first line if multi-lined).
      */
     public void addComment( String comment, int lineIndex )
     {
@@ -84,10 +83,10 @@ public class FileReport
     }
 
     /**
-     * Returns the path corresponding to the analysed class,
-     * for instance: org/apache/maven/plugins/taglist/beans/FileReport
-     *
-     * @return the file path
+     * Returns the path corresponding to the analysed class, for instance:
+     * org/apache/maven/plugins/taglist/beans/FileReport.
+     * 
+     * @return the file path.
      */
     public String getClassNameWithSlash()
     {
@@ -95,10 +94,9 @@ public class FileReport
     }
 
     /**
-     * Returns the complete name of the analysed class,
-     * for instance: org.codehaus.mojo.taglist.beans.FileReport
-     *
-     * @return the full class name
+     * Returns the complete name of the analysed class, for instance: org.codehaus.mojo.taglist.beans.FileReport.
+     * 
+     * @return the full class name.
      */
     public String getClassName()
     {
@@ -121,8 +119,7 @@ public class FileReport
             {
                 if ( currentLine.startsWith( PACKAGE_STR ) )
                 {
-                    packageName = currentLine.substring( PACKAGE_STR.length() )
-                                  .trim().replaceAll( ";", "" ).trim();
+                    packageName = currentLine.substring( PACKAGE_STR.length() ).trim().replaceAll( ";", "" ).trim();
                     break;
                 }
                 String nextLine = reader.readLine();
@@ -151,9 +148,9 @@ public class FileReport
     }
 
     /**
-     * Returns the list of the comment line indexes
-     *
-     * @return Collection of Integer
+     * Returns the list of the comment line indexes.
+     * 
+     * @return Collection of Integer.
      */
     public Collection getLineIndexes()
     {
@@ -164,10 +161,10 @@ public class FileReport
     }
 
     /**
-     * Returns the comment for the corresponding line index
-     *
-     * @param lineIndex the index of the line
-     * @return the comment
+     * Returns the comment for the corresponding line index.
+     * 
+     * @param lineIndex the index of the line.
+     * @return the comment.
      */
     public String getComment( Integer lineIndex )
     {
@@ -176,7 +173,7 @@ public class FileReport
 
     /**
      * Cf. overriden method documentation. {@inheritDoc}
-     *
+     * 
      * @see Comparable#compareTo(Object)
      */
     public int compareTo( Object o )
