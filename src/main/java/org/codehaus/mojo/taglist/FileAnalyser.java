@@ -19,10 +19,10 @@ package org.codehaus.mojo.taglist;
  * under the License.
  */
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.LineNumberReader;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -164,14 +164,13 @@ public class FileAnalyser
      */
     public void scanFile( File file )
     {
-        BufferedReader reader = null;
+        LineNumberReader reader = null;
 
         try
         {
-            reader = new BufferedReader( new FileReader( file ) );
+            reader = new LineNumberReader( new FileReader( file ) );
 
             String currentLine = reader.readLine();
-            int lineCount = 1;
             while ( currentLine != null )
             {
                 int index = -1;
@@ -200,7 +199,6 @@ public class FileAnalyser
                 {
                     // no tag on this line: just go on next line
                     currentLine = reader.readLine();
-                    lineCount++;
                     continue;
                 }
 
@@ -224,12 +222,11 @@ public class FileAnalyser
                 {
                     // this is not a valid comment tag: go to the next line
                     currentLine = reader.readLine();
-                    lineCount++;
                     continue;
                 }
 
                 int tagLength = tagName.length();
-                int commentStartIndex = lineCount;
+                int commentStartIndex = reader.getLineNumber();
                 StringBuffer comment = new StringBuffer();
 
                 String firstLine = currentLine.substring( index + tagLength ).trim();
@@ -237,7 +234,6 @@ public class FileAnalyser
                 {
                     // this is not a valid comment tag: nothing is written there
                     currentLine = reader.readLine();
-                    lineCount++;
                     if ( emptyCommentsOn )
                     {
                         comment.append( "--" );
@@ -263,7 +259,6 @@ public class FileAnalyser
 
                 // next line
                 currentLine = reader.readLine();
-                lineCount++;
 
                 if ( multipleLineCommentsOn )
                 {
@@ -298,7 +293,6 @@ public class FileAnalyser
                         comment.append( " " );
                         comment.append( currentComment );
                         currentLine = reader.readLine();
-                        lineCount++;
                     }
                 }
                 }
