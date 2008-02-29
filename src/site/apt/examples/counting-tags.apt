@@ -20,6 +20,7 @@ Counting Tags
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>taglist-maven-plugin</artifactId>
+        <version>2.2</version>
         <configuration>
           <tags>
             <tag>TODO</tag>
@@ -36,7 +37,7 @@ Counting Tags
   ...
 -----
 
-  The java file we are analyzing is this one:
+  The Java file we are analyzing is this one:
 
 -----
  1: package taglist;
@@ -84,5 +85,5 @@ Counting Tags
   <<Line 22:>> This line will <not> be counted, because it appears in the middle
   of the line with other text before it.
 
-  <<Line 26:>> This line will <not> be counted, because the text <<<@todo>>> in
+  <<Line 26:>> This line will <not> be counted, because the text <<<@todo>>> is
   not one of the configured tags.

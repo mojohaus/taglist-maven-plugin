@@ -13,17 +13,19 @@ Taglist Maven Plugin
 
 * Goals Overview
 
-   The Taglist Plugin has one goal:
+   The Taglist Plugin has one goal which is meant to participate in the site lifecycle:
 
    * {{{taglist-mojo.html}taglist:taglist}} generates the taglist report.
 
 * Usage
 
-   Instructions on how to use the Taglist Plugin can be found {{{usage.html}here}}.
+   Instructions on how to use the Taglist Plugin can be found in the {{{usage.html}usage guide}}.
 
 * Examples
 
-   The following example show how to use the Taglist Plugin in more advanced use-cases:
+   The following examples show how to use the Taglist Plugin in more advanced use-cases:
+
+   * {{{examples/counting-tags.html}Counting Tags}}
 
    * {{{taglist.html}Sample Report}}
 

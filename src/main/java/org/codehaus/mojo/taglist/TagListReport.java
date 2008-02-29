@@ -36,9 +36,9 @@ import org.codehaus.plexus.util.PathTool;
 import org.codehaus.plexus.util.StringUtils;
 
 /**
- * MOJO for the tag list report.
+ * Scans the source files for tags and generates a report on their occurrences.
  * 
- * @author <a href="mailto:bellingard.NO-SPAM@gmail.com">Fabrice Bellingard </a>
+ * @author <a href="mailto:bellingard.NO-SPAM@gmail.com">Fabrice Bellingard</a>
  * @goal taglist
  */
 public class TagListReport
