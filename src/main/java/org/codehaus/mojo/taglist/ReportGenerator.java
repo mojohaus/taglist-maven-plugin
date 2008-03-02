@@ -204,7 +204,7 @@ public class ReportGenerator
         sink.sectionTitle2_();
         sink.paragraph();
         sink.bold();
-        sink.text( bundle.getString( "report.taglist.detail.numberOfOccurrences" ) + tagReport.getTagCount() );
+        sink.text( bundle.getString( "report.taglist.detail.numberOfOccurrences" ) + ' ' + tagReport.getTagCount() );
         sink.bold_();
         sink.paragraph_();
 
