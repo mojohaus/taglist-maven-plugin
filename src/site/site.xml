@@ -9,7 +9,7 @@
     </menu>
     <menu name="Examples">
       <item name="Counting Tags" href="examples/counting-tags.html"/>
-      <item name="Taglist Sample Report" href="taglist.html"/>
+      <item name="Sample Taglist Report" href="taglist.html"/>
     </menu>
   </body>
 </project>

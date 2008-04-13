@@ -36,14 +36,15 @@ Usage
 </project>
 -------------------
 
-  The report will be generated when executing the Maven Site Plugin, like this:
+  The report will be generated when executing the <<<site>>> life cycle phase,
+  like this:
 
 -------------------
 mvn site
 -------------------
 
   You can easily customise the tags you want to look for. For instance:
-  
+
 -------------------
 <project>
   ...

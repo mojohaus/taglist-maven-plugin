@@ -11,9 +11,10 @@ Counting Tags
   This example is meant to show you how the Taglist Maven Plugin works, when it
   finds and counts tags in your code.
 
-  The plugin is configured in the <<<pom.xml>>> file like this:
+  Let us configure the plugin in the <<<pom.xml>>> file like this:
 
 -----
+<project>
   ...
   <reporting>
     <plugins>
@@ -35,6 +36,7 @@ Counting Tags
     </plugins>
   </reporting>
   ...
+</project>
 -----
 
   The Java file we are analyzing is this one:

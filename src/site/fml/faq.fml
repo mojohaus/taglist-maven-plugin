@@ -29,6 +29,10 @@ under the License.
           i.e. it has to be inside a single-line or mulit-line JavaDoc comment.
           Otherwise it will be ignored in the report.
         </p>
+        <p>
+          For examples of this, see the
+          <a href="examples/counting-tags.html">counting tags document</a>.
+        </p>
       </answer>
     </faq>
     <faq id="When is a tag included in the report?">
@@ -38,6 +42,10 @@ under the License.
           For a tag to be included in the report, it has to "contain"
           something, i.e. it has to be followed by some text. A tag without
           content is not counted in the report.
+        </p>
+        <p>
+          For examples of this, see the
+          <a href="examples/counting-tags.html">counting tags document</a>.
         </p>
       </answer>
     </faq>
