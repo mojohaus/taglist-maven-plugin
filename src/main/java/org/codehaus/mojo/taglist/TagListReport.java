@@ -318,8 +318,8 @@ public class TagListReport
 
                 if ( "java".equals( reactorProject.getArtifact().getArtifactHandler().getLanguage() ) )
                 {
-                    sourceDirs.addAll( reactorProject.getCompileSourceRoots() );
-                    sourceDirs.addAll( reactorProject.getTestCompileSourceRoots() );
+                    dirs.addAll( reactorProject.getCompileSourceRoots() );
+                    dirs.addAll( reactorProject.getTestCompileSourceRoots() );
                 }
             }
         }
