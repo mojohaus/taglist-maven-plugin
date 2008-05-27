@@ -41,7 +41,7 @@ import org.codehaus.plexus.util.FileUtils;
 import org.codehaus.plexus.util.IOUtil;
 
 /**
- * Class that analyses a file with a special comment tag. For instance:
+ * Class that analyzes a file with a special comment tag. For instance:
  * 
  * <pre>
  * // TODO: Example of an Eclipse/IntelliJ-like "todo" tag
@@ -68,7 +68,7 @@ public class FileAnalyser
     private String encoding;
 
     /**
-     * The directories to analyse.
+     * The directories to analyze.
      */
     private Collection sourceDirs;
 
@@ -83,12 +83,12 @@ public class FileAnalyser
     private Map tagReportsMap;
 
     /**
-     * Set to true if the analyser should look for multiple line comments.
+     * Set to true if the analyzer should look for multiple line comments.
      */
     private boolean multipleLineCommentsOn;
 
     /**
-     * Set to true if the analyser should look for tags without comments.
+     * Set to true if the analyzer should look for tags without comments.
      */
     private boolean emptyCommentsOn;
 
@@ -100,7 +100,7 @@ public class FileAnalyser
     /**
      * Constructor.
      * 
-     * @param report the MOJO that is using this analyser.
+     * @param report the MOJO that is using this analyzer.
      */
     public FileAnalyser( TagListReport report )
     {
@@ -332,7 +332,7 @@ public class FileAnalyser
     /**
      * Finds the type of comment the tag is in.
      * 
-     * @param currentLine the line to analyse.
+     * @param currentLine the line to analyze.
      * @param index the index of the tag in the line.
      * @return "*" or "//" or null.
      */

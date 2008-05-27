@@ -44,7 +44,7 @@ public class FileReport
 {
 
     /**
-     * The file being analysed.
+     * The file being analyzed.
      */
     private final File file;
 
@@ -71,7 +71,7 @@ public class FileReport
     /**
      * Constructor.
      * 
-     * @param file The file to analyse.
+     * @param file The file to analyze.
      */
     public FileReport( File file, String encoding )
     {
@@ -92,7 +92,7 @@ public class FileReport
     }
 
     /**
-     * Returns the path corresponding to the analysed class, for instance:
+     * Returns the path corresponding to the analyzed class, for instance:
      * org/apache/maven/plugins/taglist/beans/FileReport.
      * 
      * @return the file path.
@@ -109,7 +109,7 @@ public class FileReport
     }
 
     /**
-     * Returns the complete name of the analysed class, for instance: org.codehaus.mojo.taglist.beans.FileReport.
+     * Returns the complete name of the analyzed class, for instance: org.codehaus.mojo.taglist.beans.FileReport.
      * 
      * @return the full class name.
      */
@@ -187,7 +187,7 @@ public class FileReport
     }
 
     /**
-     * Cf. overriden method documentation. {@inheritDoc}
+     * {@inheritDoc}
      * 
      * @see Comparable#compareTo(Object)
      */

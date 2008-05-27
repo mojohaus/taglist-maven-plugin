@@ -26,7 +26,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 /**
- * Report of the scan for a specific tag
+ * Report of the scan for a specific tag.
  * 
  * @author <a href="mailto:bellingard.NO-SPAM@gmail.com">Fabrice Bellingard </a>
  */
@@ -64,7 +64,7 @@ public class TagReport
     /**
      * Returns the FileReport object corresponding to this file. If it does not exist yet, it will be created.
      * 
-     * @param file the file being analysed.
+     * @param file the file being analyzed.
      * @param encoding the character encoding of the file
      * @return a FileReport object for this file.
      */
@@ -125,7 +125,7 @@ public class TagReport
     }
 
     /**
-     * Cf. overriden method documentation. {@inheritDoc}
+     * {@inheritDoc}
      * 
      * @see Comparable#compareTo(Object)
      */
