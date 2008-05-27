@@ -23,8 +23,11 @@ import org.codehaus.plexus.util.IOUtil;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -43,7 +46,12 @@ public class FileReport
     /**
      * The file being analysed.
      */
-    private File file;
+    private final File file;
+
+    /**
+     * The character encoding of the source file
+     */
+    private final String encoding;
 
     /**
      * The name of the class corresponding to this file.
@@ -53,7 +61,7 @@ public class FileReport
     /**
      * Pair values of a line number and a comment. Map of [Integer,String].
      */
-    private Map tagListing;
+    private final Map tagListing;
 
     /**
      * The package identification string.
@@ -65,9 +73,10 @@ public class FileReport
      * 
      * @param file The file to analyse.
      */
-    public FileReport( File file )
+    public FileReport( File file, String encoding )
     {
         this.file = file;
+        this.encoding = encoding;
         this.tagListing = new HashMap();
     }
 
@@ -93,6 +102,12 @@ public class FileReport
         return className.replace( '.', '/' );
     }
 
+    private Reader getReader( File file ) throws IOException
+    {
+        InputStream in = new FileInputStream( file );
+        return ( encoding == null ) ? new InputStreamReader( in ) : new InputStreamReader( in, encoding ); 
+    }
+
     /**
      * Returns the complete name of the analysed class, for instance: org.codehaus.mojo.taglist.beans.FileReport.
      * 
@@ -109,7 +124,7 @@ public class FileReport
         String packageName = null;
         try
         {
-            reader = new BufferedReader( new FileReader( file ) );
+            reader = new BufferedReader( getReader( file ) );
             String currentLine = reader.readLine();
             if ( currentLine != null )
             {

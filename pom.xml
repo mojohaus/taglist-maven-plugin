@@ -85,6 +85,10 @@
           </tags>
         </configuration>
       </plugin>
+      <plugin>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>2.5-SNAPSHOT</version>
+      </plugin>
     </plugins>
   </reporting>
 </project>

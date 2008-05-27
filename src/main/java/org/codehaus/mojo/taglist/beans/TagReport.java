@@ -65,9 +65,10 @@ public class TagReport
      * Returns the FileReport object corresponding to this file. If it does not exist yet, it will be created.
      * 
      * @param file the file being analysed.
+     * @param encoding the character encoding of the file
      * @return a FileReport object for this file.
      */
-    public FileReport getFileReport( File file )
+    public FileReport getFileReport( File file, String encoding )
     {
         Object report = fileReportsMap.get( file );
         if ( report instanceof FileReport )
@@ -76,7 +77,7 @@ public class TagReport
         }
         else
         {
-            FileReport newFileReport = new FileReport( file );
+            FileReport newFileReport = new FileReport( file, encoding );
             fileReportsMap.put( file, newFileReport );
             return newFileReport;
         }

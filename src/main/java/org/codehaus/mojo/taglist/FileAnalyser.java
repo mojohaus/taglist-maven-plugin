@@ -20,9 +20,12 @@ package org.codehaus.mojo.taglist;
  */
 
 import java.io.File;
-import java.io.FileReader;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.LineNumberReader;
+import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -58,6 +61,11 @@ public class FileAnalyser
      * String that is used for beginning a comment line.
      */
     private static final String SLASH_COMMENT = "//";
+
+    /**
+     * The character encoding of the files to analyze.
+     */
+    private String encoding;
 
     /**
      * The directories to analyse.
@@ -100,6 +108,7 @@ public class FileAnalyser
         emptyCommentsOn = report.isEmptyComments();
         log = report.getLog();
         sourceDirs = report.constructSourceDirs();
+        encoding = report.getEncoding();
         noCommentString = report.getBundle().getString( "report.taglist.nocomment" );
         // init the map of tag reports
         String[] tags = report.getTags();
@@ -159,6 +168,12 @@ public class FileAnalyser
         return filesList;
     }
 
+    private Reader getReader( File file ) throws IOException
+    {
+        InputStream in = new FileInputStream( file );
+        return ( encoding == null ) ? new InputStreamReader( in ) : new InputStreamReader( in, encoding ); 
+    }
+
     /**
      * Scans a file to look for task tags.
      * 
@@ -170,7 +185,7 @@ public class FileAnalyser
 
         try
         {
-            reader = new LineNumberReader( new FileReader( file ) );
+            reader = new LineNumberReader( getReader( file ) );
 
             String currentLine = reader.readLine();
             while ( currentLine != null )
@@ -300,7 +315,7 @@ public class FileAnalyser
                 }
 
                 TagReport tagReport = (TagReport) tagReportsMap.get( tagName );
-                FileReport fileReport = tagReport.getFileReport( file );
+                FileReport fileReport = tagReport.getFileReport( file, encoding );
                 fileReport.addComment( comment.toString(), commentStartIndex );
             }
         }

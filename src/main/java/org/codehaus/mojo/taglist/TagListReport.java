@@ -57,6 +57,14 @@ public class TagListReport
     private SiteRenderer siteRenderer;
 
     /**
+     * Specifies the character encoding of the source files.
+     *
+     * @parameter expression="${encoding}" default-value="${project.build.sourceEncoding}"
+     * @since 2.2
+     */
+    private String encoding;
+
+    /**
      * Source directories of the project.
      * 
      * @parameter expression="${project.compileSourceRoots}"
@@ -329,7 +337,16 @@ public class TagListReport
     }
 
     /**
-     * Returns the tags to look for.
+     * Returns the character encoding of the source files.
+     *
+     * @return The character encoding of the source files.
+     */
+    public String getEncoding()
+    {
+        return encoding;
+    }
+
+    /**     * Returns the tags to look for.
      * 
      * @return a collection of String objects representing the tag names.
      */
