@@ -60,7 +60,7 @@ public class TagListReport
      * Specifies the character encoding of the source files.
      *
      * @parameter expression="${encoding}" default-value="${project.build.sourceEncoding}"
-     * @since 2.2
+     * @since 2.3
      */
     private String encoding;
 
@@ -182,6 +182,13 @@ public class TagListReport
         if ( tags == null || tags.length == 0 )
         {
             tags = new String[] { "@todo", "TODO" };
+        }
+
+        if ( StringUtils.isEmpty( encoding ) )
+        {
+            getLog().warn(
+                           "File encoding has not been set, using platform encoding "
+                               + System.getProperty( "file.encoding" ) + ", i.e. build is platform dependent!" );
         }
 
         // let's proceed to the analysis
