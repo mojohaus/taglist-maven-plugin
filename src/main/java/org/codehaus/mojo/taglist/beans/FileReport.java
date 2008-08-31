@@ -20,6 +20,7 @@ package org.codehaus.mojo.taglist.beans;
  */
 
 import org.codehaus.plexus.util.IOUtil;
+import org.codehaus.plexus.util.StringUtils;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -36,7 +37,7 @@ import java.util.Map;
 
 /**
  * Report for a file.
- * 
+ *
  * @author <a href="mailto:bellingard.NO-SPAM@gmail.com">Fabrice Bellingard </a>
  */
 public class FileReport
@@ -70,7 +71,7 @@ public class FileReport
 
     /**
      * Constructor.
-     * 
+     *
      * @param file The file to analyze.
      */
     public FileReport( File file, String encoding )
@@ -82,7 +83,7 @@ public class FileReport
 
     /**
      * Adds a new entry to the list of tags found for this file report.
-     * 
+     *
      * @param comment the comment string containing the 'todo'.
      * @param lineIndex the line number of the comment (or first line if multi-lined).
      */
@@ -94,7 +95,7 @@ public class FileReport
     /**
      * Returns the path corresponding to the analyzed class, for instance:
      * org/apache/maven/plugins/taglist/beans/FileReport.
-     * 
+     *
      * @return the file path.
      */
     public String getClassNameWithSlash()
@@ -105,12 +106,12 @@ public class FileReport
     private Reader getReader( File file ) throws IOException
     {
         InputStream in = new FileInputStream( file );
-        return ( encoding == null ) ? new InputStreamReader( in ) : new InputStreamReader( in, encoding ); 
+        return ( encoding == null ) ? new InputStreamReader( in ) : new InputStreamReader( in, encoding );
     }
 
     /**
      * Returns the complete name of the analyzed class, for instance: org.codehaus.mojo.taglist.beans.FileReport.
-     * 
+     *
      * @return the full class name.
      */
     public String getClassName()
@@ -157,14 +158,14 @@ public class FileReport
             IOUtil.close( reader );
         }
 
-        className = packageName + "." + file.getName().replaceAll( ".java", "" );
+        className = packageName + "." + file.getName().replaceAll( "\\.java$", "" );
 
         return className;
     }
 
     /**
      * Returns the list of the comment line indexes.
-     * 
+     *
      * @return Collection of Integer.
      */
     public Collection getLineIndexes()
@@ -177,7 +178,7 @@ public class FileReport
 
     /**
      * Returns the comment for the corresponding line index.
-     * 
+     *
      * @param lineIndex the index of the line.
      * @return the comment.
      */
@@ -188,7 +189,7 @@ public class FileReport
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see Comparable#compareTo(Object)
      */
     public int compareTo( Object o )
