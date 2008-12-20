@@ -33,6 +33,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.reporting.MavenReportException;
 import org.codehaus.mojo.taglist.beans.FileReport;
@@ -246,8 +247,8 @@ public class FileAnalyser
                 int commentStartIndex = reader.getLineNumber();
                 StringBuffer comment = new StringBuffer();
 
-                String firstLine = currentLine.substring( index + tagLength ).trim();
-                if ( firstLine.length() == 0 )
+                String firstLine = StringUtils.strip( currentLine.substring( index + tagLength ) );
+                if ( firstLine.length() == 0 || ":".equals( firstLine ) )
                 {
                     // this is not a valid comment tag: nothing is written there
                     currentLine = reader.readLine();
