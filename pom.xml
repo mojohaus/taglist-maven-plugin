@@ -53,6 +53,18 @@
       </roles>
       <timezone>+1</timezone>
     </developer>
+    <developer>
+      <id>david</id>
+      <name>David J. M. Karlsen</name>
+      <email>david@codehaus.org</email>
+      <organization>codehaus.org</organization>
+      <organizationUrl>http://www.codehaus.org</organizationUrl>
+      <timezone>+1</timezone>
+      <url>http://www.davidkarlsen.com</url>
+      <roles>
+        <role>Java Developer</role>
+      </roles>
+    </developer>
   </developers>
   <licenses>
     <license>
