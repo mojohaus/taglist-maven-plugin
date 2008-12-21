@@ -20,8 +20,6 @@ package org.codehaus.mojo.taglist.beans;
  */
 
 import org.codehaus.plexus.util.IOUtil;
-import org.codehaus.plexus.util.StringUtils;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
