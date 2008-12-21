@@ -20,7 +20,7 @@ package org.codehaus.mojo.taglist;
  */
 
 import java.io.File;
-import org.apache.maven.plugin.testing.AbstractMojoTestCase;
+
 import org.codehaus.plexus.util.FileUtils;
 
 /**
@@ -29,7 +29,7 @@ import org.codehaus.plexus.util.FileUtils;
  * @version $Id$
  */
 public class TaglistMojoTagsTest
-    extends AbstractMojoTestCase
+    extends AbstractTaglistMojoTestCase
 {
 
     /** {@inheritDoc} */
@@ -57,8 +57,7 @@ public class TaglistMojoTagsTest
     	File pluginXmlFile = new File( getBasedir(), "/src/test/resources/unit/tag-test/default-tags-pom.xml" );
     	assertTrue ("Cannot find plugin file.", pluginXmlFile.exists());
     	
-        TagListReport mojo = (TagListReport)lookupMojo( "taglist", pluginXmlFile );
-        assertNotNull( "Mojo not found.", mojo );
+    	TagListReport mojo = super.getTagListReport( pluginXmlFile );
         
         // Run the TagList mojo
         mojo.execute();
@@ -91,8 +90,7 @@ public class TaglistMojoTagsTest
     	File pluginXmlFile = new File( getBasedir(), "/src/test/resources/unit/tag-test/c-style-tags-pom.xml" );
     	assertTrue ("Cannot find plugin file.", pluginXmlFile.exists());
     	
-        TagListReport mojo = (TagListReport)lookupMojo( "taglist", pluginXmlFile );
-        assertNotNull( "Mojo not found.", mojo );
+    	TagListReport mojo = super.getTagListReport( pluginXmlFile );
         
         // Run the TagList mojo
         mojo.execute();
@@ -124,8 +122,7 @@ public class TaglistMojoTagsTest
     	File pluginXmlFile = new File( getBasedir(), "/src/test/resources/unit/tag-test/cplusplus-style-tags-pom.xml" );
     	assertTrue ("Cannot find plugin file.", pluginXmlFile.exists());
     	
-        TagListReport mojo = (TagListReport)lookupMojo( "taglist", pluginXmlFile );
-        assertNotNull( "Mojo not found.", mojo );
+    	TagListReport mojo = super.getTagListReport( pluginXmlFile );
         
         // Run the TagList mojo
         mojo.execute();
@@ -159,8 +156,7 @@ public class TaglistMojoTagsTest
     	File pluginXmlFile = new File( getBasedir(), "/src/test/resources/unit/tag-test/javadoc-single-style-tags-pom.xml" );
     	assertTrue ("Cannot find plugin file.", pluginXmlFile.exists());
     	
-        TagListReport mojo = (TagListReport)lookupMojo( "taglist", pluginXmlFile );
-        assertNotNull( "Mojo not found.", mojo );
+    	TagListReport mojo = super.getTagListReport( pluginXmlFile );
         
         // Run the TagList mojo
         mojo.execute();
@@ -195,8 +191,7 @@ public class TaglistMojoTagsTest
     	File pluginXmlFile = new File( getBasedir(), "/src/test/resources/unit/tag-test/javadoc-multi-style-tags-pom.xml" );
     	assertTrue ("Cannot find plugin file.", pluginXmlFile.exists());
     	
-        TagListReport mojo = (TagListReport)lookupMojo( "taglist", pluginXmlFile );
-        assertNotNull( "Mojo not found.", mojo );
+    	TagListReport mojo = super.getTagListReport( pluginXmlFile );
         
         // Run the TagList mojo
         mojo.execute();
@@ -230,8 +225,7 @@ public class TaglistMojoTagsTest
     	File pluginXmlFile = new File( getBasedir(), "/src/test/resources/unit/tag-test/not-start-line-tags-pom.xml" );
     	assertTrue ("Cannot find plugin file.", pluginXmlFile.exists());
     	
-        TagListReport mojo = (TagListReport)lookupMojo( "taglist", pluginXmlFile );
-        assertNotNull( "Mojo not found.", mojo );
+    	TagListReport mojo = super.getTagListReport( pluginXmlFile );
         
         // Run the TagList mojo
         mojo.execute();
@@ -262,8 +256,7 @@ public class TaglistMojoTagsTest
     	File pluginXmlFile = new File( getBasedir(), "/src/test/resources/unit/tag-test/source-code-variable-tags-pom.xml" );
     	assertTrue ("Cannot find plugin file.", pluginXmlFile.exists());
     	
-        TagListReport mojo = (TagListReport)lookupMojo( "taglist", pluginXmlFile );
-        assertNotNull( "Mojo not found.", mojo );
+    	TagListReport mojo = super.getTagListReport( pluginXmlFile );
         
         // Run the TagList mojo
         mojo.execute();

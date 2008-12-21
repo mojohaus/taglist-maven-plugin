@@ -20,7 +20,7 @@ package org.codehaus.mojo.taglist;
  */
 
 import java.io.File;
-import org.apache.maven.plugin.testing.AbstractMojoTestCase;
+
 import org.codehaus.plexus.util.FileUtils;
 
 /**
@@ -29,7 +29,7 @@ import org.codehaus.plexus.util.FileUtils;
  * @version $Id$
  */
 public class TaglistMojoCountingTagsTest
-    extends AbstractMojoTestCase
+    extends AbstractTaglistMojoTestCase
 {
     /** {@inheritDoc} */
     protected void setUp()
@@ -59,8 +59,7 @@ public class TaglistMojoCountingTagsTest
     	File pluginXmlFile = new File( getBasedir(), "/src/test/resources/unit/counting-tags-test/counting-tags-pom.xml" );
     	assertTrue ("Cannot find plugin file.", pluginXmlFile.exists());
     	
-        TagListReport mojo = (TagListReport)lookupMojo( "taglist", pluginXmlFile );
-        assertNotNull( "Mojo not found.", mojo );
+    	TagListReport mojo = super.getTagListReport( pluginXmlFile );
         
         // Run the TagList mojo
         mojo.execute();
