@@ -109,7 +109,7 @@ public class TaglistMojoTagsTest
         assertTrue("Incorrect C style tag result.", htmlString.indexOf(expected) != -1);
         
         //Check to see that tag has the correct text.
-        expected = "<td>This is a C style tag. */</td>"; //SEE: MTAGLIST-35
+        expected = "<td>This is a C style tag.</td>";
         assertTrue("Incorrect C style tag text.", htmlString.indexOf(expected) != -1);
     }
     

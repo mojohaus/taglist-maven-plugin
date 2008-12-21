@@ -248,6 +248,7 @@ public class FileAnalyser
                 StringBuffer comment = new StringBuffer();
 
                 String firstLine = StringUtils.strip( currentLine.substring( index + tagLength ) );
+                firstLine = StringUtils.removeEnd( firstLine, "*/" ); //MTAGLIST-35
                 if ( firstLine.length() == 0 || ":".equals( firstLine ) )
                 {
                     // this is not a valid comment tag: nothing is written there
