@@ -70,7 +70,7 @@ public class TaglistMojoBasicConfigTest
         String filename = mojo.getOutputName() + ".html";
         File outputHtml = new File( outputDir, filename );
         assertTrue( "Cannont find output html file", outputHtml.exists() );
-        String htmlString = FileUtils.fileRead( outputHtml );
+        String htmlString = FileUtils.fileRead( outputHtml, "UTF-8" );
 
         // Check to see is the com.Basic file was processed.
         String expected = "<tr class=\"a\"><th>com.BasicConfig</th>";
@@ -99,7 +99,7 @@ public class TaglistMojoBasicConfigTest
         String filename = mojo.getOutputName() + ".html";
         File outputHtml = new File( outputDir, filename );
         assertTrue( "Cannont find output html file", outputHtml.exists() );
-        String htmlString = FileUtils.fileRead( outputHtml );
+        String htmlString = FileUtils.fileRead( outputHtml, "UTF-8" );
 
         // Check to see that all three lines of the comment are captured.
         String expected = "<td>This is line one, this is line two, and this is line three.</td>";
@@ -128,7 +128,7 @@ public class TaglistMojoBasicConfigTest
         String filename = mojo.getOutputName() + ".html";
         File outputHtml = new File( outputDir, filename );
         assertTrue( "Cannont find output html file", outputHtml.exists() );
-        String htmlString = FileUtils.fileRead( outputHtml );
+        String htmlString = FileUtils.fileRead( outputHtml, "UTF-8" );
 
         // Check to see that only the first line of the comment is captured.
         String expected = "<td>This is line one,</td>";
@@ -156,7 +156,7 @@ public class TaglistMojoBasicConfigTest
         String filename = mojo.getOutputName() + ".html";
         File outputHtml = new File( outputDir, filename );
         assertTrue( "Cannont find output html file", outputHtml.exists() );
-        String htmlString = FileUtils.fileRead( outputHtml );
+        String htmlString = FileUtils.fileRead( outputHtml, "UTF-8" );
 
         // Check to see that there was only one occurrence.
         String expected = "<b>Number of occurrences found in the code: 1</b>";
@@ -193,7 +193,7 @@ public class TaglistMojoBasicConfigTest
         String filename = mojo.getOutputName() + ".html";
         File outputHtml = new File( outputDir, filename );
         assertTrue( "Cannont find output html file", outputHtml.exists() );
-        String htmlString = FileUtils.fileRead( outputHtml );
+        String htmlString = FileUtils.fileRead( outputHtml, "UTF-8" );
        
         // Check to see that there was zero tags found
         String expected = "<td>@empty_comment</td><td>0</td>";
@@ -221,7 +221,7 @@ public class TaglistMojoBasicConfigTest
         String filename = mojo.getOutputName() + ".html";
         File outputHtml = new File( outputDir, filename );
         assertTrue( "Cannont find output html file", outputHtml.exists() );
-        String htmlString = FileUtils.fileRead( outputHtml );
+        String htmlString = FileUtils.fileRead( outputHtml, "UTF-8" );
        
         // Check to see that there were two tags found
         String expected = "@colons</a></h3><p><b>Number of occurrences found in the code: 2</b>";
@@ -257,7 +257,7 @@ public class TaglistMojoBasicConfigTest
         String filename = mojo.getOutputName() + ".html";
         File outputHtml = new File( outputDir, filename );
         assertTrue( "Cannont find output html file", outputHtml.exists() );
-        String htmlString = FileUtils.fileRead( outputHtml );
+        String htmlString = FileUtils.fileRead( outputHtml, "UTF-8" );
        
         // Use the resource bundle to determine what the no comment string
         // is for the current locale.
@@ -298,7 +298,7 @@ public class TaglistMojoBasicConfigTest
         String filename = mojo.getOutputName() + ".html";
         File outputHtml = new File( outputDir, filename );
         assertTrue( "Cannont find output html file", outputHtml.exists() );
-        String htmlString = FileUtils.fileRead( outputHtml );
+        String htmlString = FileUtils.fileRead( outputHtml, "UTF-8" );
         
         // Check to see show empty tags in code flag has a count of 1.
         String expected = "@show_empty_details_tag_in_code</a></td><td>1</td>";
@@ -338,7 +338,7 @@ public class TaglistMojoBasicConfigTest
         String filename = mojo.getOutputName() + ".html";
         File outputHtml = new File( outputDir, filename );
         assertTrue( "Cannont find output html file", outputHtml.exists() );
-        String htmlString = FileUtils.fileRead( outputHtml );
+        String htmlString = FileUtils.fileRead( outputHtml, "UTF-8" );
         
         // Check to see show empty tags in code flag has a count of 1.
         String expected = "@show_empty_details_tag_in_code</a></td><td>1</td>";

@@ -68,7 +68,7 @@ public class TaglistMojoTagsTest
         String filename = mojo.getOutputName() + ".html";
         File outputHtml = new File( outputDir, filename );
         assertTrue( "Cannont find output html file", outputHtml.exists() );
-        String htmlString = FileUtils.fileRead( outputHtml );
+        String htmlString = FileUtils.fileRead( outputHtml, "UTF-8" );
         
         //Check to see that @todo has one occurance.
         String expected = "<td><a href=\"#@todo\">@todo</a></td><td>1</td>";
@@ -102,7 +102,7 @@ public class TaglistMojoTagsTest
         String filename = mojo.getOutputName() + ".html";
         File outputHtml = new File( outputDir, filename );
         assertTrue( "Cannont find output html file", outputHtml.exists() );
-        String htmlString = FileUtils.fileRead( outputHtml );
+        String htmlString = FileUtils.fileRead( outputHtml, "UTF-8" );
         
         // Check to see that C++ style tag has one occurrence.
         String expected = "<td><a href=\"#c_style_tag\">c_style_tag</a></td><td>1</td>";
@@ -135,7 +135,7 @@ public class TaglistMojoTagsTest
         String filename = mojo.getOutputName() + ".html";
         File outputHtml = new File( outputDir, filename );
         assertTrue( "Cannont find output html file", outputHtml.exists() );
-        String htmlString = FileUtils.fileRead( outputHtml );
+        String htmlString = FileUtils.fileRead( outputHtml, "UTF-8" );
         
         //Check to see that C++ style tag has one occurrence.
         String expected = "<td><a href=\"#c++_style_tag\">c++_style_tag</a></td><td>1</td>";
@@ -170,7 +170,7 @@ public class TaglistMojoTagsTest
         String filename = mojo.getOutputName() + ".html";
         File outputHtml = new File( outputDir, filename );
         assertTrue( "Cannont find output html file", outputHtml.exists() );
-        String htmlString = FileUtils.fileRead( outputHtml );
+        String htmlString = FileUtils.fileRead( outputHtml, "UTF-8" );
          
         // Check to see that JavaDoc single style tag has one occurrence.
         String expected = "<td><a href=\"#javadoc_single_style_tag\">javadoc_single_style_tag</a></td><td>1</td>";
@@ -206,7 +206,7 @@ public class TaglistMojoTagsTest
         String filename = mojo.getOutputName() + ".html";
         File outputHtml = new File( outputDir, filename );
         assertTrue( "Cannont find output html file", outputHtml.exists() );
-        String htmlString = FileUtils.fileRead( outputHtml );
+        String htmlString = FileUtils.fileRead( outputHtml, "UTF-8" );
         
         // Check to see that JavaDoc style tag has one occurrence.
         String expected = "<td><a href=\"#javadoc_multi_style_tag\">javadoc_multi_style_tag</a></td><td>1</td>";
@@ -241,7 +241,7 @@ public class TaglistMojoTagsTest
         String filename = mojo.getOutputName() + ".html";
         File outputHtml = new File( outputDir, filename );
         assertTrue( "Cannont find output html file", outputHtml.exists() );
-        String htmlString = FileUtils.fileRead( outputHtml );
+        String htmlString = FileUtils.fileRead( outputHtml, "UTF-8" );
         
         // Check to see a tag not at the start of a line does not show up.
         String expected = "<td>not_start_of_line_tag</td><td>0</td>";
@@ -273,7 +273,7 @@ public class TaglistMojoTagsTest
         String filename = mojo.getOutputName() + ".html";
         File outputHtml = new File( outputDir, filename );
         assertTrue( "Cannont find output html file", outputHtml.exists() );
-        String htmlString = FileUtils.fileRead( outputHtml );
+        String htmlString = FileUtils.fileRead( outputHtml, "UTF-8" );
         
         // Check to see a source code variable does not show up.
         String expected = "<td>source_code_variable_tag</td><td>0</td>";
