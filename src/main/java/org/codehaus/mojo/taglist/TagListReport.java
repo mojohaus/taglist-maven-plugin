@@ -65,24 +65,6 @@ public class TagListReport
     private String encoding;
 
     /**
-     * Source directories of the project.
-     * 
-     * @parameter expression="${project.compileSourceRoots}"
-     * @required
-     * @readonly
-     */
-    private List sourceDirs;
-
-    /**
-     * Test directories of the project.
-     * 
-     * @parameter expression="${project.testCompileSourceRoots}"
-     * @required
-     * @readonly
-     */
-    private List testSourceDirs;
-
-    /**
      * The output directory for the report. Note that this parameter is only evaluated if the goal is run directly from
      * the command line or from a build life cycle phase. If the goal is run indirectly as part of a site generation, the
      * output directory configured in the Maven Site Plugin is used instead.
@@ -322,8 +304,9 @@ public class TagListReport
      */
     public List constructSourceDirs()
     {
-        List dirs = new ArrayList( sourceDirs );
-        dirs.addAll( testSourceDirs );
+        List dirs = new ArrayList( project.getCompileSourceRoots() );
+        dirs.addAll( project.getTestCompileSourceRoots() );
+        
 
         if ( aggregate )
         {
