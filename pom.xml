@@ -89,12 +89,7 @@
         <artifactId>maven-surefire-plugin</artifactId>
         <version>2.4.3</version>
         <configuration>
-          <systemProperties>
-            <property>
-              <name>user.language</name>
-              <value>en</value>
-            </property>
-          </systemProperties>
+          <argLine>-Duser.language=en</argLine>
         </configuration>
       </plugin>
     </plugins>
