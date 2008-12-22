@@ -348,4 +348,12 @@ public class TaglistMojoBasicConfigTest
         expected = "<div class=\"section\"><h3><a name=\"@show_empty_details_tag_not_in_code\">@show_empty_details_tag_not_in_code</a></h3>";
         assertFalse("Unexpected tag details for the not in code tag.", htmlString.indexOf(expected) != -1);
     }
+    
+    public void testXmlFile()
+        throws Exception
+    {
+        File xmlReportFile = new File( getBasedir(), "/target/test-classes/unit/basic-config-test/outputDirectory/taglist/taglist.xml" );
+        File expected = new File( getBasedir(), "/target/test-classes/unit/basic-config-test/taglist.xml.expected" );
+        assertTrue( "unexpected contents", FileUtils.contentEquals( xmlReportFile, expected ) );
+    }
 }

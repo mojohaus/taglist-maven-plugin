@@ -20,6 +20,9 @@ package org.codehaus.mojo.taglist;
  */
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -32,6 +35,13 @@ import org.apache.maven.project.MavenProject;
 import org.apache.maven.reporting.AbstractMavenReport;
 import org.apache.maven.reporting.MavenReportException;
 import org.codehaus.doxia.site.renderer.SiteRenderer;
+import org.codehaus.mojo.taglist.beans.FileReport;
+import org.codehaus.mojo.taglist.beans.TagReport;
+import org.codehaus.mojo.taglist.output.TagListXMLComment;
+import org.codehaus.mojo.taglist.output.TagListXMLFile;
+import org.codehaus.mojo.taglist.output.TagListXMLReport;
+import org.codehaus.mojo.taglist.output.TagListXMLTag;
+import org.codehaus.mojo.taglist.output.io.xpp3.TaglistOutputXpp3Writer;
 import org.codehaus.plexus.util.PathTool;
 import org.codehaus.plexus.util.StringUtils;
 
@@ -50,6 +60,7 @@ public class TagListReport
      * @readonly
      */
     private MavenProject project;
+    
 
     /**
      * @component
@@ -66,8 +77,8 @@ public class TagListReport
 
     /**
      * The output directory for the report. Note that this parameter is only evaluated if the goal is run directly from
-     * the command line or from a build life cycle phase. If the goal is run indirectly as part of a site generation, the
-     * output directory configured in the Maven Site Plugin is used instead.
+     * the command line or from a build life cycle phase. If the goal is run indirectly as part of a site generation, 
+     * the output directory configured in the Maven Site Plugin is used instead.
      * 
      * @parameter default-value="${project.reporting.outputDirectory}"
      * @required
@@ -210,6 +221,94 @@ public class TagListReport
             }
         }
         generator.generateReport();
+        
+        // Generate the XML report
+        generateXmlReport( tagReports );
+    }
+
+
+    /** Generate an XML report that can be used by other plugins like the dashboard plugin.
+     * 
+     * @param tagReports a collection of the tag reports to be output.
+     */
+    private void generateXmlReport( Collection tagReports )
+    {
+        TagListXMLReport report = new TagListXMLReport();
+        
+        // Iterate through each tag and populate an XML tag object.
+        for ( Iterator ite = tagReports.iterator(); ite.hasNext(); )
+        {
+          TagReport tagReport = ( TagReport ) ite.next();
+          
+          TagListXMLTag tag = new TagListXMLTag();
+          tag.setName( tagReport.getTagName() );
+          tag.setCount( Integer.toString( tagReport.getTagCount() ) );
+          
+          // Iterate though each file that contains the current tag and generate an 
+          // XML file object within the current XML tag object.
+          for ( Iterator fite = tagReport.getFileReports().iterator(); fite.hasNext(); )
+          {
+            FileReport fileReport = ( FileReport ) fite.next();
+            
+            TagListXMLFile file = new TagListXMLFile();
+            file.setName( fileReport.getClassName() );
+            file.setCount( Integer.toString( fileReport.getLineIndexes().size() ) );
+            
+            // Iterate though each comment that contains the tag and generate an
+            // XML comment object within the current xml file object.
+            for ( Iterator cite = fileReport.getLineIndexes().iterator(); cite.hasNext(); )
+            {
+              Integer lineNumber = ( Integer ) cite.next();
+              
+              TagListXMLComment comment = new TagListXMLComment();
+              comment.setLineNumber( Integer.toString( lineNumber.intValue() ) );
+              comment.setComment( fileReport.getComment( lineNumber ) );
+              
+              file.addComment( comment );
+            }
+            tag.addFile( file );
+          }
+          report.addTag( tag );
+        }
+        
+        // Create the writer for the XML output file.
+        File reportDir = new File( getOutputDirectory(), "taglist" );
+        reportDir.mkdir();
+        File xmlFile = new File( reportDir, "taglist.xml" );
+        FileOutputStream fos = null;
+        OutputStreamWriter output = null;
+
+        try
+        {
+          fos = new FileOutputStream( xmlFile );
+          output = new OutputStreamWriter( fos );
+
+          // Write out the XML output file.
+          TaglistOutputXpp3Writer xmlWriter = new TaglistOutputXpp3Writer();
+          xmlWriter.write( output, report );
+        }
+        catch ( Exception e )
+        {
+          getLog().warn( "Could not save taglist xml file: " + e.getMessage() );
+        }
+        finally
+        {
+          try
+          {
+            if ( output != null )
+            {
+              output.close();
+            }
+            if ( fos != null )
+            {
+              output.close();
+            }
+          }
+          catch ( IOException e )
+          {
+            getLog().warn( "Could not close streams: " + e.getMessage() );
+          }
+        }
     }
 
     /**

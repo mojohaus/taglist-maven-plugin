@@ -27,7 +27,7 @@
     </notifiers>
   </ciManagement>
   <prerequisites>
-    <maven>2.0</maven>
+    <maven>2.0.6</maven>
   </prerequisites>
   <issueManagement>
     <system>jira</system>
@@ -84,12 +84,31 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-plugin-plugin</artifactId>
       </plugin>
-      <plugin>
+        <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
         <version>2.4.3</version>
         <configuration>
           <argLine>-Duser.language=en</argLine>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.modello</groupId>
+        <artifactId>modello-maven-plugin</artifactId>
+        <version>1.0-alpha-21</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>java</goal>
+              <goal>xpp3-writer</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <version>1.0.0</version>
+          <models>
+             <model>src/main/mdo/TagListOutput.mdo</model> 
+          </models>
         </configuration>
       </plugin>
     </plugins>
@@ -101,6 +120,11 @@
       <version>2.4</version>
     </dependency>
     <dependency>
+      <groupId>org.codehaus.plexus</groupId>
+      <artifactId>plexus-utils</artifactId>
+      <version>1.5.6</version>
+    </dependency>
+    <dependency>
       <groupId>org.apache.maven.reporting</groupId>
       <artifactId>maven-reporting-api</artifactId>
       <version>2.0</version>
@@ -109,6 +133,35 @@
       <groupId>org.apache.maven.reporting</groupId>
       <artifactId>maven-reporting-impl</artifactId>
       <version>2.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.maven</groupId>
+      <artifactId>maven-plugin-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.maven</groupId>
+      <artifactId>maven-model</artifactId>
+      <version>2.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.maven</groupId>
+      <artifactId>maven-project</artifactId>
+      <version>2.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.maven</groupId>
+      <artifactId>maven-artifact</artifactId>
+      <version>2.0</version>
+    </dependency>
+    <dependency>
+      <groupId>doxia</groupId>
+      <artifactId>doxia-sink-api</artifactId>
+      <version>1.0-alpha-4</version>
+    </dependency>
+    <dependency>
+      <groupId>doxia</groupId>
+      <artifactId>doxia-core</artifactId>
+      <version>1.0-alpha-4</version>
     </dependency>
     <!-- Test -->
     <dependency>
@@ -132,6 +185,7 @@
           </tags>
         </configuration>
       </plugin>
+     
     </plugins>
   </reporting>
 </project>
