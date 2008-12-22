@@ -71,6 +71,7 @@ public class FileReport
      * Constructor.
      *
      * @param file The file to analyze.
+     * @param encoding the file encoding to use for the report.
      */
     public FileReport( File file, String encoding )
     {
@@ -101,9 +102,16 @@ public class FileReport
         return className.replace( '.', '/' );
     }
 
-    private Reader getReader( File file ) throws IOException
+    /**
+     * Access an input reader that uses the current file encoding.
+     *
+     * @param fileToRead the file to open in the reader.
+     * @throws IOException the IO exception.
+     * @return a reader with the current file encoding.
+     */
+    private Reader getReader( File fileToRead ) throws IOException
     {
-        InputStream in = new FileInputStream( file );
+        InputStream in = new FileInputStream( fileToRead );
         return ( encoding == null ) ? new InputStreamReader( in ) : new InputStreamReader( in, encoding );
     }
 

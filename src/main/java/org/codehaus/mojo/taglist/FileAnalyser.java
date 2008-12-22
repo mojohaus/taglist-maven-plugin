@@ -169,6 +169,13 @@ public class FileAnalyser
         return filesList;
     }
 
+    /**
+     * Access an input reader that uses the current file encoding.
+     *
+     * @param file the file to open in the reader.
+     * @throws IOException the IO exception.
+     * @return a reader with the current file encoding.
+     */
     private Reader getReader( File file ) throws IOException
     {
         InputStream in = new FileInputStream( file );
