@@ -28,8 +28,8 @@ import java.io.LineNumberReader;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -113,7 +113,7 @@ public class FileAnalyser
         noCommentString = report.getBundle().getString( "report.taglist.nocomment" );
         // init the map of tag reports
         String[] tags = report.getTags();
-        tagReportsMap = new HashMap( tags.length );
+        tagReportsMap = new LinkedHashMap( tags.length );
         for ( int i = 0; i < tags.length; i++ )
         {
             String tagName = tags[i];
