@@ -88,7 +88,8 @@ public class TagListReport
     /**                                                                                                                                                                   
      * Specifies the directory where the xml output will be generated.                                                                                                    
      *                                                                                                                                                                    
-     * @parameter default-value="${project.build.directory}/taglist"                                                                                                      
+     * @parameter default-value="${project.build.directory}/taglist"
+     * @since 2.3                                                                                                      
      * @required                                                                                                                                                          
      */                                                                                                                                                                   
     private File xmlOutputDirectory;                                    
