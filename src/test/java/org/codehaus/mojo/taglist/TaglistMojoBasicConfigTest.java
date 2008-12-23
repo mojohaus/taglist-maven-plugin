@@ -352,8 +352,12 @@ public class TaglistMojoBasicConfigTest
     public void testXmlFile()
         throws Exception
     {
-        File xmlReportFile = new File( getBasedir(), "/target/test-classes/unit/basic-config-test/outputDirectory/taglist/taglist.xml" );
-        File expected = new File( getBasedir(), "/target/test-classes/unit/basic-config-test/taglist.xml.expected" );
-        assertTrue( "unexpected contents", FileUtils.contentEquals( xmlReportFile, expected ) );
+        File actualFile = new File( getBasedir(), "/target/test-classes/unit/basic-config-test/outputDirectory/taglist/taglist.xml" );
+        File expectedFile = new File( getBasedir(), "/target/test-classes/unit/basic-config-test/expected-taglist.xml" );
+        String actualXml = FileUtils.fileRead( actualFile, "UTF-8" );
+        actualXml = actualXml.replaceAll( "(\r\n)|(\r)", "\n" );
+        String expectedXml = FileUtils.fileRead( expectedFile, "UTF-8" );
+        expectedXml = expectedXml.replaceAll( "(\r\n)|(\r)", "\n" );
+        assertEquals( "unexpected contents", expectedXml, actualXml );
     }
 }
