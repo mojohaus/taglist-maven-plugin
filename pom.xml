@@ -175,6 +175,34 @@
   <reporting>
     <plugins>
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-changes-plugin</artifactId>
+        <version>2.1</version>
+        <configuration>
+          <columnNames>Key,Summary,Status,Resolution,Assignee,Type,Version,FixVersion</columnNames>
+          <urlDownload>${project.url}</urlDownload>
+          <generateJiraAnnouncement>true</generateJiraAnnouncement>
+          <toAddresses>
+            <toAddress>dev@mojo.codehaus.org</toAddress>
+            <toAddress>user@mojo.codehaus.org</toAddress>
+            <toAddress>users@maven.apache.org</toAddress>
+          </toAddresses>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>findbugs-maven-plugin</artifactId>
+        <version>1.2</version>
+        <configuration>
+          <threshold>Normal</threshold>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>jdepend-maven-plugin</artifactId>
+        <version>2.0-beta-2</version>
+      </plugin>
+      <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>taglist-maven-plugin</artifactId>
         <version>${project.version}</version>
