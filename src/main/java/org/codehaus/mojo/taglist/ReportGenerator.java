@@ -212,10 +212,15 @@ public class ReportGenerator
         List sortedFileReports = new ArrayList( fileReports );
         Collections.sort( sortedFileReports );
 
+        // MTAGLIST-38 - sink table before generating each file report in order
+        //               to align the columns correctly.
+        sink.table();
+
         for ( Iterator iter = sortedFileReports.iterator(); iter.hasNext(); )
         {
             doFileDetailedPart( (FileReport) iter.next() );
         }
+        sink.table_();
 
         sink.section2_();
     }
@@ -225,7 +230,6 @@ public class ReportGenerator
      */
     private void doFileDetailedPart( FileReport fileReport )
     {
-        sink.table();
         sink.tableRow();
         sink.tableHeaderCell();
         sink.text( fileReport.getClassName() );
@@ -238,7 +242,6 @@ public class ReportGenerator
         {
             doCommentLine( fileReport, (Integer) iter.next() );
         }
-        sink.table_();
     }
 
     /**
