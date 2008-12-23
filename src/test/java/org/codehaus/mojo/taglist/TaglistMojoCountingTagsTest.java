@@ -57,8 +57,6 @@ public class TaglistMojoCountingTagsTest
         throws Exception
     {
     	File pluginXmlFile = new File( getBasedir(), "/src/test/resources/unit/counting-tags-test/counting-tags-pom.xml" );
-    	assertTrue ("Cannot find plugin file.", pluginXmlFile.exists());
-    	
     	TagListReport mojo = super.getTagListReport( pluginXmlFile );
         
         // Run the TagList mojo

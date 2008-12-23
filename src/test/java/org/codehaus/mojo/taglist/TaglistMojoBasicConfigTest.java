@@ -56,8 +56,6 @@ public class TaglistMojoBasicConfigTest
         throws Exception
     {
     	File pluginXmlFile = new File( getBasedir(), "/src/test/resources/unit/basic-config-test/create-output-pom.xml" );
-    	assertTrue ("Cannot find plugin file.", pluginXmlFile.exists());
-    	
         TagListReport mojo = super.getTagListReport( pluginXmlFile );
         
         // Run the TagList mojo
@@ -84,8 +82,6 @@ public class TaglistMojoBasicConfigTest
         throws Exception
     {
     	File pluginXmlFile = new File( getBasedir(), "/src/test/resources/unit/basic-config-test/multiple-line-comments-enabled-pom.xml" );
-    	assertTrue ("Cannot find plugin file.", pluginXmlFile.exists());
-    	
     	TagListReport mojo = super.getTagListReport( pluginXmlFile );
         
         // Run the TagList mojo
@@ -112,10 +108,7 @@ public class TaglistMojoBasicConfigTest
         throws Exception
     {
     	File pluginXmlFile = new File( getBasedir(), "/src/test/resources/unit/basic-config-test/multiple-line-comments-disabled-pom.xml" );
-    	assertTrue ("Cannot find plugin file.", pluginXmlFile.exists());
-    	
     	TagListReport mojo = super.getTagListReport( pluginXmlFile );
-        assertNotNull( "Mojo not found.", mojo );
         
         // Run the TagList mojo
         mojo.execute();
@@ -141,8 +134,6 @@ public class TaglistMojoBasicConfigTest
         throws Exception
     {
     	File pluginXmlFile = new File( getBasedir(), "/src/test/resources/unit/basic-config-test/empty-comments-enabled-pom.xml" );
-    	assertTrue ("Cannot find plugin file.", pluginXmlFile.exists());
-    	
     	TagListReport mojo = super.getTagListReport( pluginXmlFile );
     
         mojo.execute();
@@ -177,8 +168,6 @@ public class TaglistMojoBasicConfigTest
         throws Exception
     {
     	File pluginXmlFile = new File( getBasedir(), "/src/test/resources/unit/basic-config-test/empty-comments-disabled-pom.xml" );
-    	assertTrue ("Cannot find plugin file.", pluginXmlFile.exists());
-    	
     	TagListReport mojo = super.getTagListReport( pluginXmlFile );
     
         mojo.execute();
@@ -204,8 +193,6 @@ public class TaglistMojoBasicConfigTest
         throws Exception
     {
     	File pluginXmlFile = new File( getBasedir(), "/src/test/resources/unit/basic-config-test/colons-pom.xml" );
-    	assertTrue ("Cannot find plugin file.", pluginXmlFile.exists());
-    	
     	TagListReport mojo = super.getTagListReport( pluginXmlFile );
     
         mojo.execute();
@@ -239,8 +226,6 @@ public class TaglistMojoBasicConfigTest
         throws Exception
     {
     	File pluginXmlFile = new File( getBasedir(), "/src/test/resources/unit/basic-config-test/empty-colons-pom.xml" );
-    	assertTrue ("Cannot find plugin file.", pluginXmlFile.exists());
-    	
     	TagListReport mojo = super.getTagListReport( pluginXmlFile );
     
         mojo.execute();
@@ -279,8 +264,6 @@ public class TaglistMojoBasicConfigTest
         throws Exception
     {
     	File pluginXmlFile = new File( getBasedir(), "/src/test/resources/unit/basic-config-test/show-empty-details-enabled-pom.xml" );
-    	assertTrue ("Cannot find plugin file.", pluginXmlFile.exists());
-    	
     	TagListReport mojo = super.getTagListReport( pluginXmlFile );
     
         mojo.execute();
@@ -318,8 +301,6 @@ public class TaglistMojoBasicConfigTest
         throws Exception
     {
     	File pluginXmlFile = new File( getBasedir(), "/src/test/resources/unit/basic-config-test/show-empty-details-disabled-pom.xml" );
-    	assertTrue ("Cannot find plugin file.", pluginXmlFile.exists());
-    	
     	TagListReport mojo = super.getTagListReport( pluginXmlFile );
     
         mojo.execute();
