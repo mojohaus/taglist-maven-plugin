@@ -281,7 +281,7 @@ public class TagListReport
         try
         {
           fos = new FileOutputStream( xmlFile );
-          output = new OutputStreamWriter( fos, "UTF-8" );
+          output = new OutputStreamWriter( fos, getEncoding() );
 
           // Write out the XML output file.
           TaglistOutputXpp3Writer xmlWriter = new TaglistOutputXpp3Writer();
