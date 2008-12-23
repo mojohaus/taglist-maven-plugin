@@ -84,6 +84,14 @@ public class TagListReport
      * @required
      */
     private File outputDirectory;
+    
+    /**                                                                                                                                                                   
+     * Specifies the directory where the xml output will be generated.                                                                                                    
+     *                                                                                                                                                                    
+     * @parameter default-value="${project.build.directory}/taglist"                                                                                                      
+     * @required                                                                                                                                                          
+     */                                                                                                                                                                   
+    private File xmlOutputDirectory;                                    
 
     /**
      * List of tags to look for, specified as &lt;tag&gt; tags. The tags can be either:
@@ -272,9 +280,8 @@ public class TagListReport
         }
         
         // Create the writer for the XML output file.
-        File reportDir = new File( getOutputDirectory(), "taglist" );
-        reportDir.mkdir();
-        File xmlFile = new File( reportDir, "taglist.xml" );
+        xmlOutputDirectory.mkdir();
+        File xmlFile = new File( xmlOutputDirectory, "taglist.xml" );
         FileOutputStream fos = null;
         OutputStreamWriter output = null;
 

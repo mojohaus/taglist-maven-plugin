@@ -25,6 +25,8 @@ public abstract class AbstractTaglistMojoTestCase
         TagListReport mojo = (TagListReport) lookupMojo( "taglist", pluginXmlFile );
         assertNotNull( "Mojo not found.", mojo );
         setVariableValueToObject( mojo, "encoding", TEST_ENCODING );
+        setVariableValueToObject( mojo, "xmlOutputDirectory", new File( mojo.getOutputDirectory(), 
+                                                                        "taglist" ) );
 
         return mojo;
     }
