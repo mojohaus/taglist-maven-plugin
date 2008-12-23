@@ -77,7 +77,7 @@
   <scm>
     <connection>scm:svn:http://svn.codehaus.org/mojo/trunk/mojo/taglist-maven-plugin/</connection>
     <developerConnection>scm:svn:https://svn.codehaus.org/mojo/trunk/mojo/taglist-maven-plugin/</developerConnection>
-    <url>http://svn.codehaus.org/mojo/trunk/mojo/taglist-maven-plugin/</url>
+    <url>http://fisheye.codehaus.org/changelog/mojo/trunk/mojo/taglist-maven-plugin</url>
   </scm>
   <build>
     <plugins>
