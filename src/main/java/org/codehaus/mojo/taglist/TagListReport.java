@@ -280,7 +280,7 @@ public class TagListReport
         }
         
         // Create the writer for the XML output file.
-        xmlOutputDirectory.mkdir();
+        xmlOutputDirectory.mkdirs();
         File xmlFile = new File( xmlOutputDirectory, "taglist.xml" );
         FileOutputStream fos = null;
         OutputStreamWriter output = null;
