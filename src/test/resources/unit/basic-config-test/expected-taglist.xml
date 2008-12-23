@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?><report>
+<?xml version="1.0" encoding="UTF-8"?>
+<report>
   <tags>
     <tag name="@show_empty_details_tag_in_code" count="1">
       <files>
