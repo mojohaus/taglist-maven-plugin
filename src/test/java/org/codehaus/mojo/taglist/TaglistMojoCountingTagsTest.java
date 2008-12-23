@@ -61,13 +61,7 @@ public class TaglistMojoCountingTagsTest
         
         // Run the TagList mojo
         mojo.execute();
-        
-        File outputDir = mojo.getReportOutputDirectory();
-
-        String filename = mojo.getOutputName() + ".html";
-        File outputHtml = new File( outputDir, filename );
-        assertTrue( "Cannont find output html file", outputHtml.exists() );
-        String htmlString = FileUtils.fileRead( outputHtml, "UTF-8" );
+        String htmlString = super.getGeneratedOutput( mojo );
         
         // Check that NOT_YET_DOCUMENTED does not show up.
         String expected = "<td>NOT_YET_DOCUMENTED</td><td>0</td>";
