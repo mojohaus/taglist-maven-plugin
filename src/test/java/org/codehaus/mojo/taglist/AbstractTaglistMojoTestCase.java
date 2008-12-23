@@ -9,7 +9,7 @@ import org.codehaus.plexus.util.FileUtils;
 public abstract class AbstractTaglistMojoTestCase
     extends AbstractMojoTestCase
 {
-    protected final String TEST_ENCODING = "UTF-8";
+    public static final String TEST_ENCODING = "UTF-8";
 
     /**
      * Returns a {@link TagListReport} configured by pluginXmlFile.
@@ -18,7 +18,7 @@ public abstract class AbstractTaglistMojoTestCase
      * @return a configured Mojo, never null.
      * @throws Exception in case of non-existing pluginXmlFile or mojo not found.
      */
-    TagListReport getTagListReport( File pluginXmlFile )
+    protected TagListReport getTagListReport( File pluginXmlFile )
         throws Exception
     {
         assertTrue( "Cannot find plugin file.", pluginXmlFile.exists() );
@@ -35,7 +35,7 @@ public abstract class AbstractTaglistMojoTestCase
      * @return a String containing the contents.
      * @throws IOException in case of generic I/O errors.
      */
-    String getGeneratedOutput( TagListReport mojo )
+    protected String getGeneratedOutput( TagListReport mojo )
         throws IOException
     {
         File outputDir = mojo.getReportOutputDirectory();
