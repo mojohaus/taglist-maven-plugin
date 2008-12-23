@@ -21,7 +21,6 @@ package org.codehaus.mojo.taglist;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -42,6 +41,7 @@ import org.codehaus.mojo.taglist.output.TagListXMLFile;
 import org.codehaus.mojo.taglist.output.TagListXMLReport;
 import org.codehaus.mojo.taglist.output.TagListXMLTag;
 import org.codehaus.mojo.taglist.output.io.xpp3.TaglistOutputXpp3Writer;
+import org.codehaus.plexus.util.IOUtil;
 import org.codehaus.plexus.util.PathTool;
 import org.codehaus.plexus.util.StringUtils;
 
@@ -293,21 +293,7 @@ public class TagListReport
         }
         finally
         {
-          try
-          {
-            if ( output != null )
-            {
-              output.close();
-            }
-            if ( fos != null )
-            {
-              output.close();
-            }
-          }
-          catch ( IOException e )
-          {
-            getLog().warn( "Could not close streams: " + e.getMessage() );
-          }
+            IOUtil.close( output );
         }
     }
 
