@@ -180,6 +180,7 @@
         <version>2.1</version>
         <configuration>
           <columnNames>Key,Summary,Status,Resolution,Assignee,Type,Version,FixVersion</columnNames>
+          <sortColumnNames>FixVersion</sortColumnNames>
           <urlDownload>${project.url}</urlDownload>
           <generateJiraAnnouncement>true</generateJiraAnnouncement>
           <toAddresses>
