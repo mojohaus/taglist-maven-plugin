@@ -155,14 +155,14 @@
       <version>2.0</version>
     </dependency>
     <dependency>
-      <groupId>org.apache.maven.doxia</groupId>
+      <groupId>doxia</groupId>
       <artifactId>doxia-sink-api</artifactId>
-      <version>1.0-alpha-11</version>
+      <version>1.0-alpha-5</version>
     </dependency>
     <dependency>
-      <groupId>org.apache.maven.doxia</groupId>
+      <groupId>doxia</groupId>
       <artifactId>doxia-core</artifactId>
-      <version>1.0-alpha-11</version>
+      <version>1.0-alpha-5</version>
     </dependency>
     <!-- Test -->
     <dependency>
@@ -179,8 +179,8 @@
         <artifactId>maven-changes-plugin</artifactId>
         <version>2.1</version>
         <configuration>
-          <columnNames>Key,Summary,Status,Resolution,Assignee,Type,Version,FixVersion</columnNames>
-          <sortColumnNames>FixVersion</sortColumnNames>
+          <columnNames>Key,Summary,Status,Resolution,Assignee,Type,Version,Fix Version</columnNames>
+          <sortColumnNames>Fix Version</sortColumnNames>
           <urlDownload>${project.url}</urlDownload>
           <generateJiraAnnouncement>true</generateJiraAnnouncement>
           <toAddresses>
