@@ -243,6 +243,7 @@ public class TagListReport
     private void generateXmlReport( Collection tagReports )
     {
         TagListXMLReport report = new TagListXMLReport();
+        report.setModelEncoding( getEncoding() );
         
         // Iterate through each tag and populate an XML tag object.
         for ( Iterator ite = tagReports.iterator(); ite.hasNext(); )
