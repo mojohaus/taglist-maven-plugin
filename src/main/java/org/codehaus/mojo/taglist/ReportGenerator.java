@@ -30,10 +30,11 @@ import java.util.ResourceBundle;
 import org.codehaus.doxia.sink.Sink;
 import org.codehaus.mojo.taglist.beans.FileReport;
 import org.codehaus.mojo.taglist.beans.TagReport;
+import org.codehaus.plexus.util.StringUtils;
 
 /**
  * Generates the taglist report using Doxia.
- * 
+ *
  * @author <a href="mailto:bellingard.NO-SPAM@gmail.com">Fabrice Bellingard </a>
  */
 
@@ -76,7 +77,7 @@ public class ReportGenerator
 
     /**
      * Constructor.
-     * 
+     *
      * @param report the TagListReport object used in this build.
      * @param tagReports a collection of tagReports to output.
      */
@@ -155,7 +156,7 @@ public class ReportGenerator
         // Create a hyperlink if the "showEmptyTags" flag is set or the tag contains 1 or more occurrences.
         if ( showEmptyDetails || tagReport.getTagCount() > 0 )
         {
-            sink.link( "#" + tagReport.getTagName() );
+            sink.link( "#" + StringUtils.replace( tagReport.getTagName(), "@", "" ) );
             sink.text( tagReport.getTagName() );
             sink.link_();
         }
@@ -198,10 +199,11 @@ public class ReportGenerator
 
         sink.section2();
         sink.sectionTitle2();
-        sink.anchor( tagReport.getTagName() );
+        sink.text( tagReport.getTagName() );
+        sink.sectionTitle2_();
+        sink.anchor( StringUtils.replace( tagReport.getTagName(), "@", "" ) );
         sink.text( tagReport.getTagName() );
         sink.anchor_();
-        sink.sectionTitle2_();
         sink.paragraph();
         sink.bold();
         sink.text( bundle.getString( "report.taglist.detail.numberOfOccurrences" ) + ' ' + tagReport.getTagCount() );
@@ -270,14 +272,17 @@ public class ReportGenerator
             }
         }
         sink.text( String.valueOf( lineNumber ) );
-        sink.link_();
+        if ( xrefLocation != null )
+        {
+            sink.link_();
+        }
         sink.tableCell_();
         sink.tableRow_();
     }
 
     /**
      * Set the source code cross reference location.
-     * 
+     *
      * @param xrefLocation the location of the source code cross reference.
      */
     public void setXrefLocation( String xrefLocation )
@@ -287,7 +292,7 @@ public class ReportGenerator
 
     /**
      * Get the source code cross reference location.
-     * 
+     *
      * @return the source code cross reference location.
      */
     public String getXrefLocation()
@@ -297,7 +302,7 @@ public class ReportGenerator
 
     /**
      * Get the test code cross reference location.
-     * 
+     *
      * @return the test code cross reference location.
      */
     public String getTestXrefLocation()
@@ -307,7 +312,7 @@ public class ReportGenerator
 
     /**
      * Set the test code cross reference location.
-     * 
+     *
      * @param testXrefLocation the location of the test code cross reference.
      */
     public void setTestXrefLocation( String testXrefLocation )
