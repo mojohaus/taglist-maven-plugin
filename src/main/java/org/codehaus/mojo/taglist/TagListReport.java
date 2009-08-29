@@ -344,8 +344,8 @@ public class TagListReport
                     String artifactId = report.getArtifactId();
                     if ( "maven-jxr-plugin".equals( artifactId ) || "jxr-maven-plugin".equals( artifactId ) )
                     {
-                        generator.setXrefLocation( relativePath );
-                        generator.setTestXrefLocation( getRelativePath( testXrefLocation ) );
+                        getLog().error( "Taglist plugin MUST be executed after the JXR plugin."
+                                      + "  No links to xref were generated." );
                     }
                 }
             }

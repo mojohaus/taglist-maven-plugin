@@ -271,6 +271,8 @@ public class ReportGenerator
      */
     private void doCommentLine( FileReport fileReport, Integer lineNumber )
     {
+        boolean linked = false;
+        
         sink.tableRow();
         sink.tableCell();
         sink.text( fileReport.getComment( lineNumber ) );
@@ -280,18 +282,32 @@ public class ReportGenerator
         {
             String fileLink = xrefLocation + "/" + fileReport.getClassNameWithSlash() + ".html";
             File xrefFile = new File( siteOutputDirectory, fileLink.substring( 2 ) );
+
+            // Link only if file exists in xref
             if ( xrefFile.exists() )
             {
                 sink.link( fileLink + "#" + lineNumber );
-            }
-            else
-            {
-                // this is test-xref
-                sink.link( fileLink.replaceFirst( xrefLocation, testXrefLocation ) + "#" + lineNumber );
+                linked = true;
             }
         }
+        // If the file was not linked to xref and there is a test xref location check it
+        if ( !linked && testXrefLocation != null )
+        {
+            String testFileLink = testXrefLocation + "/" + fileReport.getClassNameWithSlash() + ".html";
+            File testXrefFile = new File( siteOutputDirectory, testFileLink.substring( 2 ) );
+            
+            // Link only if file exists in test xref
+            if ( testXrefFile.exists() )
+            {
+                sink.link( testFileLink + "#" + lineNumber );
+                linked = true;
+            }
+        }
+
         sink.text( String.valueOf( lineNumber ) );
-        if ( xrefLocation != null )
+        
+        // Was a xref or test-xref link created?
+        if ( linked )
         {
             sink.link_();
         }

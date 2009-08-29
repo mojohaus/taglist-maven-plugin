@@ -39,13 +39,33 @@ under the License.
       <question>When is a tag included in the report?</question>
       <answer>
         <p>
-          For a tag to be included in the report, it has to "contain"
-          something, i.e. it has to be followed by some text. A tag without
-          content is not counted in the report.
-        </p>
-        <p>
           For examples of this, see the
           <a href="examples/counting-tags.html">counting tags document</a>.
+        </p>
+      </answer>
+    </faq>
+    <faq id="Why do I get an error stating the Taglist plugin must must be exeucted after the JXR plugin?">
+      <question>Why do I get an error stating the Taglist plugin must must be exeucted after the JXR plugin?</question>
+      <answer>
+        <p>
+          The error message: "[ERROR] Taglist plugin MUST be executed after the JXR plugin.  No links to xref were generated." 
+          is logged when the Taglist plugin is executed before the JXR (source cross-reference generator) plugin.  
+          The Taglist plugin creates links in its report to the xref or test-xref files when tags are found; however, 
+          if the JXR plugin has not been executed, the Taglist plugin cannot create the links.
+        </p>
+        <p>
+        Some causes of this condition:<br/>
+        <ul>
+			<li><i>POM plugin order</i>:  the JXR plugin must be listed before the Taglist plugin in the POM or inherited 
+			POM reporting section.</li>
+			<li><i>Maven bug</i>:  in some versions of Maven, the report plugins execution order is erroneously  changed from the order defined in the POM file.</li>
+        </ul>  
+        </p>        
+        <p>
+          To resolve this error, check that the report plugins order is correct in the POM.  If you cannot modify the POM order, 
+          or if doing so does not resolve the problem, a workaround is to execute the "site" goal twice.  The first time 
+          you will receive the error and no links will be created, but the second pass will be successful because the xref files 
+          already exist.
         </p>
       </answer>
     </faq>
