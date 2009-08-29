@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<model xsd.namespace="http://modello.codehaus.org/MODELLO/1.0.0" xml.schemaLocation="http://modello.codehaus.org/xsd/modello-1.0.0.xsd" xml.namespace="org.codehaus.mojo.taglist-maven-plugin" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://modello.codehaus.org/MODELLO/1.0.0 http://modello.codehaus.org/xsd/modello-1.0.0.xsd" xmlns="http://modello.codehaus.org/MODELLO/1.0.0">
+	<id>taglistOptions</id>
+	<name>taglistOptions</name>
+	<description><![CDATA[Model for TagList Options.]]></description>
+	<defaults>
+		<default>
+			<key>package</key>
+			<value>org.codehaus.mojo.taglist.options</value>
+		</default>
+	</defaults>
+	<classes>
+		<class rootElement="true">
+			<name>TagListOptions</name>
+			<description><![CDATA[Specific TagList parameters, i.e. options that POM doesn't have any notions.]]></description>
+			<version>1.0.0</version>
+			<fields>
+				<field>
+					<name>tagClasses</name>
+					<version>1.0.0</version>
+					<association>
+						<type>TagClass</type>
+						<multiplicity>*</multiplicity>
+					</association>
+				</field>
+			</fields>
+		</class>
+		<!-- TagClass Options -->
+		<class>
+			<name>TagClass</name>
+			<description><![CDATA[The options for the specific tag class.]]></description>
+			<version>1.0.0</version>
+			<fields>
+				<field>
+					<name>displayName</name>
+					<description><![CDATA[The name to display for this tag class in the output HTML.]]></description>
+					<version>1.0.0</version>
+					<type>String</type>
+				</field>
+				<field>
+					<name>tags</name>
+					<version>1.0.0</version>
+					<association xml.itemsStyle="wrapped">
+						<type>Tag</type>
+						<multiplicity>*</multiplicity>
+					</association>
+				</field>
+			</fields>
+		</class>
+		<!-- Tag Options -->
+		<class>
+			<name>Tag</name>
+			<description><![CDATA[The options for the specific tag.]]></description>
+			<version>1.0.0</version>
+			<fields>
+				<field>
+					<name>matchString</name>
+					<required>true</required>
+					<description><![CDATA[The string to be used in the TagList search.]]></description>
+					<version>1.0.0</version>
+					<type>String</type>
+				</field>
+				<field>
+					<name>matchType</name>
+					<required>false</required>
+					<description><![CDATA[The type of comparison to perform on the string.  Options:  exact, ignoreCase, regEx   Default = exact.]]></description>
+					<version>1.0.0</version>
+					<type>String</type>
+				</field>
+			</fields>
+		</class>
+	</classes>
+</model>
