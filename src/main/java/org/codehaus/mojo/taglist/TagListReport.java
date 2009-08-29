@@ -189,6 +189,14 @@ public class TagListReport
     private boolean showEmptyDetails;
     
     /**
+     * Skips reporting of test sources.
+     * 
+     * @parameter default-value="false"
+     * @since 2.4
+     */
+    private boolean skipTestSources;
+    
+    /**
      * Defines each tag class (grouping) and the individual tags within each class.
      * The user can also specify a title for each tag class and the matching logic used
      * by each tag.
@@ -525,7 +533,9 @@ public class TagListReport
     public List constructSourceDirs()
     {
         List dirs = new ArrayList( project.getCompileSourceRoots() );
-        dirs.addAll( project.getTestCompileSourceRoots() );
+        if ( !skipTestSources ) {
+            dirs.addAll( project.getTestCompileSourceRoots() );
+        }
         
 
         if ( aggregate )
@@ -537,7 +547,9 @@ public class TagListReport
                 if ( "java".equals( reactorProject.getArtifact().getArtifactHandler().getLanguage() ) )
                 {
                     dirs.addAll( reactorProject.getCompileSourceRoots() );
-                    dirs.addAll( reactorProject.getTestCompileSourceRoots() );
+                    if ( !skipTestSources ) {
+                        dirs.addAll( reactorProject.getTestCompileSourceRoots() );
+                    }
                 }
             }
         }
