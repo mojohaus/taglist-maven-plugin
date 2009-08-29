@@ -58,7 +58,9 @@ under the License.
         <ul>
 			<li><i>POM plugin order</i>:  the JXR plugin must be listed before the Taglist plugin in the POM or inherited 
 			POM reporting section.</li>
-			<li><i>Maven bug</i>:  in some versions of Maven, the report plugins execution order is erroneously  changed from the order defined in the POM file.</li>
+			<li><i>Maven bug</i>:  in some versions of Maven, the report plugins execution order is erroneously 
+			changed from the order defined in the POM file. 
+			Please follow <a href="http://jira.codehaus.org/browse/MNG-2258">the JIRA issue</a> for more information and updated status.</li>
         </ul>  
         </p>        
         <p>
