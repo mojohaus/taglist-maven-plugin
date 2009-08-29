@@ -49,5 +49,24 @@ public abstract class AbstractTaglistMojoTestCase
 
         return htmlString;
     }
+    
+    /**
+     * Reads the generated taglist XML report into a String.
+     * @param mojo to use as source
+     * @return a String containing the contents.
+     * @throws IOException in case of generic I/O errors.
+     */
+    protected String getGeneratedXMLOutput( TagListReport mojo )
+        throws IOException
+    {
+        File outputDir = new File(mojo.getXMLOutputDirectory());
+
+        String filename = mojo.getOutputName() + ".xml";
+        File outputXML = new File( outputDir, filename );
+        assertTrue( "Cannont find output xml file", outputXML.exists() );
+        String xmlString = FileUtils.fileRead( outputXML, TEST_ENCODING );
+
+        return xmlString;
+    }
 
 }

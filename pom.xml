@@ -95,21 +95,38 @@
       <plugin>
         <groupId>org.codehaus.modello</groupId>
         <artifactId>modello-maven-plugin</artifactId>
-        <version>1.0-alpha-22</version>
+        <version>1.0.2</version>
         <executions>
           <execution>
+		    <id>XMLOutput</id>
+		    <phase>generate-sources</phase>
             <goals>
               <goal>java</goal>
+              <goal>xsd</goal>
               <goal>xpp3-writer</goal>
             </goals>
+            <configuration>
+              <version>1.0.0</version>
+              <models>
+                <model>src/main/mdo/TagListOutput.mdo</model>
+              </models>
+            </configuration>
+          </execution>
+          <execution>
+		    <id>POMInput</id>
+		    <phase>generate-sources</phase>
+            <goals>
+              <goal>java</goal>
+              <goal>xsd</goal>
+            </goals>
+            <configuration>
+              <version>1.0.0</version>
+              <models>
+                <model>src/main/mdo/TagListOptions.mdo</model>
+              </models>
+            </configuration>
           </execution>
         </executions>
-        <configuration>
-          <version>1.0.0</version>
-          <models>
-            <model>src/main/mdo/TagListOutput.mdo</model>
-          </models>
-        </configuration>
       </plugin>
     </plugins>
   </build>
@@ -207,11 +224,32 @@
         <artifactId>taglist-maven-plugin</artifactId>
         <version>${project.version}</version>
         <configuration>
-          <tags>
-            <tag>TODO</tag>
-            <tag>@todo</tag>
-            <tag>FIXME</tag>
-          </tags>
+            <tagListOptions>
+                <tagClasses>
+                    <tagClass>
+                        <displayName>Todo Tags</displayName>
+                        <tags>
+                            <tag>
+                                <matchString>TODO</matchString>
+                                <matchType>ignoreCase</matchType>
+                            </tag>
+                            <tag>
+                                <matchString>@todo</matchString>
+                                <matchType>exact</matchType>
+                            </tag>
+                        </tags>
+                    </tagClass>
+                    <tagClass>
+                        <displayName>Fix Tags</displayName>
+                        <tags>
+                            <tag>
+                                <matchString>FIXME</matchString>
+                                <matchType>exact</matchType>
+                            </tag>
+                        </tags>
+                    </tagClass>
+                </tagClasses>
+            </tagListOptions>
         </configuration>
       </plugin>
     </plugins>

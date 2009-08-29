@@ -210,5 +210,28 @@ public class FileReport
             return 0;
         }
     }
+    
+    /**
+     * {@inheritDoc}
+     *
+     * @see Object#equals(Object)
+     */
+    public boolean equals( Object r )
+    {
+        // In Java 5 the PriorityQueue.remove method uses the 
+        // compareTo method, while in Java 6 it uses the equals method.
+        return ( this.compareTo( r ) == 0 );
+    }
+    
+    /**
+     * {@inheritDoc}
+     *
+     * @see Object#hashCode()
+     */
+    public int hashCode() 
+    {
+        assert false : "hashCode not designed";
+        return 1; // any arbitrary constant will do 
+    }
 
 }

@@ -172,10 +172,11 @@ public class TaglistMojoBasicConfigTest
         mojo.execute();
 
         String htmlString = super.getGeneratedOutput( mojo );
+        String xmlString = super.getGeneratedXMLOutput( mojo );
 
         // Check to see that there were two tags found
-        String expected = "@colons</a><p><b>Number of occurrences found in the code: 2</b>";
-        assertTrue("Missing count tag result.", htmlString.indexOf(expected) != -1);
+        String expected = "<tag name=\"@colons\" count=\"2\">";
+        assertTrue("Incorrect number of colon matches.", xmlString.indexOf(expected) != -1);
 
         // Check for the tag without the colon
         expected = "<td>This is without colon.</td>";
@@ -243,13 +244,13 @@ public class TaglistMojoBasicConfigTest
         assertTrue("Incorrect count for the not in code tag.", htmlString.indexOf(expected) != -1);
 
         // Check to see show empty tags in code section details exist (they should).
-        expected = "<div class=\"section\"><h3>@show_empty_details_tag_in_code</h3>" +
-                "<a name=\"show_empty_details_tag_in_code\">@show_empty_details_tag_in_code</a>";
+        expected = "<div class=\"section\"><h3>" +
+                "<a name=\"show_empty_details_tag_in_code\">@show_empty_details_tag_in_code</a></h3>";
         assertTrue("Missing tag details for the in code tag.", htmlString.indexOf(expected) != -1);
 
         // Check to see show empty tags not in code section details exist (they should).
-        expected = "<div class=\"section\"><h3>@show_empty_details_tag_not_in_code</h3>" +
-                "<a name=\"show_empty_details_tag_not_in_code\">@show_empty_details_tag_not_in_code</a>";
+        expected = "<div class=\"section\"><h3>" +
+                "<a name=\"show_empty_details_tag_not_in_code\">@show_empty_details_tag_not_in_code</a></h3>";
         assertTrue("Missing tag details for the not in code tag.", htmlString.indexOf(expected) != -1);
     }
 
@@ -278,24 +279,30 @@ public class TaglistMojoBasicConfigTest
         assertTrue("Incorrect count for the not in code tag.", htmlString.indexOf(expected) != -1);
 
         // Check to see show empty tags in code section details exist (they should).
-        expected = "<div class=\"section\"><h3>@show_empty_details_tag_in_code</h3>" +
-                "<a name=\"show_empty_details_tag_in_code\">@show_empty_details_tag_in_code</a>";
+        expected = "<div class=\"section\"><h3>" +
+                "<a name=\"show_empty_details_tag_in_code\">@show_empty_details_tag_in_code</a></h3>";
         assertTrue("Missing tag details for the in code tag.", htmlString.indexOf(expected) != -1);
 
         // Check to see show empty tags not in code section details do NOT exist (they should not).
-        expected = "<div class=\"section\"><h3><a name=\"@show_empty_details_tag_not_in_code\">@show_empty_details_tag_not_in_code</a></h3>";
+        expected = "<div class=\"section\"><h3>" +
+                "<a name=\"show_empty_details_tag_not_in_code\">@show_empty_details_tag_not_in_code</a></h3>";
         assertFalse("Unexpected tag details for the not in code tag.", htmlString.indexOf(expected) != -1);
     }
 
     public void testXmlFile()
         throws Exception
     {
-        File actualFile = new File( getBasedir(), "/target/test-classes/unit/basic-config-test/outputDirectory/taglist/taglist.xml" );
-        File expectedFile = new File( getBasedir(), "/target/test-classes/unit/basic-config-test/expected-taglist.xml" );
-        String actualXml = FileUtils.fileRead( actualFile, TEST_ENCODING );
+    	File pluginXmlFile = new File( getBasedir(), "/src/test/resources/unit/basic-config-test/xml-output-pom.xml" );
+        TagListReport mojo = super.getTagListReport( pluginXmlFile );
+        mojo.execute();
+        
+        String actualXml = super.getGeneratedXMLOutput( mojo );
         actualXml = actualXml.replaceAll( "(\r\n)|(\r)", "\n" );
+        
+        File expectedFile = new File( getBasedir(), "/target/test-classes/unit/basic-config-test/expected-taglist.xml" );       
         String expectedXml = FileUtils.fileRead( expectedFile, TEST_ENCODING );
         expectedXml = expectedXml.replaceAll( "(\r\n)|(\r)", "\n" );
+
         assertEquals( "unexpected contents", expectedXml, actualXml );
     }
 }

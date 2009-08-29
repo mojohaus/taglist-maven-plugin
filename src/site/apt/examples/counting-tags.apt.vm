@@ -23,13 +23,43 @@ Counting Tags
         <artifactId>taglist-maven-plugin</artifactId>
         <version>${project.version}</version>
         <configuration>
-          <tags>
-            <tag>TODO</tag>
-            <tag>&lt;todo</tag>
-            <tag>FIXME</tag>
-            <tag>DOCUMENT_ME</tag>
-            <tag>NOT_YET_DOCUMENTED</tag>
-          </tags>
+          <encoding>UTF-8</encoding>
+          <sourceFileLocale>en</sourceFileLocale>
+          <emptyComments>false</emptyComments>
+          <tagListOptions>
+            <tagClasses>
+              <tagClass>
+                <displayName>Documentation Work</displayName>
+                <tags>
+                  <tag>
+                    <matchString>DOCUMENT_ME</matchString>
+                    <matchType>exact</matchType>
+                  </tag>
+                  <tag>
+                    <matchString>NOT_YET_DOCUMENTED</matchString>
+                    <matchType>exact</matchType>
+                  </tag>
+                </tags>
+              </tagClass>
+              <tagClass>
+                <displayName>Code Work</displayName>
+                <tags>
+                  <tag>
+                    <matchString>FIXME</matchString>
+                    <matchType>exact</matchType>
+                  </tag>
+                  <tag>
+                    <matchString>&lt;todo</matchString>
+                    <matchType>exact</matchType>
+                  </tag>
+                  <tag>
+                    <matchString>TODO</matchString>
+                    <matchType>ignoreCase</matchType>
+                  </tag>
+                </tags>
+              </tagClass>
+            </tagClasses>
+          </tagListOptions>
         </configuration>
       </plugin>
       ...
@@ -74,7 +104,7 @@ Counting Tags
 
   We'll go through the lines in the code and explain what happens and why.
 
-  <<Line 4:>> This line will <not> be counted, because it is empty - it isn't
+  <<Line 4:>> This line will <not> be counted, because <emptyComments> is set to false and it is empty - it isn't
   followed by a desciptive text.
 
   <<Line 10:>> This line will be counted.

@@ -20,6 +20,7 @@ package org.codehaus.mojo.taglist.beans;
  */
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -35,9 +36,14 @@ public class TagReport
 {
 
     /**
-     * Tag name.
+     * Tag Class display name.
      */
-    private String tagName;
+    private String displayName;
+    
+    /**
+     * An array containing the tag string that make the tag class.
+     */
+    private ArrayList tagStrings = new ArrayList();
 
     /**
      * Map containing File objects as keys, and FileReport object as values.
@@ -52,11 +58,11 @@ public class TagReport
     /**
      * Constructor.
      * 
-     * @param tagName the tag's name.
+     * @param displayName the tag class's name.
      */
-    public TagReport( String tagName )
+    public TagReport( String displayName )
     {
-        this.tagName = tagName;
+        this.displayName = displayName;
         this.fileReportsMap = new HashMap();
         tagCount = -1;
     }
@@ -94,13 +100,13 @@ public class TagReport
     }
 
     /**
-     * Returns the name of the tag that was looked for.
+     * Returns the name of the tag class that was looked for.
      * 
-     * @return the name of the tag.
+     * @return the name of the tag class.
      */
     public String getTagName()
     {
-        return tagName;
+        return displayName;
     }
 
     /**
@@ -140,6 +146,66 @@ public class TagReport
         {
             return 0;
         }
+    }
+    
+    /** Add a tag string to this tag class. 
+     *  Each tag class contains 1 or more tag strings that are used
+     *  for matching 'todo' strings in the scanned code. 
+     *  
+     * @param tagString the tag string to add.
+     */
+    public void addTagString ( final String tagString )
+    {
+        if ( tagString != null )
+        {
+            tagStrings.add( tagString );
+        }
+    }
+    
+    /** Get a list of tag strings used by this tag report.
+     * 
+     * @return a list of tag strings.
+     */
+    public String [] getTagStrings ()
+    {
+        
+        String [] strings = null;
+        
+        if ( tagStrings.size() > 0 )
+        {
+            strings = new String [tagStrings.size()];
+
+            for ( int i = 0; i < tagStrings.size(); ++i )
+            {
+                strings[i] = (String) tagStrings.get( i );
+            }
+        }
+        
+        return ( strings );
+        
+    }
+    
+    /**
+     * {@inheritDoc}
+     *
+     * @see Object#equals(Object)
+     */
+    public boolean equals( Object r )
+    {
+        // In Java 5 the PriorityQueue.remove method uses the 
+        // compareTo method, while in Java 6 it uses the equals method.
+        return ( this.compareTo( r ) == 0 );
+    }
+    
+    /**
+     * {@inheritDoc}
+     *
+     * @see Object#hashCode()
+     */
+    public int hashCode() 
+    {
+        assert false : "hashCode not designed";
+        return 1; // any arbitrary constant will do 
     }
 
 }

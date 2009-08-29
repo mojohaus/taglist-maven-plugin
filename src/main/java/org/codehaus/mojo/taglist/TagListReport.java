@@ -44,6 +44,10 @@ import org.codehaus.mojo.taglist.output.io.xpp3.TaglistOutputXpp3Writer;
 import org.codehaus.plexus.util.IOUtil;
 import org.codehaus.plexus.util.PathTool;
 import org.codehaus.plexus.util.StringUtils;
+import org.codehaus.mojo.taglist.tags.AbsTag;
+import org.codehaus.mojo.taglist.tags.InvalidTagException;
+import org.codehaus.mojo.taglist.tags.TagClass;
+import org.codehaus.mojo.taglist.tags.TagFactory;
 
 /**
  * Scans the source files for tags and generates a report on their occurrences.
@@ -74,6 +78,15 @@ public class TagListReport
      * @since 2.3
      */
     private String encoding;
+    
+    /**
+     * Specifies the Locale of the source files.
+     *
+     * @parameter default-value="en"
+     * @since 2.4
+     */
+    private String sourceFileLocale;
+    private static final String DEFAULT_LOCALE = "en";
 
     /**
      * The output directory for the report. Note that this parameter is only evaluated if the goal is run directly from
@@ -85,16 +98,19 @@ public class TagListReport
      */
     private File outputDirectory;
     
-    /**                                                                                                                                                                   
-     * Specifies the directory where the xml output will be generated.                                                                                                    
-     *                                                                                                                                                                    
+    /**
+     * Specifies the directory where the xml output will be generated.
+     *
      * @parameter default-value="${project.build.directory}/taglist"
-     * @since 2.3                                                                                                      
-     * @required                                                                                                                                                          
-     */                                                                                                                                                                   
+     * @since 2.3
+     * @required
+     */
     private File xmlOutputDirectory;                                    
 
     /**
+     * <b>Deprecated</b> as of version 2.4.  The configuration <a href="#tagListOptions">tagListOptions</a> 
+     * should be used instead of tags.  <br/>
+     * <br/>
      * List of tags to look for, specified as &lt;tag&gt; tags. The tags can be either:
      * <ul>
      * <li>Javadoc tags: "@todo" for instance</li>
@@ -102,6 +118,7 @@ public class TagListReport
      * /**).</li>
      * </ul>
      * 
+     * @deprecated
      * @parameter
      */
     private String[] tags;
@@ -170,6 +187,43 @@ public class TagListReport
      * @since 2.2
      */
     private boolean showEmptyDetails;
+    
+    /**
+     * Defines each tag class (grouping) and the individual tags within each class.
+     * The user can also specify a title for each tag class and the matching logic used
+     * by each tag.
+     * <ul>
+     *  <li> <b>Exact Match</b> <br/>
+     *     &lt;matchString&gt;todo&lt;/matchString&gt;<br/>
+     *     &lt;matchType&gt;exact&lt;/matchType&gt; <br/>
+     *     <i>Matches:  todo </i>
+     *  </li>
+     *  <li> <b>Ignore Case Match</b> <br/>
+     *     &lt;matchString&gt;todo&lt;/matchString&gt;<br/>
+     *     &lt;matchType&gt;ignoreCase&lt;/matchType&gt; <br/>
+     *     <i>Matches:  todo, Todo, TODO... </i>
+     *  </li>
+     *  <li> <b>Regular Expression Match</b> <br/>
+     *     &lt;matchString&gt;tod[aeo]&lt;/matchString&gt;<br/>
+     *     &lt;matchType&gt;regEx&lt;/matchType&gt; <br/>
+     *     <i>Matches:  toda, tode, todo </i>
+     *  </li>
+     * </ul>
+     * <br/>
+     * <br/>
+     * For complete examples see the <a href="usage.html"><b>Usage</b></a> page.
+     * <br/>
+     * <br/>
+     * The legacy tags configuration remains for backwards compatibility, and the 
+     * simultaneous use of both the tags and tagListOptions is permitted;
+     * however the tags configuration should be avoided whenever possible 
+     * because those strings are only checked using the exact match logic.
+     *
+     * @parameter
+     * @since 2.4
+     */
+    private org.codehaus.mojo.taglist.options.TagListOptions tagListOptions;
+
 
     /**
      * {@inheritDoc}
@@ -178,10 +232,12 @@ public class TagListReport
      */
     protected void executeReport( Locale locale )
         throws MavenReportException
-    {
+    {    
         this.currentLocale = locale;
 
-        if ( tags == null || tags.length == 0 )
+        // User entered no tags and no tagOptions, then default tags
+        if ( ( tags == null || tags.length == 0 ) 
+             && ( tagListOptions == null || tagListOptions.getTagClasses().size() == 0 ) )
         {
             tags = new String[] { "@todo", "TODO" };
         }
@@ -192,11 +248,81 @@ public class TagListReport
                            "File encoding has not been set, using platform encoding "
                                + System.getProperty( "file.encoding" ) + ", i.e. build is platform dependent!" );
         }
+        
+        // Create the tag classes
+        ArrayList tagClasses = new ArrayList();
+        
+        // If any old style tags were used, then add each tag as a tag class
+        if ( tags != null && tags.length > 0 )
+        {
+            getLog().warn( "Using legacy tag format.  This is not recommended." );
+            for ( int i = 0; i < tags.length; i++ )
+            {
+                TagClass tc = new TagClass ( tags[i] );
+                try
+                {
+                    AbsTag newTag = TagFactory.createTag( "exact", tags[i] );
+                    tc.addTag( newTag );
+                
+                    tagClasses.add( tc );
+                }
+                catch ( InvalidTagException e )
+                {
+                    // This should be impossible since exact is supported.
+                    getLog().error( "Invalid tag type used.  tag type: exact" );
+                }
+            }
+        }
+        
+        // If the new style of tag options were used, add them
+        if ( tagListOptions != null && tagListOptions.getTagClasses().size() > 0 ) 
+        {
+            // Scan each tag class 
+            Iterator classIter = tagListOptions.getTagClasses().iterator();
+            while ( classIter.hasNext() )
+            {
+                org.codehaus.mojo.taglist.options.TagClass tcOption = 
+                              (org.codehaus.mojo.taglist.options.TagClass) classIter.next();
+                
+                // Store the tag class display name.
+                TagClass tc = new TagClass ( tcOption.getDisplayName() );
+                
+                // Scan each tag within this tag class.
+                Iterator tagIter = tcOption.getTags().iterator();
+                while ( tagIter.hasNext() )
+                {
+                    org.codehaus.mojo.taglist.options.Tag tagOption = 
+                              (org.codehaus.mojo.taglist.options.Tag) tagIter.next();
 
+                    // If a match type is not specified use default. 
+                    String matchType = tagOption.getMatchType();
+                    if ( matchType == null || matchType.length() == 0 )
+                    {
+                        matchType = TagFactory.getDefaultTagType();
+                    }
+                    
+                    try
+                    {
+                        // Create the tag based on the match type, and add it to the tag class
+                        AbsTag newTag = TagFactory.createTag( matchType, tagOption.getMatchString() );
+                        tc.addTag( newTag );
+                    }
+                    catch ( InvalidTagException e )
+                    {
+                        // This should be impossible since exact is supported.
+                        getLog().error( "Invalid tag type used.  tag type: " + matchType );
+                    }
+                }
+                
+                // Add this new tag class to the container.
+                tagClasses.add( tc );
+            }
+        }
+               
         // let's proceed to the analysis
-        FileAnalyser fileAnalyser = new FileAnalyser( this );
+        FileAnalyser fileAnalyser = new FileAnalyser( this, tagClasses );
         Collection tagReports = fileAnalyser.execute();
-
+        
         // Renders the report
         ReportGenerator generator = new ReportGenerator( this, tagReports );
         if ( linkXRef )
@@ -291,7 +417,7 @@ public class TagListReport
         {
           fos = new FileOutputStream( xmlFile );
           output = new OutputStreamWriter( fos, getEncoding() );
-
+          
           // Write out the XML output file.
           TaglistOutputXpp3Writer xmlWriter = new TaglistOutputXpp3Writer();
           xmlWriter.write( output, report );
@@ -429,15 +555,20 @@ public class TagListReport
     {
         return encoding;
     }
-
+    
     /**
-     * Returns the tags to look for.
-     * 
-     * @return a collection of String objects representing the tag names.
+     * Returns the Locale of the source files.
+     *
+     * @return The Locale of the source files.
      */
-    public String[] getTags()
+    public Locale getLocale()
     {
-        return tags;
+        // The locale string should never be null.
+        if ( sourceFileLocale == null )
+        {
+            sourceFileLocale = DEFAULT_LOCALE;
+        }
+        return new Locale( sourceFileLocale );
     }
 
     /**
@@ -488,6 +619,16 @@ public class TagListReport
     protected String getOutputDirectory()
     {
         return outputDirectory.getAbsolutePath();
+    }
+    
+    /**
+     * Get the absolute path to the XML output directory.
+     * 
+     * @return string of the absolute path.
+     */
+    protected String getXMLOutputDirectory()
+    {
+        return xmlOutputDirectory.getAbsolutePath();
     }
 
     /**

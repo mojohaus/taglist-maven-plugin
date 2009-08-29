@@ -43,7 +43,8 @@ Usage
 mvn site
 -------------------
 
-  You can easily customise the tags you want to look for. For instance:
+  The TagList plugin allows tags to be found using three matching methods:  exact match, ignore case match, and 
+  regular expression match.  The matched tags are grouped into tag classes.  For instance:
 
 -------------------
 <project>
@@ -59,6 +60,40 @@ mvn site
         <artifactId>taglist-maven-plugin</artifactId>
         <version>${project.version}</version>
         <configuration>
+          <tagListOptions>
+            <tagClasses>
+              <tagClass>
+                <displayName>Todo Work</displayName>
+                <tags>
+                  <tag>
+                    <matchString>todo</matchString>
+                    <matchType>ignoreCase</matchType>
+                  </tag>
+                  <tag>
+                    <matchString>FIXME</matchString>
+                    <matchType>exact</matchType>
+                  </tag>
+                </tags>
+              </tagClass>
+            </tagClasses>
+          </tagListOptions>
+        </configuration>
+      </plugin>
+    </plugins>
+  </reporting>
+  ...
+</project>
+
+
+-------------------
+
+  For backwards compatibility with versions prior to the 2.4 release, the legacy tags configuration is supported; however, only exact matching
+  is used with legacy configuration.
+
+-------------------
+<project>
+  ...
+        <configuration>
           <tags>
             <tag>TODO</tag>
             <tag>FIXME</tag>
@@ -66,9 +101,6 @@ mvn site
             <tag>@deprecated</tag>
           </tags>
         </configuration>
-      </plugin>
-    </plugins>
-  </reporting>
   ...
 </project>
 -------------------

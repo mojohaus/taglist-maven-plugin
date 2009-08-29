@@ -138,6 +138,9 @@ public class ReportGenerator
         sink.tableHeaderCell();
         sink.text( bundle.getString( "report.taglist.summary.occurrences" ) );
         sink.tableHeaderCell_();
+        sink.tableHeaderCell();
+        sink.text( bundle.getString( "report.taglist.summary.tagstrings" ) );
+        sink.tableHeaderCell_();
         sink.tableRow_();
         for ( Iterator iter = tagReports.iterator(); iter.hasNext(); )
         {
@@ -167,6 +170,22 @@ public class ReportGenerator
         sink.tableCell_();
         sink.tableCell();
         sink.text( String.valueOf( tagReport.getTagCount() ) );
+        sink.tableCell_();
+        sink.tableCell();
+        String [] tags = tagReport.getTagStrings();
+        if ( tags != null )
+        {
+            // Output each tag string
+            for ( int i = 0; i < tags.length; ++i )
+            {
+                if ( i > 0 )
+                {
+                    // Insert comma before each tag except for the first one.
+                    sink.text( ", " );
+                }
+                sink.text( tags[i] );
+            }
+        }
         sink.tableCell_();
         sink.tableRow_();
     }
@@ -199,11 +218,11 @@ public class ReportGenerator
 
         sink.section2();
         sink.sectionTitle2();
-        sink.text( tagReport.getTagName() );
-        sink.sectionTitle2_();
+        //sink.text( tagReport.getTagName() );
         sink.anchor( StringUtils.replace( tagReport.getTagName(), "@", "" ) );
         sink.text( tagReport.getTagName() );
         sink.anchor_();
+        sink.sectionTitle2_();
         sink.paragraph();
         sink.bold();
         sink.text( bundle.getString( "report.taglist.detail.numberOfOccurrences" ) + ' ' + tagReport.getTagCount() );

@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<report>
+<report xmlns="org.codehaus.mojo.taglist-maven-plugin">
   <tags>
-    <tag name="@show_empty_details_tag_in_code" count="1">
+    <tag name="@create_output" count="1">
       <files>
         <file name="com.BasicConfig" count="1">
           <comments>
             <comment>
-              <lineNumber>49</lineNumber>
-              <comment>this tag is in the Java code</comment>
+              <lineNumber>11</lineNumber>
+              <comment>This is the tag for the output test.</comment>
             </comment>
           </comments>
         </file>
       </files>
     </tag>
-    <tag name="@show_empty_details_tag_not_in_code" count="0" />
   </tags>
 </report>
