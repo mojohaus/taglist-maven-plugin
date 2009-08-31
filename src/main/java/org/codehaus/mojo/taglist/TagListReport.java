@@ -41,13 +41,13 @@ import org.codehaus.mojo.taglist.output.TagListXMLFile;
 import org.codehaus.mojo.taglist.output.TagListXMLReport;
 import org.codehaus.mojo.taglist.output.TagListXMLTag;
 import org.codehaus.mojo.taglist.output.io.xpp3.TaglistOutputXpp3Writer;
-import org.codehaus.plexus.util.IOUtil;
-import org.codehaus.plexus.util.PathTool;
-import org.codehaus.plexus.util.StringUtils;
 import org.codehaus.mojo.taglist.tags.AbsTag;
 import org.codehaus.mojo.taglist.tags.InvalidTagException;
 import org.codehaus.mojo.taglist.tags.TagClass;
 import org.codehaus.mojo.taglist.tags.TagFactory;
+import org.codehaus.plexus.util.IOUtil;
+import org.codehaus.plexus.util.PathTool;
+import org.codehaus.plexus.util.StringUtils;
 
 /**
  * Scans the source files for tags and generates a report on their occurrences.
@@ -64,7 +64,6 @@ public class TagListReport
      * @readonly
      */
     private MavenProject project;
-    
 
     /**
      * @component
@@ -73,43 +72,44 @@ public class TagListReport
 
     /**
      * Specifies the character encoding of the source files.
-     *
+     * 
      * @parameter expression="${encoding}" default-value="${project.build.sourceEncoding}"
      * @since 2.3
      */
     private String encoding;
-    
+
     /**
      * Specifies the Locale of the source files.
-     *
+     * 
      * @parameter default-value="en"
      * @since 2.4
      */
     private String sourceFileLocale;
+
     private static final String DEFAULT_LOCALE = "en";
 
     /**
      * The output directory for the report. Note that this parameter is only evaluated if the goal is run directly from
-     * the command line or from a build life cycle phase. If the goal is run indirectly as part of a site generation, 
+     * the command line or from a build life cycle phase. If the goal is run indirectly as part of a site generation,
      * the output directory configured in the Maven Site Plugin is used instead.
      * 
      * @parameter default-value="${project.reporting.outputDirectory}"
      * @required
      */
     private File outputDirectory;
-    
+
     /**
      * Specifies the directory where the xml output will be generated.
-     *
+     * 
      * @parameter default-value="${project.build.directory}/taglist"
      * @since 2.3
      * @required
      */
-    private File xmlOutputDirectory;                                    
+    private File xmlOutputDirectory;
 
     /**
-     * <b>Deprecated</b> as of version 2.4.  The configuration <a href="#tagListOptions">tagListOptions</a> 
-     * should be used instead of tags.  <br/>
+     * <b>Deprecated</b> as of version 2.4. The configuration <a href="#tagListOptions">tagListOptions</a> should be
+     * used instead of tags. <br/>
      * <br/>
      * List of tags to look for, specified as &lt;tag&gt; tags. The tags can be either:
      * <ul>
@@ -187,7 +187,7 @@ public class TagListReport
      * @since 2.2
      */
     private boolean showEmptyDetails;
-    
+
     /**
      * Skips reporting of test sources.
      * 
@@ -195,43 +195,36 @@ public class TagListReport
      * @since 2.4
      */
     private boolean skipTestSources;
-    
+
     /**
-     * Defines each tag class (grouping) and the individual tags within each class.
-     * The user can also specify a title for each tag class and the matching logic used
-     * by each tag.
+     * Defines each tag class (grouping) and the individual tags within each class. The user can also specify a title
+     * for each tag class and the matching logic used by each tag.
      * <ul>
-     *  <li> <b>Exact Match</b> <br/>
-     *     &lt;matchString&gt;todo&lt;/matchString&gt;<br/>
-     *     &lt;matchType&gt;exact&lt;/matchType&gt; <br/>
-     *     <i>Matches:  todo </i>
-     *  </li>
-     *  <li> <b>Ignore Case Match</b> <br/>
-     *     &lt;matchString&gt;todo&lt;/matchString&gt;<br/>
-     *     &lt;matchType&gt;ignoreCase&lt;/matchType&gt; <br/>
-     *     <i>Matches:  todo, Todo, TODO... </i>
-     *  </li>
-     *  <li> <b>Regular Expression Match</b> <br/>
-     *     &lt;matchString&gt;tod[aeo]&lt;/matchString&gt;<br/>
-     *     &lt;matchType&gt;regEx&lt;/matchType&gt; <br/>
-     *     <i>Matches:  toda, tode, todo </i>
-     *  </li>
+     * <li><b>Exact Match</b> <br/>
+     * &lt;matchString&gt;todo&lt;/matchString&gt;<br/>
+     * &lt;matchType&gt;exact&lt;/matchType&gt; <br/>
+     * <i>Matches: todo </i></li>
+     * <li><b>Ignore Case Match</b> <br/>
+     * &lt;matchString&gt;todo&lt;/matchString&gt;<br/>
+     * &lt;matchType&gt;ignoreCase&lt;/matchType&gt; <br/>
+     * <i>Matches: todo, Todo, TODO... </i></li>
+     * <li><b>Regular Expression Match</b> <br/>
+     * &lt;matchString&gt;tod[aeo]&lt;/matchString&gt;<br/>
+     * &lt;matchType&gt;regEx&lt;/matchType&gt; <br/>
+     * <i>Matches: toda, tode, todo </i></li>
      * </ul>
      * <br/>
      * <br/>
-     * For complete examples see the <a href="usage.html"><b>Usage</b></a> page.
+     * For complete examples see the <a href="usage.html"><b>Usage</b></a> page. <br/>
      * <br/>
-     * <br/>
-     * The legacy tags configuration remains for backwards compatibility, and the 
-     * simultaneous use of both the tags and tagListOptions is permitted;
-     * however the tags configuration should be avoided whenever possible 
-     * because those strings are only checked using the exact match logic.
-     *
+     * The legacy tags configuration remains for backwards compatibility, and the simultaneous use of both the tags and
+     * tagListOptions is permitted; however the tags configuration should be avoided whenever possible because those
+     * strings are only checked using the exact match logic.
+     * 
      * @parameter
      * @since 2.4
      */
     private org.codehaus.mojo.taglist.options.TagListOptions tagListOptions;
-
 
     /**
      * {@inheritDoc}
@@ -240,12 +233,12 @@ public class TagListReport
      */
     protected void executeReport( Locale locale )
         throws MavenReportException
-    {    
+    {
         this.currentLocale = locale;
 
         // User entered no tags and no tagOptions, then default tags
-        if ( ( tags == null || tags.length == 0 ) 
-             && ( tagListOptions == null || tagListOptions.getTagClasses().size() == 0 ) )
+        if ( ( tags == null || tags.length == 0 )
+            && ( tagListOptions == null || tagListOptions.getTagClasses().size() == 0 ) )
         {
             tags = new String[] { "@todo", "TODO" };
         }
@@ -256,22 +249,22 @@ public class TagListReport
                            "File encoding has not been set, using platform encoding "
                                + System.getProperty( "file.encoding" ) + ", i.e. build is platform dependent!" );
         }
-        
+
         // Create the tag classes
         ArrayList tagClasses = new ArrayList();
-        
+
         // If any old style tags were used, then add each tag as a tag class
         if ( tags != null && tags.length > 0 )
         {
             getLog().warn( "Using legacy tag format.  This is not recommended." );
             for ( int i = 0; i < tags.length; i++ )
             {
-                TagClass tc = new TagClass ( tags[i] );
+                TagClass tc = new TagClass( tags[i] );
                 try
                 {
                     AbsTag newTag = TagFactory.createTag( "exact", tags[i] );
                     tc.addTag( newTag );
-                
+
                     tagClasses.add( tc );
                 }
                 catch ( InvalidTagException e )
@@ -281,34 +274,34 @@ public class TagListReport
                 }
             }
         }
-        
+
         // If the new style of tag options were used, add them
-        if ( tagListOptions != null && tagListOptions.getTagClasses().size() > 0 ) 
+        if ( tagListOptions != null && tagListOptions.getTagClasses().size() > 0 )
         {
-            // Scan each tag class 
+            // Scan each tag class
             Iterator classIter = tagListOptions.getTagClasses().iterator();
             while ( classIter.hasNext() )
             {
-                org.codehaus.mojo.taglist.options.TagClass tcOption = 
-                              (org.codehaus.mojo.taglist.options.TagClass) classIter.next();
-                
+                org.codehaus.mojo.taglist.options.TagClass tcOption =
+                    (org.codehaus.mojo.taglist.options.TagClass) classIter.next();
+
                 // Store the tag class display name.
-                TagClass tc = new TagClass ( tcOption.getDisplayName() );
-                
+                TagClass tc = new TagClass( tcOption.getDisplayName() );
+
                 // Scan each tag within this tag class.
                 Iterator tagIter = tcOption.getTags().iterator();
                 while ( tagIter.hasNext() )
                 {
-                    org.codehaus.mojo.taglist.options.Tag tagOption = 
-                              (org.codehaus.mojo.taglist.options.Tag) tagIter.next();
+                    org.codehaus.mojo.taglist.options.Tag tagOption =
+                        (org.codehaus.mojo.taglist.options.Tag) tagIter.next();
 
-                    // If a match type is not specified use default. 
+                    // If a match type is not specified use default.
                     String matchType = tagOption.getMatchType();
                     if ( matchType == null || matchType.length() == 0 )
                     {
                         matchType = TagFactory.getDefaultTagType();
                     }
-                    
+
                     try
                     {
                         // Create the tag based on the match type, and add it to the tag class
@@ -321,16 +314,16 @@ public class TagListReport
                         getLog().error( "Invalid tag type used.  tag type: " + matchType );
                     }
                 }
-                
+
                 // Add this new tag class to the container.
                 tagClasses.add( tc );
             }
         }
-               
+
         // let's proceed to the analysis
         FileAnalyser fileAnalyser = new FileAnalyser( this, tagClasses );
         Collection tagReports = fileAnalyser.execute();
-        
+
         // Renders the report
         ReportGenerator generator = new ReportGenerator( this, tagReports );
         if ( linkXRef )
@@ -352,8 +345,9 @@ public class TagListReport
                     String artifactId = report.getArtifactId();
                     if ( "maven-jxr-plugin".equals( artifactId ) || "jxr-maven-plugin".equals( artifactId ) )
                     {
-                        getLog().error( "Taglist plugin MUST be executed after the JXR plugin."
-                                      + "  No links to xref were generated." );
+                        getLog().error(
+                                        "Taglist plugin MUST be executed after the JXR plugin."
+                                            + "  No links to xref were generated." );
                     }
                 }
             }
@@ -364,13 +358,13 @@ public class TagListReport
             }
         }
         generator.generateReport();
-        
+
         // Generate the XML report
         generateXmlReport( tagReports );
     }
 
-
-    /** Generate an XML report that can be used by other plugins like the dashboard plugin.
+    /**
+     * Generate an XML report that can be used by other plugins like the dashboard plugin.
      * 
      * @param tagReports a collection of the tag reports to be output.
      */
@@ -378,43 +372,43 @@ public class TagListReport
     {
         TagListXMLReport report = new TagListXMLReport();
         report.setModelEncoding( getEncoding() );
-        
+
         // Iterate through each tag and populate an XML tag object.
         for ( Iterator ite = tagReports.iterator(); ite.hasNext(); )
         {
-          TagReport tagReport = ( TagReport ) ite.next();
-          
-          TagListXMLTag tag = new TagListXMLTag();
-          tag.setName( tagReport.getTagName() );
-          tag.setCount( Integer.toString( tagReport.getTagCount() ) );
-          
-          // Iterate though each file that contains the current tag and generate an 
-          // XML file object within the current XML tag object.
-          for ( Iterator fite = tagReport.getFileReports().iterator(); fite.hasNext(); )
-          {
-            FileReport fileReport = ( FileReport ) fite.next();
-            
-            TagListXMLFile file = new TagListXMLFile();
-            file.setName( fileReport.getClassName() );
-            file.setCount( Integer.toString( fileReport.getLineIndexes().size() ) );
-            
-            // Iterate though each comment that contains the tag and generate an
-            // XML comment object within the current xml file object.
-            for ( Iterator cite = fileReport.getLineIndexes().iterator(); cite.hasNext(); )
+            TagReport tagReport = (TagReport) ite.next();
+
+            TagListXMLTag tag = new TagListXMLTag();
+            tag.setName( tagReport.getTagName() );
+            tag.setCount( Integer.toString( tagReport.getTagCount() ) );
+
+            // Iterate though each file that contains the current tag and generate an
+            // XML file object within the current XML tag object.
+            for ( Iterator fite = tagReport.getFileReports().iterator(); fite.hasNext(); )
             {
-              Integer lineNumber = ( Integer ) cite.next();
-              
-              TagListXMLComment comment = new TagListXMLComment();
-              comment.setLineNumber( Integer.toString( lineNumber.intValue() ) );
-              comment.setComment( fileReport.getComment( lineNumber ) );
-              
-              file.addComment( comment );
+                FileReport fileReport = (FileReport) fite.next();
+
+                TagListXMLFile file = new TagListXMLFile();
+                file.setName( fileReport.getClassName() );
+                file.setCount( Integer.toString( fileReport.getLineIndexes().size() ) );
+
+                // Iterate though each comment that contains the tag and generate an
+                // XML comment object within the current xml file object.
+                for ( Iterator cite = fileReport.getLineIndexes().iterator(); cite.hasNext(); )
+                {
+                    Integer lineNumber = (Integer) cite.next();
+
+                    TagListXMLComment comment = new TagListXMLComment();
+                    comment.setLineNumber( Integer.toString( lineNumber.intValue() ) );
+                    comment.setComment( fileReport.getComment( lineNumber ) );
+
+                    file.addComment( comment );
+                }
+                tag.addFile( file );
             }
-            tag.addFile( file );
-          }
-          report.addTag( tag );
+            report.addTag( tag );
         }
-        
+
         // Create the writer for the XML output file.
         xmlOutputDirectory.mkdirs();
         File xmlFile = new File( xmlOutputDirectory, "taglist.xml" );
@@ -423,16 +417,16 @@ public class TagListReport
 
         try
         {
-          fos = new FileOutputStream( xmlFile );
-          output = new OutputStreamWriter( fos, getEncoding() );
-          
-          // Write out the XML output file.
-          TaglistOutputXpp3Writer xmlWriter = new TaglistOutputXpp3Writer();
-          xmlWriter.write( output, report );
+            fos = new FileOutputStream( xmlFile );
+            output = new OutputStreamWriter( fos, getEncoding() );
+
+            // Write out the XML output file.
+            TaglistOutputXpp3Writer xmlWriter = new TaglistOutputXpp3Writer();
+            xmlWriter.write( output, report );
         }
         catch ( Exception e )
         {
-          getLog().warn( "Could not save taglist xml file: " + e.getMessage() );
+            getLog().warn( "Could not save taglist xml file: " + e.getMessage() );
         }
         finally
         {
@@ -533,10 +527,10 @@ public class TagListReport
     public List constructSourceDirs()
     {
         List dirs = new ArrayList( project.getCompileSourceRoots() );
-        if ( !skipTestSources ) {
+        if ( !skipTestSources )
+        {
             dirs.addAll( project.getTestCompileSourceRoots() );
         }
-        
 
         if ( aggregate )
         {
@@ -547,7 +541,8 @@ public class TagListReport
                 if ( "java".equals( reactorProject.getArtifact().getArtifactHandler().getLanguage() ) )
                 {
                     dirs.addAll( reactorProject.getCompileSourceRoots() );
-                    if ( !skipTestSources ) {
+                    if ( !skipTestSources )
+                    {
                         dirs.addAll( reactorProject.getTestCompileSourceRoots() );
                     }
                 }
@@ -560,17 +555,17 @@ public class TagListReport
 
     /**
      * Returns the character encoding of the source files.
-     *
+     * 
      * @return The character encoding of the source files.
      */
     public String getEncoding()
     {
         return encoding;
     }
-    
+
     /**
      * Returns the Locale of the source files.
-     *
+     * 
      * @return The Locale of the source files.
      */
     public Locale getLocale()
@@ -632,7 +627,7 @@ public class TagListReport
     {
         return outputDirectory.getAbsolutePath();
     }
-    
+
     /**
      * Get the absolute path to the XML output directory.
      * 
