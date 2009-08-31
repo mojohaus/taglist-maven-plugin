@@ -206,6 +206,7 @@
           </toAddresses>
         </configuration>
       </plugin>
+      <!-- avoid recursive dep in CI build
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>findbugs-maven-plugin</artifactId>
@@ -214,6 +215,7 @@
           <threshold>Normal</threshold>
         </configuration>
       </plugin>
+      -->
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>taglist-maven-plugin</artifactId>
