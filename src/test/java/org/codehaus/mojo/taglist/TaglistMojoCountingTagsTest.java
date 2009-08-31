@@ -21,8 +21,6 @@ package org.codehaus.mojo.taglist;
 
 import java.io.File;
 
-import org.codehaus.plexus.util.FileUtils;
-
 /**
  * Test the Taglist mojo tags displayed on the website.
  *
@@ -68,7 +66,7 @@ public class TaglistMojoCountingTagsTest
         assertTrue("Incorrect NOT_YET_DOCUMENTED tag result.", htmlString.indexOf(expected) != -1);
         
         // Check that FIXME has one tag.
-        expected = "<td><a href=\"#FIXME\">FIXME</a></td><td>1</td>";
+        expected = "\">FIXME</a></td><td>1</td>";
         assertTrue("Incorrect FIXME tag result.", htmlString.indexOf(expected) != -1);
         
         // Check that DOCUMENT_ME does not show up.
@@ -76,7 +74,7 @@ public class TaglistMojoCountingTagsTest
         assertTrue("Incorrect NOT_YET_DOCUMENTED tag result.", htmlString.indexOf(expected) != -1);
         
         // Check that <todo has one tag.
-        expected = "<td><a href=\"#<todo\">&lt;todo</a></td><td>1</td>";
+        expected = "\">&lt;todo</a></td><td>1</td>";
         assertTrue("Incorrect <todo tag result.", htmlString.indexOf(expected) != -1);
         
         // Check that @todo does not show up anywhere in the output.

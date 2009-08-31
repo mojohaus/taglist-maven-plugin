@@ -41,6 +41,11 @@ public class TagReport
     private String displayName;
     
     /**
+     * Tag Class HTML safe link name.
+     */
+    private String linkName;
+    
+    /**
      * An array containing the tag string that make the tag class.
      */
     private ArrayList tagStrings = new ArrayList();
@@ -59,11 +64,13 @@ public class TagReport
      * Constructor.
      * 
      * @param displayName the tag class's name.
+     * @param linkName a HTML safe link name for this report.
      */
-    public TagReport( String displayName )
+    public TagReport( final String displayName, final String linkName )
     {
         this.displayName = displayName;
         this.fileReportsMap = new HashMap();
+        this.linkName = linkName;
         tagCount = -1;
     }
 
@@ -107,6 +114,16 @@ public class TagReport
     public String getTagName()
     {
         return displayName;
+    }
+    
+    /**
+     * Returns a HTML safe link name for this tag report.
+     * 
+     * @return a HTML safe link name.
+     */
+    public String getHTMLSafeLinkName()
+    {
+        return linkName;
     }
 
     /**

@@ -86,6 +86,7 @@ public class TagListReport
      */
     private String sourceFileLocale;
 
+    /** Default locale used if the source file locale is null. */
     private static final String DEFAULT_LOCALE = "en";
 
     /**

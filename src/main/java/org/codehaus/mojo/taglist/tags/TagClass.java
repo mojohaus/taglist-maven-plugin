@@ -63,6 +63,12 @@ public class TagClass
     
     /** The last tag to successfully match. */
     private AbsTag lastSuccessfulTagMatch = null;
+    
+    /** A unique ID counter for the tag classes. */
+    private static int uniqueTcCounter = 1;
+    
+    /** The unique id for this tag class. */
+    private int uniqueId = 0;
    
     /**
      * Constructor.
@@ -73,7 +79,10 @@ public class TagClass
     {
         classDisplayName = displayName;
         
-        classTagReport = new TagReport( displayName );
+        // Assign a unique ID for this tag class and update the global counter.
+        uniqueId = uniqueTcCounter++;
+        
+        classTagReport = new TagReport( displayName, "tag_class_" + String.valueOf( uniqueId ) );
     }
 
     /** Access the tag report for this tag class.

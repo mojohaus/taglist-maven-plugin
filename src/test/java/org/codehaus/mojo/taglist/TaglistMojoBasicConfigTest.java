@@ -244,13 +244,11 @@ public class TaglistMojoBasicConfigTest
         assertTrue("Incorrect count for the not in code tag.", htmlString.indexOf(expected) != -1);
 
         // Check to see show empty tags in code section details exist (they should).
-        expected = "<div class=\"section\"><h3>" +
-                "<a name=\"show_empty_details_tag_in_code\">@show_empty_details_tag_in_code</a></h3>";
+        expected = "\">@show_empty_details_tag_in_code</a></h3>";
         assertTrue("Missing tag details for the in code tag.", htmlString.indexOf(expected) != -1);
 
         // Check to see show empty tags not in code section details exist (they should).
-        expected = "<div class=\"section\"><h3>" +
-                "<a name=\"show_empty_details_tag_not_in_code\">@show_empty_details_tag_not_in_code</a></h3>";
+        expected = "\">@show_empty_details_tag_not_in_code</a></h3>";
         assertTrue("Missing tag details for the not in code tag.", htmlString.indexOf(expected) != -1);
     }
 
@@ -279,13 +277,11 @@ public class TaglistMojoBasicConfigTest
         assertTrue("Incorrect count for the not in code tag.", htmlString.indexOf(expected) != -1);
 
         // Check to see show empty tags in code section details exist (they should).
-        expected = "<div class=\"section\"><h3>" +
-                "<a name=\"show_empty_details_tag_in_code\">@show_empty_details_tag_in_code</a></h3>";
+        expected = "\">@show_empty_details_tag_in_code</a></h3>";
         assertTrue("Missing tag details for the in code tag.", htmlString.indexOf(expected) != -1);
 
         // Check to see show empty tags not in code section details do NOT exist (they should not).
-        expected = "<div class=\"section\"><h3>" +
-                "<a name=\"show_empty_details_tag_not_in_code\">@show_empty_details_tag_not_in_code</a></h3>";
+        expected = "\">@show_empty_details_tag_not_in_code</a></h3>";
         assertFalse("Unexpected tag details for the not in code tag.", htmlString.indexOf(expected) != -1);
     }
 

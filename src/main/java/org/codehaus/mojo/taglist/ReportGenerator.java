@@ -30,7 +30,6 @@ import java.util.ResourceBundle;
 import org.codehaus.doxia.sink.Sink;
 import org.codehaus.mojo.taglist.beans.FileReport;
 import org.codehaus.mojo.taglist.beans.TagReport;
-import org.codehaus.plexus.util.StringUtils;
 
 /**
  * Generates the taglist report using Doxia.
@@ -159,7 +158,7 @@ public class ReportGenerator
         // Create a hyperlink if the "showEmptyTags" flag is set or the tag contains 1 or more occurrences.
         if ( showEmptyDetails || tagReport.getTagCount() > 0 )
         {
-            sink.link( "#" + StringUtils.replace( tagReport.getTagName(), "@", "" ) );
+            sink.link( "#" + tagReport.getHTMLSafeLinkName() );
             sink.text( tagReport.getTagName() );
             sink.link_();
         }
@@ -218,8 +217,7 @@ public class ReportGenerator
 
         sink.section2();
         sink.sectionTitle2();
-        //sink.text( tagReport.getTagName() );
-        sink.anchor( StringUtils.replace( tagReport.getTagName(), "@", "" ) );
+        sink.anchor( tagReport.getHTMLSafeLinkName() );
         sink.text( tagReport.getTagName() );
         sink.anchor_();
         sink.sectionTitle2_();

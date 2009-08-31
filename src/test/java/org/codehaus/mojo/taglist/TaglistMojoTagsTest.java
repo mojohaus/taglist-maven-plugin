@@ -21,8 +21,6 @@ package org.codehaus.mojo.taglist;
 
 import java.io.File;
 
-import org.codehaus.plexus.util.FileUtils;
-
 /**
  * Test the Taglist mojo tags.
  *
@@ -64,11 +62,11 @@ public class TaglistMojoTagsTest
         String htmlString = super.getGeneratedOutput( mojo );
 
         //Check to see that @todo has one occurance.
-        String expected = "<td><a href=\"#todo\">@todo</a></td><td>1</td>";
+        String expected = "\">@todo</a></td><td>1</td>";
         assertTrue("Incorrect default @todo tag result.", htmlString.indexOf(expected) != -1);
 
         //Check to see that @todo has one occurance.
-        expected = "<td><a href=\"#TODO\">TODO</a></td><td>1</td>";
+        expected = "\">TODO</a></td><td>1</td>";
         assertTrue("Incorrect default TODO tag result.", htmlString.indexOf(expected) != -1);
     }
 
@@ -90,7 +88,7 @@ public class TaglistMojoTagsTest
         String htmlString = super.getGeneratedOutput( mojo );
 
         // Check to see that C++ style tag has one occurrence.
-        String expected = "<td><a href=\"#c_style_tag\">c_style_tag</a></td><td>1</td>";
+        String expected = "\">c_style_tag</a></td><td>1</td>";
         assertTrue("Incorrect C style tag result.", htmlString.indexOf(expected) != -1);
 
         //Check to see that tag has the correct text.
@@ -115,7 +113,7 @@ public class TaglistMojoTagsTest
         String htmlString = super.getGeneratedOutput( mojo );
 
         //Check to see that C++ style tag has one occurrence.
-        String expected = "<td><a href=\"#c++_style_tag\">c++_style_tag</a></td><td>1</td>";
+        String expected = "\">c++_style_tag</a></td><td>1</td>";
         assertTrue("Incorrect C++ style tag result.", htmlString.indexOf(expected) != -1);
 
         //Check to see that tag has the correct text.
@@ -142,7 +140,7 @@ public class TaglistMojoTagsTest
         String htmlString = super.getGeneratedOutput( mojo );
 
         // Check to see that JavaDoc single style tag has one occurrence.
-        String expected = "<td><a href=\"#javadoc_single_style_tag\">javadoc_single_style_tag</a></td><td>1</td>";
+        String expected = "\">javadoc_single_style_tag</a></td><td>1</td>";
         assertTrue("Incorrect JavaDoc single style tag result.", htmlString.indexOf(expected) != -1);
 
         // Check to see that tag has the correct text.
@@ -170,7 +168,7 @@ public class TaglistMojoTagsTest
         String htmlString = super.getGeneratedOutput( mojo );
 
         // Check to see that JavaDoc style tag has one occurrence.
-        String expected = "<td><a href=\"#javadoc_multi_style_tag\">javadoc_multi_style_tag</a></td><td>1</td>";
+        String expected = "\">javadoc_multi_style_tag</a></td><td>1</td>";
         assertTrue("Incorrect JavaDoc multi style tag result.", htmlString.indexOf(expected) != -1);
 
         // Check to see that tag has the correct text.
