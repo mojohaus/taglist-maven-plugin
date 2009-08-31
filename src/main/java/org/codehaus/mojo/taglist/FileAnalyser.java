@@ -62,6 +62,11 @@ public class FileAnalyser
      * String that is used for beginning a comment line.
      */
     private static final String SLASH_COMMENT = "//";
+    
+    /**
+     * Maximum length of a comment.
+     */
+    private static final int MAX_COMMENT_CHARACTERS = 99999;
 
     /**
      * The character encoding of the files to analyze.
@@ -261,7 +266,7 @@ public class FileAnalyser
                             {
                                 // Mark the current position, set the read forward limit to
                                 // a large number that should not be met.
-                                reader.mark( 99999 );
+                                reader.mark( MAX_COMMENT_CHARACTERS );
                                 
                                 // next line
                                 String futureLine = reader.readLine();
