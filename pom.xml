@@ -8,7 +8,7 @@
   <artifactId>taglist-maven-plugin</artifactId>
   <packaging>maven-plugin</packaging>
   <name>Taglist Maven Plugin</name>
-  <version>2.4</version>
+  <version>2.5-SNAPSHOT</version>
   <description>Produce a tag list report.</description>
   <ciManagement>
     <system>hudson</system>
@@ -74,9 +74,9 @@
     </license>
   </licenses>
   <scm>
-    <connection>scm:svn:http://svn.codehaus.org/mojo/tags/taglist-maven-plugin-2.4</connection>
-    <developerConnection>scm:svn:https://svn.codehaus.org/mojo/tags/taglist-maven-plugin-2.4</developerConnection>
-    <url>http://fisheye.codehaus.org/changelog/mojo/tags/taglist-maven-plugin-2.4</url>
+    <connection>scm:svn:http://svn.codehaus.org/mojo/trunk/mojo/taglist-maven-plugin/</connection>
+    <developerConnection>scm:svn:https://svn.codehaus.org/mojo/trunk/mojo/taglist-maven-plugin/</developerConnection>
+    <url>http://fisheye.codehaus.org/changelog/mojo/trunk/mojo/taglist-maven-plugin</url>
   </scm>
   <build>
     <plugins>
