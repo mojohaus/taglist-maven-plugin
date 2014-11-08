@@ -97,7 +97,7 @@
       <plugin>
         <groupId>org.codehaus.modello</groupId>
         <artifactId>modello-maven-plugin</artifactId>
-        <version>1.0.2</version>
+        <version>1.8.2</version>
         <executions>
           <execution>
 		    <id>XMLOutput</id>
