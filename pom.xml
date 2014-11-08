@@ -13,22 +13,6 @@
   <name>Taglist Maven Plugin</name>
   <version>2.5-SNAPSHOT</version>
   <description>Produce a tag list report.</description>
-  <ciManagement>
-    <system>hudson</system>
-    <url>http://www.davidkarlsen.com/hudson/jobs/taglist-maven-plugin</url>
-    <notifiers>
-      <notifier>
-        <sendOnError>true</sendOnError>
-        <sendOnFailure>true</sendOnFailure>
-        <sendOnSuccess>true</sendOnSuccess>
-        <sendOnWarning>true</sendOnWarning>
-        <type>mail</type>
-        <configuration>
-          <address>david@codehaus.org</address>
-        </configuration>
-      </notifier>
-    </notifiers>
-  </ciManagement>
   <prerequisites>
     <maven>2.2.1</maven>
   </prerequisites>
