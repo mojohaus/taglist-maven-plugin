@@ -14,10 +14,10 @@
   <version>2.5-SNAPSHOT</version>
   <description>Produce a tag list report.</description>
   <properties>
-    <maven.version>2.2.1</maven.version>
+    <mavenVersion>2.2.1</mavenVersion>
   </properties>
   <prerequisites>
-    <maven>${maven.version}</maven>
+    <maven>${mavenVersion}</maven>
   </prerequisites>
   <issueManagement>
     <system>jira</system>
@@ -147,17 +147,17 @@
     <dependency>
       <groupId>org.apache.maven</groupId>
       <artifactId>maven-model</artifactId>
-      <version>${maven.version}</version>
+      <version>${mavenVersion}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.maven</groupId>
       <artifactId>maven-project</artifactId>
-      <version>${maven.version}</version>
+      <version>${mavenVersion}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.maven</groupId>
       <artifactId>maven-artifact</artifactId>
-      <version>${maven.version}</version>
+      <version>${mavenVersion}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.maven.doxia</groupId>
