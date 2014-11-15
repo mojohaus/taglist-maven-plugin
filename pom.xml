@@ -13,8 +13,11 @@
   <name>Taglist Maven Plugin</name>
   <version>2.5-SNAPSHOT</version>
   <description>Produce a tag list report.</description>
+  <properties>
+    <maven.version>2.2.1</maven.version>
+  </properties>
   <prerequisites>
-    <maven>2.2.1</maven>
+    <maven>${maven.version}</maven>
   </prerequisites>
   <issueManagement>
     <system>jira</system>
@@ -144,17 +147,17 @@
     <dependency>
       <groupId>org.apache.maven</groupId>
       <artifactId>maven-model</artifactId>
-      <version>2.0</version>
+      <version>${maven.version}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.maven</groupId>
       <artifactId>maven-project</artifactId>
-      <version>2.0</version>
+      <version>${maven.version}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.maven</groupId>
       <artifactId>maven-artifact</artifactId>
-      <version>2.0</version>
+      <version>${maven.version}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.maven.doxia</groupId>
