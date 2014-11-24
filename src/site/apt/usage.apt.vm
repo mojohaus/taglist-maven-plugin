@@ -36,6 +36,11 @@ Usage
 </project>
 -------------------
 
+  NOTE: 
+  If you like having cross references included you need to define the 
+  taglist-maven-plugin after {{{http://maven.apache.org/jxr/maven-jxr-plugin/}maven-jxr-plugin}} 
+  otherwise you will get a warning (See also {{{./faq.html}FAQ}}).
+
   The report will be generated when executing the <<<site>>> life cycle phase,
   like this:
 
