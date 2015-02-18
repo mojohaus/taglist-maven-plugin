@@ -284,7 +284,7 @@ public class ReportGenerator
             // Link only if file exists in xref
             if ( xrefFile.exists() )
             {
-                sink.link( fileLink + "#" + lineNumber );
+                sink.link( fileLink + "#L" + lineNumber );
                 linked = true;
             }
         }
@@ -297,7 +297,7 @@ public class ReportGenerator
             // Link only if file exists in test xref
             if ( testXrefFile.exists() )
             {
-                sink.link( testFileLink + "#" + lineNumber );
+                sink.link( testFileLink + "#L" + lineNumber );
                 linked = true;
             }
         }
