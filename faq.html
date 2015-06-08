@@ -1,0 +1,208 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+
+
+
+
+
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Taglist Maven Plugin - Frequently Asked Questions</title>
+    <style type="text/css" media="all">
+      @import url("./css/maven-base.css");
+      @import url("./css/maven-theme.css");
+      @import url("./css/site.css");
+    </style>
+    <link rel="stylesheet" href="./css/print.css" type="text/css" media="print" />
+          </head>
+  <body class="composite">
+    <div id="banner">
+                  <a href="../" id="bannerLeft">
+    
+                                            <img src="../images/mojo_logo.png" alt="" />
+    
+            </a>
+                        <a href="http://codehaus.org/" id="bannerRight">
+    
+                                            <img src="../images/codehaus-small.png" alt="" />
+    
+            </a>
+            <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="breadcrumbs">
+          
+  
+
+  
+    
+            
+  
+    
+            <div class="xleft">
+          
+                <a href="http://codehaus.org/" class="externalLink">Codehaus</a>
+                &gt;
+      
+                <a href="../">Mojo</a>
+                &gt;
+      
+                <a href="http://mojo.codehaus.org/taglist-maven-plugin" class="externalLink">Taglist Maven Plugin</a>
+                  </div>
+            <div class="xright">            <a href="http://maven.apache.org/" class="externalLink">Maven</a>
+            
+  
+
+  
+    
+            
+  
+    
+            &nbsp;| Last Published: 2015-06-08
+              &nbsp;| Version: 2.4
+            </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="leftColumn">
+      <div id="navcolumn">
+           
+  
+
+  
+    
+            
+  
+    
+                   <h5>Overview</h5>
+            <ul>
+              
+    <li class="none">
+                    <a href="index.html">Introduction</a>
+          </li>
+              
+    <li class="none">
+                    <a href="plugin-info.html">Goals</a>
+          </li>
+              
+    <li class="none">
+                    <a href="usage.html">Usage</a>
+          </li>
+              
+    <li class="none">
+              <strong>FAQ</strong>
+        </li>
+          </ul>
+              <h5>Examples</h5>
+            <ul>
+              
+    <li class="none">
+                    <a href="examples/counting-tags.html">Counting Tags</a>
+          </li>
+              
+    <li class="none">
+                    <a href="taglist.html">Sample Taglist Report</a>
+          </li>
+          </ul>
+                                           <a href="http://maven.apache.org/" title="Built by Maven" class="poweredBy">
+            <img alt="Built by Maven" src="./images/logos/maven-feather.png"></img>
+          </a>
+                       
+  
+
+  
+    
+            
+  
+    
+        </div>
+    </div>
+    <div id="bodyColumn">
+      <div id="contentBox">
+        <div class="section"><h2><a name="top">Frequently Asked Questions</a></h2>
+<ol type="1"><li><a href="#Where_should_a_tag_be_placed_to_be_considered_in_the_report">Where should a tag be placed to be considered in the report?</a></li>
+<li><a href="#When_is_a_tag_included_in_the_report">When is a tag included in the report?</a></li>
+<li><a href="#Why_do_I_get_an_error_stating_the_Taglist_plugin_must_must_be_exeucted_after_the_JXR_plugin">Why do I get an error stating the Taglist plugin must must be exeucted after the JXR plugin?</a></li>
+</ol>
+</div>
+<dl><dt><a name="Where_should_a_tag_be_placed_to_be_considered_in_the_report">Where should a tag be placed to be considered in the report?</a></dt>
+<dd>
+        <p>
+          A tag has to be preceded by either "*" or "//", ignoring whitespace,
+          i.e. it has to be inside a single-line or mulit-line JavaDoc comment.
+          Otherwise it will be ignored in the report.
+       </p>
+        <p>
+          For examples of this, see the
+          <a href="examples/counting-tags.html">counting tags document</a>.
+       </p>
+      <table border="0"><tr><td align="right"><a href="#top">[top]</a></td></tr></table><hr />
+</dd>
+<dt><a name="When_is_a_tag_included_in_the_report">When is a tag included in the report?</a></dt>
+<dd>
+        <p>
+          For examples of this, see the
+          <a href="examples/counting-tags.html">counting tags document</a>.
+       </p>
+      <table border="0"><tr><td align="right"><a href="#top">[top]</a></td></tr></table><hr />
+</dd>
+<dt><a name="Why_do_I_get_an_error_stating_the_Taglist_plugin_must_must_be_exeucted_after_the_JXR_plugin">Why do I get an error stating the Taglist plugin must must be exeucted after the JXR plugin?</a></dt>
+<dd>
+        <p>
+          The error message: "[ERROR] Taglist plugin MUST be executed after the JXR plugin.  No links to xref were generated." 
+          is logged when the Taglist plugin is executed before the JXR (source cross-reference generator) plugin.  
+          The Taglist plugin creates links in its report to the xref or test-xref files when tags are found; however, 
+          if the JXR plugin has not been executed, the Taglist plugin cannot create the links.
+       </p>
+        <p>
+        Some causes of this condition:<br></br>
+        <ul>
+			<li><i>POM plugin order</i>:  the JXR plugin must be listed before the Taglist plugin in the POM or inherited 
+			POM reporting section.</li>
+			<li><i>Maven bug</i>:  in some versions of Maven, the report plugins execution order is erroneously 
+			changed from the order defined in the POM file. 
+			Please follow <a href="http://jira.codehaus.org/browse/MNG-2258">the JIRA issue</a> for more information and updated status.</li>
+       </ul>  
+       </p>        
+        <p>
+          To resolve this error, check that the report plugins order is correct in the POM.  If you cannot modify the POM order, 
+          or if doing so does not resolve the problem, a workaround is to execute the "site" goal twice.  The first time 
+          you will receive the error and no links will be created, but the second pass will be successful because the xref files 
+          already exist.
+       </p>
+      <table border="0"><tr><td align="right"><a href="#top">[top]</a></td></tr></table></dd>
+</dl>
+
+      </div>
+    </div>
+    <div class="clear">
+      <hr/>
+    </div>
+    <div id="footer">
+      <div class="xright">&#169;  
+          2005-2015
+    
+          Codehaus
+          
+  
+
+  
+    
+            
+  
+    
+  </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+  </body>
+</html>

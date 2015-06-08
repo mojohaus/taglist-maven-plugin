@@ -1,0 +1,239 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+
+
+
+
+
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Taglist Maven Plugin - Usage</title>
+    <style type="text/css" media="all">
+      @import url("./css/maven-base.css");
+      @import url("./css/maven-theme.css");
+      @import url("./css/site.css");
+    </style>
+    <link rel="stylesheet" href="./css/print.css" type="text/css" media="print" />
+          <meta name="author" content="Fabrice Bellingard" />
+          </head>
+  <body class="composite">
+    <div id="banner">
+                  <a href="../" id="bannerLeft">
+    
+                                            <img src="../images/mojo_logo.png" alt="" />
+    
+            </a>
+                        <a href="http://codehaus.org/" id="bannerRight">
+    
+                                            <img src="../images/codehaus-small.png" alt="" />
+    
+            </a>
+            <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="breadcrumbs">
+          
+  
+
+  
+    
+            
+  
+    
+            <div class="xleft">
+          
+                <a href="http://codehaus.org/" class="externalLink">Codehaus</a>
+                &gt;
+      
+                <a href="../">Mojo</a>
+                &gt;
+      
+                <a href="http://mojo.codehaus.org/taglist-maven-plugin" class="externalLink">Taglist Maven Plugin</a>
+                  </div>
+            <div class="xright">            <a href="http://maven.apache.org/" class="externalLink">Maven</a>
+            
+  
+
+  
+    
+            
+  
+    
+            &nbsp;| Last Published: 2015-06-08
+              &nbsp;| Version: 2.4
+            </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="leftColumn">
+      <div id="navcolumn">
+           
+  
+
+  
+    
+            
+  
+    
+                   <h5>Overview</h5>
+            <ul>
+              
+    <li class="none">
+                    <a href="index.html">Introduction</a>
+          </li>
+              
+    <li class="none">
+                    <a href="plugin-info.html">Goals</a>
+          </li>
+              
+    <li class="none">
+              <strong>Usage</strong>
+        </li>
+              
+    <li class="none">
+                    <a href="faq.html">FAQ</a>
+          </li>
+          </ul>
+              <h5>Examples</h5>
+            <ul>
+              
+    <li class="none">
+                    <a href="examples/counting-tags.html">Counting Tags</a>
+          </li>
+              
+    <li class="none">
+                    <a href="taglist.html">Sample Taglist Report</a>
+          </li>
+          </ul>
+                                           <a href="http://maven.apache.org/" title="Built by Maven" class="poweredBy">
+            <img alt="Built by Maven" src="./images/logos/maven-feather.png"></img>
+          </a>
+                       
+  
+
+  
+    
+            
+  
+    
+        </div>
+    </div>
+    <div id="bodyColumn">
+      <div id="contentBox">
+        <div class="section"><h2>Usage</h2>
+<div class="section"><h3>Available Configuration Options</h3>
+<p>You can refer to the <a href="taglist-mojo.html">goal documentation</a> to discover the different configuration options for this plugin.</p>
+</div>
+<div class="section"><h3>How to Use</h3>
+<p>In your <tt>pom.xml</tt>, insert this segment:</p>
+<div class="source"><pre>&lt;project&gt;
+  ...
+  &lt;build&gt;
+    ...
+  &lt;/build&gt;
+  ...
+  &lt;reporting&gt;
+    &lt;plugins&gt;
+      &lt;plugin&gt;
+        &lt;groupId&gt;org.codehaus.mojo&lt;/groupId&gt;
+        &lt;artifactId&gt;taglist-maven-plugin&lt;/artifactId&gt;
+        &lt;version&gt;2.4&lt;/version&gt;
+      &lt;/plugin&gt;
+    &lt;/plugins&gt;
+  &lt;/reporting&gt;
+  ...
+&lt;/project&gt;</pre>
+</div>
+<p>The report will be generated when executing the <tt>site</tt> life cycle phase, like this:</p>
+<div class="source"><pre>mvn site</pre>
+</div>
+<p>The TagList plugin allows tags to be found using three matching methods: exact match, ignore case match, and regular expression match. The matched tags are grouped into tag classes. For instance:</p>
+<div class="source"><pre>&lt;project&gt;
+  ...
+  &lt;build&gt;
+    ...
+  &lt;/build&gt;
+  ...
+  &lt;reporting&gt;
+    &lt;plugins&gt;
+      &lt;plugin&gt;
+        &lt;groupId&gt;org.codehaus.mojo&lt;/groupId&gt;
+        &lt;artifactId&gt;taglist-maven-plugin&lt;/artifactId&gt;
+        &lt;version&gt;2.4&lt;/version&gt;
+        &lt;configuration&gt;
+          &lt;tagListOptions&gt;
+            &lt;tagClasses&gt;
+              &lt;tagClass&gt;
+                &lt;displayName&gt;Todo Work&lt;/displayName&gt;
+                &lt;tags&gt;
+                  &lt;tag&gt;
+                    &lt;matchString&gt;todo&lt;/matchString&gt;
+                    &lt;matchType&gt;ignoreCase&lt;/matchType&gt;
+                  &lt;/tag&gt;
+                  &lt;tag&gt;
+                    &lt;matchString&gt;FIXME&lt;/matchString&gt;
+                    &lt;matchType&gt;exact&lt;/matchType&gt;
+                  &lt;/tag&gt;
+                &lt;/tags&gt;
+              &lt;/tagClass&gt;
+            &lt;/tagClasses&gt;
+          &lt;/tagListOptions&gt;
+        &lt;/configuration&gt;
+      &lt;/plugin&gt;
+    &lt;/plugins&gt;
+  &lt;/reporting&gt;
+  ...
+&lt;/project&gt;
+
+</pre>
+</div>
+<p>For backwards compatibility with versions prior to the 2.4 release, the legacy tags configuration is supported; however, only exact matching is used with legacy configuration.</p>
+<div class="source"><pre>&lt;project&gt;
+  ...
+        &lt;configuration&gt;
+          &lt;tags&gt;
+            &lt;tag&gt;TODO&lt;/tag&gt;
+            &lt;tag&gt;FIXME&lt;/tag&gt;
+            &lt;tag&gt;@todo&lt;/tag&gt;
+            &lt;tag&gt;@deprecated&lt;/tag&gt;
+          &lt;/tags&gt;
+        &lt;/configuration&gt;
+  ...
+&lt;/project&gt;</pre>
+</div>
+</div>
+</div>
+
+      </div>
+    </div>
+    <div class="clear">
+      <hr/>
+    </div>
+    <div id="footer">
+      <div class="xright">&#169;  
+          2005-2015
+    
+          Codehaus
+          
+  
+
+  
+    
+            
+  
+    
+  </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,251 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+
+
+
+
+
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Taglist Maven Plugin - Counting Tags</title>
+    <style type="text/css" media="all">
+      @import url("../css/maven-base.css");
+      @import url("../css/maven-theme.css");
+      @import url("../css/site.css");
+    </style>
+    <link rel="stylesheet" href="../css/print.css" type="text/css" media="print" />
+          <meta name="author" content="Dennis Lundberg" />
+          </head>
+  <body class="composite">
+    <div id="banner">
+                  <a href="../" id="bannerLeft">
+    
+                                            <img src="../../images/mojo_logo.png" alt="" />
+    
+            </a>
+                        <a href="http://codehaus.org/" id="bannerRight">
+    
+                                            <img src="../../images/codehaus-small.png" alt="" />
+    
+            </a>
+            <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="breadcrumbs">
+          
+  
+
+  
+    
+            
+  
+    
+            <div class="xleft">
+          
+                <a href="http://codehaus.org/" class="externalLink">Codehaus</a>
+                &gt;
+      
+                <a href="../../">Mojo</a>
+                &gt;
+      
+                <a href="http://mojo.codehaus.org/taglist-maven-plugin" class="externalLink">Taglist Maven Plugin</a>
+                  </div>
+            <div class="xright">            <a href="http://maven.apache.org/" class="externalLink">Maven</a>
+            
+  
+
+  
+    
+            
+  
+    
+            &nbsp;| Last Published: 2015-06-08
+              &nbsp;| Version: 2.4
+            </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="leftColumn">
+      <div id="navcolumn">
+           
+  
+
+  
+    
+            
+  
+    
+                   <h5>Overview</h5>
+            <ul>
+              
+    <li class="none">
+                    <a href="../index.html">Introduction</a>
+          </li>
+              
+    <li class="none">
+                    <a href="../plugin-info.html">Goals</a>
+          </li>
+              
+    <li class="none">
+                    <a href="../usage.html">Usage</a>
+          </li>
+              
+    <li class="none">
+                    <a href="../faq.html">FAQ</a>
+          </li>
+          </ul>
+              <h5>Examples</h5>
+            <ul>
+              
+    <li class="none">
+              <strong>Counting Tags</strong>
+        </li>
+              
+    <li class="none">
+                    <a href="../taglist.html">Sample Taglist Report</a>
+          </li>
+          </ul>
+                                           <a href="http://maven.apache.org/" title="Built by Maven" class="poweredBy">
+            <img alt="Built by Maven" src="../images/logos/maven-feather.png"></img>
+          </a>
+                       
+  
+
+  
+    
+            
+  
+    
+        </div>
+    </div>
+    <div id="bodyColumn">
+      <div id="contentBox">
+        <div class="section"><h2>Counting Tags</h2>
+<p>This example is meant to show you how the Taglist Maven Plugin works, when it finds and counts tags in your code.</p>
+<p>Let us configure the plugin in the <tt>pom.xml</tt> file like this:</p>
+<div class="source"><pre>&lt;project&gt;
+  ...
+  &lt;reporting&gt;
+    &lt;plugins&gt;
+      &lt;plugin&gt;
+        &lt;groupId&gt;org.codehaus.mojo&lt;/groupId&gt;
+        &lt;artifactId&gt;taglist-maven-plugin&lt;/artifactId&gt;
+        &lt;version&gt;2.4&lt;/version&gt;
+        &lt;configuration&gt;
+          &lt;encoding&gt;UTF-8&lt;/encoding&gt;
+          &lt;sourceFileLocale&gt;en&lt;/sourceFileLocale&gt;
+          &lt;emptyComments&gt;false&lt;/emptyComments&gt;
+          &lt;tagListOptions&gt;
+            &lt;tagClasses&gt;
+              &lt;tagClass&gt;
+                &lt;displayName&gt;Documentation Work&lt;/displayName&gt;
+                &lt;tags&gt;
+                  &lt;tag&gt;
+                    &lt;matchString&gt;DOCUMENT_ME&lt;/matchString&gt;
+                    &lt;matchType&gt;exact&lt;/matchType&gt;
+                  &lt;/tag&gt;
+                  &lt;tag&gt;
+                    &lt;matchString&gt;NOT_YET_DOCUMENTED&lt;/matchString&gt;
+                    &lt;matchType&gt;exact&lt;/matchType&gt;
+                  &lt;/tag&gt;
+                &lt;/tags&gt;
+              &lt;/tagClass&gt;
+              &lt;tagClass&gt;
+                &lt;displayName&gt;Code Work&lt;/displayName&gt;
+                &lt;tags&gt;
+                  &lt;tag&gt;
+                    &lt;matchString&gt;FIXME&lt;/matchString&gt;
+                    &lt;matchType&gt;exact&lt;/matchType&gt;
+                  &lt;/tag&gt;
+                  &lt;tag&gt;
+                    &lt;matchString&gt;&amp;lt;todo&lt;/matchString&gt;
+                    &lt;matchType&gt;exact&lt;/matchType&gt;
+                  &lt;/tag&gt;
+                  &lt;tag&gt;
+                    &lt;matchString&gt;TODO&lt;/matchString&gt;
+                    &lt;matchType&gt;ignoreCase&lt;/matchType&gt;
+                  &lt;/tag&gt;
+                &lt;/tags&gt;
+              &lt;/tagClass&gt;
+            &lt;/tagClasses&gt;
+          &lt;/tagListOptions&gt;
+        &lt;/configuration&gt;
+      &lt;/plugin&gt;
+      ...
+    &lt;/plugins&gt;
+  &lt;/reporting&gt;
+  ...
+&lt;/project&gt;</pre>
+</div>
+<p>The Java file we are analyzing is this one:</p>
+<div class="source"><pre> 1: package taglist;
+ 2:
+ 3: /**
+ 4:  * NOT_YET_DOCUMENTED
+ 5:  */
+ 6: public class Issue
+ 7: {
+ 8:   /**
+ 9:    * A method.
+10:    * FIXME Describe what this method does
+11:    *
+12:    * @param i DOCUMENT_ME
+13:    * @return Something useful
+14:    */
+15:   public double method(int i)
+16:   {
+17:     // &lt;todo&gt; must be implemented
+18:     return 0;
+19:   }
+20:
+21:   /**
+22:    * This method counts FIXME tags in the text.
+23:    */
+24:   private int countFixmeTags(String text)
+25:   {
+26:     // @todo Implement this later
+27:   }
+28: }</pre>
+</div>
+<p>We'll go through the lines in the code and explain what happens and why.</p>
+<p><b>Line 4:</b> This line will <i>not</i> be counted, because <i>emptyComments</i> is set to false and it is empty - it isn't followed by a desciptive text.</p>
+<p><b>Line 10:</b> This line will be counted.</p>
+<p><b>Line 12:</b> This line will <i>not</i> be counted, because it is located at the end of the line with other text before it.</p>
+<p><b>Line 17:</b> This line will be counted.</p>
+<p><b>Line 22:</b> This line will <i>not</i> be counted, because it appears in the middle of the line with other text before it.</p>
+<p><b>Line 26:</b> This line will <i>not</i> be counted, because the text <tt>@todo</tt> is not one of the configured tags.</p>
+</div>
+
+      </div>
+    </div>
+    <div class="clear">
+      <hr/>
+    </div>
+    <div id="footer">
+      <div class="xright">&#169;  
+          2005-2015
+    
+          Codehaus
+          
+  
+
+  
+    
+            
+  
+    
+  </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+  </body>
+</html>

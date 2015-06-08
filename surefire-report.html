@@ -1,0 +1,523 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+
+
+
+
+
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Taglist Maven Plugin - Surefire Report</title>
+    <style type="text/css" media="all">
+      @import url("./css/maven-base.css");
+      @import url("./css/maven-theme.css");
+      @import url("./css/site.css");
+    </style>
+    <link rel="stylesheet" href="./css/print.css" type="text/css" media="print" />
+          </head>
+  <body class="composite">
+    <div id="banner">
+                  <a href="../" id="bannerLeft">
+    
+                                            <img src="../images/mojo_logo.png" alt="" />
+    
+            </a>
+                        <a href="http://codehaus.org/" id="bannerRight">
+    
+                                            <img src="../images/codehaus-small.png" alt="" />
+    
+            </a>
+            <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="breadcrumbs">
+          
+  
+
+  
+    
+            
+  
+    
+            <div class="xleft">
+          
+                <a href="http://codehaus.org/" class="externalLink">Codehaus</a>
+                &gt;
+      
+                <a href="../">Mojo</a>
+                &gt;
+      
+                <a href="http://mojo.codehaus.org/taglist-maven-plugin" class="externalLink">Taglist Maven Plugin</a>
+                  </div>
+            <div class="xright">            <a href="http://maven.apache.org/" class="externalLink">Maven</a>
+            
+  
+
+  
+    
+            
+  
+    
+            &nbsp;| Last Published: 2015-06-08
+              &nbsp;| Version: 2.4
+            </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="leftColumn">
+      <div id="navcolumn">
+           
+  
+
+  
+    
+            
+  
+    
+                   <h5>Overview</h5>
+            <ul>
+              
+    <li class="none">
+                    <a href="index.html">Introduction</a>
+          </li>
+              
+    <li class="none">
+                    <a href="plugin-info.html">Goals</a>
+          </li>
+              
+    <li class="none">
+                    <a href="usage.html">Usage</a>
+          </li>
+              
+    <li class="none">
+                    <a href="faq.html">FAQ</a>
+          </li>
+          </ul>
+              <h5>Examples</h5>
+            <ul>
+              
+    <li class="none">
+                    <a href="examples/counting-tags.html">Counting Tags</a>
+          </li>
+              
+    <li class="none">
+                    <a href="taglist.html">Sample Taglist Report</a>
+          </li>
+          </ul>
+              <h5>Project Documentation</h5>
+            <ul>
+              
+                
+              
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+              
+        <li class="collapsed">
+                    <a href="project-info.html">Project Information</a>
+                </li>
+              
+                
+              
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+            
+            
+      
+            
+      
+            
+      
+              
+            <li class="expanded">
+                    <a href="project-reports.html">Project Reports</a>
+                  <ul>
+                  
+    <li class="none">
+                    <a href="checkstyle.html">Checkstyle</a>
+          </li>
+                  
+    <li class="none">
+                    <a href="cobertura/index.html">Cobertura Test Coverage</a>
+          </li>
+                  
+    <li class="none">
+                    <a href="apidocs/index.html">JavaDocs</a>
+          </li>
+                  
+    <li class="none">
+                    <a href="jira-report.html">JIRA Report</a>
+          </li>
+                  
+    <li class="none">
+                    <a href="plugin-info.html">Plugin Documentation</a>
+          </li>
+                  
+    <li class="none">
+                    <a href="xref/index.html">Source Xref</a>
+          </li>
+                  
+    <li class="none">
+              <strong>Surefire Report</strong>
+        </li>
+                  
+    <li class="none">
+                    <a href="taglist.html">Tag List</a>
+          </li>
+                  
+    <li class="none">
+                    <a href="testapidocs/index.html">Test JavaDocs</a>
+          </li>
+                  
+    <li class="none">
+                    <a href="xref-test/index.html">Test Source Xref</a>
+          </li>
+              </ul>
+        </li>
+          </ul>
+                                           <a href="http://maven.apache.org/" title="Built by Maven" class="poweredBy">
+            <img alt="Built by Maven" src="./images/logos/maven-feather.png"></img>
+          </a>
+                       
+  
+
+  
+    
+            
+  
+    
+        </div>
+    </div>
+    <div id="bodyColumn">
+      <div id="contentBox">
+        <script type="text/javascript">
+function toggleDisplay(elementId) {
+ var elm = document.getElementById(elementId + 'error');
+ if (elm && typeof elm.style != "undefined") {
+ if (elm.style.display == "none") {
+ elm.style.display = "";
+ document.getElementById(elementId + 'off').style.display = "none";
+ document.getElementById(elementId + 'on').style.display = "inline";
+ } else if (elm.style.display == "") { elm.style.display = "none";
+ document.getElementById(elementId + 'off').style.display = "inline";
+ document.getElementById(elementId + 'on').style.display = "none";
+ } 
+ } 
+ }
+</script><div class="section"><h2>Surefire Report</h2>
+</div>
+<div class="section"><h2><a name="Summary"></a>Summary</h2>
+<div class="section">[<a href="#Summary">Summary</a>] [<a href="#Package_List">Package List</a>] [<a href="#Test_Cases">Test Cases</a>]</div>
+<br />
+<table class="bodyTable"><tr class="a"><th>Tests</th>
+<th>Errors </th>
+<th>Failures</th>
+<th>Skipped</th>
+<th>Success Rate</th>
+<th>Time</th>
+</tr>
+<tr class="b"><td>25</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>100%</td>
+<td>1.357</td>
+</tr>
+</table>
+<br />
+Note: failures are anticipated and checked for with assertions while errors are unanticipated.<br />
+</div>
+<div class="section"><h2><a name="Package_List"></a>Package List</h2>
+<div class="section">[<a href="#Summary">Summary</a>] [<a href="#Package_List">Package List</a>] [<a href="#Test_Cases">Test Cases</a>]</div>
+<br />
+<table class="bodyTable"><tr class="a"><th>Package</th>
+<th>Tests</th>
+<th>Errors </th>
+<th>Failures</th>
+<th>Skipped</th>
+<th>Success Rate</th>
+<th>Time</th>
+</tr>
+<tr class="b"><td><a href="#org.codehaus.mojo.taglist.beans">org.codehaus.mojo.taglist.beans</a></td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>100%</td>
+<td>0.258</td>
+</tr>
+<tr class="a"><td><a href="#org.codehaus.mojo.taglist">org.codehaus.mojo.taglist</a></td>
+<td>24</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>100%</td>
+<td>1.099</td>
+</tr>
+</table>
+<br />
+Note: package statistics are not computed recursively, they only sum up all of its testsuites numbers.<div class="section"><h3><a name="org.codehaus.mojo.taglist.beans"></a>org.codehaus.mojo.taglist.beans</h3>
+<table class="bodyTable"><tr class="b"><th></th>
+<th>Class</th>
+<th>Tests</th>
+<th>Errors </th>
+<th>Failures</th>
+<th>Skipped</th>
+<th>Success Rate</th>
+<th>Time</th>
+</tr>
+<tr class="a"><td><a href="#org.codehaus.mojo.taglist.beansFileReportTestCase"><img src="images/icon_success_sml.gif" /></a></td>
+<td><a href="#org.codehaus.mojo.taglist.beansFileReportTestCase">FileReportTestCase</a></td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>100%</td>
+<td>0.258</td>
+</tr>
+</table>
+</div>
+<div class="section"><h3><a name="org.codehaus.mojo.taglist"></a>org.codehaus.mojo.taglist</h3>
+<table class="bodyTable"><tr class="b"><th></th>
+<th>Class</th>
+<th>Tests</th>
+<th>Errors </th>
+<th>Failures</th>
+<th>Skipped</th>
+<th>Success Rate</th>
+<th>Time</th>
+</tr>
+<tr class="a"><td><a href="#org.codehaus.mojo.taglistTaglistMojoBasicConfigTest"><img src="images/icon_success_sml.gif" /></a></td>
+<td><a href="#org.codehaus.mojo.taglistTaglistMojoBasicConfigTest">TaglistMojoBasicConfigTest</a></td>
+<td>10</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>100%</td>
+<td>0.388</td>
+</tr>
+<tr class="b"><td><a href="#org.codehaus.mojo.taglistTaglistMojoCountingTagsTest"><img src="images/icon_success_sml.gif" /></a></td>
+<td><a href="#org.codehaus.mojo.taglistTaglistMojoCountingTagsTest">TaglistMojoCountingTagsTest</a></td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>100%</td>
+<td>0.05</td>
+</tr>
+<tr class="a"><td><a href="#org.codehaus.mojo.taglistTaglistMojoLocalesTest"><img src="images/icon_success_sml.gif" /></a></td>
+<td><a href="#org.codehaus.mojo.taglistTaglistMojoLocalesTest">TaglistMojoLocalesTest</a></td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>100%</td>
+<td>0.24</td>
+</tr>
+<tr class="b"><td><a href="#org.codehaus.mojo.taglistTaglistMojoTagClassesTest"><img src="images/icon_success_sml.gif" /></a></td>
+<td><a href="#org.codehaus.mojo.taglistTaglistMojoTagClassesTest">TaglistMojoTagClassesTest</a></td>
+<td>4</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>100%</td>
+<td>0.175</td>
+</tr>
+<tr class="a"><td><a href="#org.codehaus.mojo.taglistTaglistMojoTagsTest"><img src="images/icon_success_sml.gif" /></a></td>
+<td><a href="#org.codehaus.mojo.taglistTaglistMojoTagsTest">TaglistMojoTagsTest</a></td>
+<td>7</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>100%</td>
+<td>0.246</td>
+</tr>
+</table>
+</div>
+<br />
+</div>
+<div class="section"><h2><a name="Test_Cases"></a>Test Cases</h2>
+<div class="section">[<a href="#Summary">Summary</a>] [<a href="#Package_List">Package List</a>] [<a href="#Test_Cases">Test Cases</a>]</div>
+<div class="section"><h3><a name="org.codehaus.mojo.taglist.beansFileReportTestCase"></a>FileReportTestCase</h3>
+<table class="bodyTable"><tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>testGetClassName</td>
+<td>0.246</td>
+</tr>
+</table>
+</div>
+<div class="section"><h3><a name="org.codehaus.mojo.taglistTaglistMojoBasicConfigTest"></a>TaglistMojoBasicConfigTest</h3>
+<table class="bodyTable"><tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>testCreateTagListOutput</td>
+<td>0.038</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>testEmptyCommentsEnabled</td>
+<td>0.04</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>testEmptyCommentsDisabled</td>
+<td>0.039</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>testColonInComment</td>
+<td>0.035</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>testColonInEmptyComment</td>
+<td>0.036</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>testShowEmptyDetailsEnabled</td>
+<td>0.036</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>testShowEmptyDetailsDisabled</td>
+<td>0.038</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>testXmlFile</td>
+<td>0.043</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>testMultipleLineCommentsEnabled</td>
+<td>0.042</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>testMultipleLineCommentsDisabled</td>
+<td>0.039</td>
+</tr>
+</table>
+</div>
+<div class="section"><h3><a name="org.codehaus.mojo.taglistTaglistMojoCountingTagsTest"></a>TaglistMojoCountingTagsTest</h3>
+<table class="bodyTable"><tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>testCountingTags</td>
+<td>0.049</td>
+</tr>
+</table>
+</div>
+<div class="section"><h3><a name="org.codehaus.mojo.taglistTaglistMojoLocalesTest"></a>TaglistMojoLocalesTest</h3>
+<table class="bodyTable"><tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>testEnglishLocale</td>
+<td>0.171</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>testTurkishLocale</td>
+<td>0.061</td>
+</tr>
+</table>
+</div>
+<div class="section"><h3><a name="org.codehaus.mojo.taglistTaglistMojoTagClassesTest"></a>TaglistMojoTagClassesTest</h3>
+<table class="bodyTable"><tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>testExactMatch</td>
+<td>0.047</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>testIgnoreCaseMatch</td>
+<td>0.045</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>testDefaultExactMatch</td>
+<td>0.037</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>testRegExMatch</td>
+<td>0.044</td>
+</tr>
+</table>
+</div>
+<div class="section"><h3><a name="org.codehaus.mojo.taglistTaglistMojoTagsTest"></a>TaglistMojoTagsTest</h3>
+<table class="bodyTable"><tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>testDefaultTags</td>
+<td>0.035</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>testCTags</td>
+<td>0.035</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>testCPlusPlusTags</td>
+<td>0.035</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>testJavaDocSingleTags</td>
+<td>0.035</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>testJavaDocMultiTags</td>
+<td>0.034</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>testNotAtStartOfLineTags</td>
+<td>0.038</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>testSourceCodeVariablesTags</td>
+<td>0.031</td>
+</tr>
+</table>
+</div>
+<br />
+</div>
+<br />
+
+      </div>
+    </div>
+    <div class="clear">
+      <hr/>
+    </div>
+    <div id="footer">
+      <div class="xright">&#169;  
+          2005-2015
+    
+          Codehaus
+          
+  
+
+  
+    
+            
+  
+    
+  </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+  </body>
+</html>
