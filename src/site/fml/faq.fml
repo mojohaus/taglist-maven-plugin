@@ -26,7 +26,7 @@ under the License.
       <answer>
         <p>
           A tag has to be preceded by either "*" or "//", ignoring whitespace,
-          i.e. it has to be inside a single-line or mulit-line JavaDoc comment.
+          i.e. it has to be inside a single-line or multi-line JavaDoc comment.
           Otherwise it will be ignored in the report.
         </p>
         <p>
@@ -44,8 +44,8 @@ under the License.
         </p>
       </answer>
     </faq>
-    <faq id="Why do I get an error stating the Taglist plugin must must be exeucted after the JXR plugin?">
-      <question>Why do I get an error stating the Taglist plugin must must be exeucted after the JXR plugin?</question>
+    <faq id="Why do I get an error stating the Taglist plugin must be executed after the JXR plugin?">
+      <question>Why do I get an error stating the Taglist plugin must be executed after the JXR plugin?</question>
       <answer>
         <p>
           The error message: "[ERROR] Taglist plugin MUST be executed after the JXR plugin.  No links to xref were generated." 
