@@ -20,6 +20,8 @@ package org.codehaus.mojo.taglist.beans;
  */
 
 import org.codehaus.plexus.util.IOUtil;
+import org.codehaus.plexus.util.StringUtils;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -164,7 +166,16 @@ public class FileReport
             IOUtil.close( reader );
         }
 
-        className = packageName + "." + file.getName().replaceAll( "\\.java$", "" );
+        String packagelessClassName = file.getName();
+        for ( String suffix : new String[]{ ".java", ".scala" } )
+        {
+            final int index = packagelessClassName.lastIndexOf( suffix );
+            if ( index > -1 )
+            {
+                packagelessClassName = packagelessClassName.substring( 0, index );
+            }
+        }
+        className = packageName + "." + packagelessClassName;
 
         return className;
     }

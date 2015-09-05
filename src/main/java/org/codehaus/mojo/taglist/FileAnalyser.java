@@ -109,6 +109,11 @@ public class FileAnalyser
     private ArrayList tagClasses = new ArrayList();
 
     /**
+     * String used to configure the file filter.
+     */
+    private final String fileSuffix;
+
+    /**
      * Constructor.
      * 
      * @param report the MOJO that is using this analyzer.
@@ -122,7 +127,8 @@ public class FileAnalyser
         sourceDirs = report.constructSourceDirs();
         encoding = report.getEncoding();
         locale = report.getLocale();
-        noCommentString = report.getBundle().getString( "report.taglist.nocomment" );      
+        noCommentString = report.getBundle().getString( "report.taglist.nocomment" );
+        fileSuffix = report.getFileSuffix();
         this.tagClasses = tagClasses;
     }
 
@@ -166,12 +172,18 @@ public class FileAnalyser
     private List findFilesToScan()
         throws MavenReportException
     {
+        String pattern = "";
+        for ( String suffix : StringUtils.split( fileSuffix, "," ) )
+        {
+            pattern += "**/*." + StringUtils.removeStart( suffix, "." );
+        }
+
         List filesList = new ArrayList();
         try
         {
             for ( Iterator iter = sourceDirs.iterator(); iter.hasNext(); )
             {
-                filesList.addAll( FileUtils.getFiles( new File( (String) iter.next() ), "**/*.java", null ) );
+                filesList.addAll( FileUtils.getFiles( new File( (String) iter.next() ), pattern, null ) );
             }
         }
         catch ( IOException e )
