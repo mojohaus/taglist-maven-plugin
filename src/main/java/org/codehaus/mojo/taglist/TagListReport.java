@@ -190,6 +190,14 @@ public class TagListReport
     private boolean showEmptyDetails;
 
     /**
+     * Specifies the suffix of the files for which a report will be generated.
+     *
+     * @parameter default-value="java"
+     * @since 2.5
+     */
+    private String  fileSuffix;
+
+    /**
      * Skips reporting of test sources.
      * 
      * @parameter default-value="false"
@@ -229,7 +237,7 @@ public class TagListReport
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.apache.maven.reporting.AbstractMavenReport#executeReport(java.util.Locale)
      */
     protected void executeReport( Locale locale )
@@ -319,6 +327,12 @@ public class TagListReport
                 // Add this new tag class to the container.
                 tagClasses.add( tc );
             }
+        }
+
+        // User entered no or empty file suffix, then default to "java"
+        if ( StringUtils.isEmpty(fileSuffix) )
+        {
+            fileSuffix = "java";
         }
 
         // let's proceed to the analysis
@@ -496,6 +510,7 @@ public class TagListReport
      */
     private boolean hasSources( File dir )
     {
+
         boolean found = false;
         if ( dir.exists() && dir.isDirectory() )
         {
@@ -503,9 +518,20 @@ public class TagListReport
             for ( int i = 0; i < files.length && !found; i++ )
             {
                 File currentFile = files[i];
-                if ( currentFile.isFile() && currentFile.getName().endsWith( ".java" ) )
+                if ( currentFile.isFile()   )
                 {
-                    found = true;
+                    if ( StringUtils.isEmpty( fileSuffix ) && currentFile.getName().endsWith( ".java" ) )
+                    {
+                        found = true;
+                    }
+                    else
+                    {
+                        for ( String suffix : StringUtils.split( fileSuffix, "," ) )
+                        {
+                            String pointSuffix = "." + StringUtils.stripStart( suffix, "." );
+                            found |= currentFile.getName().endsWith( pointSuffix );
+                        }
+                    }
                 }
                 else if ( currentFile.isDirectory() )
                 {
@@ -601,12 +627,22 @@ public class TagListReport
 
     /**
      * Tells whether to generate details for tags with zero occurrences.
-     * 
+     *
      * @return the showEmptyTags.
      */
     public boolean isShowEmptyDetails()
     {
         return showEmptyDetails;
+    }
+
+    /**
+     * Returns the suffix considered in file filtering.
+     *
+     * @return the fileSuffix.
+     */
+    public String getFileSuffix()
+    {
+        return fileSuffix;
     }
 
     /**

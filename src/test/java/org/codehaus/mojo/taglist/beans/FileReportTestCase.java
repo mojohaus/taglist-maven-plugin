@@ -29,8 +29,13 @@ import org.codehaus.plexus.PlexusTestCase;
  */
 public class FileReportTestCase extends PlexusTestCase
 {
-  public void testGetClassName() {
-    File file = new File(getBasedir() + "/src/test/resources/org/codehaus/mojo/taglist/beans/XYjavatest.java");
+  public void testGetClassNameJava() {
+    File file = getTestFile( "/src/test/resources/org/codehaus/mojo/taglist/beans/XYjavatest.java" );
+    FileReport fileReport = new FileReport(file, "UTF-8");
+    assertEquals("org.codehaus.mojo.taglist.beans.XYjavatest", fileReport.getClassName());
+  }
+  public void testGetClassNameScala() {
+    File file = getTestFile( "/src/test/resources/org/codehaus/mojo/taglist/beans/XYjavatest.scala" );
     FileReport fileReport = new FileReport(file, "UTF-8");
     assertEquals("org.codehaus.mojo.taglist.beans.XYjavatest", fileReport.getClassName());
   }

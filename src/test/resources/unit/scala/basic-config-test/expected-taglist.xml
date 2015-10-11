@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<report xmlns="org.codehaus.mojo.taglist-maven-plugin">
+  <tags>
+    <tag name="@create_output" count="1">
+      <files>
+        <file name="com.BasicConfig" count="1">
+          <comments>
+            <comment>
+              <lineNumber>11</lineNumber>
+              <comment>This is the tag for the output test.</comment>
+            </comment>
+          </comments>
+        </file>
+      </files>
+    </tag>
+  </tags>
+</report>
