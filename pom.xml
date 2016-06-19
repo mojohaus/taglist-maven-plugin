@@ -5,7 +5,7 @@
   <parent>
     <groupId>org.codehaus.mojo</groupId>
     <artifactId>mojo-parent</artifactId>
-    <version>37</version>
+    <version>39</version>
   </parent>
 
   <artifactId>taglist-maven-plugin</artifactId>
@@ -21,8 +21,8 @@
     <maven>${mavenVersion}</maven>
   </prerequisites>
   <issueManagement>
-    <system>jira</system>
-    <url>http://jira.codehaus.org/browse/MTAGLIST</url>
+    <system>GitHub</system>
+    <url>https://github.com/mojohaus/taglist-maven-plugin/issues/</url>
   </issueManagement>
   <inceptionYear>2005</inceptionYear>
   <developers>
@@ -52,6 +52,15 @@
       <organizationUrl>http://www.codehaus.org</organizationUrl>
       <timezone>+1</timezone>
       <url>http://www.davidkarlsen.com</url>
+      <roles>
+        <role>Java Developer</role>
+      </roles>
+    </developer>
+    <developer>
+      <id>khmarbaise</id>
+      <name>Karl Heinz Marbaise</name>
+      <email>khmarbaise@apache.org</email>
+      <timezone>+1</timezone>
       <roles>
         <role>Java Developer</role>
       </roles>
@@ -179,17 +188,11 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-changes-plugin</artifactId>
-        <version>2.1</version>
+        <version>2.11</version>
         <configuration>
           <columnNames>Key,Summary,Status,Resolution,Assignee,Type,Version,Fix Version</columnNames>
           <sortColumnNames>Fix Version</sortColumnNames>
           <urlDownload>${project.url}</urlDownload>
-          <generateJiraAnnouncement>true</generateJiraAnnouncement>
-          <toAddresses>
-            <toAddress>dev@mojo.codehaus.org</toAddress>
-            <toAddress>user@mojo.codehaus.org</toAddress>
-            <toAddress>users@maven.apache.org</toAddress>
-          </toAddresses>
         </configuration>
       </plugin>
       <!-- avoid recursive dep in CI build
