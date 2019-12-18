@@ -109,6 +109,11 @@ public class FileAnalyser
     private ArrayList tagClasses = new ArrayList();
 
     /**
+     * The supported source types.
+     */
+    private final String[] sourceTypes;
+
+    /**
      * Constructor.
      * 
      * @param report the MOJO that is using this analyzer.
@@ -124,6 +129,7 @@ public class FileAnalyser
         locale = report.getLocale();
         noCommentString = report.getBundle().getString( "report.taglist.nocomment" );      
         this.tagClasses = tagClasses;
+        this.sourceTypes = report.getSourceTypes();
     }
 
     /**
@@ -171,7 +177,7 @@ public class FileAnalyser
         {
             for ( Iterator iter = sourceDirs.iterator(); iter.hasNext(); )
             {
-                filesList.addAll( FileUtils.getFiles( new File( (String) iter.next() ), "**/*.java", null ) );
+                filesList.addAll( FileUtils.getFiles( new File( (String) iter.next() ), getIncludes(), null ) );
             }
         }
         catch ( IOException e )
@@ -179,6 +185,20 @@ public class FileAnalyser
             throw new MavenReportException( "Error while trying to find the files to scan.", e );
         }
         return filesList;
+    }
+
+    private String getIncludes()
+    {
+        StringBuilder s = new StringBuilder();
+        for ( int i = 0; i < sourceTypes.length; i++ ) {
+            if ( s.length() > 0 )
+            {
+                s.append( ',' );
+            }
+            s.append( "**/*" );
+            s.append( sourceTypes[i] );
+        }
+        return s.toString();
     }
 
     /**

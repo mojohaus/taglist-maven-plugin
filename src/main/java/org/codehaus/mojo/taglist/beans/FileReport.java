@@ -164,7 +164,9 @@ public class FileReport
             IOUtil.close( reader );
         }
 
-        className = packageName + "." + file.getName().replaceAll( "\\.java$", "" );
+        String ext = file.getName().substring(file.getName().lastIndexOf('.') + 1, file.getName().length());
+
+        className = packageName + "." + file.getName().replaceAll( "\\." + ext + '$', "" );
 
         return className;
     }

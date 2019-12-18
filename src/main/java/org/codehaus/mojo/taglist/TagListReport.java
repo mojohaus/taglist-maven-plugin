@@ -228,6 +228,14 @@ public class TagListReport
     private org.codehaus.mojo.taglist.options.TagListOptions tagListOptions;
 
     /**
+     * A comma separated list of source types to be scanned, for example '.java,.scala'.
+     *
+     * @parameter default-value=".java"
+     * @since 2.5
+     */
+    private String sourceTypes;
+
+    /**
      * {@inheritDoc}
      * 
      * @see org.apache.maven.reporting.AbstractMavenReport#executeReport(java.util.Locale)
@@ -503,7 +511,7 @@ public class TagListReport
             for ( int i = 0; i < files.length && !found; i++ )
             {
                 File currentFile = files[i];
-                if ( currentFile.isFile() && currentFile.getName().endsWith( ".java" ) )
+                if ( currentFile.isFile() && isSourceFile( currentFile.getName() ))
                 {
                     found = true;
                 }
@@ -700,4 +708,29 @@ public class TagListReport
         return ResourceBundle.getBundle( "taglist-report", locale, this.getClass().getClassLoader() );
     }
 
+    /**
+     * Return the source types to scan. The default is '.java'.
+     *
+     * @return the source types to scan.
+     */
+    public String[] getSourceTypes()
+    {
+        if ( sourceTypes != null )
+        {
+            return sourceTypes.toLowerCase().split("[, ]+");
+        } else {
+            return new String[] { ".java" };
+        }
+    }
+
+    public boolean isSourceFile( String name )
+    {
+        String[] types = getSourceTypes();
+        for ( int i = 0; i < types.length; i++ ) {
+            if ( name.toLowerCase().endsWith( types[i]) ) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
