@@ -5,27 +5,38 @@
   <parent>
     <groupId>org.codehaus.mojo</groupId>
     <artifactId>mojo-parent</artifactId>
-    <version>39</version>
+    <version>62</version>
   </parent>
 
   <artifactId>taglist-maven-plugin</artifactId>
+  <version>3.0.0-SNAPSHOT</version>
+
   <packaging>maven-plugin</packaging>
   <name>Taglist Maven Plugin</name>
-  <version>2.5-SNAPSHOT</version>
   <description>Produce a tag list report.</description>
   <url>http://www.mojohaus.org/taglist-maven-plugin/</url>
+
   <properties>
-    <mavenVersion>2.2.1</mavenVersion>
-    <plugin.maven-javadoc-plugin.version>3.3.1</plugin.maven-javadoc-plugin.version>
+    <mavenVersion>3.0</mavenVersion>
+    <mojo.java.target>1.8</mojo.java.target>
+
+    <doxiaVersion>1.11.1</doxiaVersion>
+    <doxia-sitetoolsVersion>1.11.1</doxia-sitetoolsVersion>
+
+    <!-- test dependencies -->
+    <dependency.junit.version>5.8.2</dependency.junit.version>
   </properties>
+
   <prerequisites>
     <maven>${mavenVersion}</maven>
   </prerequisites>
+
   <issueManagement>
     <system>GitHub</system>
     <url>https://github.com/mojohaus/taglist-maven-plugin/issues/</url>
   </issueManagement>
   <inceptionYear>2005</inceptionYear>
+
   <developers>
     <developer>
       <name>Fabrice Bellingard</name>
@@ -66,7 +77,17 @@
         <role>Java Developer</role>
       </roles>
     </developer>
+    <developer>
+      <id>bmarwell</id>
+      <name>Benjamin Marwell</name>
+      <email>bmarwell@apache.org</email>
+      <timezone>Europe/Berlin</timezone>
+      <roles>
+        <role>Committer</role>
+      </roles>
+    </developer>
   </developers>
+
   <licenses>
     <license>
       <name>The Apache Software License, Version 2.0</name>
@@ -74,6 +95,7 @@
       <distribution>repo</distribution>
     </license>
   </licenses>
+
   <scm>
     <connection>scm:git:https://github.com/mojohaus/taglist-maven-plugin.git</connection>
     <developerConnection>scm:git:ssh://git@github.com/mojohaus/taglist-maven-plugin.git</developerConnection>
@@ -85,7 +107,6 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-javadoc-plugin</artifactId>
-          <version>${plugin.maven-javadoc-plugin.version}</version>
           <configuration>
             <tags>
               <tag>
@@ -122,9 +143,24 @@
         </configuration>
       </plugin>
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-plugin-plugin</artifactId>
+        <configuration>
+          <skipErrorNoDescriptorsFound>true</skipErrorNoDescriptorsFound>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>helpmojo</goal>
+              <goal>descriptor</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
         <groupId>org.codehaus.modello</groupId>
         <artifactId>modello-maven-plugin</artifactId>
-        <version>1.8.2</version>
+        <version>1.10.0</version>
         <executions>
           <execution>
 		    <id>XMLOutput</id>
@@ -159,6 +195,19 @@
       </plugin>
     </plugins>
   </build>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.junit</groupId>
+        <artifactId>junit-bom</artifactId>
+        <version>${dependency.junit.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
   <dependencies>
     <dependency>
       <groupId>commons-lang</groupId>
@@ -168,53 +217,61 @@
     <dependency>
       <groupId>org.codehaus.plexus</groupId>
       <artifactId>plexus-utils</artifactId>
-      <version>3.0.20</version>
+      <version>3.4.1</version>
     </dependency>
     <dependency>
       <groupId>org.apache.maven.reporting</groupId>
       <artifactId>maven-reporting-api</artifactId>
-      <version>2.0</version>
+      <version>3.0</version>
     </dependency>
     <dependency>
       <groupId>org.apache.maven.reporting</groupId>
       <artifactId>maven-reporting-impl</artifactId>
-      <version>2.0</version>
+      <version>3.0.0</version>
     </dependency>
+
+    <!-- Doxia -->
     <dependency>
-      <groupId>org.apache.maven</groupId>
-      <artifactId>maven-plugin-api</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.maven</groupId>
-      <artifactId>maven-model</artifactId>
-      <version>${mavenVersion}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.maven</groupId>
-      <artifactId>maven-project</artifactId>
-      <version>${mavenVersion}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.maven</groupId>
-      <artifactId>maven-artifact</artifactId>
-      <version>${mavenVersion}</version>
+      <groupId>org.apache.maven.doxia</groupId>
+      <artifactId>doxia-core</artifactId>
+      <version>${doxiaVersion}</version>
+      <scope>runtime</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.maven.doxia</groupId>
       <artifactId>doxia-sink-api</artifactId>
-      <version>1.6</version>
+      <version>${doxiaVersion}</version>
     </dependency>
+
+    <!-- Doxia-sitetools -->
     <dependency>
       <groupId>org.apache.maven.doxia</groupId>
-      <artifactId>doxia-core</artifactId>
-      <version>1.6</version>
+      <artifactId>doxia-site-renderer</artifactId>
+      <version>${doxia-sitetoolsVersion}</version>
     </dependency>
+
     <!-- Test -->
     <dependency>
       <groupId>org.apache.maven.plugin-testing</groupId>
       <artifactId>maven-plugin-testing-harness</artifactId>
-      <version>1.3</version>
+      <version>3.3.0</version>
       <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.vintage</groupId>
+      <artifactId>junit-vintage-engine</artifactId>
+      <scope>test</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>org.hamcrest</groupId>
+          <artifactId>hamcrest-core</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
   </dependencies>
   <reporting>
@@ -222,12 +279,11 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
-        <version>${plugin.maven-javadoc-plugin.version}</version>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-changes-plugin</artifactId>
-        <version>2.11</version>
+        <version>2.12.1</version>
         <configuration>
           <columnNames>Key,Summary,Status,Resolution,Assignee,Type,Version,Fix Version</columnNames>
           <sortColumnNames>Fix Version</sortColumnNames>
