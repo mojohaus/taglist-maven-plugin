@@ -108,6 +108,7 @@
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-javadoc-plugin</artifactId>
           <configuration>
+            <source>${mojo.java.target}</source>
             <tags>
               <tag>
                 <name>todo</name>
