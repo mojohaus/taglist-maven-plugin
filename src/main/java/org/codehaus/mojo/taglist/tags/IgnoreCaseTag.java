@@ -29,12 +29,12 @@ import java.util.Locale;
  *  
  *  Example POM:
  *  <pre>
- *   <project >
+ *   &lt;project&gt;
  *       ...
- *       <matchString>fixme</matchString>
- *      <matchType>ignoreCase</matchType>
+ *       &lt;matchString&gt;fixme&lt;/matchString&gt;
+ *       &lt;matchType&gt;ignoreCase&lt;/matchType&gt;
  *       ...
- *   </project>
+ *   &lt;/project&gt;
  *  </pre>
  *  
  *  Example Java code with match:

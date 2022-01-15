@@ -179,7 +179,7 @@ public class TaglistMojoTagsTest
     /**
      * Test the tags not at start of line.
      *
-     * E.g. // This is a comment about @todo line.   <-- @todo didn't start line
+     * E.g. // This is a comment about @todo line.   &lt;-- @todo didn't start line
      *
      * @throws Exception
      */

@@ -29,11 +29,11 @@ import java.util.Locale;
  *  
  *  Example POM:
  *  <pre>
- *   <project >
+ *   &lt;project &gt;
  *       ...
- *       <matchString>fixme</matchString>
+ *       &lt;matchString&gt;fixme&lt;/matchString&gt;
  *       ...
- *   </project>
+ *   &lt;/project&gt;
  *  </pre>
  *  
  *  Example Java code with match:

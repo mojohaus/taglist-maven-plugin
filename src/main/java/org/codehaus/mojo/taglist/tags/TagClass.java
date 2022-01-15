@@ -35,15 +35,15 @@ import org.codehaus.mojo.taglist.beans.TagReport;
  * 
  *  Example
  *  <pre>
- *   <tagClass>
- *    <displayName>Action Items</displayName>
- *    <tags>
- *     <tag>
- *      <matchString>todo</matchString>
- *      <matchType>ignoreCase</matchType>
- *     </tag>
- *    </tags>
- *   </tagClass>
+ *   &lt;tagClass&gt;
+ *    &lt;displayName&gt;Action Items&lt;/displayName&gt;
+ *    &lt;tags&gt;
+ *     &lt;tag&gt;
+ *      &lt;matchString&gt;todo&lt;/matchString&gt;
+ *      &lt;matchType&gt;ignoreCase&lt;/matchType&gt;
+ *     &lt;/tag&gt;
+ *    &lt;/tags&gt;
+ *   &lt;/tagClass&gt;
  *  </pre>
  * 
  */

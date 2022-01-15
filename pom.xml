@@ -16,6 +16,7 @@
   <url>http://www.mojohaus.org/taglist-maven-plugin/</url>
   <properties>
     <mavenVersion>2.2.1</mavenVersion>
+    <plugin.maven-javadoc-plugin.version>3.3.1</plugin.maven-javadoc-plugin.version>
   </properties>
   <prerequisites>
     <maven>${mavenVersion}</maven>
@@ -79,6 +80,39 @@
     <url>https://github.com/mojohaus/taglist-maven-plugin</url>
   </scm>
   <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-javadoc-plugin</artifactId>
+          <version>${plugin.maven-javadoc-plugin.version}</version>
+          <configuration>
+            <tags>
+              <tag>
+                <name>todo</name>
+                <placement>a</placement>
+                <head>TODO:</head>
+              </tag>
+              <tag>
+                <name>goal</name>
+                <placement>a</placement>
+                <head>GOAL:</head>
+              </tag>
+              <tag>
+                <name>requiresProject</name>
+                <placement>a</placement>
+                <head>Requires Project:</head>
+              </tag>
+              <tag>
+                <name>threadSafe</name>
+                <placement>a</placement>
+                <head>Thread safe:</head>
+              </tag>
+            </tags>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -185,6 +219,11 @@
   </dependencies>
   <reporting>
     <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>${plugin.maven-javadoc-plugin.version}</version>
+      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-changes-plugin</artifactId>

@@ -31,12 +31,12 @@ import java.util.Locale;
  *  
  *  Example POM:
  *  <pre>
- *   <project >
+ *   &lt;project&gt;
  *       ...
- *       <matchString>fixme[0-9]</matchString>
- *      <matchType>regEx</matchType>
+ *       &lt;matchString&gt;fixme[0-9]&lt;/matchString&gt;
+ *       &lt;matchType&gt;regEx&lt;/matchType&gt;
  *       ...
- *   </project>
+ *   &lt;/project&gt;
  *  </pre>
  *  
  *  Example Java code with match:
