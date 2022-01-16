@@ -31,8 +31,6 @@ import java.util.ResourceBundle;
 
 import org.apache.maven.doxia.siterenderer.Renderer;
 import org.apache.maven.model.ReportPlugin;
-import org.apache.maven.plugins.annotations.Execute;
-import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.plugins.annotations.ResolutionScope;
@@ -81,23 +79,6 @@ public class TagListReport
      */
     @Parameter( defaultValue = "${project.build.directory}/taglist", required = true )
     private File xmlOutputDirectory;
-
-    /**
-     * <b>Deprecated</b> as of version 2.4. The configuration <a href="#tagListOptions">tagListOptions</a> should be
-     * used instead of tags. <br/>
-     * <br/>
-     * List of tags to look for, specified as &lt;tag&gt; tags. The tags can be either:
-     * <ul>
-     * <li>Javadoc tags: "@todo" for instance</li>
-     * <li>Simple tags: "TODO" for instance. In this case, the tags will be searched in any Java comment (//, /* or
-     * /**).</li>
-     * </ul>
-     * 
-     * @deprecated use {@link #tagListOptions} instead.
-     */
-    @Deprecated
-    @Parameter
-    private String[] tags;
 
     /**
      * This parameter indicates whether for simple tags (like "TODO"), the analyzer should look for multiple line
@@ -189,25 +170,26 @@ public class TagListReport
      * The legacy tags configuration remains for backwards compatibility, and the simultaneous use of both the tags and
      * tagListOptions is permitted; however the tags configuration should be avoided whenever possible because those
      * strings are only checked using the exact match logic.
-     * 
+     *
      * @since 2.4
      */
     @Parameter
     private org.codehaus.mojo.taglist.options.TagListOptions tagListOptions;
 
+    private String[] tags;
+
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.apache.maven.reporting.AbstractMavenReport#executeReport(java.util.Locale)
      */
     protected void executeReport( Locale locale )
-        throws MavenReportException
+            throws MavenReportException
     {
         this.currentLocale = locale;
 
         // User entered no tags and no tagOptions, then default tags
-        if ( ( tags == null || tags.length == 0 )
-            && ( tagListOptions == null || tagListOptions.getTagClasses().size() == 0 ) )
+        if ( ( tagListOptions == null || tagListOptions.getTagClasses().size() == 0 ) )
         {
             tags = new String[] { "@todo", "TODO" };
         }
