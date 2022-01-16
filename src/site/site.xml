@@ -18,6 +18,10 @@
     </fluidoSkin>
   </custom>
   <body>
+    <breadcrumbs>
+      <item name="MojoHaus" href="https://www.mojohaus.org/"/>
+      <item name="${this.name}" href="${this.url}" />
+    </breadcrumbs>
     <menu name="Overview">
       <item name="Introduction" href="index.html"/>
       <item name="Goals" href="plugin-info.html"/>
