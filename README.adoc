@@ -53,5 +53,5 @@ For publishing the site do the following:
 
 ----
 cd target/checkout
-../mvnw verify site site:stage scm-publish:publish-scm
+./mvnw verify site site:stage scm-publish:publish-scm
 ----
