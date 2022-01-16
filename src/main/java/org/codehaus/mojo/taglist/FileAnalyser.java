@@ -106,7 +106,7 @@ public class FileAnalyser
     /**
      * ArrayList of tag classes.
      */
-    private ArrayList tagClasses = new ArrayList();
+    private List<TagClass> tagClasses = new ArrayList();
 
     /**
      * Constructor.
@@ -114,13 +114,13 @@ public class FileAnalyser
      * @param report the MOJO that is using this analyzer.
      * @param tagClasses the array of tag classes to use for searching
      */
-    public FileAnalyser( TagListReport report, ArrayList tagClasses )
+    public FileAnalyser( TagListReport report, List<TagClass> tagClasses )
     {
         multipleLineCommentsOn = report.isMultipleLineComments();
         emptyCommentsOn = report.isEmptyComments();
         log = report.getLog();
         sourceDirs = report.constructSourceDirs();
-        encoding = report.getEncoding();
+        encoding = report.getInputEncoding();
         locale = report.getLocale();
         noCommentString = report.getBundle().getString( "report.taglist.nocomment" );      
         this.tagClasses = tagClasses;
