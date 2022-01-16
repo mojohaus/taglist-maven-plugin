@@ -31,6 +31,11 @@ import java.util.ResourceBundle;
 
 import org.apache.maven.doxia.siterenderer.Renderer;
 import org.apache.maven.model.ReportPlugin;
+import org.apache.maven.plugins.annotations.Execute;
+import org.apache.maven.plugins.annotations.LifecyclePhase;
+import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.plugins.annotations.Parameter;
+import org.apache.maven.plugins.annotations.ResolutionScope;
 import org.apache.maven.project.MavenProject;
 import org.apache.maven.reporting.AbstractMavenReport;
 import org.apache.maven.reporting.MavenReportException;
@@ -53,59 +58,28 @@ import org.codehaus.plexus.util.StringUtils;
  * Scans the source files for tags and generates a report on their occurrences.
  * 
  * @author <a href="mailto:bellingard.NO-SPAM@gmail.com">Fabrice Bellingard</a>
- * @goal taglist
  */
+@Mojo( name="taglist", requiresDependencyResolution = ResolutionScope.COMPILE)
 public class TagListReport
     extends AbstractMavenReport
 {
     /**
-     * @parameter expression="${project}"
-     * @required
-     * @readonly
-     */
-    private MavenProject project;
-
-    /**
-     * @component
-     */
-    private Renderer siteRenderer;
-
-    /**
-     * Specifies the character encoding of the source files.
-     * 
-     * @parameter expression="${encoding}" default-value="${project.build.sourceEncoding}"
-     * @since 2.3
-     */
-    private String encoding;
-
-    /**
      * Specifies the Locale of the source files.
      * 
-     * @parameter default-value="en"
      * @since 2.4
      */
+    @Parameter( property = "sourceFileLocale", defaultValue = "en" )
     private String sourceFileLocale;
 
     /** Default locale used if the source file locale is null. */
     private static final String DEFAULT_LOCALE = "en";
 
     /**
-     * The output directory for the report. Note that this parameter is only evaluated if the goal is run directly from
-     * the command line or from a build life cycle phase. If the goal is run indirectly as part of a site generation,
-     * the output directory configured in the Maven Site Plugin is used instead.
-     * 
-     * @parameter default-value="${project.reporting.outputDirectory}"
-     * @required
-     */
-    private File outputDirectory;
-
-    /**
      * Specifies the directory where the xml output will be generated.
      * 
-     * @parameter default-value="${project.build.directory}/taglist"
      * @since 2.3
-     * @required
      */
+    @Parameter( defaultValue = "${project.build.directory}/taglist", required = true )
     private File xmlOutputDirectory;
 
     /**
@@ -119,61 +93,55 @@ public class TagListReport
      * /**).</li>
      * </ul>
      * 
-     * @deprecated
-     * @parameter
+     * @deprecated use {@link #tagListOptions} instead.
      */
+    @Deprecated
+    @Parameter
     private String[] tags;
 
     /**
      * This parameter indicates whether for simple tags (like "TODO"), the analyzer should look for multiple line
      * comments.
      * 
-     * @parameter default-value="true"
      */
+    @Parameter( defaultValue = "true" )
     private boolean multipleLineComments;
 
     /**
      * This parameter indicates whether to look for tags even if they don't have a comment.
-     * 
-     * @parameter default-value="true"
      */
+    @Parameter( defaultValue = "true" )
     private boolean emptyComments;
 
     /**
      * Link the tag line numbers to the source xref. Defaults to true and will link automatically if jxr plugin is being
      * used.
-     * 
-     * @parameter expression="${linkXRef}" default-value="true"
      */
+    @Parameter( defaultValue = "true", property = "taglists.linkXRef")
     private boolean linkXRef;
 
     /**
      * Location of the Xrefs to link to.
-     * 
-     * @parameter default-value="${project.reporting.outputDirectory}/xref"
      */
+    @Parameter( defaultValue = "${project.reporting.outputDirectory}/xref", property = "taglists.xrefLocation" )
     private File xrefLocation;
 
     /**
      * Location of the Test Xrefs to link to.
-     * 
-     * @parameter default-value="${project.reporting.outputDirectory}/xref-test"
      */
+    @Parameter( defaultValue = "${project.reporting.outputDirectory}/xref-test", property = "taglists.testXrefLocation" )
     private File testXrefLocation;
 
     /**
      * The projects in the reactor for aggregation report.
-     * 
-     * @parameter expression="${reactorProjects}"
-     * @readonly
      */
+    @Parameter( readonly = true, defaultValue = "${reactorProjects}" )
     private List reactorProjects;
 
     /**
      * Whether to build an aggregated report at the root, or build individual reports.
-     * 
-     * @parameter expression="${aggregate}" default-value="false"
      */
+    @Parameter( defaultValue = "false", property = "taglists.aggregate" )
     private boolean aggregate;
 
     /**
@@ -184,17 +152,17 @@ public class TagListReport
     /**
      * This parameter indicates whether to generate details for tags with zero occurrences.
      * 
-     * @parameter default-value="false"
      * @since 2.2
      */
+    @Parameter( defaultValue = "false" )
     private boolean showEmptyDetails;
 
     /**
      * Skips reporting of test sources.
      * 
-     * @parameter default-value="false"
      * @since 2.4
      */
+    @Parameter( defaultValue = "false" )
     private boolean skipTestSources;
 
     /**
@@ -222,9 +190,9 @@ public class TagListReport
      * tagListOptions is permitted; however the tags configuration should be avoided whenever possible because those
      * strings are only checked using the exact match logic.
      * 
-     * @parameter
      * @since 2.4
      */
+    @Parameter
     private org.codehaus.mojo.taglist.options.TagListOptions tagListOptions;
 
     /**
@@ -244,7 +212,7 @@ public class TagListReport
             tags = new String[] { "@todo", "TODO" };
         }
 
-        if ( StringUtils.isEmpty( encoding ) )
+        if ( StringUtils.isEmpty( getInputEncoding() ) )
         {
             getLog().warn(
                            "File encoding has not been set, using platform encoding "
@@ -252,7 +220,7 @@ public class TagListReport
         }
 
         // Create the tag classes
-        ArrayList tagClasses = new ArrayList();
+        List<TagClass> tagClasses = new ArrayList<>();
 
         // If any old style tags were used, then add each tag as a tag class
         if ( tags != null && tags.length > 0 )
@@ -339,7 +307,7 @@ public class TagListReport
             else
             {
                 // Not yet generated - check if the report is on its way
-                for ( Iterator reports = project.getReportPlugins().iterator(); reports.hasNext(); )
+                for ( Iterator reports = getProject().getReportPlugins().iterator(); reports.hasNext(); )
                 {
                     ReportPlugin report = (ReportPlugin) reports.next();
 
@@ -372,7 +340,7 @@ public class TagListReport
     private void generateXmlReport( Collection tagReports )
     {
         TagListXMLReport report = new TagListXMLReport();
-        report.setModelEncoding( getEncoding() );
+        report.setModelEncoding( getInputEncoding() );
 
         // Iterate through each tag and populate an XML tag object.
         for ( Iterator ite = tagReports.iterator(); ite.hasNext(); )
@@ -419,7 +387,7 @@ public class TagListReport
         try
         {
             fos = new FileOutputStream( xmlFile );
-            output = new OutputStreamWriter( fos, getEncoding() );
+            output = new OutputStreamWriter( fos, getInputEncoding());
 
             // Write out the XML output file.
             TaglistOutputXpp3Writer xmlWriter = new TaglistOutputXpp3Writer();
@@ -461,7 +429,7 @@ public class TagListReport
     public boolean canGenerateReport()
     {
         boolean canGenerate = !constructSourceDirs().isEmpty();
-        if ( aggregate && !project.isExecutionRoot() )
+        if ( aggregate && !getProject().isExecutionRoot() )
         {
             canGenerate = false;
         }
@@ -527,10 +495,10 @@ public class TagListReport
      */
     public List constructSourceDirs()
     {
-        List dirs = new ArrayList( project.getCompileSourceRoots() );
+        List dirs = new ArrayList( getProject().getCompileSourceRoots() );
         if ( !skipTestSources )
         {
-            dirs.addAll( project.getTestCompileSourceRoots() );
+            dirs.addAll( getProject().getTestCompileSourceRoots() );
         }
 
         if ( aggregate )
@@ -552,16 +520,6 @@ public class TagListReport
 
         dirs = pruneSourceDirs( dirs );
         return dirs;
-    }
-
-    /**
-     * Returns the character encoding of the source files.
-     * 
-     * @return The character encoding of the source files.
-     */
-    public String getEncoding()
-    {
-        return encoding;
     }
 
     /**
@@ -642,16 +600,6 @@ public class TagListReport
     /**
      * {@inheritDoc}
      * 
-     * @see org.apache.maven.reporting.AbstractMavenReport#getProject()
-     */
-    public MavenProject getProject()
-    {
-        return project;
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
      * @see org.apache.maven.reporting.MavenReport#getDescription(java.util.Locale)
      */
     public String getDescription( Locale locale )
@@ -700,4 +648,9 @@ public class TagListReport
         return ResourceBundle.getBundle( "taglist-report", locale, this.getClass().getClassLoader() );
     }
 
+    @Override
+    protected String getInputEncoding()
+    {
+        return super.getInputEncoding();
+    }
 }
