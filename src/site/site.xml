@@ -23,14 +23,14 @@
       <item name="${this.name}" href="${this.url}" />
     </breadcrumbs>
     <menu name="Overview">
-      <item name="Introduction" href="index.html"/>
-      <item name="Goals" href="plugin-info.html"/>
-      <item name="Usage" href="usage.html"/>
-      <item name="FAQ" href="faq.html"/>
+      <item name="Introduction" href="./index.html"/>
+      <item name="Goals" href="./plugin-info.html"/>
+      <item name="Usage" href="./usage.html"/>
+      <item name="FAQ" href="./faq.html"/>
     </menu>
     <menu name="Examples">
-      <item name="Counting Tags" href="examples/counting-tags.html"/>
-      <item name="Sample Taglist Report" href="taglist.html"/>
+      <item name="Counting Tags" href="./examples/counting-tags.html"/>
+      <item name="Sample Taglist Report" href="./taglist.html"/>
     </menu>
   </body>
 </project>
