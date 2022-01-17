@@ -19,6 +19,7 @@
   <properties>
     <mavenVersion>3.0</mavenVersion>
     <mojo.java.target>1.8</mojo.java.target>
+    <project.build.outputTimestamp>10</project.build.outputTimestamp>
 
     <doxiaVersion>1.11.1</doxiaVersion>
     <doxia-sitetoolsVersion>1.11.1</doxia-sitetoolsVersion>
