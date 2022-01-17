@@ -14,7 +14,7 @@
   <packaging>maven-plugin</packaging>
   <name>Taglist Maven Plugin</name>
   <description>Produce a tag list report.</description>
-  <url>http://www.mojohaus.org/taglist-maven-plugin/</url>
+  <url>https://www.mojohaus.org/taglist-maven-plugin/</url>
 
   <properties>
     <mavenVersion>3.0</mavenVersion>
@@ -25,6 +25,9 @@
 
     <!-- test dependencies -->
     <dependency.junit.version>5.8.2</dependency.junit.version>
+
+    <!-- override plugins -->
+    <taglist-maven-plugin.version>${project.version}</taglist-maven-plugin.version>
   </properties>
 
   <prerequisites>
