@@ -166,10 +166,6 @@ public class TagListReport
      * <br/>
      * <br/>
      * For complete examples see the <a href="usage.html"><b>Usage</b></a> page. <br/>
-     * <br/>
-     * The legacy tags configuration remains for backwards compatibility, and the simultaneous use of both the tags and
-     * tagListOptions is permitted; however the tags configuration should be avoided whenever possible because those
-     * strings are only checked using the exact match logic.
      *
      * @since 2.4
      */
