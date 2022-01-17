@@ -13,7 +13,7 @@ Counting Tags
 
   Let us configure the plugin in the <<<pom.xml>>> file like this:
 
------
++---+
 <project>
   ...
   <reporting>
@@ -67,40 +67,40 @@ Counting Tags
   </reporting>
   ...
 </project>
------
++---+
 
   The Java file we are analyzing is this one:
 
------
- 1: package taglist;
- 2:
- 3: /**
- 4:  * NOT_YET_DOCUMENTED
- 5:  */
- 6: public class Issue
- 7: {
- 8:   /**
- 9:    * A method.
-10:    * FIXME Describe what this method does
-11:    *
-12:    * @param i DOCUMENT_ME
-13:    * @return Something useful
-14:    */
-15:   public double method(int i)
-16:   {
-17:     // <todo> must be implemented
-18:     return 0;
-19:   }
-20:
-21:   /**
-22:    * This method counts FIXME tags in the text.
-23:    */
-24:   private int countFixmeTags(String text)
-25:   {
-26:     // @todo Implement this later
-27:   }
-28: }
------
++---+
+package taglist;
+
+/**
+ * NOT_YET_DOCUMENTED
+ */
+public class Issue
+{
+  /**
+   * A method.
+   * FIXME Describe what this method does
+   *
+   * @param i DOCUMENT_ME
+   * @return Something useful
+   */
+  public double method(int i)
+  {
+    // <todo> must be implemented
+    return 0;
+  }
+
+  /**
+   * This method counts FIXME tags in the text.
+   */
+  private int countFixmeTags(String text)
+  {
+    // @todo Implement this later
+  }
+}
++---+
 
   We'll go through the lines in the code and explain what happens and why.
 

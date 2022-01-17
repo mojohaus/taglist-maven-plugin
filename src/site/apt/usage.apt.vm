@@ -16,7 +16,7 @@ Usage
 
   In your <<<pom.xml>>>, insert this segment:
 
--------------------
++---+
 <project>
   ...
   <build>
@@ -34,7 +34,7 @@ Usage
   </reporting>
   ...
 </project>
--------------------
++---+
 
   NOTE: 
   If you like having cross references included you need to define the 
@@ -51,7 +51,7 @@ mvn site
   The TagList plugin allows tags to be found using three matching methods:  exact match, ignore case match, and 
   regular expression match.  The matched tags are grouped into tag classes.  For instance:
 
--------------------
++---+
 <project>
   ...
   <build>
@@ -88,14 +88,14 @@ mvn site
   </reporting>
   ...
 </project>
++---+
 
+    For backwards compatibility with versions prior to the 2.4 release, the legacy tags configuration is supported;
+    however, only exact matching
+    is used with legacy configuration.
 
--------------------
++---+
 
-  For backwards compatibility with versions prior to the 2.4 release, the legacy tags configuration is supported; however, only exact matching
-  is used with legacy configuration.
-
--------------------
 <project>
   ...
         <configuration>
@@ -108,4 +108,4 @@ mvn site
         </configuration>
   ...
 </project>
--------------------
++---+
