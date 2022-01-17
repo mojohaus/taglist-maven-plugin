@@ -1,8 +1,7 @@
-_extends: .github
 name-template: '$RESOLVED_VERSION'
 tag-template: 'taglist-maven-plugin-$RESOLVED_VERSION'
 categories:
-  - title: '🚀 Features'
+  - title: '🚀 New features and improvements'
     labels:
       - 'feature'
       - 'enhancement'
@@ -21,6 +20,9 @@ categories:
     labels:
       - 'removal'
       - 'removed'
+  - title: '📝 Documentation updates'
+    labels:
+      - 'documentation'
   - title: '🧰 Maintenance'
     labels:
       - 'chore'
