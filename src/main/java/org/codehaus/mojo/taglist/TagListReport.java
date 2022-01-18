@@ -530,7 +530,7 @@ public class TagListReport
         if ( includes != null ) {
             return String.join(",", includes);
         } else {
-            return null;
+            return "";
         }
     }
 
@@ -542,7 +542,7 @@ public class TagListReport
       if ( excludes != null ) {
           return String.join(",", excludes);
       } else {
-          return null;
+          return "";
       }
     }
 
