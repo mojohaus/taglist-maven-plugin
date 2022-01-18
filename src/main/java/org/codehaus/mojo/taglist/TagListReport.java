@@ -464,7 +464,7 @@ public class TagListReport
         if ( dir.exists() && dir.isDirectory() )
         {
             try {
-                if ( ! FileUtils.getFiles( dir, getIncludes(), getExcludes() ).isEmpty() ) {
+                if ( ! FileUtils.getFiles( dir, getIncludesCommaSeparated(), getExcludesCommaSeparated() ).isEmpty() ) {
                     found = true;
                 }
             } catch (IOException e) {
@@ -525,7 +525,7 @@ public class TagListReport
     /**
      * Get the files to include, as a comma separated list of patterns.
      */
-    public String getIncludes()
+    String getIncludesCommaSeparated()
     {
         if ( includes != null ) {
             return String.join(",", includes);
@@ -537,7 +537,7 @@ public class TagListReport
     /**
      * Get the files to exclude, as a comma separated list of patterns.
      */
-    public String getExcludes()
+    String getExcludesCommaSeparated()
     {
       if ( excludes != null ) {
           return String.join(",", excludes);

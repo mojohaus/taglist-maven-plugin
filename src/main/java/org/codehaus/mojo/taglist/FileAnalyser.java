@@ -134,8 +134,8 @@ public class FileAnalyser
         locale = report.getLocale();
         noCommentString = report.getBundle().getString( "report.taglist.nocomment" );      
         this.tagClasses = tagClasses;
-        this.includes = report.getIncludes();
-        this.excludes = report.getExcludes();
+        this.includes = report.getIncludesCommaSeparated();
+        this.excludes = report.getExcludesCommaSeparated();
     }
 
     /**
