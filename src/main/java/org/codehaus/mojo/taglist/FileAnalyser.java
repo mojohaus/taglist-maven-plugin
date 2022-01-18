@@ -84,6 +84,16 @@ public class FileAnalyser
     private Collection sourceDirs;
 
     /**
+     * The files to include, as a comma separated list of patterns.
+     */
+    private String includes;
+
+    /**
+     * The files top exclude, as a comma separated list of patterns.
+     */
+    private String excludes;
+
+    /**
      * Log for debug output.
      */
     private Log log;
@@ -124,6 +134,8 @@ public class FileAnalyser
         locale = report.getLocale();
         noCommentString = report.getBundle().getString( "report.taglist.nocomment" );      
         this.tagClasses = tagClasses;
+        this.includes = report.getIncludes();
+        this.excludes = report.getExcludes();
     }
 
     /**
@@ -171,7 +183,7 @@ public class FileAnalyser
         {
             for ( Iterator iter = sourceDirs.iterator(); iter.hasNext(); )
             {
-                filesList.addAll( FileUtils.getFiles( new File( (String) iter.next() ), "**/*.java", null ) );
+                filesList.addAll( FileUtils.getFiles( new File( (String) iter.next() ), includes, excludes ) );
             }
         }
         catch ( IOException e )

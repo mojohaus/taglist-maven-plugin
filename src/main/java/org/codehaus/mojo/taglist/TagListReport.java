@@ -21,6 +21,7 @@ package org.codehaus.mojo.taglist;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -48,6 +49,7 @@ import org.codehaus.mojo.taglist.tags.AbsTag;
 import org.codehaus.mojo.taglist.tags.InvalidTagException;
 import org.codehaus.mojo.taglist.tags.TagClass;
 import org.codehaus.mojo.taglist.tags.TagFactory;
+import org.codehaus.plexus.util.FileUtils;
 import org.codehaus.plexus.util.IOUtil;
 import org.codehaus.plexus.util.PathTool;
 import org.codehaus.plexus.util.StringUtils;
@@ -71,6 +73,22 @@ public class TagListReport
 
     /** Default locale used if the source file locale is null. */
     private static final String DEFAULT_LOCALE = "en";
+
+    /**
+     * List of files to include. Specified as fileset patterns which are relative to the source directory.
+     *
+     * @since 3.0.0
+     */
+    @Parameter( defaultValue = "**/*.java" )
+    private String[] includes;
+
+    /**
+     * List of files to exclude. Specified as fileset patterns which are relative to the source directory.
+     *
+     * @since 3.0.0
+     */
+    @Parameter( defaultValue = "" )
+    private String[] excludes;
 
     /**
      * Specifies the directory where the xml output will be generated.
@@ -435,30 +453,33 @@ public class TagListReport
     }
 
     /**
-     * Checks whether the given directory contains Java files.
+     * Checks whether the given directory contains source files.
      * 
      * @param dir the source directory.
-     * @return true if the folder or one of its subfolders contains at least 1 Java file.
+     * @return true if the folder or one of its subfolders contains at least 1 source file that matches includes/excludes.
      */
     private boolean hasSources( File dir )
     {
         boolean found = false;
         if ( dir.exists() && dir.isDirectory() )
         {
-            File[] files = dir.listFiles();
-            for ( int i = 0; i < files.length && !found; i++ )
-            {
-                File currentFile = files[i];
-                if ( currentFile.isFile() && currentFile.getName().endsWith( ".java" ) )
-                {
+            try {
+                if ( ! FileUtils.getFiles( dir, getIncludes(), getExcludes() ).isEmpty() ) {
                     found = true;
                 }
-                else if ( currentFile.isDirectory() )
-                {
-                    boolean hasSources = hasSources( currentFile );
-                    if ( hasSources )
-                    {
-                        found = true;
+            } catch (IOException e) {
+                // should never get here
+                getLog().error("Error whilst trying to scan the directory " + dir.getAbsolutePath(), e);
+            }
+            File[] files = dir.listFiles();
+            if ( files != null ) {
+                for ( int i = 0; i < files.length && !found; i++ ) {
+                    File currentFile = files[i];
+                    if ( currentFile.isDirectory() ) {
+                        boolean hasSources = hasSources( currentFile );
+                        if ( hasSources ) {
+                            found = true;
+                        }
                     }
                 }
             }
@@ -485,6 +506,7 @@ public class TagListReport
             {
                 MavenProject reactorProject = (MavenProject) i.next();
 
+                // TODO should this be more like ! "pom".equals(...)
                 if ( "java".equals( reactorProject.getArtifact().getArtifactHandler().getLanguage() ) )
                 {
                     dirs.addAll( reactorProject.getCompileSourceRoots() );
@@ -501,6 +523,30 @@ public class TagListReport
     }
 
     /**
+     * Get the files to include, as a comma separated list of patterns.
+     */
+    public String getIncludes()
+    {
+        if ( includes != null ) {
+            return String.join(",", includes);
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Get the files to exclude, as a comma separated list of patterns.
+     */
+    public String getExcludes()
+    {
+      if ( excludes != null ) {
+          return String.join(",", excludes);
+      } else {
+          return null;
+      }
+    }
+
+  /**
      * Returns the Locale of the source files.
      * 
      * @return The Locale of the source files.
