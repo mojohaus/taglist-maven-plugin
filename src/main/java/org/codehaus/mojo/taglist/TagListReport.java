@@ -32,6 +32,7 @@ import java.util.ResourceBundle;
 
 import org.apache.maven.doxia.siterenderer.Renderer;
 import org.apache.maven.model.ReportPlugin;
+import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.plugins.annotations.ResolutionScope;
@@ -458,33 +459,30 @@ public class TagListReport
      * @param dir the source directory.
      * @return true if the folder or one of its subfolders contains at least 1 source file that matches includes/excludes.
      */
-    private boolean hasSources( File dir )
-    {
-        boolean found = false;
+    private boolean hasSources( File dir ) throws MojoExecutionException {
         if ( dir.exists() && dir.isDirectory() )
         {
             try {
                 if ( ! FileUtils.getFiles( dir, getIncludesCommaSeparated(), getExcludesCommaSeparated() ).isEmpty() ) {
-                    found = true;
+                    return true;
                 }
             } catch (IOException e) {
-                // should never get here
-                getLog().error("Error whilst trying to scan the directory " + dir.getAbsolutePath(), e);
+                throw new MojoExecutionException("Failed to check files in directory " +
+                        dir.getAbsolutePath() + " : " + e.getMessage(), e);
             }
             File[] files = dir.listFiles();
             if ( files != null ) {
-                for ( int i = 0; i < files.length && !found; i++ ) {
-                    File currentFile = files[i];
-                    if ( currentFile.isDirectory() ) {
-                        boolean hasSources = hasSources( currentFile );
+                for ( File file : files ) {
+                    if ( file.isDirectory() ) {
+                        boolean hasSources = hasSources( file );
                         if ( hasSources ) {
-                            found = true;
+                            return true;
                         }
                     }
                 }
             }
         }
-        return found;
+        return false;
     }
 
     /**
@@ -506,7 +504,7 @@ public class TagListReport
             {
                 MavenProject reactorProject = (MavenProject) i.next();
 
-                // TODO should this be more like ! "pom".equals(...)
+                // TODO see https://github.com/mojohaus/taglist-maven-plugin/issues/55
                 if ( "java".equals( reactorProject.getArtifact().getArtifactHandler().getLanguage() ) )
                 {
                     dirs.addAll( reactorProject.getCompileSourceRoots() );
