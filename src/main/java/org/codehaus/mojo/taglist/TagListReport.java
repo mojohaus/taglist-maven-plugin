@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import org.apache.maven.MavenExecutionException;
 import org.apache.maven.doxia.siterenderer.Renderer;
 import org.apache.maven.model.ReportPlugin;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -287,7 +288,7 @@ public class TagListReport
         }
 
         // let's proceed to the analysis
-        FileAnalyser fileAnalyser = new FileAnalyser( this, tagClasses );
+        FileAnalyser fileAnalyser = createFileAnalyser( this, tagClasses );
         Collection tagReports = fileAnalyser.execute();
 
         // Renders the report
@@ -400,6 +401,14 @@ public class TagListReport
         }
     }
 
+    private FileAnalyser createFileAnalyser( TagListReport report, List<TagClass> tagClasses ) throws MavenReportException {
+      try {
+        return new FileAnalyser( report, tagClasses );
+      } catch (MojoExecutionException e) {
+        throw new MavenReportException("Failed to create report : " + e.getMessage(), e);
+      }
+    }
+
     /**
      * Returns the path relative to the output directory.
      * 
@@ -425,12 +434,16 @@ public class TagListReport
      */
     public boolean canGenerateReport()
     {
-        boolean canGenerate = !constructSourceDirs().isEmpty();
-        if ( aggregate && !getProject().isExecutionRoot() )
-        {
-            canGenerate = false;
+        try {
+            boolean canGenerate = !constructSourceDirs().isEmpty();
+            if (aggregate && !getProject().isExecutionRoot()) {
+                canGenerate = false;
+            }
+            return canGenerate;
+        } catch (MojoExecutionException e) {
+            getLog().error("Can not generate report : " + e.getMessage(), e);
+            return false;
         }
-        return canGenerate;
     }
 
     /**
@@ -439,8 +452,7 @@ public class TagListReport
      * @param sourceDirectories the original list of directories.
      * @return a new list containing only non empty dirs.
      */
-    private List pruneSourceDirs( List sourceDirectories )
-    {
+    private List pruneSourceDirs( List sourceDirectories ) throws MojoExecutionException {
         List pruned = new ArrayList( sourceDirectories.size() );
         for ( Iterator i = sourceDirectories.iterator(); i.hasNext(); )
         {
@@ -490,8 +502,7 @@ public class TagListReport
      * 
      * @return the list of dirs.
      */
-    public List constructSourceDirs()
-    {
+    public List constructSourceDirs() throws MojoExecutionException {
         List dirs = new ArrayList( getProject().getCompileSourceRoots() );
         if ( !skipTestSources )
         {

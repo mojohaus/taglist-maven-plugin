@@ -33,6 +33,7 @@ import java.util.List;
 import java.util.Locale;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.reporting.MavenReportException;
 import org.codehaus.mojo.taglist.beans.FileReport;
@@ -124,8 +125,7 @@ public class FileAnalyser
      * @param report the MOJO that is using this analyzer.
      * @param tagClasses the array of tag classes to use for searching
      */
-    public FileAnalyser( TagListReport report, List<TagClass> tagClasses )
-    {
+    public FileAnalyser( TagListReport report, List<TagClass> tagClasses ) throws MojoExecutionException {
         multipleLineCommentsOn = report.isMultipleLineComments();
         emptyCommentsOn = report.isEmptyComments();
         log = report.getLog();
