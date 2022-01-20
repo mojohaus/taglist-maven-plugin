@@ -129,7 +129,7 @@ public class FileAnalyser
         multipleLineCommentsOn = report.isMultipleLineComments();
         emptyCommentsOn = report.isEmptyComments();
         log = report.getLog();
-        sourceDirs = report.constructSourceDirs();
+        sourceDirs = report.getSourceDirs();
         encoding = report.getInputEncoding();
         locale = report.getLocale();
         noCommentString = report.getBundle().getString( "report.taglist.nocomment" );      

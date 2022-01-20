@@ -29,6 +29,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.concurrent.atomic.AtomicReference;
 
 import org.apache.maven.doxia.siterenderer.Renderer;
 import org.apache.maven.model.ReportPlugin;
@@ -38,6 +39,7 @@ import org.apache.maven.plugins.annotations.ResolutionScope;
 import org.apache.maven.project.MavenProject;
 import org.apache.maven.reporting.AbstractMavenReport;
 import org.apache.maven.reporting.MavenReportException;
+import org.apache.maven.shared.utils.io.FileUtils;
 import org.codehaus.mojo.taglist.beans.FileReport;
 import org.codehaus.mojo.taglist.beans.TagReport;
 import org.codehaus.mojo.taglist.output.TagListXMLComment;
@@ -49,7 +51,6 @@ import org.codehaus.mojo.taglist.tags.AbsTag;
 import org.codehaus.mojo.taglist.tags.InvalidTagException;
 import org.codehaus.mojo.taglist.tags.TagClass;
 import org.codehaus.mojo.taglist.tags.TagFactory;
-import org.codehaus.plexus.util.FileUtils;
 import org.codehaus.plexus.util.IOUtil;
 import org.codehaus.plexus.util.PathTool;
 import org.codehaus.plexus.util.StringUtils;
@@ -191,6 +192,8 @@ public class TagListReport
     private org.codehaus.mojo.taglist.options.TagListOptions tagListOptions;
 
     private String[] tags;
+
+    private AtomicReference<List> sourceDirs = new AtomicReference<>();
 
     /**
      * {@inheritDoc}
@@ -424,7 +427,7 @@ public class TagListReport
      */
     public boolean canGenerateReport()
     {
-        boolean canGenerate = !constructSourceDirs().isEmpty();
+        boolean canGenerate = !getSourceDirs().isEmpty();
         if ( aggregate && !getProject().isExecutionRoot() )
         {
             canGenerate = false;
@@ -434,11 +437,11 @@ public class TagListReport
 
     /**
      * Removes empty dirs from the list.
-     * 
+     *
      * @param sourceDirectories the original list of directories.
      * @return a new list containing only non empty dirs.
      */
-    private List pruneSourceDirs( List sourceDirectories )
+    private List pruneSourceDirs( List sourceDirectories ) throws IOException
     {
         List pruned = new ArrayList( sourceDirectories.size() );
         for ( Iterator i = sourceDirectories.iterator(); i.hasNext(); )
@@ -454,45 +457,46 @@ public class TagListReport
 
     /**
      * Checks whether the given directory contains source files.
-     * 
+     *
      * @param dir the source directory.
-     * @return true if the folder or one of its subfolders contains at least 1 source file that matches includes/excludes.
+     * @return true if the folder or one of its subfolders contains at least 1 source file that matches
+     * includes/excludes.
      */
-    private boolean hasSources( File dir )
+    private boolean hasSources( File dir ) throws IOException
     {
-        boolean found = false;
         if ( dir.exists() && dir.isDirectory() )
         {
-            try {
-                if ( ! FileUtils.getFiles( dir, getIncludesCommaSeparated(), getExcludesCommaSeparated() ).isEmpty() ) {
-                    found = true;
-                }
-            } catch (IOException e) {
-                // should never get here
-                getLog().error("Error whilst trying to scan the directory " + dir.getAbsolutePath(), e);
+            if ( !FileUtils.getFiles( dir, getIncludesCommaSeparated(), getExcludesCommaSeparated() ).isEmpty() )
+            {
+                return true;
             }
+
             File[] files = dir.listFiles();
-            if ( files != null ) {
-                for ( int i = 0; i < files.length && !found; i++ ) {
+            if ( files != null )
+            {
+                for ( int i = 0; i < files.length; i++ )
+                {
                     File currentFile = files[i];
-                    if ( currentFile.isDirectory() ) {
+                    if ( currentFile.isDirectory() )
+                    {
                         boolean hasSources = hasSources( currentFile );
-                        if ( hasSources ) {
-                            found = true;
+                        if ( hasSources )
+                        {
+                            return true;
                         }
                     }
                 }
             }
         }
-        return found;
+        return false;
     }
 
     /**
      * Construct the list of source directories to analyze.
-     * 
+     *
      * @return the list of dirs.
      */
-    public List constructSourceDirs()
+    private List constructSourceDirs()
     {
         List dirs = new ArrayList( getProject().getCompileSourceRoots() );
         if ( !skipTestSources )
@@ -506,7 +510,6 @@ public class TagListReport
             {
                 MavenProject reactorProject = (MavenProject) i.next();
 
-                // TODO should this be more like ! "pom".equals(...)
                 if ( "java".equals( reactorProject.getArtifact().getArtifactHandler().getLanguage() ) )
                 {
                     dirs.addAll( reactorProject.getCompileSourceRoots() );
@@ -518,8 +521,33 @@ public class TagListReport
             }
         }
 
-        dirs = pruneSourceDirs( dirs );
+        /*
+         * This try-catch is needed due to a missing declared exception in the
+         * 'canGenerateReport()' method. For this reason, neither the 'canGenerateReport()'
+         * nor the 'constructSourceDirs()' can throw exceptions.
+         * The exception itself is caused by a declaration from the FileUtils, but never used
+         * there. The FileUtils.getFiles() should be replaced by an NIO filter at some point.
+         */
+        try
+        {
+            dirs = pruneSourceDirs( dirs );
+        }
+        catch ( IOException javaIoIOException )
+        {
+            getLog().warn( "Unable to prune source dirs.", javaIoIOException );
+        }
+
         return dirs;
+    }
+
+    protected List getSourceDirs()
+    {
+        if ( sourceDirs.get() == null )
+        {
+            sourceDirs.compareAndSet( null, constructSourceDirs() );
+        }
+
+        return sourceDirs.get();
     }
 
     /**
@@ -527,9 +555,12 @@ public class TagListReport
      */
     String getIncludesCommaSeparated()
     {
-        if ( includes != null ) {
-            return String.join(",", includes);
-        } else {
+        if ( includes != null )
+        {
+            return String.join( ",", includes );
+        }
+        else
+        {
             return "";
         }
     }
