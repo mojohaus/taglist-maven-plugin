@@ -9,7 +9,7 @@
   </parent>
 
   <artifactId>taglist-maven-plugin</artifactId>
-  <version>3.0.0-SNAPSHOT</version>
+  <version>3.0.0</version>
 
   <packaging>maven-plugin</packaging>
   <name>Taglist Maven Plugin</name>
@@ -19,7 +19,7 @@
   <properties>
     <mavenVersion>3.0</mavenVersion>
     <mojo.java.target>1.8</mojo.java.target>
-    <project.build.outputTimestamp>10</project.build.outputTimestamp>
+    <project.build.outputTimestamp>1642852275</project.build.outputTimestamp>
 
     <doxiaVersion>1.11.1</doxiaVersion>
     <doxia-sitetoolsVersion>1.11.1</doxia-sitetoolsVersion>
@@ -104,6 +104,7 @@
     <connection>scm:git:https://github.com/mojohaus/taglist-maven-plugin.git</connection>
     <developerConnection>scm:git:ssh://git@github.com/mojohaus/taglist-maven-plugin.git</developerConnection>
     <url>https://github.com/mojohaus/taglist-maven-plugin</url>
+    <tag>taglist-maven-plugin-3.0.0</tag>
   </scm>
   <build>
     <pluginManagement>
