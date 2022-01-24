@@ -33,8 +33,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.codehaus.plexus.util.IOUtil;
-
 /**
  * Report for a file.
  *
@@ -129,11 +127,9 @@ public class FileReport
             return className;
         }
         // need to compute it (only once)
-        BufferedReader reader = null;
         String packageName = null;
-        try
+        try ( BufferedReader reader = new BufferedReader( getReader( file ) ) )
         {
-            reader = new BufferedReader( getReader( file ) );
             String currentLine = reader.readLine();
             if ( currentLine != null )
             {
@@ -160,10 +156,6 @@ public class FileReport
         catch ( IOException e )
         {
             packageName = "unknown";
-        }
-        finally
-        {
-            IOUtil.close( reader );
         }
 
         className = packageName + "." + file.getName().replaceAll( "\\.java$", "" );

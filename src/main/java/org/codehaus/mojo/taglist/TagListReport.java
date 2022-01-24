@@ -51,7 +51,6 @@ import org.codehaus.mojo.taglist.tags.AbsTag;
 import org.codehaus.mojo.taglist.tags.InvalidTagException;
 import org.codehaus.mojo.taglist.tags.TagClass;
 import org.codehaus.mojo.taglist.tags.TagFactory;
-import org.codehaus.plexus.util.IOUtil;
 import org.codehaus.plexus.util.PathTool;
 import org.codehaus.plexus.util.StringUtils;
 
@@ -366,13 +365,12 @@ public class TagListReport
         // Create the writer for the XML output file.
         xmlOutputDirectory.mkdirs();
         File xmlFile = new File( xmlOutputDirectory, "taglist.xml" );
-        FileOutputStream fos = null;
-        OutputStreamWriter output = null;
 
-        try
+        try (
+                FileOutputStream fos = new FileOutputStream( xmlFile );
+                OutputStreamWriter output = new OutputStreamWriter( fos, getInputEncoding() )
+        )
         {
-            fos = new FileOutputStream( xmlFile );
-            output = new OutputStreamWriter( fos, getInputEncoding());
 
             // Write out the XML output file.
             TaglistOutputXpp3Writer xmlWriter = new TaglistOutputXpp3Writer();
@@ -381,10 +379,6 @@ public class TagListReport
         catch ( Exception e )
         {
             getLog().warn( "Could not save taglist xml file: " + e.getMessage() );
-        }
-        finally
-        {
-            IOUtil.close( output );
         }
     }
 

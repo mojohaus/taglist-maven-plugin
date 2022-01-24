@@ -38,7 +38,6 @@ import org.codehaus.mojo.taglist.beans.FileReport;
 import org.codehaus.mojo.taglist.beans.TagReport;
 import org.codehaus.mojo.taglist.tags.TagClass;
 import org.codehaus.plexus.util.FileUtils;
-import org.codehaus.plexus.util.IOUtil;
 
 /**
  * Class that analyzes a file with a special comment tag. For instance:
@@ -210,11 +209,8 @@ public class FileAnalyser
      */
     public void scanFile( File file )
     {
-        LineNumberReader reader = null;
-
-        try
+        try ( LineNumberReader reader = new LineNumberReader( getReader( file ) ) )
         {
-            reader = new LineNumberReader( getReader( file ) );
 
             String currentLine = reader.readLine();
             while ( currentLine != null )
@@ -327,10 +323,6 @@ public class FileAnalyser
         catch ( IOException e )
         {
             log.error( "Error while scanning the file " + file.getPath(), e );
-        }
-        finally
-        {
-            IOUtil.close( reader );
         }
     }
 
