@@ -52,17 +52,17 @@ public class TagClass
     /**
      * The tag class's name.
      */
-    private String classDisplayName = null;
+    private final String classDisplayName;
 
     /**
      * The tag report for this tag class.
      */
-    private TagReport classTagReport = null;
+    private final TagReport classTagReport;
 
     /**
      * The container of tags that make up this tag class.
      */
-    private ArrayList<AbsTag> tags = new ArrayList<>();
+    private final ArrayList<AbsTag> tags = new ArrayList<>();
 
     /**
      * The int value for no tag match found.
@@ -82,7 +82,7 @@ public class TagClass
     /**
      * The unique id for this tag class.
      */
-    private int uniqueId = 0;
+    private final int uniqueId;
 
     /**
      * Constructor.
@@ -95,8 +95,8 @@ public class TagClass
         
         // Assign a unique ID for this tag class and update the global counter.
         uniqueId = uniqueTcCounter++;
-        
-        classTagReport = new TagReport( displayName, "tag_class_" + String.valueOf( uniqueId ) );
+
+        classTagReport = new TagReport( displayName, "tag_class_" + uniqueId );
     }
 
     /** Access the tag report for this tag class.

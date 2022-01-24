@@ -87,7 +87,7 @@ public class TagListReport
      *
      * @since 3.0.0
      */
-    @Parameter( defaultValue = "" )
+    @Parameter()
     private String[] excludes;
 
     /**
@@ -193,7 +193,7 @@ public class TagListReport
 
     private String[] tags;
 
-    private AtomicReference<List<String>> sourceDirs = new AtomicReference<>();
+    private final AtomicReference<List<String>> sourceDirs = new AtomicReference<>();
 
     /**
      * {@inheritDoc}

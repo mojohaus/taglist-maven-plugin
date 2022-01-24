@@ -38,22 +38,22 @@ public class TagReport
     /**
      * Tag Class display name.
      */
-    private String displayName;
-    
+    private final String displayName;
+
     /**
      * Tag Class HTML safe link name.
      */
-    private String linkName;
+    private final String linkName;
 
     /**
      * An array containing the tag string that make the tag class.
      */
-    private List<String> tagStrings = new ArrayList<>();
+    private final List<String> tagStrings = new ArrayList<>();
 
     /**
      * Map containing File objects as keys, and FileReport object as values.
      */
-    private Map<File, FileReport> fileReportsMap;
+    private final Map<File, FileReport> fileReportsMap;
 
     /**
      * Number of tags found in the code.

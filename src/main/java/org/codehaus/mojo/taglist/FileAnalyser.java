@@ -69,52 +69,52 @@ public class FileAnalyser
     /**
      * The character encoding of the files to analyze.
      */
-    private String encoding;
-    
+    private final String encoding;
+
     /**
      * The Locale of the files to analyze.
      */
-    private Locale locale;
+    private final Locale locale;
 
     /**
      * The directories to analyze.
      */
-    private Collection<String> sourceDirs;
+    private final Collection<String> sourceDirs;
 
     /**
      * The files to include, as a comma separated list of patterns.
      */
-    private String includes;
+    private final String includes;
 
     /**
      * The files top exclude, as a comma separated list of patterns.
      */
-    private String excludes;
+    private final String excludes;
 
     /**
      * Log for debug output.
      */
-    private Log log;
+    private final Log log;
 
     /**
      * Set to true if the analyzer should look for multiple line comments.
      */
-    private boolean multipleLineCommentsOn;
+    private final boolean multipleLineCommentsOn;
 
     /**
      * Set to true if the analyzer should look for tags without comments.
      */
-    private boolean emptyCommentsOn;
+    private final boolean emptyCommentsOn;
 
     /**
      * String used to indicate that there is no comment after the tag.
      */
-    private String noCommentString;
+    private final String noCommentString;
 
     /**
      * ArrayList of tag classes.
      */
-    private List<TagClass> tagClasses;
+    private final List<TagClass> tagClasses;
 
     /**
      * Constructor.

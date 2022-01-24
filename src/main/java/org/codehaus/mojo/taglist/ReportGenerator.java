@@ -51,27 +51,27 @@ public class ReportGenerator
     /**
      * The sink used in this Maven build to generated the tag list page.
      */
-    private Sink sink;
+    private final Sink sink;
 
     /**
      * The resource bundle used in this Maven build.
      */
-    private ResourceBundle bundle;
+    private final ResourceBundle bundle;
 
     /**
      * The output path of the site.
      */
-    private File siteOutputDirectory;
+    private final File siteOutputDirectory;
 
     /**
      * A list of sorted tag reports.
      */
-    private List<TagReport> sortedTagReports;
+    private final List<TagReport> sortedTagReports;
 
     /**
      * Display details for tags that contain zero occurrences.
      */
-    private boolean showEmptyDetails;
+    private final boolean showEmptyDetails;
 
     /**
      * Constructor.

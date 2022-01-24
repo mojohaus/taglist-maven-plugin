@@ -21,30 +21,37 @@ package org.codehaus.mojo.taglist.tags;
 
 /** The tag factory is used to create a tag based on the type of tag
  *  defined in the pom.xml.
- * 
+ *
  */
-public class TagFactory 
+public class TagFactory
 {
-    /** The XML name of the generic tag (case sensitive). */
-    private static String genericTag = "exact";
-    /** The XML name of the ignore case tag (case insensitive). */
-    private static String ignorecaseTag = "ignoreCase";
-    /** The XML name of the regular expression tag. */
-    private static String regexTag = "regEx";
-    
-    
-    /** Create a tag based on a tag type string.
-     * 
+    /**
+     * The XML name of the generic tag (case sensitive).
+     */
+    private static final String genericTag = "exact";
+    /**
+     * The XML name of the ignore case tag (case insensitive).
+     */
+    private static final String ignorecaseTag = "ignoreCase";
+    /**
+     * The XML name of the regular expression tag.
+     */
+    private static final String regexTag = "regEx";
+
+
+    /**
+     * Create a tag based on a tag type string.
+     *
      * @param tagType the XML string for the tag to create.
-     * @param rule the tag string to use in matching tags.
+     * @param rule    the tag string to use in matching tags.
      * @return the new tag. NULL if the tagType is unknown.
      * @throws InvalidTagException if the tagType is unknown
      */
-    public static AbsTag createTag ( final String tagType, final String rule )
-    throws InvalidTagException
+    public static AbsTag createTag( final String tagType, final String rule )
+            throws InvalidTagException
     {
-        AbsTag tag = null;
-        
+        AbsTag tag;
+
         if ( genericTag.equals( tagType ) )
         {
             tag = new GenericTag( rule );
@@ -61,15 +68,16 @@ public class TagFactory
         {
             throw new InvalidTagException( tagType );
         }
-        
+
         return ( tag );
     }
-    
-    /** Returns the default tag type if one is not specified.
-     * 
+
+    /**
+     * Returns the default tag type if one is not specified.
+     *
      * @return the default tag type string
      */
-    public static final String getDefaultTagType()
+    public static String getDefaultTagType()
     {
         return ( genericTag );
     }
