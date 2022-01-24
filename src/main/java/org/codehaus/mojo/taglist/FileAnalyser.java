@@ -81,7 +81,7 @@ public class FileAnalyser
     /**
      * The directories to analyze.
      */
-    private Collection sourceDirs;
+    private Collection<String> sourceDirs;
 
     /**
      * The files to include, as a comma separated list of patterns.
@@ -116,7 +116,7 @@ public class FileAnalyser
     /**
      * ArrayList of tag classes.
      */
-    private List<TagClass> tagClasses = new ArrayList();
+    private List<TagClass> tagClasses;
 
     /**
      * Constructor.
@@ -140,18 +140,18 @@ public class FileAnalyser
 
     /**
      * Execute the analysis for the configuration given by the TagListReport.
-     * 
+     *
      * @return a collection of TagReport objects.
      * @throws MavenReportException the Maven report exception.
      */
-    public Collection execute()
-        throws MavenReportException
+    public Collection<TagReport> execute()
+            throws MavenReportException
     {
-        List fileList = findFilesToScan();
+        List<File> fileList = findFilesToScan();
 
-        for ( Iterator iter = fileList.iterator(); iter.hasNext(); )
+        for ( Iterator<File> iter = fileList.iterator(); iter.hasNext(); )
         {
-            File file = (File) iter.next();
+            File file = iter.next();
             if ( file.exists() )
             {
                 scanFile( file );
@@ -159,31 +159,32 @@ public class FileAnalyser
         }
 
         // Get the tag reports from each of the tag classes.
-        Collection tagReports = new ArrayList();
-        Iterator itr = tagClasses.iterator();      
+        Collection<TagReport> tagReports = new ArrayList<>();
+        Iterator<TagClass> itr = tagClasses.iterator();
         while ( itr.hasNext() )
         {
-            TagClass tc = (TagClass) itr.next();
+            TagClass tc = itr.next();
             tagReports.add( tc.getTagReport() );
         }
 
         return tagReports;
     }
+
     /**
      * Gives the list of files to scan.
-     * 
+     *
      * @return a List of File objects.
      * @throws MavenReportException the Maven report exception.
      */
-    private List findFilesToScan()
-        throws MavenReportException
+    private List<File> findFilesToScan()
+            throws MavenReportException
     {
-        List filesList = new ArrayList();
+        List<File> filesList = new ArrayList<>();
         try
         {
-            for ( Iterator iter = sourceDirs.iterator(); iter.hasNext(); )
+            for ( Iterator<String> iter = sourceDirs.iterator(); iter.hasNext(); )
             {
-                filesList.addAll( FileUtils.getFiles( new File( (String) iter.next() ), includes, excludes ) );
+                filesList.addAll( FileUtils.getFiles( new File( iter.next() ), includes, excludes ) );
             }
         }
         catch ( IOException e )
@@ -223,11 +224,11 @@ public class FileAnalyser
             while ( currentLine != null )
             {
                 int index = -1;
-                Iterator iter = tagClasses.iterator();
+                Iterator<TagClass> iter = tagClasses.iterator();
                 // look for a tag on this line
                 while ( iter.hasNext() )
                 {
-                    TagClass tagClass = (TagClass) iter.next();
+                    TagClass tagClass = iter.next();
                     index = tagClass.tagMatchContains( currentLine, locale );
                     if ( index != TagClass.NO_MATCH )
                     {
@@ -297,10 +298,10 @@ public class FileAnalyser
                                     }
                                     // try to look if the next line is not a new tag
                                     boolean newTagFound = false;
-                                    Iterator moreTCiter = tagClasses.iterator();
+                                    Iterator<TagClass> moreTCiter = tagClasses.iterator();
                                     while ( moreTCiter.hasNext() )
                                     {
-                                        TagClass tc = (TagClass) moreTCiter.next();
+                                        TagClass tc = moreTCiter.next();
                                         if ( tc.tagMatchStartsWith( currentComment, locale ) )
                                         {
                                             newTagFound = true;

@@ -67,7 +67,7 @@ public class ReportGenerator
     /**
      * A list of sorted tag reports.
      */
-    private List sortedTagReports;
+    private List<TagReport> sortedTagReports;
 
     /**
      * Display details for tags that contain zero occurrences.
@@ -77,12 +77,12 @@ public class ReportGenerator
     /**
      * Constructor.
      *
-     * @param report the TagListReport object used in this build.
+     * @param report     the TagListReport object used in this build.
      * @param tagReports a collection of tagReports to output.
      */
-    public ReportGenerator( TagListReport report, Collection tagReports )
+    public ReportGenerator( TagListReport report, Collection<TagReport> tagReports )
     {
-        sortedTagReports = new ArrayList( tagReports );
+        sortedTagReports = new ArrayList<>( tagReports );
         Collections.sort( sortedTagReports );
         this.bundle = report.getBundle();
         this.sink = report.getSink();
@@ -123,7 +123,7 @@ public class ReportGenerator
     /**
      * @param tagReports a collection of tagReports to summarize.
      */
-    private void doSummarySection( Collection tagReports )
+    private void doSummarySection( Collection<TagReport> tagReports )
     {
         sink.paragraph();
         sink.text( bundle.getString( "report.taglist.summary.description" ) );
@@ -141,9 +141,9 @@ public class ReportGenerator
         sink.text( bundle.getString( "report.taglist.summary.tagstrings" ) );
         sink.tableHeaderCell_();
         sink.tableRow_();
-        for ( Iterator iter = tagReports.iterator(); iter.hasNext(); )
+        for ( Iterator<TagReport> iter = tagReports.iterator(); iter.hasNext(); )
         {
-            doTagSummary( (TagReport) iter.next() );
+            doTagSummary( iter.next() );
         }
         sink.table_();
     }
@@ -192,15 +192,15 @@ public class ReportGenerator
     /**
      * @param tagReports a collection of tagReports to be detailed in this section.
      */
-    private void doDetailSection( Collection tagReports )
+    private void doDetailSection( Collection<TagReport> tagReports )
     {
         sink.paragraph();
         sink.text( bundle.getString( "report.taglist.detail.description" ) );
         sink.paragraph_();
 
-        for ( Iterator iter = tagReports.iterator(); iter.hasNext(); )
+        for ( Iterator<TagReport> iter = tagReports.iterator(); iter.hasNext(); )
         {
-            doTagDetailedPart( (TagReport) iter.next() );
+            doTagDetailedPart( iter.next() );
         }
     }
 
@@ -227,17 +227,17 @@ public class ReportGenerator
         sink.bold_();
         sink.paragraph_();
 
-        Collection fileReports = tagReport.getFileReports();
-        List sortedFileReports = new ArrayList( fileReports );
+        Collection<FileReport> fileReports = tagReport.getFileReports();
+        List<FileReport> sortedFileReports = new ArrayList<>( fileReports );
         Collections.sort( sortedFileReports );
 
         // MTAGLIST-38 - sink table before generating each file report in order
         //               to align the columns correctly.
         sink.table();
 
-        for ( Iterator iter = sortedFileReports.iterator(); iter.hasNext(); )
+        for ( Iterator<FileReport> iter = sortedFileReports.iterator(); iter.hasNext(); )
         {
-            doFileDetailedPart( (FileReport) iter.next() );
+            doFileDetailedPart( iter.next() );
         }
         sink.table_();
 
@@ -257,9 +257,9 @@ public class ReportGenerator
         sink.text( bundle.getString( "report.taglist.detail.line" ) );
         sink.tableHeaderCell_();
         sink.tableRow_();
-        for ( Iterator iter = fileReport.getLineIndexes().iterator(); iter.hasNext(); )
+        for ( Iterator<Integer> iter = fileReport.getLineIndexes().iterator(); iter.hasNext(); )
         {
-            doCommentLine( fileReport, (Integer) iter.next() );
+            doCommentLine( fileReport, iter.next() );
         }
     }
 

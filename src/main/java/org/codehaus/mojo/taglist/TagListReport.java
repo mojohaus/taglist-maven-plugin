@@ -42,6 +42,7 @@ import org.apache.maven.reporting.MavenReportException;
 import org.apache.maven.shared.utils.io.FileUtils;
 import org.codehaus.mojo.taglist.beans.FileReport;
 import org.codehaus.mojo.taglist.beans.TagReport;
+import org.codehaus.mojo.taglist.options.Tag;
 import org.codehaus.mojo.taglist.output.TagListXMLComment;
 import org.codehaus.mojo.taglist.output.TagListXMLFile;
 import org.codehaus.mojo.taglist.output.TagListXMLReport;
@@ -135,8 +136,9 @@ public class TagListReport
     /**
      * The projects in the reactor for aggregation report.
      */
-    @Parameter( readonly = true, defaultValue = "${reactorProjects}" )
-    private List reactorProjects;
+    @Parameter( readonly = true,
+                defaultValue = "${reactorProjects}" )
+    private List<MavenProject> reactorProjects;
 
     /**
      * Whether to build an aggregated report at the root, or build individual reports.
@@ -193,7 +195,7 @@ public class TagListReport
 
     private String[] tags;
 
-    private AtomicReference<List> sourceDirs = new AtomicReference<>();
+    private AtomicReference<List<String>> sourceDirs = new AtomicReference<>();
 
     /**
      * {@inheritDoc}
@@ -247,21 +249,21 @@ public class TagListReport
         if ( tagListOptions != null && tagListOptions.getTagClasses().size() > 0 )
         {
             // Scan each tag class
-            Iterator classIter = tagListOptions.getTagClasses().iterator();
+            Iterator<org.codehaus.mojo.taglist.options.TagClass> classIter = tagListOptions.getTagClasses().iterator();
             while ( classIter.hasNext() )
             {
                 org.codehaus.mojo.taglist.options.TagClass tcOption =
-                    (org.codehaus.mojo.taglist.options.TagClass) classIter.next();
+                        classIter.next();
 
                 // Store the tag class display name.
                 TagClass tc = new TagClass( tcOption.getDisplayName() );
 
                 // Scan each tag within this tag class.
-                Iterator tagIter = tcOption.getTags().iterator();
+                Iterator<Tag> tagIter = tcOption.getTags().iterator();
                 while ( tagIter.hasNext() )
                 {
                     org.codehaus.mojo.taglist.options.Tag tagOption =
-                        (org.codehaus.mojo.taglist.options.Tag) tagIter.next();
+                            tagIter.next();
 
                     // If a match type is not specified use default.
                     String matchType = tagOption.getMatchType();
@@ -290,7 +292,7 @@ public class TagListReport
 
         // let's proceed to the analysis
         FileAnalyser fileAnalyser = new FileAnalyser( this, tagClasses );
-        Collection tagReports = fileAnalyser.execute();
+        Collection<TagReport> tagReports = fileAnalyser.execute();
 
         // Renders the report
         ReportGenerator generator = new ReportGenerator( this, tagReports );
@@ -306,16 +308,17 @@ public class TagListReport
             else
             {
                 // Not yet generated - check if the report is on its way
-                for ( Iterator reports = getProject().getReportPlugins().iterator(); reports.hasNext(); )
+
+                for ( Iterator<ReportPlugin> reports = getProject().getModel().getReporting().getPlugins().iterator(); reports.hasNext(); )
                 {
-                    ReportPlugin report = (ReportPlugin) reports.next();
+                    ReportPlugin report = reports.next();
 
                     String artifactId = report.getArtifactId();
                     if ( "maven-jxr-plugin".equals( artifactId ) || "jxr-maven-plugin".equals( artifactId ) )
                     {
                         getLog().error(
-                                        "Taglist plugin MUST be executed after the JXR plugin."
-                                            + "  No links to xref were generated." );
+                                "Taglist plugin MUST be executed after the JXR plugin."
+                                        + "  No links to xref were generated." );
                     }
                 }
             }
@@ -333,18 +336,18 @@ public class TagListReport
 
     /**
      * Generate an XML report that can be used by other plugins like the dashboard plugin.
-     * 
+     *
      * @param tagReports a collection of the tag reports to be output.
      */
-    private void generateXmlReport( Collection tagReports )
+    private void generateXmlReport( Collection<TagReport> tagReports )
     {
         TagListXMLReport report = new TagListXMLReport();
         report.setModelEncoding( getInputEncoding() );
 
         // Iterate through each tag and populate an XML tag object.
-        for ( Iterator ite = tagReports.iterator(); ite.hasNext(); )
+        for ( Iterator<TagReport> ite = tagReports.iterator(); ite.hasNext(); )
         {
-            TagReport tagReport = (TagReport) ite.next();
+            TagReport tagReport = ite.next();
 
             TagListXMLTag tag = new TagListXMLTag();
             tag.setName( tagReport.getTagName() );
@@ -352,9 +355,9 @@ public class TagListReport
 
             // Iterate though each file that contains the current tag and generate an
             // XML file object within the current XML tag object.
-            for ( Iterator fite = tagReport.getFileReports().iterator(); fite.hasNext(); )
+            for ( Iterator<FileReport> fite = tagReport.getFileReports().iterator(); fite.hasNext(); )
             {
-                FileReport fileReport = (FileReport) fite.next();
+                FileReport fileReport = fite.next();
 
                 TagListXMLFile file = new TagListXMLFile();
                 file.setName( fileReport.getClassName() );
@@ -362,12 +365,12 @@ public class TagListReport
 
                 // Iterate though each comment that contains the tag and generate an
                 // XML comment object within the current xml file object.
-                for ( Iterator cite = fileReport.getLineIndexes().iterator(); cite.hasNext(); )
+                for ( Iterator<Integer> cite = fileReport.getLineIndexes().iterator(); cite.hasNext(); )
                 {
-                    Integer lineNumber = (Integer) cite.next();
+                    Integer lineNumber = cite.next();
 
                     TagListXMLComment comment = new TagListXMLComment();
-                    comment.setLineNumber( Integer.toString( lineNumber.intValue() ) );
+                    comment.setLineNumber( Integer.toString( lineNumber ) );
                     comment.setComment( fileReport.getComment( lineNumber ) );
 
                     file.addComment( comment );
@@ -441,12 +444,12 @@ public class TagListReport
      * @param sourceDirectories the original list of directories.
      * @return a new list containing only non empty dirs.
      */
-    private List pruneSourceDirs( List sourceDirectories ) throws IOException
+    private List<String> pruneSourceDirs( List<String> sourceDirectories ) throws IOException
     {
-        List pruned = new ArrayList( sourceDirectories.size() );
-        for ( Iterator i = sourceDirectories.iterator(); i.hasNext(); )
+        List<String> pruned = new ArrayList<>( sourceDirectories.size() );
+        for ( Iterator<String> i = sourceDirectories.iterator(); i.hasNext(); )
         {
-            String dir = (String) i.next();
+            String dir = i.next();
             if ( !pruned.contains( dir ) && hasSources( new File( dir ) ) )
             {
                 pruned.add( dir );
@@ -496,9 +499,9 @@ public class TagListReport
      *
      * @return the list of dirs.
      */
-    private List constructSourceDirs()
+    private List<String> constructSourceDirs()
     {
-        List dirs = new ArrayList( getProject().getCompileSourceRoots() );
+        List<String> dirs = new ArrayList<>( getProject().getCompileSourceRoots() );
         if ( !skipTestSources )
         {
             dirs.addAll( getProject().getTestCompileSourceRoots() );
@@ -506,9 +509,9 @@ public class TagListReport
 
         if ( aggregate )
         {
-            for ( Iterator i = reactorProjects.iterator(); i.hasNext(); )
+            for ( Iterator<MavenProject> i = reactorProjects.iterator(); i.hasNext(); )
             {
-                MavenProject reactorProject = (MavenProject) i.next();
+                MavenProject reactorProject = i.next();
 
                 if ( "java".equals( reactorProject.getArtifact().getArtifactHandler().getLanguage() ) )
                 {
@@ -540,7 +543,7 @@ public class TagListReport
         return dirs;
     }
 
-    protected List getSourceDirs()
+    protected List<String> getSourceDirs()
     {
         if ( sourceDirs.get() == null )
         {

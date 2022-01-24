@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -32,7 +33,7 @@ import java.util.Map;
  * @author <a href="mailto:bellingard.NO-SPAM@gmail.com">Fabrice Bellingard </a>
  */
 public class TagReport
-    implements Comparable
+        implements Comparable<TagReport>
 {
 
     /**
@@ -44,16 +45,16 @@ public class TagReport
      * Tag Class HTML safe link name.
      */
     private String linkName;
-    
+
     /**
      * An array containing the tag string that make the tag class.
      */
-    private ArrayList tagStrings = new ArrayList();
+    private List<String> tagStrings = new ArrayList<>();
 
     /**
      * Map containing File objects as keys, and FileReport object as values.
      */
-    private Map fileReportsMap;
+    private Map<File, FileReport> fileReportsMap;
 
     /**
      * Number of tags found in the code.
@@ -69,7 +70,7 @@ public class TagReport
     public TagReport( final String displayName, final String linkName )
     {
         this.displayName = displayName;
-        this.fileReportsMap = new HashMap();
+        this.fileReportsMap = new HashMap<>();
         this.linkName = linkName;
         tagCount = -1;
     }
@@ -83,10 +84,10 @@ public class TagReport
      */
     public FileReport getFileReport( File file, String encoding )
     {
-        Object report = fileReportsMap.get( file );
-        if ( report instanceof FileReport )
+        FileReport report = fileReportsMap.get( file );
+        if ( report != null )
         {
-            return (FileReport) report;
+            return report;
         }
         else
         {
@@ -98,10 +99,10 @@ public class TagReport
 
     /**
      * Returns the collection of file reports for the tag.
-     * 
+     *
      * @return a Collection of FileReport objects.
      */
-    public Collection getFileReports()
+    public Collection<FileReport> getFileReports()
     {
         return fileReportsMap.values();
     }
@@ -139,9 +140,9 @@ public class TagReport
         }
         // tagCount was not computed yet
         tagCount = 0;
-        for ( Iterator iter = fileReportsMap.values().iterator(); iter.hasNext(); )
+        for ( Iterator<FileReport> iter = fileReportsMap.values().iterator(); iter.hasNext(); )
         {
-            FileReport fileReport = (FileReport) iter.next();
+            FileReport fileReport = iter.next();
             tagCount += fileReport.getLineIndexes().size();
         }
         return tagCount;
@@ -149,15 +150,14 @@ public class TagReport
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see Comparable#compareTo(Object)
      */
-    public int compareTo( Object o )
+    public int compareTo( TagReport o )
     {
-        if ( o instanceof TagReport )
+        if ( o != null )
         {
-            TagReport tagReport = (TagReport) o;
-            return this.getTagName().compareTo( tagReport.getTagName() );
+            return this.getTagName().compareTo( o.getTagName() );
         }
         else
         {
@@ -194,7 +194,7 @@ public class TagReport
 
             for ( int i = 0; i < tagStrings.size(); ++i )
             {
-                strings[i] = (String) tagStrings.get( i );
+                strings[i] = tagStrings.get( i );
             }
         }
         
@@ -211,9 +211,14 @@ public class TagReport
     {
         // In Java 5 the PriorityQueue.remove method uses the 
         // compareTo method, while in Java 6 it uses the equals method.
-        return ( this.compareTo( r ) == 0 );
+        if ( !( r instanceof TagReport ) )
+        {
+            return false;
+        }
+
+        return ( this.compareTo( (TagReport) r ) == 0 );
     }
-    
+
     /**
      * {@inheritDoc}
      *
