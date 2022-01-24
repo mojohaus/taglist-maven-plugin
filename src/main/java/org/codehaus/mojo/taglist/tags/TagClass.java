@@ -140,19 +140,16 @@ public class TagClass
         // Reset the last tag match
         lastSuccessfulTagMatch = null;
 
-        Iterator<AbsTag> itr = tags.iterator();
-        while ( itr.hasNext() )
+        for ( AbsTag tag : tags )
         {
-            AbsTag tag = itr.next();
-            
             // Check if the string contain this tag
             index = tag.contains( currentLine, locale );
-            
+
             if ( index != NO_MATCH )
             {
                 // Store the last match
                 lastSuccessfulTagMatch = tag;
-                
+
                 // Stop checking
                 break;
             }

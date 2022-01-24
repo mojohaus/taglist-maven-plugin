@@ -23,7 +23,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -141,9 +140,9 @@ public class ReportGenerator
         sink.text( bundle.getString( "report.taglist.summary.tagstrings" ) );
         sink.tableHeaderCell_();
         sink.tableRow_();
-        for ( Iterator<TagReport> iter = tagReports.iterator(); iter.hasNext(); )
+        for ( TagReport tagReport : tagReports )
         {
-            doTagSummary( iter.next() );
+            doTagSummary( tagReport );
         }
         sink.table_();
     }
@@ -198,9 +197,9 @@ public class ReportGenerator
         sink.text( bundle.getString( "report.taglist.detail.description" ) );
         sink.paragraph_();
 
-        for ( Iterator<TagReport> iter = tagReports.iterator(); iter.hasNext(); )
+        for ( TagReport tagReport : tagReports )
         {
-            doTagDetailedPart( iter.next() );
+            doTagDetailedPart( tagReport );
         }
     }
 
@@ -235,9 +234,9 @@ public class ReportGenerator
         //               to align the columns correctly.
         sink.table();
 
-        for ( Iterator<FileReport> iter = sortedFileReports.iterator(); iter.hasNext(); )
+        for ( FileReport sortedFileReport : sortedFileReports )
         {
-            doFileDetailedPart( iter.next() );
+            doFileDetailedPart( sortedFileReport );
         }
         sink.table_();
 
@@ -257,9 +256,9 @@ public class ReportGenerator
         sink.text( bundle.getString( "report.taglist.detail.line" ) );
         sink.tableHeaderCell_();
         sink.tableRow_();
-        for ( Iterator<Integer> iter = fileReport.getLineIndexes().iterator(); iter.hasNext(); )
+        for ( Integer integer : fileReport.getLineIndexes() )
         {
-            doCommentLine( fileReport, iter.next() );
+            doCommentLine( fileReport, integer );
         }
     }
 

@@ -28,7 +28,6 @@ import java.io.LineNumberReader;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
@@ -149,9 +148,8 @@ public class FileAnalyser
     {
         List<File> fileList = findFilesToScan();
 
-        for ( Iterator<File> iter = fileList.iterator(); iter.hasNext(); )
+        for ( File file : fileList )
         {
-            File file = iter.next();
             if ( file.exists() )
             {
                 scanFile( file );
@@ -160,10 +158,8 @@ public class FileAnalyser
 
         // Get the tag reports from each of the tag classes.
         Collection<TagReport> tagReports = new ArrayList<>();
-        Iterator<TagClass> itr = tagClasses.iterator();
-        while ( itr.hasNext() )
+        for ( TagClass tc : tagClasses )
         {
-            TagClass tc = itr.next();
             tagReports.add( tc.getTagReport() );
         }
 
@@ -182,9 +178,9 @@ public class FileAnalyser
         List<File> filesList = new ArrayList<>();
         try
         {
-            for ( Iterator<String> iter = sourceDirs.iterator(); iter.hasNext(); )
+            for ( String sourceDir : sourceDirs )
             {
-                filesList.addAll( FileUtils.getFiles( new File( iter.next() ), includes, excludes ) );
+                filesList.addAll( FileUtils.getFiles( new File( sourceDir ), includes, excludes ) );
             }
         }
         catch ( IOException e )
@@ -224,11 +220,9 @@ public class FileAnalyser
             while ( currentLine != null )
             {
                 int index = -1;
-                Iterator<TagClass> iter = tagClasses.iterator();
                 // look for a tag on this line
-                while ( iter.hasNext() )
+                for ( TagClass tagClass : tagClasses )
                 {
-                    TagClass tagClass = iter.next();
                     index = tagClass.tagMatchContains( currentLine, locale );
                     if ( index != TagClass.NO_MATCH )
                     {
@@ -259,7 +253,7 @@ public class FileAnalyser
                                 comment.append( "--" );
                             }
                             else
-                            {                               
+                            {
                                 continue;
                             }
                         }
@@ -280,28 +274,26 @@ public class FileAnalyser
                                 // Mark the current position, set the read forward limit to
                                 // a large number that should not be met.
                                 reader.mark( MAX_COMMENT_CHARACTERS );
-                                
+
                                 // next line
                                 String futureLine = reader.readLine();
-                                
+
                                 // we're looking for multiple line comments
                                 while ( futureLine != null && futureLine.trim().startsWith( commentType )
-                                    && futureLine.indexOf( tagClass.getLastTagMatchString() ) < 0 )
+                                        && futureLine.indexOf( tagClass.getLastTagMatchString() ) < 0 )
                                 {
                                     String currentComment = futureLine.substring( futureLine.indexOf( commentType )
-                                                                                   + commentType.length() ).trim();
+                                            + commentType.length() ).trim();
                                     if ( currentComment.startsWith( "@" ) || "".equals( currentComment )
-                                        || "/".equals( currentComment ) )
+                                            || "/".equals( currentComment ) )
                                     {
                                         // the comment is finished
                                         break;
                                     }
                                     // try to look if the next line is not a new tag
                                     boolean newTagFound = false;
-                                    Iterator<TagClass> moreTCiter = tagClasses.iterator();
-                                    while ( moreTCiter.hasNext() )
+                                    for ( TagClass tc : tagClasses )
                                     {
-                                        TagClass tc = moreTCiter.next();
                                         if ( tc.tagMatchStartsWith( currentComment, locale ) )
                                         {
                                             newTagFound = true;
@@ -318,7 +310,7 @@ public class FileAnalyser
                                     comment.append( currentComment );
                                     futureLine = reader.readLine();
                                 }
-                                
+
                                 // Reset the reader to the marked position before the multi
                                 // line check was performed.
                                 reader.reset();

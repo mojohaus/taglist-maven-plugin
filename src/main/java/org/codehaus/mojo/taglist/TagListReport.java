@@ -25,7 +25,6 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -227,12 +226,12 @@ public class TagListReport
         if ( tags != null && tags.length > 0 )
         {
             getLog().warn( "Using legacy tag format.  This is not recommended." );
-            for ( int i = 0; i < tags.length; i++ )
+            for ( String tag : tags )
             {
-                TagClass tc = new TagClass( tags[i] );
+                TagClass tc = new TagClass( tag );
                 try
                 {
-                    AbsTag newTag = TagFactory.createTag( "exact", tags[i] );
+                    AbsTag newTag = TagFactory.createTag( "exact", tag );
                     tc.addTag( newTag );
 
                     tagClasses.add( tc );
@@ -249,22 +248,14 @@ public class TagListReport
         if ( tagListOptions != null && tagListOptions.getTagClasses().size() > 0 )
         {
             // Scan each tag class
-            Iterator<org.codehaus.mojo.taglist.options.TagClass> classIter = tagListOptions.getTagClasses().iterator();
-            while ( classIter.hasNext() )
+            for ( org.codehaus.mojo.taglist.options.TagClass tcOption : tagListOptions.getTagClasses() )
             {
-                org.codehaus.mojo.taglist.options.TagClass tcOption =
-                        classIter.next();
-
                 // Store the tag class display name.
                 TagClass tc = new TagClass( tcOption.getDisplayName() );
 
                 // Scan each tag within this tag class.
-                Iterator<Tag> tagIter = tcOption.getTags().iterator();
-                while ( tagIter.hasNext() )
+                for ( Tag tagOption : tcOption.getTags() )
                 {
-                    org.codehaus.mojo.taglist.options.Tag tagOption =
-                            tagIter.next();
-
                     // If a match type is not specified use default.
                     String matchType = tagOption.getMatchType();
                     if ( matchType == null || matchType.length() == 0 )
@@ -309,10 +300,8 @@ public class TagListReport
             {
                 // Not yet generated - check if the report is on its way
 
-                for ( Iterator<ReportPlugin> reports = getProject().getModel().getReporting().getPlugins().iterator(); reports.hasNext(); )
+                for ( ReportPlugin report : getProject().getModel().getReporting().getPlugins() )
                 {
-                    ReportPlugin report = reports.next();
-
                     String artifactId = report.getArtifactId();
                     if ( "maven-jxr-plugin".equals( artifactId ) || "jxr-maven-plugin".equals( artifactId ) )
                     {
@@ -345,30 +334,24 @@ public class TagListReport
         report.setModelEncoding( getInputEncoding() );
 
         // Iterate through each tag and populate an XML tag object.
-        for ( Iterator<TagReport> ite = tagReports.iterator(); ite.hasNext(); )
+        for ( TagReport tagReport : tagReports )
         {
-            TagReport tagReport = ite.next();
-
             TagListXMLTag tag = new TagListXMLTag();
             tag.setName( tagReport.getTagName() );
             tag.setCount( Integer.toString( tagReport.getTagCount() ) );
 
             // Iterate though each file that contains the current tag and generate an
             // XML file object within the current XML tag object.
-            for ( Iterator<FileReport> fite = tagReport.getFileReports().iterator(); fite.hasNext(); )
+            for ( FileReport fileReport : tagReport.getFileReports() )
             {
-                FileReport fileReport = fite.next();
-
                 TagListXMLFile file = new TagListXMLFile();
                 file.setName( fileReport.getClassName() );
                 file.setCount( Integer.toString( fileReport.getLineIndexes().size() ) );
 
                 // Iterate though each comment that contains the tag and generate an
                 // XML comment object within the current xml file object.
-                for ( Iterator<Integer> cite = fileReport.getLineIndexes().iterator(); cite.hasNext(); )
+                for ( Integer lineNumber : fileReport.getLineIndexes() )
                 {
-                    Integer lineNumber = cite.next();
-
                     TagListXMLComment comment = new TagListXMLComment();
                     comment.setLineNumber( Integer.toString( lineNumber ) );
                     comment.setComment( fileReport.getComment( lineNumber ) );
@@ -447,9 +430,8 @@ public class TagListReport
     private List<String> pruneSourceDirs( List<String> sourceDirectories ) throws IOException
     {
         List<String> pruned = new ArrayList<>( sourceDirectories.size() );
-        for ( Iterator<String> i = sourceDirectories.iterator(); i.hasNext(); )
+        for ( String dir : sourceDirectories )
         {
-            String dir = i.next();
             if ( !pruned.contains( dir ) && hasSources( new File( dir ) ) )
             {
                 pruned.add( dir );
@@ -477,9 +459,8 @@ public class TagListReport
             File[] files = dir.listFiles();
             if ( files != null )
             {
-                for ( int i = 0; i < files.length; i++ )
+                for ( File currentFile : files )
                 {
-                    File currentFile = files[i];
                     if ( currentFile.isDirectory() )
                     {
                         boolean hasSources = hasSources( currentFile );
@@ -509,10 +490,8 @@ public class TagListReport
 
         if ( aggregate )
         {
-            for ( Iterator<MavenProject> i = reactorProjects.iterator(); i.hasNext(); )
+            for ( MavenProject reactorProject : reactorProjects )
             {
-                MavenProject reactorProject = i.next();
-
                 if ( "java".equals( reactorProject.getArtifact().getArtifactHandler().getLanguage() ) )
                 {
                     dirs.addAll( reactorProject.getCompileSourceRoots() );

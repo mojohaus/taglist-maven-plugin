@@ -23,7 +23,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -140,9 +139,8 @@ public class TagReport
         }
         // tagCount was not computed yet
         tagCount = 0;
-        for ( Iterator<FileReport> iter = fileReportsMap.values().iterator(); iter.hasNext(); )
+        for ( FileReport fileReport : fileReportsMap.values() )
         {
-            FileReport fileReport = iter.next();
             tagCount += fileReport.getLineIndexes().size();
         }
         return tagCount;
