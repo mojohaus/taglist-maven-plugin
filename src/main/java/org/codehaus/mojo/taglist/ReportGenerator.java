@@ -20,11 +20,10 @@ package org.codehaus.mojo.taglist;
  */
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
 import java.util.ResourceBundle;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import org.apache.maven.doxia.sink.Sink;
 import org.codehaus.mojo.taglist.beans.FileReport;
@@ -66,7 +65,7 @@ public class ReportGenerator
     /**
      * A list of sorted tag reports.
      */
-    private final List<TagReport> sortedTagReports;
+    private final SortedSet<TagReport> sortedTagReports;
 
     /**
      * Display details for tags that contain zero occurrences.
@@ -81,8 +80,7 @@ public class ReportGenerator
      */
     public ReportGenerator( TagListReport report, Collection<TagReport> tagReports )
     {
-        sortedTagReports = new ArrayList<>( tagReports );
-        Collections.sort( sortedTagReports );
+        sortedTagReports = new TreeSet<>( tagReports );
         this.bundle = report.getBundle();
         this.sink = report.getSink();
         this.siteOutputDirectory = report.getReportOutputDirectory();
@@ -227,8 +225,7 @@ public class ReportGenerator
         sink.paragraph_();
 
         Collection<FileReport> fileReports = tagReport.getFileReports();
-        List<FileReport> sortedFileReports = new ArrayList<>( fileReports );
-        Collections.sort( sortedFileReports );
+        SortedSet<FileReport> sortedFileReports = new TreeSet<>( fileReports );
 
         // MTAGLIST-38 - sink table before generating each file report in order
         //               to align the columns correctly.

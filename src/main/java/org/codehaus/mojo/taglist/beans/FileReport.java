@@ -26,12 +26,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 /**
  * Report for a file.
@@ -170,10 +169,9 @@ public class FileReport
      */
     public Collection<Integer> getLineIndexes()
     {
-        List<Integer> list = new ArrayList<>();
-        list.addAll( tagListing.keySet() );
-        Collections.sort( list );
-        return list;
+        SortedSet<Integer> lineIndexes = new TreeSet<>();
+        lineIndexes.addAll( tagListing.keySet() );
+        return lineIndexes;
     }
 
     /**
