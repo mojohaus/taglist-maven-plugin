@@ -28,7 +28,6 @@ import java.io.LineNumberReader;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
@@ -39,7 +38,6 @@ import org.codehaus.mojo.taglist.beans.FileReport;
 import org.codehaus.mojo.taglist.beans.TagReport;
 import org.codehaus.mojo.taglist.tags.TagClass;
 import org.codehaus.plexus.util.FileUtils;
-import org.codehaus.plexus.util.IOUtil;
 
 /**
  * Class that analyzes a file with a special comment tag. For instance:
@@ -71,52 +69,52 @@ public class FileAnalyser
     /**
      * The character encoding of the files to analyze.
      */
-    private String encoding;
-    
+    private final String encoding;
+
     /**
      * The Locale of the files to analyze.
      */
-    private Locale locale;
+    private final Locale locale;
 
     /**
      * The directories to analyze.
      */
-    private Collection sourceDirs;
+    private final Collection<String> sourceDirs;
 
     /**
      * The files to include, as a comma separated list of patterns.
      */
-    private String includes;
+    private final String includes;
 
     /**
      * The files top exclude, as a comma separated list of patterns.
      */
-    private String excludes;
+    private final String excludes;
 
     /**
      * Log for debug output.
      */
-    private Log log;
+    private final Log log;
 
     /**
      * Set to true if the analyzer should look for multiple line comments.
      */
-    private boolean multipleLineCommentsOn;
+    private final boolean multipleLineCommentsOn;
 
     /**
      * Set to true if the analyzer should look for tags without comments.
      */
-    private boolean emptyCommentsOn;
+    private final boolean emptyCommentsOn;
 
     /**
      * String used to indicate that there is no comment after the tag.
      */
-    private String noCommentString;
+    private final String noCommentString;
 
     /**
      * ArrayList of tag classes.
      */
-    private List<TagClass> tagClasses = new ArrayList();
+    private final List<TagClass> tagClasses;
 
     /**
      * Constructor.
@@ -140,18 +138,17 @@ public class FileAnalyser
 
     /**
      * Execute the analysis for the configuration given by the TagListReport.
-     * 
+     *
      * @return a collection of TagReport objects.
      * @throws MavenReportException the Maven report exception.
      */
-    public Collection execute()
-        throws MavenReportException
+    public Collection<TagReport> execute()
+            throws MavenReportException
     {
-        List fileList = findFilesToScan();
+        List<File> fileList = findFilesToScan();
 
-        for ( Iterator iter = fileList.iterator(); iter.hasNext(); )
+        for ( File file : fileList )
         {
-            File file = (File) iter.next();
             if ( file.exists() )
             {
                 scanFile( file );
@@ -159,31 +156,30 @@ public class FileAnalyser
         }
 
         // Get the tag reports from each of the tag classes.
-        Collection tagReports = new ArrayList();
-        Iterator itr = tagClasses.iterator();      
-        while ( itr.hasNext() )
+        Collection<TagReport> tagReports = new ArrayList<>();
+        for ( TagClass tc : tagClasses )
         {
-            TagClass tc = (TagClass) itr.next();
             tagReports.add( tc.getTagReport() );
         }
 
         return tagReports;
     }
+
     /**
      * Gives the list of files to scan.
-     * 
+     *
      * @return a List of File objects.
      * @throws MavenReportException the Maven report exception.
      */
-    private List findFilesToScan()
-        throws MavenReportException
+    private List<File> findFilesToScan()
+            throws MavenReportException
     {
-        List filesList = new ArrayList();
+        List<File> filesList = new ArrayList<>();
         try
         {
-            for ( Iterator iter = sourceDirs.iterator(); iter.hasNext(); )
+            for ( String sourceDir : sourceDirs )
             {
-                filesList.addAll( FileUtils.getFiles( new File( (String) iter.next() ), includes, excludes ) );
+                filesList.addAll( FileUtils.getFiles( new File( sourceDir ), includes, excludes ) );
             }
         }
         catch ( IOException e )
@@ -213,21 +209,16 @@ public class FileAnalyser
      */
     public void scanFile( File file )
     {
-        LineNumberReader reader = null;
-
-        try
+        try ( LineNumberReader reader = new LineNumberReader( getReader( file ) ) )
         {
-            reader = new LineNumberReader( getReader( file ) );
 
             String currentLine = reader.readLine();
             while ( currentLine != null )
             {
                 int index = -1;
-                Iterator iter = tagClasses.iterator();
                 // look for a tag on this line
-                while ( iter.hasNext() )
+                for ( TagClass tagClass : tagClasses )
                 {
-                    TagClass tagClass = (TagClass) iter.next();
                     index = tagClass.tagMatchContains( currentLine, locale );
                     if ( index != TagClass.NO_MATCH )
                     {
@@ -258,7 +249,7 @@ public class FileAnalyser
                                 comment.append( "--" );
                             }
                             else
-                            {                               
+                            {
                                 continue;
                             }
                         }
@@ -279,28 +270,26 @@ public class FileAnalyser
                                 // Mark the current position, set the read forward limit to
                                 // a large number that should not be met.
                                 reader.mark( MAX_COMMENT_CHARACTERS );
-                                
+
                                 // next line
                                 String futureLine = reader.readLine();
-                                
+
                                 // we're looking for multiple line comments
                                 while ( futureLine != null && futureLine.trim().startsWith( commentType )
-                                    && futureLine.indexOf( tagClass.getLastTagMatchString() ) < 0 )
+                                        && futureLine.indexOf( tagClass.getLastTagMatchString() ) < 0 )
                                 {
                                     String currentComment = futureLine.substring( futureLine.indexOf( commentType )
-                                                                                   + commentType.length() ).trim();
+                                            + commentType.length() ).trim();
                                     if ( currentComment.startsWith( "@" ) || "".equals( currentComment )
-                                        || "/".equals( currentComment ) )
+                                            || "/".equals( currentComment ) )
                                     {
                                         // the comment is finished
                                         break;
                                     }
                                     // try to look if the next line is not a new tag
                                     boolean newTagFound = false;
-                                    Iterator moreTCiter = tagClasses.iterator();
-                                    while ( moreTCiter.hasNext() )
+                                    for ( TagClass tc : tagClasses )
                                     {
-                                        TagClass tc = (TagClass) moreTCiter.next();
                                         if ( tc.tagMatchStartsWith( currentComment, locale ) )
                                         {
                                             newTagFound = true;
@@ -317,7 +306,7 @@ public class FileAnalyser
                                     comment.append( currentComment );
                                     futureLine = reader.readLine();
                                 }
-                                
+
                                 // Reset the reader to the marked position before the multi
                                 // line check was performed.
                                 reader.reset();
@@ -334,10 +323,6 @@ public class FileAnalyser
         catch ( IOException e )
         {
             log.error( "Error while scanning the file " + file.getPath(), e );
-        }
-        finally
-        {
-            IOUtil.close( reader );
         }
     }
 

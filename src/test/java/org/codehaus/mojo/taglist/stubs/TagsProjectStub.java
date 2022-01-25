@@ -19,10 +19,10 @@ package org.codehaus.mojo.taglist.stubs;
  * under the License.
  */
 
-import org.codehaus.plexus.PlexusTestCase;
-
-import java.util.List;
 import java.util.Collections;
+import java.util.List;
+
+import org.codehaus.plexus.PlexusTestCase;
 
 /**
  * The Maven Project stub file for testing the different types of tags.
@@ -34,13 +34,15 @@ import java.util.Collections;
 public class TagsProjectStub
     extends org.apache.maven.plugin.testing.stubs.MavenProjectStub
 {	
-	public List getCompileSourceRoots()
+	public List<String> getCompileSourceRoots()
 	{
-		return Collections.singletonList( PlexusTestCase.getBasedir() + "/target/test-classes/unit/tag-test/java-sources" );
+		return Collections.singletonList(
+				PlexusTestCase.getBasedir() + "/target/test-classes/unit/tag-test/java-sources" );
 	}
-	
-	public List getTestCompileSourceRoots()
+
+	public List<String> getTestCompileSourceRoots()
 	{
-		return Collections.singletonList( PlexusTestCase.getBasedir() + "/target/test-classes/unit/tag-test/test-sources" );
+		return Collections.singletonList(
+				PlexusTestCase.getBasedir() + "/target/test-classes/unit/tag-test/test-sources" );
 	}	
 }

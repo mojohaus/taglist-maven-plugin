@@ -156,10 +156,13 @@
         <groupId>org.codehaus.modello</groupId>
         <artifactId>modello-maven-plugin</artifactId>
         <version>1.11</version>
+        <configuration>
+          <useJava5>true</useJava5>
+        </configuration>
         <executions>
           <execution>
-		    <id>XMLOutput</id>
-		    <phase>generate-sources</phase>
+            <id>XMLOutput</id>
+            <phase>generate-sources</phase>
             <goals>
               <goal>java</goal>
               <goal>xsd</goal>

@@ -45,34 +45,48 @@ import org.codehaus.mojo.taglist.beans.TagReport;
  *    &lt;/tags&gt;
  *   &lt;/tagClass&gt;
  *  </pre>
- * 
+ *
  */
 public class TagClass
 {
-    /** The tag class's name. */
-    private String classDisplayName = null;
-    
-    /** The tag report for this tag class. */
-    private TagReport classTagReport = null;
-    
-    /** The container of tags that make up this tag class. */
-    private ArrayList tags = new ArrayList();
-    
-    /** The int value for no tag match found. */
+    /**
+     * The tag class's name.
+     */
+    private final String classDisplayName;
+
+    /**
+     * The tag report for this tag class.
+     */
+    private final TagReport classTagReport;
+
+    /**
+     * The container of tags that make up this tag class.
+     */
+    private final ArrayList<AbsTag> tags = new ArrayList<>();
+
+    /**
+     * The int value for no tag match found.
+     */
     public static final int NO_MATCH = AbsTag.NO_MATCH;
-    
-    /** The last tag to successfully match. */
+
+    /**
+     * The last tag to successfully match.
+     */
     private AbsTag lastSuccessfulTagMatch = null;
-    
-    /** A unique ID counter for the tag classes. */
+
+    /**
+     * A unique ID counter for the tag classes.
+     */
     private static int uniqueTcCounter = 1;
-    
-    /** The unique id for this tag class. */
-    private int uniqueId = 0;
-   
+
+    /**
+     * The unique id for this tag class.
+     */
+    private final int uniqueId;
+
     /**
      * Constructor.
-     * 
+     *
      * @param displayName the string to display as the name for this tag class.
      */
     public TagClass( final String displayName )
@@ -81,8 +95,8 @@ public class TagClass
         
         // Assign a unique ID for this tag class and update the global counter.
         uniqueId = uniqueTcCounter++;
-        
-        classTagReport = new TagReport( displayName, "tag_class_" + String.valueOf( uniqueId ) );
+
+        classTagReport = new TagReport( displayName, "tag_class_" + uniqueId );
     }
 
     /** Access the tag report for this tag class.
@@ -125,20 +139,17 @@ public class TagClass
         
         // Reset the last tag match
         lastSuccessfulTagMatch = null;
-        
-        Iterator itr = tags.iterator();      
-        while ( itr.hasNext() )
+
+        for ( AbsTag tag : tags )
         {
-            AbsTag tag = (AbsTag) itr.next();
-            
             // Check if the string contain this tag
             index = tag.contains( currentLine, locale );
-            
+
             if ( index != NO_MATCH )
             {
                 // Store the last match
                 lastSuccessfulTagMatch = tag;
-                
+
                 // Stop checking
                 break;
             }
@@ -160,13 +171,13 @@ public class TagClass
     public boolean tagMatchStartsWith ( final String currentLine, final Locale locale )
     {
         boolean match = false;
-        
-        Iterator itr = tags.iterator();
+
+        Iterator<AbsTag> itr = tags.iterator();
         
         // Loop while there are more tags and there has not been a match.
         while ( itr.hasNext() && !match )
         {
-            AbsTag tag = (AbsTag) itr.next();
+            AbsTag tag = itr.next();
             
             // Check if the string starts with this tag
             match = tag.startsWith( currentLine, locale );

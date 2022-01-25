@@ -19,7 +19,6 @@ package org.codehaus.mojo.taglist.beans;
  * under the License.
  */
 
-import org.codehaus.plexus.util.IOUtil;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -27,11 +26,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 /**
  * Report for a file.
@@ -39,7 +38,7 @@ import java.util.Map;
  * @author <a href="mailto:bellingard.NO-SPAM@gmail.com">Fabrice Bellingard </a>
  */
 public class FileReport
-    implements Comparable
+        implements Comparable<FileReport>
 {
 
     /**
@@ -60,7 +59,7 @@ public class FileReport
     /**
      * Pair values of a line number and a comment. Map of [Integer,String].
      */
-    private final Map tagListing;
+    private final Map<Integer, String> tagListing;
 
     /**
      * The package identification string.
@@ -77,7 +76,7 @@ public class FileReport
     {
         this.file = file;
         this.encoding = encoding;
-        this.tagListing = new HashMap();
+        this.tagListing = new HashMap<>();
     }
 
     /**
@@ -88,7 +87,7 @@ public class FileReport
      */
     public void addComment( String comment, int lineIndex )
     {
-        tagListing.put( new Integer( lineIndex ), comment );
+        tagListing.put( lineIndex, comment );
     }
 
     /**
@@ -127,11 +126,9 @@ public class FileReport
             return className;
         }
         // need to compute it (only once)
-        BufferedReader reader = null;
         String packageName = null;
-        try
+        try ( BufferedReader reader = new BufferedReader( getReader( file ) ) )
         {
-            reader = new BufferedReader( getReader( file ) );
             String currentLine = reader.readLine();
             if ( currentLine != null )
             {
@@ -159,10 +156,6 @@ public class FileReport
         {
             packageName = "unknown";
         }
-        finally
-        {
-            IOUtil.close( reader );
-        }
 
         className = packageName + "." + file.getName().replaceAll( "\\.java$", "" );
 
@@ -174,12 +167,11 @@ public class FileReport
      *
      * @return Collection of Integer.
      */
-    public Collection getLineIndexes()
+    public Collection<Integer> getLineIndexes()
     {
-        ArrayList list = new ArrayList();
-        list.addAll( tagListing.keySet() );
-        Collections.sort( list );
-        return list;
+        SortedSet<Integer> lineIndexes = new TreeSet<>();
+        lineIndexes.addAll( tagListing.keySet() );
+        return lineIndexes;
     }
 
     /**
@@ -190,7 +182,7 @@ public class FileReport
      */
     public String getComment( Integer lineIndex )
     {
-        return (String) tagListing.get( lineIndex );
+        return tagListing.get( lineIndex );
     }
 
     /**
@@ -198,12 +190,11 @@ public class FileReport
      *
      * @see Comparable#compareTo(Object)
      */
-    public int compareTo( Object o )
+    public int compareTo( FileReport o )
     {
-        if ( o instanceof FileReport )
+        if ( o != null )
         {
-            FileReport fileReport = (FileReport) o;
-            return this.getClassName().compareTo( fileReport.getClassName() );
+            return this.getClassName().compareTo( o.getClassName() );
         }
         else
         {
@@ -220,7 +211,11 @@ public class FileReport
     {
         // In Java 5 the PriorityQueue.remove method uses the 
         // compareTo method, while in Java 6 it uses the equals method.
-        return ( this.compareTo( r ) == 0 );
+        if ( !( r instanceof FileReport ) )
+        {
+            return false;
+        }
+        return ( this.compareTo( (FileReport) r ) == 0 );
     }
     
     /**

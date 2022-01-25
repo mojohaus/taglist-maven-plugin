@@ -20,12 +20,10 @@ package org.codehaus.mojo.taglist;
  */
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
 import java.util.ResourceBundle;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import org.apache.maven.doxia.sink.Sink;
 import org.codehaus.mojo.taglist.beans.FileReport;
@@ -52,38 +50,37 @@ public class ReportGenerator
     /**
      * The sink used in this Maven build to generated the tag list page.
      */
-    private Sink sink;
+    private final Sink sink;
 
     /**
      * The resource bundle used in this Maven build.
      */
-    private ResourceBundle bundle;
+    private final ResourceBundle bundle;
 
     /**
      * The output path of the site.
      */
-    private File siteOutputDirectory;
+    private final File siteOutputDirectory;
 
     /**
      * A list of sorted tag reports.
      */
-    private List sortedTagReports;
+    private final SortedSet<TagReport> sortedTagReports;
 
     /**
      * Display details for tags that contain zero occurrences.
      */
-    private boolean showEmptyDetails;
+    private final boolean showEmptyDetails;
 
     /**
      * Constructor.
      *
-     * @param report the TagListReport object used in this build.
+     * @param report     the TagListReport object used in this build.
      * @param tagReports a collection of tagReports to output.
      */
-    public ReportGenerator( TagListReport report, Collection tagReports )
+    public ReportGenerator( TagListReport report, Collection<TagReport> tagReports )
     {
-        sortedTagReports = new ArrayList( tagReports );
-        Collections.sort( sortedTagReports );
+        sortedTagReports = new TreeSet<>( tagReports );
         this.bundle = report.getBundle();
         this.sink = report.getSink();
         this.siteOutputDirectory = report.getReportOutputDirectory();
@@ -123,7 +120,7 @@ public class ReportGenerator
     /**
      * @param tagReports a collection of tagReports to summarize.
      */
-    private void doSummarySection( Collection tagReports )
+    private void doSummarySection( Collection<TagReport> tagReports )
     {
         sink.paragraph();
         sink.text( bundle.getString( "report.taglist.summary.description" ) );
@@ -141,9 +138,9 @@ public class ReportGenerator
         sink.text( bundle.getString( "report.taglist.summary.tagstrings" ) );
         sink.tableHeaderCell_();
         sink.tableRow_();
-        for ( Iterator iter = tagReports.iterator(); iter.hasNext(); )
+        for ( TagReport tagReport : tagReports )
         {
-            doTagSummary( (TagReport) iter.next() );
+            doTagSummary( tagReport );
         }
         sink.table_();
     }
@@ -192,15 +189,15 @@ public class ReportGenerator
     /**
      * @param tagReports a collection of tagReports to be detailed in this section.
      */
-    private void doDetailSection( Collection tagReports )
+    private void doDetailSection( Collection<TagReport> tagReports )
     {
         sink.paragraph();
         sink.text( bundle.getString( "report.taglist.detail.description" ) );
         sink.paragraph_();
 
-        for ( Iterator iter = tagReports.iterator(); iter.hasNext(); )
+        for ( TagReport tagReport : tagReports )
         {
-            doTagDetailedPart( (TagReport) iter.next() );
+            doTagDetailedPart( tagReport );
         }
     }
 
@@ -227,17 +224,16 @@ public class ReportGenerator
         sink.bold_();
         sink.paragraph_();
 
-        Collection fileReports = tagReport.getFileReports();
-        List sortedFileReports = new ArrayList( fileReports );
-        Collections.sort( sortedFileReports );
+        Collection<FileReport> fileReports = tagReport.getFileReports();
+        SortedSet<FileReport> sortedFileReports = new TreeSet<>( fileReports );
 
         // MTAGLIST-38 - sink table before generating each file report in order
         //               to align the columns correctly.
         sink.table();
 
-        for ( Iterator iter = sortedFileReports.iterator(); iter.hasNext(); )
+        for ( FileReport sortedFileReport : sortedFileReports )
         {
-            doFileDetailedPart( (FileReport) iter.next() );
+            doFileDetailedPart( sortedFileReport );
         }
         sink.table_();
 
@@ -257,9 +253,9 @@ public class ReportGenerator
         sink.text( bundle.getString( "report.taglist.detail.line" ) );
         sink.tableHeaderCell_();
         sink.tableRow_();
-        for ( Iterator iter = fileReport.getLineIndexes().iterator(); iter.hasNext(); )
+        for ( Integer integer : fileReport.getLineIndexes() )
         {
-            doCommentLine( fileReport, (Integer) iter.next() );
+            doCommentLine( fileReport, integer );
         }
     }
 

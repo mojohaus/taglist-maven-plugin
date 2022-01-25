@@ -19,9 +19,9 @@ package org.codehaus.mojo.taglist.tags;
  * under the License.
  */
 
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.Locale;
 
 /** The regular expression tag class.
  * 
@@ -52,8 +52,10 @@ import java.util.Locale;
  */
 public class RegExTag extends AbsTag
 {
-    /** The regular expression pattern to pre-compile. */
-    private Pattern pattern = null;
+    /**
+     * The regular expression pattern to pre-compile.
+     */
+    private final Pattern pattern;
     
     /** The length of the last regEx comment tag match */
     private int lastMatchedCommentTagLength = 0;

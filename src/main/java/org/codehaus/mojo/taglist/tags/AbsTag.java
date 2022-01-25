@@ -41,10 +41,10 @@ public abstract class AbsTag
      *  indexOf(..string..) function. */
     static final int NO_MATCH = -1;
     
-    /** The tag string for this tag. The string here is generic, and its
-     *  use is defined by the derived tag objects.
+    /**
+     * The tag string for this tag. The string here is generic, and its use is defined by the derived tag objects.
      */
-    protected String tagString = null;
+    protected String tagString;
     
     
     /** Check to see if the string contains this tag.  
