@@ -33,13 +33,29 @@
       <plugin>
         <artifactId>taglist-maven-plugin</artifactId>
         <configuration>
-         <project implementation="org.codehaus.mojo.taglist.stubs.BasicConfigProjectStub"/>
+          <project implementation="org.codehaus.mojo.taglist.stubs.BasicConfigProjectStub"/>
           <outputDirectory>${basedir}/target/test-classes/unit/basic-config-test/outputDirectory</outputDirectory>
           <showEmptyDetails>false</showEmptyDetails>
-          <tags>
-            <tag>@show_empty_details_tag_in_code</tag>
-            <tag>@show_empty_details_tag_not_in_code</tag>
-          </tags>
+          <tagListOptions>
+            <tagClasses>
+              <tagClass>
+                <tags>
+                  <tag>
+                    <matchString>@show_empty_details_tag_in_code</matchString>
+                    <matchType>exact</matchType>
+                  </tag>
+                </tags>
+              </tagClass>
+              <tagClass>
+                <tags>
+                  <tag>
+                    <matchString>@show_empty_details_tag_not_in_code</matchString>
+                    <matchType>exact</matchType>
+                  </tag>
+                </tags>
+              </tagClass>
+            </tagClasses>
+          </tagListOptions>
         </configuration>
       </plugin>
     </plugins>

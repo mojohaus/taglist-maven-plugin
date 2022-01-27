@@ -7,13 +7,13 @@ import org.apache.maven.plugin.testing.AbstractMojoTestCase;
 import org.codehaus.plexus.util.FileUtils;
 
 public abstract class AbstractTaglistMojoTestCase
-    extends AbstractMojoTestCase
+        extends AbstractMojoTestCase
 {
     public static final String TEST_ENCODING = "UTF-8";
 
     /**
      * Returns a {@link TagListReport} configured by pluginXmlFile.
-     * 
+     *
      * @param pluginXmlFile file to configure Mojo with, must exist.
      * @return a configured Mojo, never null.
      * @throws Exception in case of non-existing pluginXmlFile or mojo not found.
@@ -23,10 +23,13 @@ public abstract class AbstractTaglistMojoTestCase
     {
         assertTrue( "Cannot find plugin file.", pluginXmlFile.exists() );
         TagListReport mojo = (TagListReport) lookupMojo( "taglist", pluginXmlFile );
-        assertNotNull( "Mojo not found.", mojo );
-        setVariableValueToObject( mojo, "encoding", TEST_ENCODING );
-        setVariableValueToObject( mojo, "xmlOutputDirectory", new File( mojo.getOutputDirectory(), 
-                                                                        "taglist" ) );
+
+        setVariableValueToObject( mojo, "inputEncoding", TEST_ENCODING );
+        setVariableValueToObject( mojo, "xmlOutputDirectory", new File( mojo.getOutputDirectory(),
+                "taglist" ) );
+        setVariableValueToObject( mojo, "includes", new String[] { "**/*.java" } );
+        setVariableValueToObject( mojo, "excludes", new String[] {} );
+        // setVariableValueToObject( mojo, "siteRenderer", new DoxiaDocumentRenderer(  ) );
 
         return mojo;
     }

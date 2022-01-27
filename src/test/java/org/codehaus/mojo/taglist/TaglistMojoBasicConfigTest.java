@@ -260,7 +260,8 @@ public class TaglistMojoBasicConfigTest
     public void testShowEmptyDetailsDisabled()
         throws Exception
     {
-        File pluginXmlFile = new File( getBasedir(), "/src/test/resources/unit/basic-config-test/show-empty-details-disabled-pom.xml" );
+        File pluginXmlFile = new File( getBasedir(),
+                "/src/test/resources/unit/basic-config-test/show-empty-details-disabled-pom.xml" );
         TagListReport mojo = super.getTagListReport( pluginXmlFile );
 
         mojo.execute();
@@ -268,21 +269,21 @@ public class TaglistMojoBasicConfigTest
         String htmlString = super.getGeneratedOutput( mojo );
 
         // Check to see show empty tags in code flag has a count of 1.
-        String expected = "@show_empty_details_tag_in_code</a></td><td>1</td>";
-        assertTrue("Incorrect count for the in code tag.", htmlString.indexOf(expected) != -1);
+        String expected = "@show_empty_details_tag_in_code</a></td>\n<td>1</td>";
+        assertTrue( "Incorrect count for the in code tag.", htmlString.indexOf( expected ) != -1 );
 
         // Check to see show empty tags in not code flag has a count of 0.
         // FYI: Since there are no details, there is no ending hyperlink tag (</a>).
-        expected = "@show_empty_details_tag_not_in_code</td><td>0</td>";
-        assertTrue("Incorrect count for the not in code tag.", htmlString.indexOf(expected) != -1);
+        expected = "@show_empty_details_tag_not_in_code</td>\n<td>0</td>";
+        assertTrue( "Incorrect count for the not in code tag.", htmlString.indexOf( expected ) != -1 );
 
         // Check to see show empty tags in code section details exist (they should).
         expected = "\">@show_empty_details_tag_in_code</a></h3>";
-        assertTrue("Missing tag details for the in code tag.", htmlString.indexOf(expected) != -1);
+        assertTrue( "Missing tag details for the in code tag.", htmlString.indexOf( expected ) != -1 );
 
         // Check to see show empty tags not in code section details do NOT exist (they should not).
         expected = "\">@show_empty_details_tag_not_in_code</a></h3>";
-        assertFalse("Unexpected tag details for the not in code tag.", htmlString.indexOf(expected) != -1);
+        assertFalse( "Unexpected tag details for the not in code tag.", htmlString.indexOf( expected ) != -1 );
     }
 
     public void testXmlFile()

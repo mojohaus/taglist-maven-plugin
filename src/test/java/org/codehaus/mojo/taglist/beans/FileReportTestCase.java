@@ -20,6 +20,7 @@ package org.codehaus.mojo.taglist.beans;
  */
 
 import java.io.File;
+
 import org.codehaus.plexus.PlexusTestCase;
 
 /**
