@@ -104,7 +104,7 @@ public class TagReport implements Comparable<TagReport> {
      * @return the name of the tag class.
      */
     public String getTagName() {
-        return displayName;
+        return displayName != null ? displayName : tagStrings.get(0);
     }
 
     /**
