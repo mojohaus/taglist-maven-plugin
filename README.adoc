@@ -3,7 +3,7 @@
 This is the http://www.mojohaus.org/taglist-maven-plugin/[taglist-maven-plugin].
 
 image:++https://img.shields.io/badge/License-Apache--2.0-green++["Apache License,Version 2.0,January 2004",link=http://www.apache.org/licenses/]
-image:https://img.shields.io/maven-central/v/org.codehaus.mojo/taglist-maven-plugin.svg?label=Maven%20Central[Maven Central,link=http://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22org.codehaus.mojo%22%20AND%20a%3A%22taglist-maven-plugin%22]
+image:https://img.shields.io/maven-central/v/org.codehaus.mojo/taglist-maven-plugin.svg?label=Maven%20Central[Maven Central,link=https://search.maven.org/artifact/org.codehaus.mojo/taglist-maven-plugin]
 image:https://github.com/mojohaus/taglist-maven-plugin/workflows/GitHub%20CI/badge.svg?branch=master[Build Status,link=https://github.com/mojohaus/taglist-maven-plugin/actions/workflows/maven.yml?query=branch%3Amaster]
 
 == Contributing
