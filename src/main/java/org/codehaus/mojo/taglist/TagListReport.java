@@ -206,7 +206,7 @@ public class TagListReport
         this.currentLocale = locale;
 
         // User entered no tags and no tagOptions, then default tags
-        if ( ( tagListOptions == null || tagListOptions.getTagClasses().size() == 0 ) )
+        if ( (tags == null || tags.length == 0) && ( tagListOptions == null || tagListOptions.getTagClasses().size() == 0 ) )
         {
             tags = new String[] { "@todo", "TODO" };
         }

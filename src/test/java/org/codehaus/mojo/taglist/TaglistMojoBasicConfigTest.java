@@ -293,11 +293,9 @@ public class TaglistMojoBasicConfigTest
         mojo.execute();
         
         String actualXml = super.getGeneratedXMLOutput( mojo );
-        actualXml = actualXml.replaceAll( "(\r\n)|(\r)", "\n" );
-        
+
         File expectedFile = new File( getBasedir(), "/target/test-classes/unit/basic-config-test/expected-taglist.xml" );       
-        String expectedXml = FileUtils.fileRead( expectedFile, TEST_ENCODING );
-        expectedXml = expectedXml.replaceAll( "(\r\n)|(\r)", "\n" );
+        String expectedXml = readFileContentWithoutNewLine(expectedFile );
 
         assertEquals( "unexpected contents", expectedXml, actualXml );
     }

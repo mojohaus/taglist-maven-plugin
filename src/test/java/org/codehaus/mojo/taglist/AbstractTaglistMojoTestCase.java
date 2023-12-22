@@ -2,9 +2,11 @@ package org.codehaus.mojo.taglist;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.util.stream.Collectors;
 
 import org.apache.maven.plugin.testing.AbstractMojoTestCase;
-import org.codehaus.plexus.util.FileUtils;
 
 public abstract class AbstractTaglistMojoTestCase
     extends AbstractMojoTestCase
@@ -24,8 +26,9 @@ public abstract class AbstractTaglistMojoTestCase
         assertTrue( "Cannot find plugin file.", pluginXmlFile.exists() );
         TagListReport mojo = (TagListReport) lookupMojo( "taglist", pluginXmlFile );
         assertNotNull( "Mojo not found.", mojo );
-        setVariableValueToObject( mojo, "encoding", TEST_ENCODING );
-        setVariableValueToObject( mojo, "xmlOutputDirectory", new File( mojo.getOutputDirectory(), 
+        setVariableValueToObject( mojo, "inputEncoding", TEST_ENCODING );
+        setVariableValueToObject( mojo, "includes", new String[]{"**/*.java"} );
+        setVariableValueToObject( mojo, "xmlOutputDirectory", new File( mojo.getOutputDirectory(),
                                                                         "taglist" ) );
 
         return mojo;
@@ -45,9 +48,7 @@ public abstract class AbstractTaglistMojoTestCase
         String filename = mojo.getOutputName() + ".html";
         File outputHtml = new File( outputDir, filename );
         assertTrue( "Cannont find output html file", outputHtml.exists() );
-        String htmlString = FileUtils.fileRead( outputHtml, TEST_ENCODING );
-
-        return htmlString;
+        return readFileContentWithoutNewLine( outputHtml );
     }
     
     /**
@@ -64,9 +65,15 @@ public abstract class AbstractTaglistMojoTestCase
         String filename = mojo.getOutputName() + ".xml";
         File outputXML = new File( outputDir, filename );
         assertTrue( "Cannont find output xml file", outputXML.exists() );
-        String xmlString = FileUtils.fileRead( outputXML, TEST_ENCODING );
+        return readFileContentWithoutNewLine( outputXML );
+    }
 
-        return xmlString;
+
+    protected String readFileContentWithoutNewLine(File file) throws IOException {
+        return Files.readAllLines(file.toPath(), Charset.forName(TEST_ENCODING))
+                .stream()
+                .map(String::trim)
+                .collect(Collectors.joining());
     }
 
 }
