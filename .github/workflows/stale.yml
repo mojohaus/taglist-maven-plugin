@@ -9,7 +9,9 @@ jobs:
     steps:
       - uses: actions/stale@v8
         with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
           stale-pr-message: 'This PR is stale because it has been open 365 days with no activity. Remove stale label or comment or this will be closed in 30 days.'
-          days-before-stale: 365
+          days-before-pr-stale: 365
           days-before-pr-close: 30
+          stale-issue-message: 'This issue is stale because it has been open 365 days with no activity. Remove stale label or comment or this will be closed in 30 days.'
+          days-before-issue-stale: 365
+          days-before-issue-close: 30
