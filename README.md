@@ -1,14 +1,14 @@
-= MojoHaus TagList Maven Plugin
+# MojoHaus TagList Maven Plugin
 
-This is the http://www.mojohaus.org/taglist-maven-plugin/[taglist-maven-plugin].
+This is the http://www.mojohaus.org/taglist-maven-plugin/[taglist-maven-plugin.
 
-image:++https://img.shields.io/badge/License-Apache--2.0-green++["Apache License,Version 2.0,January 2004",link=http://www.apache.org/licenses/]
-image:https://img.shields.io/maven-central/v/org.codehaus.mojo/taglist-maven-plugin.svg?label=Maven%20Central[Maven Central,link=https://search.maven.org/artifact/org.codehaus.mojo/taglist-maven-plugin]
-image:https://github.com/mojohaus/taglist-maven-plugin/workflows/GitHub%20CI/badge.svg?branch=master[Build Status,link=https://github.com/mojohaus/taglist-maven-plugin/actions/workflows/maven.yml?query=branch%3Amaster]
+[![Apache License, Version 2.0, January 2004](https://img.shields.io/github/license/mojohaus/versions-maven-plugin.svg?label=License)](https://www.apache.org/licenses/)
+[![Maven Central](https://img.shields.io/maven-central/v/org.codehaus.mojo/taglist-maven-plugin.svg?label=Maven%20Central)](https://search.maven.org/artifact/org.codehaus.mojo/taglist-maven-plugin)
+[![GitHub CI](https://github.com/mojohaus/taglist-maven-plugin/actions/workflows/maven.yml/badge.svg)](https://github.com/mojohaus/taglist-maven-plugin/actions/workflows/maven.yml)
 
-== Contributing
+## Contributing
 
-=== Creating Issues
+### Creating Issues
 
 If you find a problem please create an
 https://github.com/mojohaus/taglist-maven-plugin/issues[issue in the ticket]
@@ -17,7 +17,7 @@ If you have a full working example or a log file this is also helpful.
 You should of course describe only a single issue in a single ticket and not
 mixing up several different things into a single issue.
 
-=== Creating a Pull Request
+### Creating a Pull Request
 
 Before you create a pull request it is necessary to create an issue in
 the https://github.com/mojohaus/taglist-maven-plugin/issues[ticket system]
@@ -28,12 +28,12 @@ It is required if you want to get a Pull request to be integrated into please
 squash your commits into a single commit which references the issue in the
 commit message which looks like this:
 
-----
+```
 Fixed #Issue
 
  o Description.
 
-----
+```
 
 This makes it simpler to merge it and this will also close the
 appropriate issue automatically in one go. This make the life as
@@ -44,14 +44,14 @@ create/add/fix several issues in one, cause otherwise the history is hard to
 read and to understand and makes the maintenance of the issues and pull request
 hard or to be honest impossible.
 
-== Releasing
+## Releasing
 
 * Make sure `gpg-agent` is running.
-* Execute `./mvnw -B release:prepare release:perform`
+* Execute `mvn -B release:prepare release:perform`
 
 For publishing the site do the following:
 
-----
+```
 cd target/checkout
-./mvnw verify site site:stage scm-publish:publish-scm
-----
+mvn verify site site:stage scm-publish:publish-scm
+```
