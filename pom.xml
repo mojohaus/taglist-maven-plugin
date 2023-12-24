@@ -17,7 +17,7 @@
   <url>https://www.mojohaus.org/taglist-maven-plugin/</url>
 
   <properties>
-    <mavenVersion>3.2.5</mavenVersion>
+    <mavenVersion>3.8.1</mavenVersion>
     <mojo.java.target>1.8</mojo.java.target>
     <project.build.outputTimestamp>1642852333</project.build.outputTimestamp>
 
