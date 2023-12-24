@@ -21,7 +21,7 @@
     <mojo.java.target>1.8</mojo.java.target>
     <project.build.outputTimestamp>1642852333</project.build.outputTimestamp>
 
-    <doxiaVersion>1.11.1</doxiaVersion>
+    <doxiaVersion>1.12.0</doxiaVersion>
     <doxia-sitetoolsVersion>1.11.1</doxia-sitetoolsVersion>
 
     <!-- test dependencies -->
