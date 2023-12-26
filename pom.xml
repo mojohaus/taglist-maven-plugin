@@ -5,7 +5,7 @@
   <parent>
     <groupId>org.codehaus.mojo</groupId>
     <artifactId>mojo-parent</artifactId>
-    <version>67</version>
+    <version>77</version>
   </parent>
 
   <artifactId>taglist-maven-plugin</artifactId>
@@ -17,15 +17,10 @@
   <url>https://www.mojohaus.org/taglist-maven-plugin/</url>
 
   <properties>
-    <mavenVersion>3.6.3</mavenVersion>
-    <mojo.java.target>1.8</mojo.java.target>
     <project.build.outputTimestamp>1642852333</project.build.outputTimestamp>
 
     <doxiaVersion>1.12.0</doxiaVersion>
     <doxia-sitetoolsVersion>1.11.1</doxia-sitetoolsVersion>
-
-    <!-- test dependencies -->
-    <dependency.junit.version>5.8.2</dependency.junit.version>
 
     <!-- override plugins -->
     <taglist-maven-plugin.version>${project.version}</taglist-maven-plugin.version>
@@ -151,7 +146,6 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-plugin-plugin</artifactId>
-        <version>3.10.2</version>
       </plugin>
       <plugin>
         <groupId>org.codehaus.modello</groupId>
@@ -194,18 +188,6 @@
       </plugin>
     </plugins>
   </build>
-
-  <dependencyManagement>
-    <dependencies>
-      <dependency>
-        <groupId>org.junit</groupId>
-        <artifactId>junit-bom</artifactId>
-        <version>${dependency.junit.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
 
   <dependencies>
     <dependency>
@@ -283,11 +265,6 @@
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-api</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter-engine</artifactId>
       <scope>test</scope>
     </dependency>
     <dependency>
