@@ -25,7 +25,7 @@
     <doxia-sitetoolsVersion>1.11.1</doxia-sitetoolsVersion>
 
     <!-- test dependencies -->
-    <dependency.junit.version>5.8.2</dependency.junit.version>
+    <dependency.junit.version>5.10.1</dependency.junit.version>
 
     <!-- override plugins -->
     <taglist-maven-plugin.version>${project.version}</taglist-maven-plugin.version>
