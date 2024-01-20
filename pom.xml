@@ -18,7 +18,7 @@
 
   <properties>
     <mavenVersion>3.2.5</mavenVersion>
-    <mojo.java.target>1.8</mojo.java.target>
+    <mojo.java.target>8</mojo.java.target>
     <project.build.outputTimestamp>1642852333</project.build.outputTimestamp>
 
     <doxiaVersion>1.12.0</doxiaVersion>
