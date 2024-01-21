@@ -5,7 +5,7 @@
   <parent>
     <groupId>org.codehaus.mojo</groupId>
     <artifactId>mojo-parent</artifactId>
-    <version>67</version>
+    <version>78</version>
   </parent>
 
   <artifactId>taglist-maven-plugin</artifactId>
@@ -18,7 +18,7 @@
 
   <properties>
     <mavenVersion>3.2.5</mavenVersion>
-    <mojo.java.target>1.8</mojo.java.target>
+    <mojo.java.target>8</mojo.java.target>
     <project.build.outputTimestamp>1642852333</project.build.outputTimestamp>
 
     <doxiaVersion>1.12.0</doxiaVersion>
