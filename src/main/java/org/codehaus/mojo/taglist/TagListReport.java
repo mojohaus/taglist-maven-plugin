@@ -56,7 +56,7 @@ import org.codehaus.plexus.util.StringUtils;
 
 /**
  * Scans the source files for tags and generates a report on their occurrences.
- * 
+ *
  * @author <a href="mailto:bellingard.NO-SPAM@gmail.com">Fabrice Bellingard</a>
  */
 @Mojo( name="taglist", requiresDependencyResolution = ResolutionScope.COMPILE)
@@ -65,7 +65,7 @@ public class TagListReport
 {
     /**
      * Specifies the Locale of the source files.
-     * 
+     *
      * @since 2.4
      */
     @Parameter( property = "sourceFileLocale", defaultValue = "en" )
@@ -92,7 +92,7 @@ public class TagListReport
 
     /**
      * Specifies the directory where the xml output will be generated.
-     * 
+     *
      * @since 2.3
      */
     @Parameter( defaultValue = "${project.build.directory}/taglist", required = true )
@@ -101,7 +101,7 @@ public class TagListReport
     /**
      * This parameter indicates whether for simple tags (like "TODO"), the analyzer should look for multiple line
      * comments.
-     * 
+     *
      */
     @Parameter( defaultValue = "true" )
     private boolean multipleLineComments;
@@ -151,7 +151,7 @@ public class TagListReport
 
     /**
      * This parameter indicates whether to generate details for tags with zero occurrences.
-     * 
+     *
      * @since 2.2
      */
     @Parameter( defaultValue = "false" )
@@ -159,7 +159,7 @@ public class TagListReport
 
     /**
      * Skips reporting of test sources.
-     * 
+     *
      * @since 2.4
      */
     @Parameter( defaultValue = "false" )
@@ -208,7 +208,7 @@ public class TagListReport
         // User entered no tags and no tagOptions, then default tags
         if ( (tags == null || tags.length == 0) && ( tagListOptions == null || tagListOptions.getTagClasses().size() == 0 ) )
         {
-            tags = new String[] { "@todo", "TODO" };
+            tags = new String[] { "@todo", "TODO", "FIXME" };
         }
 
         if ( StringUtils.isEmpty( getInputEncoding() ) )
@@ -384,7 +384,7 @@ public class TagListReport
 
     /**
      * Returns the path relative to the output directory.
-     * 
+     *
      * @param location the location to make relative.
      * @return the relative path.
      */
@@ -402,7 +402,7 @@ public class TagListReport
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.apache.maven.reporting.MavenReport#canGenerateReport()
      */
     public boolean canGenerateReport()
@@ -555,7 +555,7 @@ public class TagListReport
 
   /**
      * Returns the Locale of the source files.
-     * 
+     *
      * @return The Locale of the source files.
      */
     public Locale getLocale()
@@ -570,7 +570,7 @@ public class TagListReport
 
     /**
      * Tells whether to look for comments over multiple lines.
-     * 
+     *
      * @return Returns true if the analyzer should look for multiple lines.
      */
     public boolean isMultipleLineComments()
@@ -580,7 +580,7 @@ public class TagListReport
 
     /**
      * Tells whether to look for tags without comments.
-     * 
+     *
      * @return the emptyComments.
      */
     public boolean isEmptyComments()
@@ -590,7 +590,7 @@ public class TagListReport
 
     /**
      * Tells whether to generate details for tags with zero occurrences.
-     * 
+     *
      * @return the showEmptyTags.
      */
     public boolean isShowEmptyDetails()
@@ -600,7 +600,7 @@ public class TagListReport
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.apache.maven.reporting.AbstractMavenReport#getSiteRenderer()
      */
     protected Renderer getSiteRenderer()
@@ -610,7 +610,7 @@ public class TagListReport
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.apache.maven.reporting.AbstractMavenReport#getOutputDirectory()
      */
     protected String getOutputDirectory()
@@ -620,7 +620,7 @@ public class TagListReport
 
     /**
      * Get the absolute path to the XML output directory.
-     * 
+     *
      * @return string of the absolute path.
      */
     protected String getXMLOutputDirectory()
@@ -630,7 +630,7 @@ public class TagListReport
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.apache.maven.reporting.MavenReport#getDescription(java.util.Locale)
      */
     public String getDescription( Locale locale )
@@ -640,7 +640,7 @@ public class TagListReport
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.apache.maven.reporting.MavenReport#getName(java.util.Locale)
      */
     public String getName( Locale locale )
@@ -650,7 +650,7 @@ public class TagListReport
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.apache.maven.reporting.MavenReport#getOutputName()
      */
     public String getOutputName()
@@ -660,7 +660,7 @@ public class TagListReport
 
     /**
      * Returns the correct resource bundle according to the locale.
-     * 
+     *
      * @return the bundle corresponding to the locale used for rendering the report.
      */
     public ResourceBundle getBundle()
@@ -670,7 +670,7 @@ public class TagListReport
 
     /**
      * Returns the correct resource bundle according to the locale.
-     * 
+     *
      * @param locale the locale of the user.
      * @return the bundle corresponding to the locale.
      */
