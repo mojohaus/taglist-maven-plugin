@@ -26,57 +26,50 @@ import java.io.File;
  *
  * @version $Id$
  */
-public class TaglistMojoCountingTagsTest
-    extends AbstractTaglistMojoTestCase
-{
+public class TaglistMojoCountingTagsTest extends AbstractTaglistMojoTestCase {
     /** {@inheritDoc} */
-    protected void setUp()
-        throws Exception
-    {
+    protected void setUp() throws Exception {
         super.setUp();
     }
 
     /** {@inheritDoc} */
-    protected void tearDown()
-        throws Exception
-    {
+    protected void tearDown() throws Exception {
         super.tearDown();
-    }    
-    
+    }
+
     /**
      * Test the counting tags example from the TagList website.
-     * 
+     *
      * The purpose of this test is to guarantee that the information
      * listed on the website matches what the taglist plugin will return.
      *
      * @throws Exception
      */
-    public void testCountingTags()
-        throws Exception
-    {
-    	File pluginXmlFile = new File( getBasedir(), "/src/test/resources/unit/counting-tags-test/counting-tags-pom.xml" );
-    	TagListReport mojo = super.getTagListReport( pluginXmlFile );
-        
+    public void testCountingTags() throws Exception {
+        File pluginXmlFile =
+                new File(getBasedir(), "/src/test/resources/unit/counting-tags-test/counting-tags-pom.xml");
+        TagListReport mojo = super.getTagListReport(pluginXmlFile);
+
         // Run the TagList mojo
         mojo.execute();
-        String htmlString = super.getGeneratedOutput( mojo );
-        
+        String htmlString = super.getGeneratedOutput(mojo);
+
         // Check that NOT_YET_DOCUMENTED does not show up.
         String expected = "<td>NOT_YET_DOCUMENTED</td><td>0</td>";
         assertTrue("Incorrect NOT_YET_DOCUMENTED tag result.", htmlString.indexOf(expected) != -1);
-        
+
         // Check that FIXME has one tag.
         expected = "\">FIXME</a></td><td>1</td>";
         assertTrue("Incorrect FIXME tag result.", htmlString.indexOf(expected) != -1);
-        
+
         // Check that DOCUMENT_ME does not show up.
         expected = "<td>DOCUMENT_ME</td><td>0</td>";
         assertTrue("Incorrect NOT_YET_DOCUMENTED tag result.", htmlString.indexOf(expected) != -1);
-        
+
         // Check that <todo has one tag.
         expected = "\">&lt;todo</a></td><td>1</td>";
         assertTrue("Incorrect <todo tag result.", htmlString.indexOf(expected) != -1);
-        
+
         // Check that @todo does not show up anywhere in the output.
         String notExpected = "@todo";
         assertTrue("Incorrect @todo tag result.", htmlString.indexOf(notExpected) == -1);

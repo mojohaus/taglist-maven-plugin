@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
   <modelVersion>4.0.0</modelVersion>
@@ -15,25 +16,15 @@
   <name>Taglist Maven Plugin</name>
   <description>Produce a tag list report.</description>
   <url>https://www.mojohaus.org/taglist-maven-plugin/</url>
-
-  <properties>
-    <project.build.outputTimestamp>2024-02-04T00:00:00Z</project.build.outputTimestamp>
-    <doxiaVersion>1.12.0</doxiaVersion>
-    <doxia-sitetoolsVersion>1.11.1</doxia-sitetoolsVersion>
-
-    <!-- override plugins -->
-    <taglist-maven-plugin.version>${project.version}</taglist-maven-plugin.version>
-  </properties>
-
-  <prerequisites>
-    <maven>${mavenVersion}</maven>
-  </prerequisites>
-
-  <issueManagement>
-    <system>GitHub</system>
-    <url>https://github.com/mojohaus/taglist-maven-plugin/issues/</url>
-  </issueManagement>
   <inceptionYear>2005</inceptionYear>
+
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
 
   <developers>
     <developer>
@@ -58,48 +49,58 @@
       <id>david</id>
       <name>David J. M. Karlsen</name>
       <email>david@codehaus.org</email>
+      <url>http://www.davidkarlsen.com</url>
       <organization>codehaus.org</organization>
       <organizationUrl>http://www.codehaus.org</organizationUrl>
-      <timezone>+1</timezone>
-      <url>http://www.davidkarlsen.com</url>
       <roles>
         <role>Java Developer</role>
       </roles>
+      <timezone>+1</timezone>
     </developer>
     <developer>
       <id>khmarbaise</id>
       <name>Karl Heinz Marbaise</name>
       <email>khmarbaise@apache.org</email>
-      <timezone>+1</timezone>
       <roles>
         <role>Java Developer</role>
       </roles>
+      <timezone>+1</timezone>
     </developer>
     <developer>
       <id>bmarwell</id>
       <name>Benjamin Marwell</name>
       <email>bmarwell@apache.org</email>
-      <timezone>Europe/Berlin</timezone>
       <roles>
         <role>Committer</role>
       </roles>
+      <timezone>Europe/Berlin</timezone>
     </developer>
   </developers>
 
-  <licenses>
-    <license>
-      <name>The Apache Software License, Version 2.0</name>
-      <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
-      <distribution>repo</distribution>
-    </license>
-  </licenses>
+  <prerequisites>
+    <maven>${mavenVersion}</maven>
+  </prerequisites>
 
   <scm>
     <connection>scm:git:https://github.com/mojohaus/taglist-maven-plugin.git</connection>
     <developerConnection>scm:git:ssh://git@github.com/mojohaus/taglist-maven-plugin.git</developerConnection>
-    <url>https://github.com/mojohaus/taglist-maven-plugin</url>
     <tag>HEAD</tag>
+    <url>https://github.com/mojohaus/taglist-maven-plugin</url>
   </scm>
+
+  <issueManagement>
+    <system>GitHub</system>
+    <url>https://github.com/mojohaus/taglist-maven-plugin/issues/</url>
+  </issueManagement>
+
+  <properties>
+    <project.build.outputTimestamp>2024-02-04T00:00:00Z</project.build.outputTimestamp>
+    <doxiaVersion>1.12.0</doxiaVersion>
+    <doxia-sitetoolsVersion>1.11.1</doxia-sitetoolsVersion>
+
+    <!-- override plugins -->
+    <taglist-maven-plugin.version>${project.version}</taglist-maven-plugin.version>
+  </properties>
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -109,89 +110,6 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
-  <build>
-    <pluginManagement>
-      <plugins>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-javadoc-plugin</artifactId>
-          <configuration>
-            <source>${mojo.java.target}</source>
-            <tags>
-              <tag>
-                <name>todo</name>
-                <placement>a</placement>
-                <head>TODO:</head>
-              </tag>
-              <tag>
-                <name>goal</name>
-                <placement>a</placement>
-                <head>GOAL:</head>
-              </tag>
-              <tag>
-                <name>requiresProject</name>
-                <placement>a</placement>
-                <head>Requires Project:</head>
-              </tag>
-              <tag>
-                <name>threadSafe</name>
-                <placement>a</placement>
-                <head>Thread safe:</head>
-              </tag>
-            </tags>
-          </configuration>
-        </plugin>
-      </plugins>
-    </pluginManagement>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <configuration>
-          <argLine>-Duser.language=en</argLine>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-plugin-plugin</artifactId>
-      </plugin>
-      <plugin>
-        <groupId>org.codehaus.modello</groupId>
-        <artifactId>modello-maven-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>XMLOutput</id>
-            <phase>generate-sources</phase>
-            <goals>
-              <goal>java</goal>
-              <goal>xsd</goal>
-              <goal>xpp3-writer</goal>
-            </goals>
-            <configuration>
-              <version>1.0.0</version>
-              <models>
-                <model>src/main/mdo/TagListOutput.mdo</model>
-              </models>
-            </configuration>
-          </execution>
-          <execution>
-		    <id>POMInput</id>
-		    <phase>generate-sources</phase>
-            <goals>
-              <goal>java</goal>
-              <goal>xsd</goal>
-            </goals>
-            <configuration>
-              <version>1.0.0</version>
-              <models>
-                <model>src/main/mdo/TagListOptions.mdo</model>
-              </models>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-    </plugins>
-  </build>
 
   <dependencies>
     <dependency>
@@ -300,6 +218,89 @@
       <version>3.0.0</version>
     </dependency>
   </dependencies>
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-javadoc-plugin</artifactId>
+          <configuration>
+            <source>${mojo.java.target}</source>
+            <tags>
+              <tag>
+                <name>todo</name>
+                <placement>a</placement>
+                <head>TODO:</head>
+              </tag>
+              <tag>
+                <name>goal</name>
+                <placement>a</placement>
+                <head>GOAL:</head>
+              </tag>
+              <tag>
+                <name>requiresProject</name>
+                <placement>a</placement>
+                <head>Requires Project:</head>
+              </tag>
+              <tag>
+                <name>threadSafe</name>
+                <placement>a</placement>
+                <head>Thread safe:</head>
+              </tag>
+            </tags>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <argLine>-Duser.language=en</argLine>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-plugin-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.modello</groupId>
+        <artifactId>modello-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>XMLOutput</id>
+            <goals>
+              <goal>java</goal>
+              <goal>xsd</goal>
+              <goal>xpp3-writer</goal>
+            </goals>
+            <phase>generate-sources</phase>
+            <configuration>
+              <version>1.0.0</version>
+              <models>
+                <model>src/main/mdo/TagListOutput.mdo</model>
+              </models>
+            </configuration>
+          </execution>
+          <execution>
+            <id>POMInput</id>
+            <goals>
+              <goal>java</goal>
+              <goal>xsd</goal>
+            </goals>
+            <phase>generate-sources</phase>
+            <configuration>
+              <version>1.0.0</version>
+              <models>
+                <model>src/main/mdo/TagListOptions.mdo</model>
+              </models>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
   <reporting>
     <plugins>
       <plugin>
@@ -321,32 +322,32 @@
         <artifactId>taglist-maven-plugin</artifactId>
         <version>${project.version}</version>
         <configuration>
-            <tagListOptions>
-                <tagClasses>
-                    <tagClass>
-                        <displayName>Todo Tags</displayName>
-                        <tags>
-                            <tag>
-                                <matchString>TODO</matchString>
-                                <matchType>ignoreCase</matchType>
-                            </tag>
-                            <tag>
-                                <matchString>@todo</matchString>
-                                <matchType>exact</matchType>
-                            </tag>
-                        </tags>
-                    </tagClass>
-                    <tagClass>
-                        <displayName>Fix Tags</displayName>
-                        <tags>
-                            <tag>
-                                <matchString>FIXME</matchString>
-                                <matchType>exact</matchType>
-                            </tag>
-                        </tags>
-                    </tagClass>
-                </tagClasses>
-            </tagListOptions>
+          <tagListOptions>
+            <tagClasses>
+              <tagClass>
+                <displayName>Todo Tags</displayName>
+                <tags>
+                  <tag>
+                    <matchString>TODO</matchString>
+                    <matchType>ignoreCase</matchType>
+                  </tag>
+                  <tag>
+                    <matchString>@todo</matchString>
+                    <matchType>exact</matchType>
+                  </tag>
+                </tags>
+              </tagClass>
+              <tagClass>
+                <displayName>Fix Tags</displayName>
+                <tags>
+                  <tag>
+                    <matchString>FIXME</matchString>
+                    <matchType>exact</matchType>
+                  </tag>
+                </tags>
+              </tagClass>
+            </tagClasses>
+          </tagListOptions>
         </configuration>
       </plugin>
     </plugins>

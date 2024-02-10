@@ -23,28 +23,20 @@ import java.io.File;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import org.codehaus.plexus.util.FileUtils;
-
 /**
  * Test the Taglist mojo basic configurations.
  *
  * @version $Id$
  */
-public class TaglistMojoBasicConfigTest
-    extends AbstractTaglistMojoTestCase
-{
+public class TaglistMojoBasicConfigTest extends AbstractTaglistMojoTestCase {
 
     /** {@inheritDoc} */
-    protected void setUp()
-        throws Exception
-    {
+    protected void setUp() throws Exception {
         super.setUp();
     }
 
     /** {@inheritDoc} */
-    protected void tearDown()
-        throws Exception
-    {
+    protected void tearDown() throws Exception {
         super.tearDown();
     }
 
@@ -53,16 +45,14 @@ public class TaglistMojoBasicConfigTest
      *
      * @throws Exception
      */
-    public void testCreateTagListOutput()
-        throws Exception
-    {
-        File pluginXmlFile = new File( getBasedir(), "/src/test/resources/unit/basic-config-test/create-output-pom.xml" );
-        TagListReport mojo = super.getTagListReport( pluginXmlFile );
+    public void testCreateTagListOutput() throws Exception {
+        File pluginXmlFile = new File(getBasedir(), "/src/test/resources/unit/basic-config-test/create-output-pom.xml");
+        TagListReport mojo = super.getTagListReport(pluginXmlFile);
 
         // Run the TagList mojo
         mojo.execute();
 
-        String htmlString = super.getGeneratedOutput( mojo );
+        String htmlString = super.getGeneratedOutput(mojo);
 
         // Check to see is the com.Basic file was processed.
         String expected = "<tr class=\"a\"><th>com.BasicConfig</th>";
@@ -74,16 +64,15 @@ public class TaglistMojoBasicConfigTest
      *
      * @throws Exception
      */
-    public void testMultipleLineCommentsEnabled()
-        throws Exception
-    {
-        File pluginXmlFile = new File( getBasedir(), "/src/test/resources/unit/basic-config-test/multiple-line-comments-enabled-pom.xml" );
-        TagListReport mojo = super.getTagListReport( pluginXmlFile );
+    public void testMultipleLineCommentsEnabled() throws Exception {
+        File pluginXmlFile = new File(
+                getBasedir(), "/src/test/resources/unit/basic-config-test/multiple-line-comments-enabled-pom.xml");
+        TagListReport mojo = super.getTagListReport(pluginXmlFile);
 
         // Run the TagList mojo
         mojo.execute();
 
-        String htmlString = super.getGeneratedOutput( mojo );
+        String htmlString = super.getGeneratedOutput(mojo);
 
         // Check to see that all three lines of the comment are captured.
         String expected = "<td>This is line one, this is line two, and this is line three.</td>";
@@ -95,15 +84,14 @@ public class TaglistMojoBasicConfigTest
      *
      * @throws Exception
      */
-    public void testMultipleLineCommentsDisabled()
-        throws Exception
-    {
-        File pluginXmlFile = new File( getBasedir(), "/src/test/resources/unit/basic-config-test/multiple-line-comments-disabled-pom.xml" );
-        TagListReport mojo = super.getTagListReport( pluginXmlFile );
+    public void testMultipleLineCommentsDisabled() throws Exception {
+        File pluginXmlFile = new File(
+                getBasedir(), "/src/test/resources/unit/basic-config-test/multiple-line-comments-disabled-pom.xml");
+        TagListReport mojo = super.getTagListReport(pluginXmlFile);
 
         // Run the TagList mojo
         mojo.execute();
-        String htmlString = super.getGeneratedOutput( mojo );
+        String htmlString = super.getGeneratedOutput(mojo);
 
         // Check to see that only the first line of the comment is captured.
         String expected = "<td>This is line one,</td>";
@@ -115,14 +103,13 @@ public class TaglistMojoBasicConfigTest
      *
      * @throws Exception
      */
-    public void testEmptyCommentsEnabled()
-        throws Exception
-    {
-        File pluginXmlFile = new File( getBasedir(), "/src/test/resources/unit/basic-config-test/empty-comments-enabled-pom.xml" );
-        TagListReport mojo = super.getTagListReport( pluginXmlFile );
+    public void testEmptyCommentsEnabled() throws Exception {
+        File pluginXmlFile =
+                new File(getBasedir(), "/src/test/resources/unit/basic-config-test/empty-comments-enabled-pom.xml");
+        TagListReport mojo = super.getTagListReport(pluginXmlFile);
 
         mojo.execute();
-        String htmlString = super.getGeneratedOutput( mojo );
+        String htmlString = super.getGeneratedOutput(mojo);
 
         // Check to see that there was only one occurrence.
         String expected = "<b>Number of occurrences found in the code: 1</b>";
@@ -130,7 +117,7 @@ public class TaglistMojoBasicConfigTest
 
         // Use the resource bundle to determine what the no comment string
         // is for the current locale.
-        ResourceBundle bundle = ResourceBundle.getBundle( "taglist-report" );
+        ResourceBundle bundle = ResourceBundle.getBundle("taglist-report");
         String noComment = bundle.getString("report.taglist.nocomment");
 
         // Check to see that the empty comment message was entered
@@ -143,15 +130,14 @@ public class TaglistMojoBasicConfigTest
      *
      * @throws Exception
      */
-    public void testEmptyCommentsDisabled()
-        throws Exception
-    {
-        File pluginXmlFile = new File( getBasedir(), "/src/test/resources/unit/basic-config-test/empty-comments-disabled-pom.xml" );
-        TagListReport mojo = super.getTagListReport( pluginXmlFile );
+    public void testEmptyCommentsDisabled() throws Exception {
+        File pluginXmlFile =
+                new File(getBasedir(), "/src/test/resources/unit/basic-config-test/empty-comments-disabled-pom.xml");
+        TagListReport mojo = super.getTagListReport(pluginXmlFile);
 
         mojo.execute();
 
-        String htmlString = super.getGeneratedOutput( mojo );
+        String htmlString = super.getGeneratedOutput(mojo);
 
         // Check to see that there was zero tags found
         String expected = "<td>@empty_comment</td><td>0</td>";
@@ -163,16 +149,14 @@ public class TaglistMojoBasicConfigTest
      *
      * @throws Exception
      */
-    public void testColonInComment()
-        throws Exception
-    {
-        File pluginXmlFile = new File( getBasedir(), "/src/test/resources/unit/basic-config-test/colons-pom.xml" );
-        TagListReport mojo = super.getTagListReport( pluginXmlFile );
+    public void testColonInComment() throws Exception {
+        File pluginXmlFile = new File(getBasedir(), "/src/test/resources/unit/basic-config-test/colons-pom.xml");
+        TagListReport mojo = super.getTagListReport(pluginXmlFile);
 
         mojo.execute();
 
-        String htmlString = super.getGeneratedOutput( mojo );
-        String xmlString = super.getGeneratedXMLOutput( mojo );
+        String htmlString = super.getGeneratedOutput(mojo);
+        String xmlString = super.getGeneratedXMLOutput(mojo);
 
         // Check to see that there were two tags found
         String expected = "<tag name=\"@colons\" count=\"2\">";
@@ -192,19 +176,17 @@ public class TaglistMojoBasicConfigTest
      *
      * @throws Exception
      */
-    public void testColonInEmptyComment()
-        throws Exception
-    {
-        File pluginXmlFile = new File( getBasedir(), "/src/test/resources/unit/basic-config-test/empty-colons-pom.xml" );
-        TagListReport mojo = super.getTagListReport( pluginXmlFile );
+    public void testColonInEmptyComment() throws Exception {
+        File pluginXmlFile = new File(getBasedir(), "/src/test/resources/unit/basic-config-test/empty-colons-pom.xml");
+        TagListReport mojo = super.getTagListReport(pluginXmlFile);
 
         mojo.execute();
 
-        String htmlString = super.getGeneratedOutput( mojo );
+        String htmlString = super.getGeneratedOutput(mojo);
 
         // Use the resource bundle to determine what the no comment string
         // is for the current locale.
-        ResourceBundle bundle = ResourceBundle.getBundle( "taglist-report", Locale.ENGLISH );
+        ResourceBundle bundle = ResourceBundle.getBundle("taglist-report", Locale.ENGLISH);
         String noComment = bundle.getString("report.taglist.nocomment");
 
         // Check to see that there is a comment for line #40 (empty_no_colons)
@@ -225,15 +207,14 @@ public class TaglistMojoBasicConfigTest
      *
      * @throws Exception
      */
-    public void testShowEmptyDetailsEnabled()
-        throws Exception
-    {
-        File pluginXmlFile = new File( getBasedir(), "/src/test/resources/unit/basic-config-test/show-empty-details-enabled-pom.xml" );
-        TagListReport mojo = super.getTagListReport( pluginXmlFile );
+    public void testShowEmptyDetailsEnabled() throws Exception {
+        File pluginXmlFile =
+                new File(getBasedir(), "/src/test/resources/unit/basic-config-test/show-empty-details-enabled-pom.xml");
+        TagListReport mojo = super.getTagListReport(pluginXmlFile);
 
         mojo.execute();
 
-        String htmlString = super.getGeneratedOutput( mojo );
+        String htmlString = super.getGeneratedOutput(mojo);
 
         // Check to see show empty tags in code flag has a count of 1.
         String expected = "@show_empty_details_tag_in_code</a></td><td>1</td>";
@@ -257,15 +238,14 @@ public class TaglistMojoBasicConfigTest
      *
      * @throws Exception
      */
-    public void testShowEmptyDetailsDisabled()
-        throws Exception
-    {
-        File pluginXmlFile = new File( getBasedir(), "/src/test/resources/unit/basic-config-test/show-empty-details-disabled-pom.xml" );
-        TagListReport mojo = super.getTagListReport( pluginXmlFile );
+    public void testShowEmptyDetailsDisabled() throws Exception {
+        File pluginXmlFile = new File(
+                getBasedir(), "/src/test/resources/unit/basic-config-test/show-empty-details-disabled-pom.xml");
+        TagListReport mojo = super.getTagListReport(pluginXmlFile);
 
         mojo.execute();
 
-        String htmlString = super.getGeneratedOutput( mojo );
+        String htmlString = super.getGeneratedOutput(mojo);
 
         // Check to see show empty tags in code flag has a count of 1.
         String expected = "@show_empty_details_tag_in_code</a></td><td>1</td>";
@@ -285,18 +265,16 @@ public class TaglistMojoBasicConfigTest
         assertFalse("Unexpected tag details for the not in code tag.", htmlString.indexOf(expected) != -1);
     }
 
-    public void testXmlFile()
-        throws Exception
-    {
-    	File pluginXmlFile = new File( getBasedir(), "/src/test/resources/unit/basic-config-test/xml-output-pom.xml" );
-        TagListReport mojo = super.getTagListReport( pluginXmlFile );
+    public void testXmlFile() throws Exception {
+        File pluginXmlFile = new File(getBasedir(), "/src/test/resources/unit/basic-config-test/xml-output-pom.xml");
+        TagListReport mojo = super.getTagListReport(pluginXmlFile);
         mojo.execute();
-        
-        String actualXml = super.getGeneratedXMLOutput( mojo );
 
-        File expectedFile = new File( getBasedir(), "/target/test-classes/unit/basic-config-test/expected-taglist.xml" );       
-        String expectedXml = readFileContentWithoutNewLine(expectedFile );
+        String actualXml = super.getGeneratedXMLOutput(mojo);
 
-        assertEquals( "unexpected contents", expectedXml, actualXml );
+        File expectedFile = new File(getBasedir(), "/target/test-classes/unit/basic-config-test/expected-taglist.xml");
+        String expectedXml = readFileContentWithoutNewLine(expectedFile);
+
+        assertEquals("unexpected contents", expectedXml, actualXml);
     }
 }

@@ -20,22 +20,19 @@ package org.codehaus.mojo.taglist.tags;
  */
 
 /** The exception used if an invalid tag type was passed.
- * 
+ *
  */
-public class InvalidTagException extends Exception 
-{
+public class InvalidTagException extends Exception {
     /**
-     * 
+     *
      */
     private static final long serialVersionUID = 1L;
-    
+
     /** Constructor for invalid tag exception.
-     * 
+     *
      * @param tagString the tag string that was used.
      */
-    InvalidTagException ( String tagString )
-    {
-        super( "Invalid tag type string used:  " + tagString );
+    InvalidTagException(String tagString) {
+        super("Invalid tag type string used:  " + tagString);
     }
-
 }

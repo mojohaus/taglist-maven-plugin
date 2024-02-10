@@ -41,16 +41,15 @@ import org.codehaus.plexus.util.FileUtils;
 
 /**
  * Class that analyzes a file with a special comment tag. For instance:
- * 
+ *
  * <pre>
  * // TODO: Example of an Eclipse/IntelliJ-like "todo" tag
  * </pre>
- * 
+ *
  * @author <a href="mailto:bellingard.NO-SPAM@gmail.com">Fabrice Bellingard </a>
  * @todo : This is another example of "todo" tag
  */
-public class FileAnalyser
-{
+public class FileAnalyser {
     /**
      * String that is used for beginning a comment line.
      */
@@ -60,7 +59,7 @@ public class FileAnalyser
      * String that is used for beginning a comment line.
      */
     private static final String SLASH_COMMENT = "//";
-    
+
     /**
      * Maximum length of a comment.
      */
@@ -118,19 +117,18 @@ public class FileAnalyser
 
     /**
      * Constructor.
-     * 
+     *
      * @param report the MOJO that is using this analyzer.
      * @param tagClasses the array of tag classes to use for searching
      */
-    public FileAnalyser( TagListReport report, List<TagClass> tagClasses )
-    {
+    public FileAnalyser(TagListReport report, List<TagClass> tagClasses) {
         multipleLineCommentsOn = report.isMultipleLineComments();
         emptyCommentsOn = report.isEmptyComments();
         log = report.getLog();
         sourceDirs = report.getSourceDirs();
         encoding = report.getInputEncoding();
         locale = report.getLocale();
-        noCommentString = report.getBundle().getString( "report.taglist.nocomment" );      
+        noCommentString = report.getBundle().getString("report.taglist.nocomment");
         this.tagClasses = tagClasses;
         this.includes = report.getIncludesCommaSeparated();
         this.excludes = report.getExcludesCommaSeparated();
@@ -142,24 +140,19 @@ public class FileAnalyser
      * @return a collection of TagReport objects.
      * @throws MavenReportException the Maven report exception.
      */
-    public Collection<TagReport> execute()
-            throws MavenReportException
-    {
+    public Collection<TagReport> execute() throws MavenReportException {
         List<File> fileList = findFilesToScan();
 
-        for ( File file : fileList )
-        {
-            if ( file.exists() )
-            {
-                scanFile( file );
+        for (File file : fileList) {
+            if (file.exists()) {
+                scanFile(file);
             }
         }
 
         // Get the tag reports from each of the tag classes.
         Collection<TagReport> tagReports = new ArrayList<>();
-        for ( TagClass tc : tagClasses )
-        {
-            tagReports.add( tc.getTagReport() );
+        for (TagClass tc : tagClasses) {
+            tagReports.add(tc.getTagReport());
         }
 
         return tagReports;
@@ -171,20 +164,14 @@ public class FileAnalyser
      * @return a List of File objects.
      * @throws MavenReportException the Maven report exception.
      */
-    private List<File> findFilesToScan()
-            throws MavenReportException
-    {
+    private List<File> findFilesToScan() throws MavenReportException {
         List<File> filesList = new ArrayList<>();
-        try
-        {
-            for ( String sourceDir : sourceDirs )
-            {
-                filesList.addAll( FileUtils.getFiles( new File( sourceDir ), includes, excludes ) );
+        try {
+            for (String sourceDir : sourceDirs) {
+                filesList.addAll(FileUtils.getFiles(new File(sourceDir), includes, excludes));
             }
-        }
-        catch ( IOException e )
-        {
-            throw new MavenReportException( "Error while trying to find the files to scan.", e );
+        } catch (IOException e) {
+            throw new MavenReportException("Error while trying to find the files to scan.", e);
         }
         return filesList;
     }
@@ -196,38 +183,31 @@ public class FileAnalyser
      * @throws IOException the IO exception.
      * @return a reader with the current file encoding.
      */
-    private Reader getReader( File file ) throws IOException
-    {
-        InputStream in = new FileInputStream( file );
-        return ( encoding == null ) ? new InputStreamReader( in ) : new InputStreamReader( in, encoding ); 
+    private Reader getReader(File file) throws IOException {
+        InputStream in = new FileInputStream(file);
+        return (encoding == null) ? new InputStreamReader(in) : new InputStreamReader(in, encoding);
     }
 
     /**
      * Scans a file to look for task tags.
-     * 
+     *
      * @param file the file to scan.
      */
-    public void scanFile( File file )
-    {
-        try ( LineNumberReader reader = new LineNumberReader( getReader( file ) ) )
-        {
+    public void scanFile(File file) {
+        try (LineNumberReader reader = new LineNumberReader(getReader(file))) {
 
             String currentLine = reader.readLine();
-            while ( currentLine != null )
-            {
+            while (currentLine != null) {
                 int index = -1;
                 // look for a tag on this line
-                for ( TagClass tagClass : tagClasses )
-                {
-                    index = tagClass.tagMatchContains( currentLine, locale );
-                    if ( index != TagClass.NO_MATCH )
-                    {
+                for (TagClass tagClass : tagClasses) {
+                    index = tagClass.tagMatchContains(currentLine, locale);
+                    if (index != TagClass.NO_MATCH) {
                         // there's a tag on this line
                         String commentType = null;
-                        commentType = extractCommentType( currentLine, index );
+                        commentType = extractCommentType(currentLine, index);
 
-                        if ( commentType == null )
-                        {
+                        if (commentType == null) {
                             // this is not a valid comment tag: skip other tag classes and
                             // go to the next line
                             break;
@@ -237,73 +217,61 @@ public class FileAnalyser
                         int commentStartIndex = reader.getLineNumber();
                         StringBuffer comment = new StringBuffer();
 
-                        String firstLine = StringUtils.strip( currentLine.substring( index + tagLength ) );
-                        firstLine = StringUtils.removeEnd( firstLine, "*/" ); //MTAGLIST-35
-                        if ( firstLine.length() == 0 || ":".equals( firstLine ) )
-                        {
+                        String firstLine = StringUtils.strip(currentLine.substring(index + tagLength));
+                        firstLine = StringUtils.removeEnd(firstLine, "*/"); // MTAGLIST-35
+                        if (firstLine.length() == 0 || ":".equals(firstLine)) {
                             // this is not a valid comment tag: nothing is written there
-                            if ( emptyCommentsOn )
-                            {
-                                comment.append( "--" );
-                                comment.append( noCommentString );
-                                comment.append( "--" );
-                            }
-                            else
-                            {
+                            if (emptyCommentsOn) {
+                                comment.append("--");
+                                comment.append(noCommentString);
+                                comment.append("--");
+                            } else {
                                 continue;
                             }
-                        }
-                        else
-                        {
+                        } else {
                             // this tag has a comment
-                            if ( firstLine.charAt( 0 ) == ':' )
-                            {
-                                comment.append( firstLine.substring( 1 ).trim() );
-                            }
-                            else
-                            {
-                                comment.append( firstLine );
+                            if (firstLine.charAt(0) == ':') {
+                                comment.append(firstLine.substring(1).trim());
+                            } else {
+                                comment.append(firstLine);
                             }
 
-                            if ( multipleLineCommentsOn )
-                            {
+                            if (multipleLineCommentsOn) {
                                 // Mark the current position, set the read forward limit to
                                 // a large number that should not be met.
-                                reader.mark( MAX_COMMENT_CHARACTERS );
+                                reader.mark(MAX_COMMENT_CHARACTERS);
 
                                 // next line
                                 String futureLine = reader.readLine();
 
                                 // we're looking for multiple line comments
-                                while ( futureLine != null && futureLine.trim().startsWith( commentType )
-                                        && futureLine.indexOf( tagClass.getLastTagMatchString() ) < 0 )
-                                {
-                                    String currentComment = futureLine.substring( futureLine.indexOf( commentType )
-                                            + commentType.length() ).trim();
-                                    if ( currentComment.startsWith( "@" ) || "".equals( currentComment )
-                                            || "/".equals( currentComment ) )
-                                    {
+                                while (futureLine != null
+                                        && futureLine.trim().startsWith(commentType)
+                                        && futureLine.indexOf(tagClass.getLastTagMatchString()) < 0) {
+                                    String currentComment = futureLine
+                                            .substring(futureLine.indexOf(commentType) + commentType.length())
+                                            .trim();
+                                    if (currentComment.startsWith("@")
+                                            || "".equals(currentComment)
+                                            || "/".equals(currentComment)) {
                                         // the comment is finished
                                         break;
                                     }
                                     // try to look if the next line is not a new tag
                                     boolean newTagFound = false;
-                                    for ( TagClass tc : tagClasses )
-                                    {
-                                        if ( tc.tagMatchStartsWith( currentComment, locale ) )
-                                        {
+                                    for (TagClass tc : tagClasses) {
+                                        if (tc.tagMatchStartsWith(currentComment, locale)) {
                                             newTagFound = true;
                                             break;
                                         }
                                     }
-                                    if ( newTagFound )
-                                    {
+                                    if (newTagFound) {
                                         // this is a new comment: stop here the current comment
                                         break;
                                     }
                                     // nothing was found: this means the comment is going on this line
-                                    comment.append( " " );
-                                    comment.append( currentComment );
+                                    comment.append(" ");
+                                    comment.append(currentComment);
                                     futureLine = reader.readLine();
                                 }
 
@@ -313,39 +281,32 @@ public class FileAnalyser
                             }
                         }
                         TagReport tagReport = tagClass.getTagReport();
-                        FileReport fileReport = tagReport.getFileReport( file, encoding );
-                        fileReport.addComment( comment.toString(), commentStartIndex );
+                        FileReport fileReport = tagReport.getFileReport(file, encoding);
+                        fileReport.addComment(comment.toString(), commentStartIndex);
                     }
                 }
                 currentLine = reader.readLine();
             }
-        }
-        catch ( IOException e )
-        {
-            log.error( "Error while scanning the file " + file.getPath(), e );
+        } catch (IOException e) {
+            log.error("Error while scanning the file " + file.getPath(), e);
         }
     }
 
     /**
      * Finds the type of comment the tag is in.
-     * 
+     *
      * @param currentLine the line to analyze.
      * @param index the index of the tag in the line.
      * @return "*" or "//" or null.
      */
-    private String extractCommentType( String currentLine, int index )
-    {
+    private String extractCommentType(String currentLine, int index) {
         String commentType = null;
-        String beforeTag = currentLine.substring( 0, index ).trim();
-        if ( beforeTag.endsWith( SLASH_COMMENT ) )
-        {
+        String beforeTag = currentLine.substring(0, index).trim();
+        if (beforeTag.endsWith(SLASH_COMMENT)) {
             commentType = SLASH_COMMENT;
-        }
-        else if ( beforeTag.endsWith( STAR_COMMENT ) )
-        {
+        } else if (beforeTag.endsWith(STAR_COMMENT)) {
             commentType = STAR_COMMENT;
         }
         return commentType;
     }
-
 }
