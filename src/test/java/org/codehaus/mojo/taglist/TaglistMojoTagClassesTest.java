@@ -28,16 +28,6 @@ import java.io.File;
  */
 public class TaglistMojoTagClassesTest extends AbstractTaglistMojoTestCase {
 
-    /** {@inheritDoc} */
-    protected void setUp() throws Exception {
-        super.setUp();
-    }
-
-    /** {@inheritDoc} */
-    protected void tearDown() throws Exception {
-        super.tearDown();
-    }
-
     /**
      * Test that the default match type is exact.
      *
@@ -56,11 +46,11 @@ public class TaglistMojoTagClassesTest extends AbstractTaglistMojoTestCase {
 
         // Check to see that all three lines of the comment are captured.
         String expected = "<td>This is the tag for the exact match default 1 of 1.</td>";
-        assertTrue("Missing tag result.", htmlString.indexOf(expected) != -1);
+        assertTrue("Missing tag result.", htmlString.contains(expected));
 
         // Check to see that all three lines of the comment are captured.
         String expectedCount = "<tag name=\"Test Exact Matches (default)\" count=\"1\">";
-        assertTrue("Incorrect tag count.", xmlString.indexOf(expectedCount) != -1);
+        assertTrue("Incorrect tag count.", xmlString.contains(expectedCount));
     }
 
     /**
@@ -80,11 +70,11 @@ public class TaglistMojoTagClassesTest extends AbstractTaglistMojoTestCase {
 
         // Check to see that all three lines of the comment are captured.
         String expected = "<td>This is hte tag for the exact match 1 of 1.</td>";
-        assertTrue("Missing tag result.", htmlString.indexOf(expected) != -1);
+        assertTrue("Missing tag result.", htmlString.contains(expected));
 
         // Check to see that all three lines of the comment are captured.
         String expectedCount = "<tag name=\"Test Exact Matches (configured)\" count=\"1\">";
-        assertTrue("Incorrect tag count.", xmlString.indexOf(expectedCount) != -1);
+        assertTrue("Incorrect tag count.", xmlString.contains(expectedCount));
     }
 
     /**
@@ -104,15 +94,15 @@ public class TaglistMojoTagClassesTest extends AbstractTaglistMojoTestCase {
 
         // Check to see that all three lines of the comment are captured.
         String expected1 = "<td>ignore case 1 of 3.</td>";
-        assertTrue("Missing tag result #1.", htmlString.indexOf(expected1) != -1);
+        assertTrue("Missing tag result #1.", htmlString.contains(expected1));
         String expected2 = "<td>ignore case 2 of 3.</td>";
-        assertTrue("Missing tag result #2.", htmlString.indexOf(expected2) != -1);
+        assertTrue("Missing tag result #2.", htmlString.contains(expected2));
         String expected3 = "<td>ignore case 3 of 3.</td>";
-        assertTrue("Missing tag result #3.", htmlString.indexOf(expected3) != -1);
+        assertTrue("Missing tag result #3.", htmlString.contains(expected3));
 
         // Check to see that all three lines of the comment are captured.
         String expectedCount = "<tag name=\"Test IgnoreCase Matches (configured)\" count=\"3\">";
-        assertTrue("Incorrect tag count.", xmlString.indexOf(expectedCount) != -1);
+        assertTrue("Incorrect tag count.", xmlString.contains(expectedCount));
     }
 
     /**
@@ -132,14 +122,14 @@ public class TaglistMojoTagClassesTest extends AbstractTaglistMojoTestCase {
 
         // Check to see that all three lines of the comment are captured.
         String expected1 = "<td>reg ex match 1 of 3.</td>";
-        assertTrue("Missing tag result #1.", htmlString.indexOf(expected1) != -1);
+        assertTrue("Missing tag result #1.", htmlString.contains(expected1));
         String expected2 = "<td>reg ex match 2 of 3.</td>";
-        assertTrue("Missing tag result #2.", htmlString.indexOf(expected2) != -1);
+        assertTrue("Missing tag result #2.", htmlString.contains(expected2));
         String expected3 = "<td>reg ex match 3 of 3.</td>";
-        assertTrue("Missing tag result #3.", htmlString.indexOf(expected3) != -1);
+        assertTrue("Missing tag result #3.", htmlString.contains(expected3));
 
         // Check to see that all three lines of the comment are captured.
         String expectedCount = "<tag name=\"Test RegEx Matches (configured)\" count=\"3\">";
-        assertTrue("Incorrect tag count.", xmlString.indexOf(expectedCount) != -1);
+        assertTrue("Incorrect tag count.", xmlString.contains(expectedCount));
     }
 }

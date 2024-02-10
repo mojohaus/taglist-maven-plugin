@@ -26,18 +26,20 @@ import org.codehaus.plexus.PlexusTestCase;
 
 /**
  * The Maven Project stub file for testing the the website example tests.
- *
+ * <p>
  * This stub is used to get the test and source file directories.  This
  * allows the TagList plugin unit tests run against the unit test directories
  * instead of using the default project directories.
  */
 public class CountingTagsProjectStub extends org.apache.maven.plugin.testing.stubs.MavenProjectStub {
-    public List getCompileSourceRoots() {
+    @Override
+    public List<String> getCompileSourceRoots() {
         return Collections.singletonList(
                 PlexusTestCase.getBasedir() + "/target/test-classes/unit/counting-tags-test/java-sources");
     }
 
-    public List getTestCompileSourceRoots() {
+    @Override
+    public List<String> getTestCompileSourceRoots() {
         return Collections.singletonList(
                 PlexusTestCase.getBasedir() + "/target/test-classes/unit/counting-tags-test/test-sources");
     }

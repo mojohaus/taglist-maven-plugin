@@ -20,12 +20,12 @@ package org.codehaus.mojo.taglist;
  */
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.LineNumberReader;
 import java.io.Reader;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -184,7 +184,7 @@ public class FileAnalyser {
      * @return a reader with the current file encoding.
      */
     private Reader getReader(File file) throws IOException {
-        InputStream in = new FileInputStream(file);
+        InputStream in = Files.newInputStream(file.toPath());
         return (encoding == null) ? new InputStreamReader(in) : new InputStreamReader(in, encoding);
     }
 
@@ -198,15 +198,13 @@ public class FileAnalyser {
 
             String currentLine = reader.readLine();
             while (currentLine != null) {
-                int index = -1;
+                int index;
                 // look for a tag on this line
                 for (TagClass tagClass : tagClasses) {
                     index = tagClass.tagMatchContains(currentLine, locale);
                     if (index != TagClass.NO_MATCH) {
                         // there's a tag on this line
-                        String commentType = null;
-                        commentType = extractCommentType(currentLine, index);
-
+                        String commentType = extractCommentType(currentLine, index);
                         if (commentType == null) {
                             // this is not a valid comment tag: skip other tag classes and
                             // go to the next line
@@ -215,11 +213,11 @@ public class FileAnalyser {
 
                         int tagLength = tagClass.getLastTagMatchStringLength();
                         int commentStartIndex = reader.getLineNumber();
-                        StringBuffer comment = new StringBuffer();
+                        StringBuilder comment = new StringBuilder();
 
                         String firstLine = StringUtils.strip(currentLine.substring(index + tagLength));
                         firstLine = StringUtils.removeEnd(firstLine, "*/"); // MTAGLIST-35
-                        if (firstLine.length() == 0 || ":".equals(firstLine)) {
+                        if (firstLine.isEmpty() || ":".equals(firstLine)) {
                             // this is not a valid comment tag: nothing is written there
                             if (emptyCommentsOn) {
                                 comment.append("--");
@@ -247,12 +245,12 @@ public class FileAnalyser {
                                 // we're looking for multiple line comments
                                 while (futureLine != null
                                         && futureLine.trim().startsWith(commentType)
-                                        && futureLine.indexOf(tagClass.getLastTagMatchString()) < 0) {
+                                        && !futureLine.contains(tagClass.getLastTagMatchString())) {
                                     String currentComment = futureLine
                                             .substring(futureLine.indexOf(commentType) + commentType.length())
                                             .trim();
                                     if (currentComment.startsWith("@")
-                                            || "".equals(currentComment)
+                                            || currentComment.isEmpty()
                                             || "/".equals(currentComment)) {
                                         // the comment is finished
                                         break;

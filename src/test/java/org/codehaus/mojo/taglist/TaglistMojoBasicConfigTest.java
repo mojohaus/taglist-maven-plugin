@@ -30,16 +30,6 @@ import java.util.ResourceBundle;
  */
 public class TaglistMojoBasicConfigTest extends AbstractTaglistMojoTestCase {
 
-    /** {@inheritDoc} */
-    protected void setUp() throws Exception {
-        super.setUp();
-    }
-
-    /** {@inheritDoc} */
-    protected void tearDown() throws Exception {
-        super.tearDown();
-    }
-
     /**
      * Test that all of the default settings are correct.
      *
@@ -56,7 +46,7 @@ public class TaglistMojoBasicConfigTest extends AbstractTaglistMojoTestCase {
 
         // Check to see is the com.Basic file was processed.
         String expected = "<tr class=\"a\"><th>com.BasicConfig</th>";
-        assertTrue("Missing tag result.", htmlString.indexOf(expected) != -1);
+        assertTrue("Missing tag result.", htmlString.contains(expected));
     }
 
     /**
@@ -76,7 +66,7 @@ public class TaglistMojoBasicConfigTest extends AbstractTaglistMojoTestCase {
 
         // Check to see that all three lines of the comment are captured.
         String expected = "<td>This is line one, this is line two, and this is line three.</td>";
-        assertTrue("Missing tag result.", htmlString.indexOf(expected) != -1);
+        assertTrue("Missing tag result.", htmlString.contains(expected));
     }
 
     /**
@@ -95,7 +85,7 @@ public class TaglistMojoBasicConfigTest extends AbstractTaglistMojoTestCase {
 
         // Check to see that only the first line of the comment is captured.
         String expected = "<td>This is line one,</td>";
-        assertTrue("Missing tag result.", htmlString.indexOf(expected) != -1);
+        assertTrue("Missing tag result.", htmlString.contains(expected));
     }
 
     /**
@@ -113,7 +103,7 @@ public class TaglistMojoBasicConfigTest extends AbstractTaglistMojoTestCase {
 
         // Check to see that there was only one occurrence.
         String expected = "<b>Number of occurrences found in the code: 1</b>";
-        assertTrue("Missing tag result.", htmlString.indexOf(expected) != -1);
+        assertTrue("Missing tag result.", htmlString.contains(expected));
 
         // Use the resource bundle to determine what the no comment string
         // is for the current locale.
@@ -122,7 +112,7 @@ public class TaglistMojoBasicConfigTest extends AbstractTaglistMojoTestCase {
 
         // Check to see that the empty comment message was entered
         expected = "<td>--" + noComment + "--</td>";
-        assertTrue("Incorrect no comment message.", htmlString.indexOf(expected) != -1);
+        assertTrue("Incorrect no comment message.", htmlString.contains(expected));
     }
 
     /**
@@ -141,7 +131,7 @@ public class TaglistMojoBasicConfigTest extends AbstractTaglistMojoTestCase {
 
         // Check to see that there was zero tags found
         String expected = "<td>@empty_comment</td><td>0</td>";
-        assertTrue("Missing tag result.", htmlString.indexOf(expected) != -1);
+        assertTrue("Missing tag result.", htmlString.contains(expected));
     }
 
     /**
@@ -160,15 +150,15 @@ public class TaglistMojoBasicConfigTest extends AbstractTaglistMojoTestCase {
 
         // Check to see that there were two tags found
         String expected = "<tag name=\"@colons\" count=\"2\">";
-        assertTrue("Incorrect number of colon matches.", xmlString.indexOf(expected) != -1);
+        assertTrue("Incorrect number of colon matches.", xmlString.contains(expected));
 
         // Check for the tag without the colon
         expected = "<td>This is without colon.</td>";
-        assertTrue("Missing without colon tag result.", htmlString.indexOf(expected) != -1);
+        assertTrue("Missing without colon tag result.", htmlString.contains(expected));
 
         // Check for the tag with the colon
         expected = "<td>This is with colon.</td>";
-        assertTrue("Missing with tag result.", htmlString.indexOf(expected) != -1);
+        assertTrue("Missing with tag result.", htmlString.contains(expected));
     }
 
     /**
@@ -193,13 +183,13 @@ public class TaglistMojoBasicConfigTest extends AbstractTaglistMojoTestCase {
         // Since there is no text following the tag, the "No Comment" string should
         // be inserted by the TagList Plugin
         String expected = "<td>--" + noComment + "--</td><td>40</td>";
-        assertTrue("Incorrect empty tag without colon text.", htmlString.indexOf(expected) != -1);
+        assertTrue("Incorrect empty tag without colon text.", htmlString.contains(expected));
 
         // Check to see that there is a comment for line #43 (empty_colons)
         // Since there is no text following the tag, the "No Comment" string should
         // be inserted by the TagList Plugin
         expected = "<td>--" + noComment + "--</td><td>43</td>";
-        assertTrue("Incorrect empty tag with colon text.", htmlString.indexOf(expected) != -1);
+        assertTrue("Incorrect empty tag with colon text.", htmlString.contains(expected));
     }
 
     /**
@@ -218,19 +208,19 @@ public class TaglistMojoBasicConfigTest extends AbstractTaglistMojoTestCase {
 
         // Check to see show empty tags in code flag has a count of 1.
         String expected = "@show_empty_details_tag_in_code</a></td><td>1</td>";
-        assertTrue("Incorrect count for the in code tag.", htmlString.indexOf(expected) != -1);
+        assertTrue("Incorrect count for the in code tag.", htmlString.contains(expected));
 
         // Check to see show empty tags in not code flag has a count of 0.
         expected = "@show_empty_details_tag_not_in_code</a></td><td>0</td>";
-        assertTrue("Incorrect count for the not in code tag.", htmlString.indexOf(expected) != -1);
+        assertTrue("Incorrect count for the not in code tag.", htmlString.contains(expected));
 
         // Check to see show empty tags in code section details exist (they should).
         expected = "\">@show_empty_details_tag_in_code</a></h3>";
-        assertTrue("Missing tag details for the in code tag.", htmlString.indexOf(expected) != -1);
+        assertTrue("Missing tag details for the in code tag.", htmlString.contains(expected));
 
         // Check to see show empty tags not in code section details exist (they should).
         expected = "\">@show_empty_details_tag_not_in_code</a></h3>";
-        assertTrue("Missing tag details for the not in code tag.", htmlString.indexOf(expected) != -1);
+        assertTrue("Missing tag details for the not in code tag.", htmlString.contains(expected));
     }
 
     /**
@@ -249,20 +239,20 @@ public class TaglistMojoBasicConfigTest extends AbstractTaglistMojoTestCase {
 
         // Check to see show empty tags in code flag has a count of 1.
         String expected = "@show_empty_details_tag_in_code</a></td><td>1</td>";
-        assertTrue("Incorrect count for the in code tag.", htmlString.indexOf(expected) != -1);
+        assertTrue("Incorrect count for the in code tag.", htmlString.contains(expected));
 
         // Check to see show empty tags in not code flag has a count of 0.
         // FYI: Since there are no details, there is no ending hyperlink tag (</a>).
         expected = "@show_empty_details_tag_not_in_code</td><td>0</td>";
-        assertTrue("Incorrect count for the not in code tag.", htmlString.indexOf(expected) != -1);
+        assertTrue("Incorrect count for the not in code tag.", htmlString.contains(expected));
 
         // Check to see show empty tags in code section details exist (they should).
         expected = "\">@show_empty_details_tag_in_code</a></h3>";
-        assertTrue("Missing tag details for the in code tag.", htmlString.indexOf(expected) != -1);
+        assertTrue("Missing tag details for the in code tag.", htmlString.contains(expected));
 
         // Check to see show empty tags not in code section details do NOT exist (they should not).
         expected = "\">@show_empty_details_tag_not_in_code</a></h3>";
-        assertFalse("Unexpected tag details for the not in code tag.", htmlString.indexOf(expected) != -1);
+        assertFalse("Unexpected tag details for the not in code tag.", htmlString.contains(expected));
     }
 
     public void testXmlFile() throws Exception {

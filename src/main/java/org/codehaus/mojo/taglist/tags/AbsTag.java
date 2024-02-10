@@ -22,12 +22,12 @@ package org.codehaus.mojo.taglist.tags;
 import java.util.Locale;
 
 /** The abstract base class for tags.
- *
+ * <p>
  *  This class defines the required functions that each type of
  *  tag must implement.  The goal here is to allow different types
  *  of tags to be created by the user, but the call processing
  *  for each tag can be generic.
- *
+ * <p>
  *  For example, a generic tag might search files for an exact string
  *  match of the tag, but a regex tag will use regular expressions in
  *  its searching.  Either way, the processing classes call each tag
@@ -66,11 +66,11 @@ public abstract class AbsTag {
     public abstract boolean startsWith(final String currentLine, final Locale locale);
 
     /** Return the length of the last matched tag.
-     *
+     * <p>
      * Normally this is the length of the tag; however, some tags
      * are dynamic.  For example a regular expression tag might be
      * 10 characters; however, the matched string may only be 5.
-     *
+     * <p>
      * Calling this function allows the tag object to return the
      * correct length for the last matched tag.
      *

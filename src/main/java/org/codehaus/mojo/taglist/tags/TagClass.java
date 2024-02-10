@@ -27,11 +27,11 @@ import org.codehaus.mojo.taglist.beans.TagReport;
 
 /**
  * Class that define a classification of tags.
- *
+ * <p>
  * Each tag class contains 1 or more tags.  This allows a user to define
  * one tag "name" for display purposes, while still checking the files for
  * multiple tag rules.
- *
+ * <p>
  *  Example
  *  <pre>
  *   &lt;tagClass&gt;
@@ -78,11 +78,6 @@ public class TagClass {
     private static int uniqueTcCounter = 1;
 
     /**
-     * The unique id for this tag class.
-     */
-    private final int uniqueId;
-
-    /**
      * Constructor.
      *
      * @param displayName the string to display as the name for this tag class.
@@ -91,7 +86,7 @@ public class TagClass {
         classDisplayName = displayName;
 
         // Assign a unique ID for this tag class and update the global counter.
-        uniqueId = uniqueTcCounter++;
+        int uniqueId = uniqueTcCounter++;
 
         classTagReport = new TagReport(displayName, "tag_class_" + uniqueId);
     }
@@ -117,7 +112,7 @@ public class TagClass {
     }
 
     /** Get the index of the first tag contained from within a string.
-     *
+     * <p>
      *  The tag class will check each for its tags until a match is found
      *  within the specified string.  If no match is found, this function will
      *  return TagClass.NO_MATCH for the index.
@@ -150,7 +145,7 @@ public class TagClass {
     }
 
     /** Check if a string starts with a tag from this tag class.
-     *
+     * <p>
      *  The tag class will check each of its tags until the start of the string
      *  matched one of the tags.  If not match if found, false is returned.
      *
@@ -188,11 +183,11 @@ public class TagClass {
     }
 
     /** Return the length of the last matched tag.
-     *
+     * <p>
      * Normally this is the length of the tag; however, some tags
      * are dynamic.  For example a regular expression tag might be
      * 10 characters; however, the matched string may only be 5.
-     *
+     * <p>
      * Calling this function allows the tag object to return the
      * correct length for the last matched tag.
      *

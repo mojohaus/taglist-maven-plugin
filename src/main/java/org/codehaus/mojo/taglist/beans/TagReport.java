@@ -160,13 +160,13 @@ public class TagReport implements Comparable<TagReport> {
 
     /** Get a list of tag strings used by this tag report.
      *
-     * @return a list of tag strings.
+     * @return an array of tag strings.
      */
     public String[] getTagStrings() {
 
         String[] strings = null;
 
-        if (tagStrings.size() > 0) {
+        if (!tagStrings.isEmpty()) {
             strings = new String[tagStrings.size()];
 
             for (int i = 0; i < tagStrings.size(); ++i) {
