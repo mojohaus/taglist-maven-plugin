@@ -59,16 +59,14 @@ import org.codehaus.plexus.util.StringUtils;
  *
  * @author <a href="mailto:bellingard.NO-SPAM@gmail.com">Fabrice Bellingard</a>
  */
-@Mojo( name="taglist", requiresDependencyResolution = ResolutionScope.COMPILE)
-public class TagListReport
-    extends AbstractMavenReport
-{
+@Mojo(name = "taglist", requiresDependencyResolution = ResolutionScope.COMPILE)
+public class TagListReport extends AbstractMavenReport {
     /**
      * Specifies the Locale of the source files.
      *
      * @since 2.4
      */
-    @Parameter( property = "sourceFileLocale", defaultValue = "en" )
+    @Parameter(property = "sourceFileLocale", defaultValue = "en")
     private String sourceFileLocale;
 
     /** Default locale used if the source file locale is null. */
@@ -79,7 +77,7 @@ public class TagListReport
      *
      * @since 3.0.0
      */
-    @Parameter( defaultValue = "**/*.java" )
+    @Parameter(defaultValue = "**/*.java")
     private String[] includes;
 
     /**
@@ -95,7 +93,7 @@ public class TagListReport
      *
      * @since 2.3
      */
-    @Parameter( defaultValue = "${project.build.directory}/taglist", required = true )
+    @Parameter(defaultValue = "${project.build.directory}/taglist", required = true)
     private File xmlOutputDirectory;
 
     /**
@@ -103,45 +101,44 @@ public class TagListReport
      * comments.
      *
      */
-    @Parameter( defaultValue = "true" )
+    @Parameter(defaultValue = "true")
     private boolean multipleLineComments;
 
     /**
      * This parameter indicates whether to look for tags even if they don't have a comment.
      */
-    @Parameter( defaultValue = "true" )
+    @Parameter(defaultValue = "true")
     private boolean emptyComments;
 
     /**
      * Link the tag line numbers to the source xref. Defaults to true and will link automatically if jxr plugin is being
      * used.
      */
-    @Parameter( defaultValue = "true", property = "taglists.linkXRef")
+    @Parameter(defaultValue = "true", property = "taglists.linkXRef")
     private boolean linkXRef;
 
     /**
      * Location of the Xrefs to link to.
      */
-    @Parameter( defaultValue = "${project.reporting.outputDirectory}/xref", property = "taglists.xrefLocation" )
+    @Parameter(defaultValue = "${project.reporting.outputDirectory}/xref", property = "taglists.xrefLocation")
     private File xrefLocation;
 
     /**
      * Location of the Test Xrefs to link to.
      */
-    @Parameter( defaultValue = "${project.reporting.outputDirectory}/xref-test", property = "taglists.testXrefLocation" )
+    @Parameter(defaultValue = "${project.reporting.outputDirectory}/xref-test", property = "taglists.testXrefLocation")
     private File testXrefLocation;
 
     /**
      * The projects in the reactor for aggregation report.
      */
-    @Parameter( readonly = true,
-                defaultValue = "${reactorProjects}" )
+    @Parameter(readonly = true, defaultValue = "${reactorProjects}")
     private List<MavenProject> reactorProjects;
 
     /**
      * Whether to build an aggregated report at the root, or build individual reports.
      */
-    @Parameter( defaultValue = "false", property = "taglists.aggregate" )
+    @Parameter(defaultValue = "false", property = "taglists.aggregate")
     private boolean aggregate;
 
     /**
@@ -154,7 +151,7 @@ public class TagListReport
      *
      * @since 2.2
      */
-    @Parameter( defaultValue = "false" )
+    @Parameter(defaultValue = "false")
     private boolean showEmptyDetails;
 
     /**
@@ -162,7 +159,7 @@ public class TagListReport
      *
      * @since 2.4
      */
-    @Parameter( defaultValue = "false" )
+    @Parameter(defaultValue = "false")
     private boolean skipTestSources;
 
     /**
@@ -200,126 +197,103 @@ public class TagListReport
      *
      * @see org.apache.maven.reporting.AbstractMavenReport#executeReport(java.util.Locale)
      */
-    protected void executeReport( Locale locale )
-            throws MavenReportException
-    {
+    protected void executeReport(Locale locale) throws MavenReportException {
         this.currentLocale = locale;
 
         // User entered no tags and no tagOptions, then default tags
-        if ( (tags == null || tags.length == 0) && ( tagListOptions == null || tagListOptions.getTagClasses().size() == 0 ) )
-        {
-            tags = new String[] { "@todo", "TODO", "FIXME" };
+        if ((tags == null || tags.length == 0)
+                && (tagListOptions == null || tagListOptions.getTagClasses().size() == 0)) {
+            tags = new String[] {"@todo", "TODO", "FIXME"};
         }
 
-        if ( StringUtils.isEmpty( getInputEncoding() ) )
-        {
-            getLog().warn(
-                           "File encoding has not been set, using platform encoding "
-                               + System.getProperty( "file.encoding" ) + ", i.e. build is platform dependent!" );
+        if (StringUtils.isEmpty(getInputEncoding())) {
+            getLog().warn("File encoding has not been set, using platform encoding "
+                    + System.getProperty("file.encoding") + ", i.e. build is platform dependent!");
         }
 
         // Create the tag classes
         List<TagClass> tagClasses = new ArrayList<>();
 
         // If any old style tags were used, then add each tag as a tag class
-        if ( tags != null && tags.length > 0 )
-        {
-            getLog().warn( "Using legacy tag format.  This is not recommended." );
-            for ( String tag : tags )
-            {
-                TagClass tc = new TagClass( tag );
-                try
-                {
-                    AbsTag newTag = TagFactory.createTag( "exact", tag );
-                    tc.addTag( newTag );
+        if (tags != null && tags.length > 0) {
+            getLog().warn("Using legacy tag format.  This is not recommended.");
+            for (String tag : tags) {
+                TagClass tc = new TagClass(tag);
+                try {
+                    AbsTag newTag = TagFactory.createTag("exact", tag);
+                    tc.addTag(newTag);
 
-                    tagClasses.add( tc );
-                }
-                catch ( InvalidTagException e )
-                {
+                    tagClasses.add(tc);
+                } catch (InvalidTagException e) {
                     // This should be impossible since exact is supported.
-                    getLog().error( "Invalid tag type used.  tag type: exact" );
+                    getLog().error("Invalid tag type used.  tag type: exact");
                 }
             }
         }
 
         // If the new style of tag options were used, add them
-        if ( tagListOptions != null && tagListOptions.getTagClasses().size() > 0 )
-        {
+        if (tagListOptions != null && tagListOptions.getTagClasses().size() > 0) {
             // Scan each tag class
-            for ( org.codehaus.mojo.taglist.options.TagClass tcOption : tagListOptions.getTagClasses() )
-            {
+            for (org.codehaus.mojo.taglist.options.TagClass tcOption : tagListOptions.getTagClasses()) {
                 // Store the tag class display name.
-                TagClass tc = new TagClass( tcOption.getDisplayName() );
+                TagClass tc = new TagClass(tcOption.getDisplayName());
 
                 // Scan each tag within this tag class.
-                for ( Tag tagOption : tcOption.getTags() )
-                {
+                for (Tag tagOption : tcOption.getTags()) {
                     // If a match type is not specified use default.
                     String matchType = tagOption.getMatchType();
-                    if ( matchType == null || matchType.length() == 0 )
-                    {
+                    if (matchType == null || matchType.length() == 0) {
                         matchType = TagFactory.getDefaultTagType();
                     }
 
-                    try
-                    {
+                    try {
                         // Create the tag based on the match type, and add it to the tag class
-                        AbsTag newTag = TagFactory.createTag( matchType, tagOption.getMatchString() );
-                        tc.addTag( newTag );
-                    }
-                    catch ( InvalidTagException e )
-                    {
+                        AbsTag newTag = TagFactory.createTag(matchType, tagOption.getMatchString());
+                        tc.addTag(newTag);
+                    } catch (InvalidTagException e) {
                         // This should be impossible since exact is supported.
-                        getLog().error( "Invalid tag type used.  tag type: " + matchType );
+                        getLog().error("Invalid tag type used.  tag type: " + matchType);
                     }
                 }
 
                 // Add this new tag class to the container.
-                tagClasses.add( tc );
+                tagClasses.add(tc);
             }
         }
 
         // let's proceed to the analysis
-        FileAnalyser fileAnalyser = new FileAnalyser( this, tagClasses );
+        FileAnalyser fileAnalyser = new FileAnalyser(this, tagClasses);
         Collection<TagReport> tagReports = fileAnalyser.execute();
 
         // Renders the report
-        ReportGenerator generator = new ReportGenerator( this, tagReports );
-        if ( linkXRef )
-        {
-            String relativePath = getRelativePath( xrefLocation );
-            if ( xrefLocation.exists() )
-            {
+        ReportGenerator generator = new ReportGenerator(this, tagReports);
+        if (linkXRef) {
+            String relativePath = getRelativePath(xrefLocation);
+            if (xrefLocation.exists()) {
                 // XRef was already generated by manual execution of a lifecycle binding
-                generator.setXrefLocation( relativePath );
-                generator.setTestXrefLocation( getRelativePath( testXrefLocation ) );
-            }
-            else
-            {
+                generator.setXrefLocation(relativePath);
+                generator.setTestXrefLocation(getRelativePath(testXrefLocation));
+            } else {
                 // Not yet generated - check if the report is on its way
 
-                for ( ReportPlugin report : getProject().getModel().getReporting().getPlugins() )
-                {
+                for (ReportPlugin report :
+                        getProject().getModel().getReporting().getPlugins()) {
                     String artifactId = report.getArtifactId();
-                    if ( "maven-jxr-plugin".equals( artifactId ) || "jxr-maven-plugin".equals( artifactId ) )
-                    {
-                        getLog().error(
-                                "Taglist plugin MUST be executed after the JXR plugin."
-                                        + "  No links to xref were generated." );
+                    if ("maven-jxr-plugin".equals(artifactId) || "jxr-maven-plugin".equals(artifactId)) {
+                        getLog().error("Taglist plugin MUST be executed after the JXR plugin."
+                                + "  No links to xref were generated.");
                     }
                 }
             }
 
-            if ( generator.getXrefLocation() == null )
-            {
-                getLog().warn( "Unable to locate Source XRef to link to - DISABLED" );
+            if (generator.getXrefLocation() == null) {
+                getLog().warn("Unable to locate Source XRef to link to - DISABLED");
             }
         }
         generator.generateReport();
 
         // Generate the XML report
-        generateXmlReport( tagReports );
+        generateXmlReport(tagReports);
     }
 
     /**
@@ -327,58 +301,49 @@ public class TagListReport
      *
      * @param tagReports a collection of the tag reports to be output.
      */
-    private void generateXmlReport( Collection<TagReport> tagReports )
-    {
+    private void generateXmlReport(Collection<TagReport> tagReports) {
         TagListXMLReport report = new TagListXMLReport();
-        report.setModelEncoding( getInputEncoding() );
+        report.setModelEncoding(getInputEncoding());
 
         // Iterate through each tag and populate an XML tag object.
-        for ( TagReport tagReport : tagReports )
-        {
+        for (TagReport tagReport : tagReports) {
             TagListXMLTag tag = new TagListXMLTag();
-            tag.setName( tagReport.getTagName() );
-            tag.setCount( Integer.toString( tagReport.getTagCount() ) );
+            tag.setName(tagReport.getTagName());
+            tag.setCount(Integer.toString(tagReport.getTagCount()));
 
             // Iterate though each file that contains the current tag and generate an
             // XML file object within the current XML tag object.
-            for ( FileReport fileReport : tagReport.getFileReports() )
-            {
+            for (FileReport fileReport : tagReport.getFileReports()) {
                 TagListXMLFile file = new TagListXMLFile();
-                file.setName( fileReport.getClassName() );
-                file.setCount( Integer.toString( fileReport.getLineIndexes().size() ) );
+                file.setName(fileReport.getClassName());
+                file.setCount(Integer.toString(fileReport.getLineIndexes().size()));
 
                 // Iterate though each comment that contains the tag and generate an
                 // XML comment object within the current xml file object.
-                for ( Integer lineNumber : fileReport.getLineIndexes() )
-                {
+                for (Integer lineNumber : fileReport.getLineIndexes()) {
                     TagListXMLComment comment = new TagListXMLComment();
-                    comment.setLineNumber( Integer.toString( lineNumber ) );
-                    comment.setComment( fileReport.getComment( lineNumber ) );
+                    comment.setLineNumber(Integer.toString(lineNumber));
+                    comment.setComment(fileReport.getComment(lineNumber));
 
-                    file.addComment( comment );
+                    file.addComment(comment);
                 }
-                tag.addFile( file );
+                tag.addFile(file);
             }
-            report.addTag( tag );
+            report.addTag(tag);
         }
 
         // Create the writer for the XML output file.
         xmlOutputDirectory.mkdirs();
-        File xmlFile = new File( xmlOutputDirectory, "taglist.xml" );
+        File xmlFile = new File(xmlOutputDirectory, "taglist.xml");
 
-        try (
-                FileOutputStream fos = new FileOutputStream( xmlFile );
-                OutputStreamWriter output = new OutputStreamWriter( fos, getInputEncoding() )
-        )
-        {
+        try (FileOutputStream fos = new FileOutputStream(xmlFile);
+                OutputStreamWriter output = new OutputStreamWriter(fos, getInputEncoding())) {
 
             // Write out the XML output file.
             TaglistOutputXpp3Writer xmlWriter = new TaglistOutputXpp3Writer();
-            xmlWriter.write( output, report );
-        }
-        catch ( Exception e )
-        {
-            getLog().warn( "Could not save taglist xml file: " + e.getMessage() );
+            xmlWriter.write(output, report);
+        } catch (Exception e) {
+            getLog().warn("Could not save taglist xml file: " + e.getMessage());
         }
     }
 
@@ -388,12 +353,10 @@ public class TagListReport
      * @param location the location to make relative.
      * @return the relative path.
      */
-    private String getRelativePath( File location )
-    {
+    private String getRelativePath(File location) {
         String relativePath =
-            PathTool.getRelativePath( getReportOutputDirectory().getAbsolutePath(), location.getAbsolutePath() );
-        if ( StringUtils.isEmpty( relativePath ) )
-        {
+                PathTool.getRelativePath(getReportOutputDirectory().getAbsolutePath(), location.getAbsolutePath());
+        if (StringUtils.isEmpty(relativePath)) {
             relativePath = ".";
         }
         relativePath = relativePath + "/" + location.getName();
@@ -405,11 +368,9 @@ public class TagListReport
      *
      * @see org.apache.maven.reporting.MavenReport#canGenerateReport()
      */
-    public boolean canGenerateReport()
-    {
+    public boolean canGenerateReport() {
         boolean canGenerate = !getSourceDirs().isEmpty();
-        if ( aggregate && !getProject().isExecutionRoot() )
-        {
+        if (aggregate && !getProject().isExecutionRoot()) {
             canGenerate = false;
         }
         return canGenerate;
@@ -421,14 +382,11 @@ public class TagListReport
      * @param sourceDirectories the original list of directories.
      * @return a new list containing only non empty dirs.
      */
-    private List<String> pruneSourceDirs( List<String> sourceDirectories ) throws IOException
-    {
-        List<String> pruned = new ArrayList<>( sourceDirectories.size() );
-        for ( String dir : sourceDirectories )
-        {
-            if ( !pruned.contains( dir ) && hasSources( new File( dir ) ) )
-            {
-                pruned.add( dir );
+    private List<String> pruneSourceDirs(List<String> sourceDirectories) throws IOException {
+        List<String> pruned = new ArrayList<>(sourceDirectories.size());
+        for (String dir : sourceDirectories) {
+            if (!pruned.contains(dir) && hasSources(new File(dir))) {
+                pruned.add(dir);
             }
         }
         return pruned;
@@ -441,25 +399,19 @@ public class TagListReport
      * @return true if the folder or one of its subfolders contains at least 1 source file that matches
      * includes/excludes.
      */
-    private boolean hasSources( File dir ) throws IOException
-    {
-        if ( dir.exists() && dir.isDirectory() )
-        {
-            if ( !FileUtils.getFiles( dir, getIncludesCommaSeparated(), getExcludesCommaSeparated() ).isEmpty() )
-            {
+    private boolean hasSources(File dir) throws IOException {
+        if (dir.exists() && dir.isDirectory()) {
+            if (!FileUtils.getFiles(dir, getIncludesCommaSeparated(), getExcludesCommaSeparated())
+                    .isEmpty()) {
                 return true;
             }
 
             File[] files = dir.listFiles();
-            if ( files != null )
-            {
-                for ( File currentFile : files )
-                {
-                    if ( currentFile.isDirectory() )
-                    {
-                        boolean hasSources = hasSources( currentFile );
-                        if ( hasSources )
-                        {
+            if (files != null) {
+                for (File currentFile : files) {
+                    if (currentFile.isDirectory()) {
+                        boolean hasSources = hasSources(currentFile);
+                        if (hasSources) {
                             return true;
                         }
                     }
@@ -474,24 +426,22 @@ public class TagListReport
      *
      * @return the list of dirs.
      */
-    private List<String> constructSourceDirs()
-    {
-        List<String> dirs = new ArrayList<>( getProject().getCompileSourceRoots() );
-        if ( !skipTestSources )
-        {
-            dirs.addAll( getProject().getTestCompileSourceRoots() );
+    private List<String> constructSourceDirs() {
+        List<String> dirs = new ArrayList<>(getProject().getCompileSourceRoots());
+        if (!skipTestSources) {
+            dirs.addAll(getProject().getTestCompileSourceRoots());
         }
 
-        if ( aggregate )
-        {
-            for ( MavenProject reactorProject : reactorProjects )
-            {
-                if ( "java".equals( reactorProject.getArtifact().getArtifactHandler().getLanguage() ) )
-                {
-                    dirs.addAll( reactorProject.getCompileSourceRoots() );
-                    if ( !skipTestSources )
-                    {
-                        dirs.addAll( reactorProject.getTestCompileSourceRoots() );
+        if (aggregate) {
+            for (MavenProject reactorProject : reactorProjects) {
+                if ("java"
+                        .equals(reactorProject
+                                .getArtifact()
+                                .getArtifactHandler()
+                                .getLanguage())) {
+                    dirs.addAll(reactorProject.getCompileSourceRoots());
+                    if (!skipTestSources) {
+                        dirs.addAll(reactorProject.getTestCompileSourceRoots());
                     }
                 }
             }
@@ -504,23 +454,18 @@ public class TagListReport
          * The exception itself is caused by a declaration from the FileUtils, but never used
          * there. The FileUtils.getFiles() should be replaced by an NIO filter at some point.
          */
-        try
-        {
-            dirs = pruneSourceDirs( dirs );
-        }
-        catch ( IOException javaIoIOException )
-        {
-            getLog().warn( "Unable to prune source dirs.", javaIoIOException );
+        try {
+            dirs = pruneSourceDirs(dirs);
+        } catch (IOException javaIoIOException) {
+            getLog().warn("Unable to prune source dirs.", javaIoIOException);
         }
 
         return dirs;
     }
 
-    protected List<String> getSourceDirs()
-    {
-        if ( sourceDirs.get() == null )
-        {
-            sourceDirs.compareAndSet( null, constructSourceDirs() );
+    protected List<String> getSourceDirs() {
+        if (sourceDirs.get() == null) {
+            sourceDirs.compareAndSet(null, constructSourceDirs());
         }
 
         return sourceDirs.get();
@@ -529,14 +474,10 @@ public class TagListReport
     /**
      * Get the files to include, as a comma separated list of patterns.
      */
-    String getIncludesCommaSeparated()
-    {
-        if ( includes != null )
-        {
-            return String.join( ",", includes );
-        }
-        else
-        {
+    String getIncludesCommaSeparated() {
+        if (includes != null) {
+            return String.join(",", includes);
+        } else {
             return "";
         }
     }
@@ -544,28 +485,25 @@ public class TagListReport
     /**
      * Get the files to exclude, as a comma separated list of patterns.
      */
-    String getExcludesCommaSeparated()
-    {
-      if ( excludes != null ) {
-          return String.join(",", excludes);
-      } else {
-          return "";
-      }
+    String getExcludesCommaSeparated() {
+        if (excludes != null) {
+            return String.join(",", excludes);
+        } else {
+            return "";
+        }
     }
 
-  /**
+    /**
      * Returns the Locale of the source files.
      *
      * @return The Locale of the source files.
      */
-    public Locale getLocale()
-    {
+    public Locale getLocale() {
         // The locale string should never be null.
-        if ( sourceFileLocale == null )
-        {
+        if (sourceFileLocale == null) {
             sourceFileLocale = DEFAULT_LOCALE;
         }
-        return new Locale( sourceFileLocale );
+        return new Locale(sourceFileLocale);
     }
 
     /**
@@ -573,8 +511,7 @@ public class TagListReport
      *
      * @return Returns true if the analyzer should look for multiple lines.
      */
-    public boolean isMultipleLineComments()
-    {
+    public boolean isMultipleLineComments() {
         return multipleLineComments;
     }
 
@@ -583,8 +520,7 @@ public class TagListReport
      *
      * @return the emptyComments.
      */
-    public boolean isEmptyComments()
-    {
+    public boolean isEmptyComments() {
         return emptyComments;
     }
 
@@ -593,8 +529,7 @@ public class TagListReport
      *
      * @return the showEmptyTags.
      */
-    public boolean isShowEmptyDetails()
-    {
+    public boolean isShowEmptyDetails() {
         return showEmptyDetails;
     }
 
@@ -603,8 +538,7 @@ public class TagListReport
      *
      * @see org.apache.maven.reporting.AbstractMavenReport#getSiteRenderer()
      */
-    protected Renderer getSiteRenderer()
-    {
+    protected Renderer getSiteRenderer() {
         return siteRenderer;
     }
 
@@ -613,8 +547,7 @@ public class TagListReport
      *
      * @see org.apache.maven.reporting.AbstractMavenReport#getOutputDirectory()
      */
-    protected String getOutputDirectory()
-    {
+    protected String getOutputDirectory() {
         return outputDirectory.getAbsolutePath();
     }
 
@@ -623,8 +556,7 @@ public class TagListReport
      *
      * @return string of the absolute path.
      */
-    protected String getXMLOutputDirectory()
-    {
+    protected String getXMLOutputDirectory() {
         return xmlOutputDirectory.getAbsolutePath();
     }
 
@@ -633,9 +565,8 @@ public class TagListReport
      *
      * @see org.apache.maven.reporting.MavenReport#getDescription(java.util.Locale)
      */
-    public String getDescription( Locale locale )
-    {
-        return getBundle( locale ).getString( "report.taglist.description" );
+    public String getDescription(Locale locale) {
+        return getBundle(locale).getString("report.taglist.description");
     }
 
     /**
@@ -643,9 +574,8 @@ public class TagListReport
      *
      * @see org.apache.maven.reporting.MavenReport#getName(java.util.Locale)
      */
-    public String getName( Locale locale )
-    {
-        return getBundle( locale ).getString( "report.taglist.name" );
+    public String getName(Locale locale) {
+        return getBundle(locale).getString("report.taglist.name");
     }
 
     /**
@@ -653,8 +583,7 @@ public class TagListReport
      *
      * @see org.apache.maven.reporting.MavenReport#getOutputName()
      */
-    public String getOutputName()
-    {
+    public String getOutputName() {
         return "taglist";
     }
 
@@ -663,9 +592,8 @@ public class TagListReport
      *
      * @return the bundle corresponding to the locale used for rendering the report.
      */
-    public ResourceBundle getBundle()
-    {
-        return getBundle( currentLocale );
+    public ResourceBundle getBundle() {
+        return getBundle(currentLocale);
     }
 
     /**
@@ -674,14 +602,13 @@ public class TagListReport
      * @param locale the locale of the user.
      * @return the bundle corresponding to the locale.
      */
-    private ResourceBundle getBundle( Locale locale )
-    {
-        return ResourceBundle.getBundle( "taglist-report", locale, this.getClass().getClassLoader() );
+    private ResourceBundle getBundle(Locale locale) {
+        return ResourceBundle.getBundle(
+                "taglist-report", locale, this.getClass().getClassLoader());
     }
 
     @Override
-    protected String getInputEncoding()
-    {
+    protected String getInputEncoding() {
         return super.getInputEncoding();
     }
 }

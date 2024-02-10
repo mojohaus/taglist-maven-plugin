@@ -37,9 +37,7 @@ import java.util.TreeSet;
  *
  * @author <a href="mailto:bellingard.NO-SPAM@gmail.com">Fabrice Bellingard </a>
  */
-public class FileReport
-        implements Comparable<FileReport>
-{
+public class FileReport implements Comparable<FileReport> {
 
     /**
      * The file being analyzed.
@@ -72,8 +70,7 @@ public class FileReport
      * @param file The file to analyze.
      * @param encoding the file encoding to use for the report.
      */
-    public FileReport( File file, String encoding )
-    {
+    public FileReport(File file, String encoding) {
         this.file = file;
         this.encoding = encoding;
         this.tagListing = new HashMap<>();
@@ -85,9 +82,8 @@ public class FileReport
      * @param comment the comment string containing the 'todo'.
      * @param lineIndex the line number of the comment (or first line if multi-lined).
      */
-    public void addComment( String comment, int lineIndex )
-    {
-        tagListing.put( lineIndex, comment );
+    public void addComment(String comment, int lineIndex) {
+        tagListing.put(lineIndex, comment);
     }
 
     /**
@@ -96,9 +92,8 @@ public class FileReport
      *
      * @return the file path.
      */
-    public String getClassNameWithSlash()
-    {
-        return className.replace( '.', '/' );
+    public String getClassNameWithSlash() {
+        return className.replace('.', '/');
     }
 
     /**
@@ -108,10 +103,9 @@ public class FileReport
      * @throws IOException the IO exception.
      * @return a reader with the current file encoding.
      */
-    private Reader getReader( File fileToRead ) throws IOException
-    {
-        InputStream in = new FileInputStream( fileToRead );
-        return ( encoding == null ) ? new InputStreamReader( in ) : new InputStreamReader( in, encoding );
+    private Reader getReader(File fileToRead) throws IOException {
+        InputStream in = new FileInputStream(fileToRead);
+        return (encoding == null) ? new InputStreamReader(in) : new InputStreamReader(in, encoding);
     }
 
     /**
@@ -119,45 +113,38 @@ public class FileReport
      *
      * @return the full class name.
      */
-    public String getClassName()
-    {
-        if ( className != null )
-        {
+    public String getClassName() {
+        if (className != null) {
             return className;
         }
         // need to compute it (only once)
         String packageName = null;
-        try ( BufferedReader reader = new BufferedReader( getReader( file ) ) )
-        {
+        try (BufferedReader reader = new BufferedReader(getReader(file))) {
             String currentLine = reader.readLine();
-            if ( currentLine != null )
-            {
+            if (currentLine != null) {
                 currentLine = currentLine.trim();
             }
-            while ( currentLine != null )
-            {
-                if ( currentLine.startsWith( PACKAGE_STR ) )
-                {
-                    packageName = currentLine.substring( PACKAGE_STR.length() ).trim().replaceAll( ";", "" ).trim();
+            while (currentLine != null) {
+                if (currentLine.startsWith(PACKAGE_STR)) {
+                    packageName = currentLine
+                            .substring(PACKAGE_STR.length())
+                            .trim()
+                            .replaceAll(";", "")
+                            .trim();
                     break;
                 }
                 String nextLine = reader.readLine();
-                if ( nextLine == null )
-                {
+                if (nextLine == null) {
                     currentLine = nextLine;
-                }
-                else
-                {
+                } else {
                     currentLine = nextLine.trim();
                 }
             }
-        }
-        catch ( IOException e )
-        {
+        } catch (IOException e) {
             packageName = "unknown";
         }
 
-        className = packageName + "." + file.getName().replaceAll( "\\.java$", "" );
+        className = packageName + "." + file.getName().replaceAll("\\.java$", "");
 
         return className;
     }
@@ -167,10 +154,9 @@ public class FileReport
      *
      * @return Collection of Integer.
      */
-    public Collection<Integer> getLineIndexes()
-    {
+    public Collection<Integer> getLineIndexes() {
         SortedSet<Integer> lineIndexes = new TreeSet<>();
-        lineIndexes.addAll( tagListing.keySet() );
+        lineIndexes.addAll(tagListing.keySet());
         return lineIndexes;
     }
 
@@ -180,9 +166,8 @@ public class FileReport
      * @param lineIndex the index of the line.
      * @return the comment.
      */
-    public String getComment( Integer lineIndex )
-    {
-        return tagListing.get( lineIndex );
+    public String getComment(Integer lineIndex) {
+        return tagListing.get(lineIndex);
     }
 
     /**
@@ -190,43 +175,35 @@ public class FileReport
      *
      * @see Comparable#compareTo(Object)
      */
-    public int compareTo( FileReport o )
-    {
-        if ( o != null )
-        {
-            return this.getClassName().compareTo( o.getClassName() );
-        }
-        else
-        {
+    public int compareTo(FileReport o) {
+        if (o != null) {
+            return this.getClassName().compareTo(o.getClassName());
+        } else {
             return 0;
         }
     }
-    
+
     /**
      * {@inheritDoc}
      *
      * @see Object#equals(Object)
      */
-    public boolean equals( Object r )
-    {
-        // In Java 5 the PriorityQueue.remove method uses the 
+    public boolean equals(Object r) {
+        // In Java 5 the PriorityQueue.remove method uses the
         // compareTo method, while in Java 6 it uses the equals method.
-        if ( !( r instanceof FileReport ) )
-        {
+        if (!(r instanceof FileReport)) {
             return false;
         }
-        return ( this.compareTo( (FileReport) r ) == 0 );
+        return (this.compareTo((FileReport) r) == 0);
     }
-    
+
     /**
      * {@inheritDoc}
      *
      * @see Object#hashCode()
      */
-    public int hashCode() 
-    {
+    public int hashCode() {
         assert false : "hashCode not designed";
-        return 1; // any arbitrary constant will do 
+        return 1; // any arbitrary constant will do
     }
-
 }

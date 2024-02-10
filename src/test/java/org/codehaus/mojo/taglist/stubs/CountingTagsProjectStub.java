@@ -19,28 +19,26 @@ package org.codehaus.mojo.taglist.stubs;
  * under the License.
  */
 
-import org.codehaus.plexus.PlexusTestCase;
-
-import java.util.List;
 import java.util.Collections;
+import java.util.List;
+
+import org.codehaus.plexus.PlexusTestCase;
 
 /**
  * The Maven Project stub file for testing the the website example tests.
- * 
+ *
  * This stub is used to get the test and source file directories.  This
  * allows the TagList plugin unit tests run against the unit test directories
  * instead of using the default project directories.
  */
-public class CountingTagsProjectStub
-    extends org.apache.maven.plugin.testing.stubs.MavenProjectStub
-{	
-	public List getCompileSourceRoots()
-	{
-		return Collections.singletonList( PlexusTestCase.getBasedir() + "/target/test-classes/unit/counting-tags-test/java-sources" );
-	}
-	
-	public List getTestCompileSourceRoots()
-	{
-		return Collections.singletonList( PlexusTestCase.getBasedir() + "/target/test-classes/unit/counting-tags-test/test-sources" );
-	}	
+public class CountingTagsProjectStub extends org.apache.maven.plugin.testing.stubs.MavenProjectStub {
+    public List getCompileSourceRoots() {
+        return Collections.singletonList(
+                PlexusTestCase.getBasedir() + "/target/test-classes/unit/counting-tags-test/java-sources");
+    }
+
+    public List getTestCompileSourceRoots() {
+        return Collections.singletonList(
+                PlexusTestCase.getBasedir() + "/target/test-classes/unit/counting-tags-test/test-sources");
+    }
 }

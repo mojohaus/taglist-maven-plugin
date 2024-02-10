@@ -26,21 +26,15 @@ import java.io.File;
  *
  * @version $Id$
  */
-public class TaglistMojoTagsTest
-    extends AbstractTaglistMojoTestCase
-{
+public class TaglistMojoTagsTest extends AbstractTaglistMojoTestCase {
 
     /** {@inheritDoc} */
-    protected void setUp()
-        throws Exception
-    {
+    protected void setUp() throws Exception {
         super.setUp();
     }
 
     /** {@inheritDoc} */
-    protected void tearDown()
-        throws Exception
-    {
+    protected void tearDown() throws Exception {
         super.tearDown();
     }
 
@@ -49,23 +43,21 @@ public class TaglistMojoTagsTest
      *
      * @throws Exception
      */
-    public void testDefaultTags()
-        throws Exception
-    {
-        File pluginXmlFile = new File( getBasedir(), "/src/test/resources/unit/tag-test/default-tags-pom.xml" );
+    public void testDefaultTags() throws Exception {
+        File pluginXmlFile = new File(getBasedir(), "/src/test/resources/unit/tag-test/default-tags-pom.xml");
 
-        TagListReport mojo = super.getTagListReport( pluginXmlFile );
+        TagListReport mojo = super.getTagListReport(pluginXmlFile);
 
         // Run the TagList mojo
         mojo.execute();
 
-        String htmlString = super.getGeneratedOutput( mojo );
+        String htmlString = super.getGeneratedOutput(mojo);
 
-        //Check to see that @todo has one occurance.
+        // Check to see that @todo has one occurance.
         String expected = "\">@todo</a></td><td>1</td>";
         assertTrue("Incorrect default @todo tag result.", htmlString.indexOf(expected) != -1);
 
-        //Check to see that @todo has one occurance.
+        // Check to see that @todo has one occurance.
         expected = "\">TODO</a></td><td>1</td>";
         assertTrue("Incorrect default TODO tag result.", htmlString.indexOf(expected) != -1);
     }
@@ -76,22 +68,20 @@ public class TaglistMojoTagsTest
      *
      * @throws Exception
      */
-    public void testCTags()
-        throws Exception
-    {
-        File pluginXmlFile = new File( getBasedir(), "/src/test/resources/unit/tag-test/c-style-tags-pom.xml" );
-        TagListReport mojo = super.getTagListReport( pluginXmlFile );
+    public void testCTags() throws Exception {
+        File pluginXmlFile = new File(getBasedir(), "/src/test/resources/unit/tag-test/c-style-tags-pom.xml");
+        TagListReport mojo = super.getTagListReport(pluginXmlFile);
 
         // Run the TagList mojo
         mojo.execute();
 
-        String htmlString = super.getGeneratedOutput( mojo );
+        String htmlString = super.getGeneratedOutput(mojo);
 
         // Check to see that C++ style tag has one occurrence.
         String expected = "\">c_style_tag</a></td><td>1</td>";
         assertTrue("Incorrect C style tag result.", htmlString.indexOf(expected) != -1);
 
-        //Check to see that tag has the correct text.
+        // Check to see that tag has the correct text.
         expected = "<td>This is a C style tag.</td>";
         assertTrue("Incorrect C style tag text.", htmlString.indexOf(expected) != -1);
     }
@@ -101,22 +91,20 @@ public class TaglistMojoTagsTest
      *
      * @throws Exception
      */
-    public void testCPlusPlusTags()
-        throws Exception
-    {
-        File pluginXmlFile = new File( getBasedir(), "/src/test/resources/unit/tag-test/cplusplus-style-tags-pom.xml" );
-        TagListReport mojo = super.getTagListReport( pluginXmlFile );
+    public void testCPlusPlusTags() throws Exception {
+        File pluginXmlFile = new File(getBasedir(), "/src/test/resources/unit/tag-test/cplusplus-style-tags-pom.xml");
+        TagListReport mojo = super.getTagListReport(pluginXmlFile);
 
         // Run the TagList mojo
         mojo.execute();
 
-        String htmlString = super.getGeneratedOutput( mojo );
+        String htmlString = super.getGeneratedOutput(mojo);
 
-        //Check to see that C++ style tag has one occurrence.
+        // Check to see that C++ style tag has one occurrence.
         String expected = "\">c++_style_tag</a></td><td>1</td>";
         assertTrue("Incorrect C++ style tag result.", htmlString.indexOf(expected) != -1);
 
-        //Check to see that tag has the correct text.
+        // Check to see that tag has the correct text.
         expected = "<td>This is a C++ style tag.</td>";
         assertTrue("Incorrect C++ style tag text.", htmlString.indexOf(expected) != -1);
     }
@@ -128,16 +116,15 @@ public class TaglistMojoTagsTest
      *
      * @throws Exception
      */
-    public void testJavaDocSingleTags()
-        throws Exception
-    {
-        File pluginXmlFile = new File( getBasedir(), "/src/test/resources/unit/tag-test/javadoc-single-style-tags-pom.xml" );
-        TagListReport mojo = super.getTagListReport( pluginXmlFile );
+    public void testJavaDocSingleTags() throws Exception {
+        File pluginXmlFile =
+                new File(getBasedir(), "/src/test/resources/unit/tag-test/javadoc-single-style-tags-pom.xml");
+        TagListReport mojo = super.getTagListReport(pluginXmlFile);
 
         // Run the TagList mojo
         mojo.execute();
 
-        String htmlString = super.getGeneratedOutput( mojo );
+        String htmlString = super.getGeneratedOutput(mojo);
 
         // Check to see that JavaDoc single style tag has one occurrence.
         String expected = "\">javadoc_single_style_tag</a></td><td>1</td>";
@@ -156,16 +143,15 @@ public class TaglistMojoTagsTest
      *
      * @throws Exception
      */
-    public void testJavaDocMultiTags()
-        throws Exception
-    {
-        File pluginXmlFile = new File( getBasedir(), "/src/test/resources/unit/tag-test/javadoc-multi-style-tags-pom.xml" );
-        TagListReport mojo = super.getTagListReport( pluginXmlFile );
+    public void testJavaDocMultiTags() throws Exception {
+        File pluginXmlFile =
+                new File(getBasedir(), "/src/test/resources/unit/tag-test/javadoc-multi-style-tags-pom.xml");
+        TagListReport mojo = super.getTagListReport(pluginXmlFile);
 
         // Run the TagList mojo
         mojo.execute();
 
-        String htmlString = super.getGeneratedOutput( mojo );
+        String htmlString = super.getGeneratedOutput(mojo);
 
         // Check to see that JavaDoc style tag has one occurrence.
         String expected = "\">javadoc_multi_style_tag</a></td><td>1</td>";
@@ -183,16 +169,14 @@ public class TaglistMojoTagsTest
      *
      * @throws Exception
      */
-    public void testNotAtStartOfLineTags()
-        throws Exception
-    {
-        File pluginXmlFile = new File( getBasedir(), "/src/test/resources/unit/tag-test/not-start-line-tags-pom.xml" );
-        TagListReport mojo = super.getTagListReport( pluginXmlFile );
+    public void testNotAtStartOfLineTags() throws Exception {
+        File pluginXmlFile = new File(getBasedir(), "/src/test/resources/unit/tag-test/not-start-line-tags-pom.xml");
+        TagListReport mojo = super.getTagListReport(pluginXmlFile);
 
         // Run the TagList mojo
         mojo.execute();
 
-        String htmlString = super.getGeneratedOutput( mojo );
+        String htmlString = super.getGeneratedOutput(mojo);
 
         // Check to see a tag not at the start of a line does not show up.
         String expected = "<td>not_start_of_line_tag</td><td>0</td>";
@@ -207,16 +191,15 @@ public class TaglistMojoTagsTest
      *
      * @throws Exception
      */
-    public void testSourceCodeVariablesTags()
-        throws Exception
-    {
-        File pluginXmlFile = new File( getBasedir(), "/src/test/resources/unit/tag-test/source-code-variable-tags-pom.xml" );
-        TagListReport mojo = super.getTagListReport( pluginXmlFile );
+    public void testSourceCodeVariablesTags() throws Exception {
+        File pluginXmlFile =
+                new File(getBasedir(), "/src/test/resources/unit/tag-test/source-code-variable-tags-pom.xml");
+        TagListReport mojo = super.getTagListReport(pluginXmlFile);
 
         // Run the TagList mojo
         mojo.execute();
 
-        String htmlString = super.getGeneratedOutput( mojo );
+        String htmlString = super.getGeneratedOutput(mojo);
 
         // Check to see a source code variable does not show up.
         String expected = "<td>source_code_variable_tag</td><td>0</td>";

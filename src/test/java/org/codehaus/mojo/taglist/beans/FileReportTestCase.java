@@ -20,6 +20,7 @@ package org.codehaus.mojo.taglist.beans;
  */
 
 import java.io.File;
+
 import org.codehaus.plexus.PlexusTestCase;
 
 /**
@@ -27,11 +28,10 @@ import org.codehaus.plexus.PlexusTestCase;
  *
  * @author Dennis Lundberg
  */
-public class FileReportTestCase extends PlexusTestCase
-{
-  public void testGetClassName() {
-    File file = new File(getBasedir() + "/src/test/resources/org/codehaus/mojo/taglist/beans/XYjavatest.java");
-    FileReport fileReport = new FileReport(file, "UTF-8");
-    assertEquals("org.codehaus.mojo.taglist.beans.XYjavatest", fileReport.getClassName());
-  }
+public class FileReportTestCase extends PlexusTestCase {
+    public void testGetClassName() {
+        File file = new File(getBasedir() + "/src/test/resources/org/codehaus/mojo/taglist/beans/XYjavatest.java");
+        FileReport fileReport = new FileReport(file, "UTF-8");
+        assertEquals("org.codehaus.mojo.taglist.beans.XYjavatest", fileReport.getClassName());
+    }
 }

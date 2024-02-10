@@ -24,11 +24,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /** The regular expression tag class.
- * 
+ *
  *  This class defines a regular express tag search.  This tag
  *  will match if the regular express string listed is found within
  *  the scanned lines.
- *  
+ *
  *  Example POM:
  *  <pre>
  *   &lt;project&gt;
@@ -38,110 +38,99 @@ import java.util.regex.Pattern;
  *       ...
  *   &lt;/project&gt;
  *  </pre>
- *  
+ *
  *  Example Java code with match:
  *  <pre>
  *    fixme1 this will match (fixme followed by one digit.)
  *  </pre>
- *  
+ *
  *  Example Java code without match:
  *  <pre>
  *     fixme this will NOT match (no digit after fixme)
  *  </pre>
- *       
+ *
  */
-public class RegExTag extends AbsTag
-{
+public class RegExTag extends AbsTag {
     /**
      * The regular expression pattern to pre-compile.
      */
     private final Pattern pattern;
-    
+
     /** The length of the last regEx comment tag match */
     private int lastMatchedCommentTagLength = 0;
 
-    /** Check to see if the string contains this tag.  
+    /** Check to see if the string contains this tag.
      *  If there is a match, return the index within the string; otherwise,
      *  return NO_MATCH.
-     *  
+     *
      *  @param currentLine the string for the current line being scanned.
      *  @param locale the Locale of the currentLine.
      *  @return the index within the string of the matched tag, or TagClass.NO_MATCH
      *  if not match was found.
      */
-    public int contains( final String currentLine, final Locale locale )
-    {
+    public int contains(final String currentLine, final Locale locale) {
         int result = AbsTag.NO_MATCH;
-        
-        if ( currentLine != null )
-        {
+
+        if (currentLine != null) {
             // Get index match or -1 if no match
-            Matcher m = pattern.matcher( currentLine );
-            if ( m.find() )
-            {
+            Matcher m = pattern.matcher(currentLine);
+            if (m.find()) {
                 result = m.start();
-                
+
                 // Store the length of the comment tag.
                 lastMatchedCommentTagLength = m.end() - m.start();
             }
         }
-        
-        return ( result );
+
+        return (result);
     }
-    
-    /** Check to see if the string starts with this tag.  
-     *  
+
+    /** Check to see if the string starts with this tag.
+     *
      *  @param currentLine the string for the current line being scanned.
      *  @param locale the Locale of the currentLine.
      *  @return true if the string starts with this tag.
      */
-    public boolean startsWith( final String currentLine, final Locale locale )
-    {
+    public boolean startsWith(final String currentLine, final Locale locale) {
         boolean result = false;
-        
-        if ( currentLine != null )
-        {
-            Matcher m = pattern.matcher( currentLine );
-            if ( m.find() )
-            {
+
+        if (currentLine != null) {
+            Matcher m = pattern.matcher(currentLine);
+            if (m.find()) {
                 // Was the match at the first character?
                 result = m.start() == 0;
             }
         }
-        
-        return ( result );
+
+        return (result);
     }
-    
+
     /** Return the length of the last matched tag.
-     * 
-     * A regular expression tag might be 10 characters; however, 
+     *
+     * A regular expression tag might be 10 characters; however,
      * the matched string may only be 5.
-     * 
+     *
      * Example:
      *    regEx tag:       a*b    (tag length = 3)
-     *    
+     *
      *    matched comment: aaabbb (comment length = 6)
-     *    
+     *
      * In the above example, this function will return 6.
-     *  
+     *
      * @return the length of the last matched tag.
      */
-    public int getLastTagMatchLength()
-    {
-        return ( lastMatchedCommentTagLength );
+    public int getLastTagMatchLength() {
+        return (lastMatchedCommentTagLength);
     }
 
     /** Constructor.
-     * 
+     *
      * @param tagString the string to match against for this tag.
      */
-    public RegExTag ( final String tagString )
-    {
-        super( tagString );
-        
+    public RegExTag(final String tagString) {
+        super(tagString);
+
         // Pre-compile the regular expression
-        pattern = Pattern.compile( tagString );
-
+        pattern = Pattern.compile(tagString);
     }
-
 }

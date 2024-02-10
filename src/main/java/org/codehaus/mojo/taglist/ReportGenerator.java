@@ -34,9 +34,7 @@ import org.codehaus.mojo.taglist.beans.TagReport;
  *
  * @author <a href="mailto:bellingard.NO-SPAM@gmail.com">Fabrice Bellingard </a>
  */
-
-public class ReportGenerator
-{
+public class ReportGenerator {
     /**
      * The source code cross reference path.
      */
@@ -78,9 +76,8 @@ public class ReportGenerator
      * @param report     the TagListReport object used in this build.
      * @param tagReports a collection of tagReports to output.
      */
-    public ReportGenerator( TagListReport report, Collection<TagReport> tagReports )
-    {
-        sortedTagReports = new TreeSet<>( tagReports );
+    public ReportGenerator(TagListReport report, Collection<TagReport> tagReports) {
+        sortedTagReports = new TreeSet<>(tagReports);
         this.bundle = report.getBundle();
         this.sink = report.getSink();
         this.siteOutputDirectory = report.getReportOutputDirectory();
@@ -90,11 +87,10 @@ public class ReportGenerator
     /**
      * Generates the whole report using each tag reports made during the analysis.
      */
-    public void generateReport()
-    {
+    public void generateReport() {
         sink.head();
         sink.title();
-        sink.text( bundle.getString( "report.taglist.header" ) );
+        sink.text(bundle.getString("report.taglist.header"));
         sink.title_();
         sink.head_();
 
@@ -102,14 +98,14 @@ public class ReportGenerator
         sink.section1();
 
         sink.sectionTitle1();
-        sink.text( bundle.getString( "report.taglist.mainTitle" ) );
+        sink.text(bundle.getString("report.taglist.mainTitle"));
         sink.sectionTitle1_();
 
         // Summary section
-        doSummarySection( sortedTagReports );
+        doSummarySection(sortedTagReports);
 
         // Detail section
-        doDetailSection( sortedTagReports );
+        doDetailSection(sortedTagReports);
 
         sink.section1_();
         sink.body_();
@@ -120,27 +116,25 @@ public class ReportGenerator
     /**
      * @param tagReports a collection of tagReports to summarize.
      */
-    private void doSummarySection( Collection<TagReport> tagReports )
-    {
+    private void doSummarySection(Collection<TagReport> tagReports) {
         sink.paragraph();
-        sink.text( bundle.getString( "report.taglist.summary.description" ) );
+        sink.text(bundle.getString("report.taglist.summary.description"));
         sink.paragraph_();
 
         sink.table();
         sink.tableRow();
         sink.tableHeaderCell();
-        sink.text( bundle.getString( "report.taglist.summary.tag" ) );
+        sink.text(bundle.getString("report.taglist.summary.tag"));
         sink.tableHeaderCell_();
         sink.tableHeaderCell();
-        sink.text( bundle.getString( "report.taglist.summary.occurrences" ) );
+        sink.text(bundle.getString("report.taglist.summary.occurrences"));
         sink.tableHeaderCell_();
         sink.tableHeaderCell();
-        sink.text( bundle.getString( "report.taglist.summary.tagstrings" ) );
+        sink.text(bundle.getString("report.taglist.summary.tagstrings"));
         sink.tableHeaderCell_();
         sink.tableRow_();
-        for ( TagReport tagReport : tagReports )
-        {
-            doTagSummary( tagReport );
+        for (TagReport tagReport : tagReports) {
+            doTagSummary(tagReport);
         }
         sink.table_();
     }
@@ -148,38 +142,31 @@ public class ReportGenerator
     /**
      * @param tagReport the tagReport to summarize.
      */
-    private void doTagSummary( TagReport tagReport )
-    {
+    private void doTagSummary(TagReport tagReport) {
         sink.tableRow();
         sink.tableCell();
         // Create a hyperlink if the "showEmptyTags" flag is set or the tag contains 1 or more occurrences.
-        if ( showEmptyDetails || tagReport.getTagCount() > 0 )
-        {
-            sink.link( "#" + tagReport.getHTMLSafeLinkName() );
-            sink.text( tagReport.getTagName() );
+        if (showEmptyDetails || tagReport.getTagCount() > 0) {
+            sink.link("#" + tagReport.getHTMLSafeLinkName());
+            sink.text(tagReport.getTagName());
             sink.link_();
-        }
-        else
-        {
-            sink.text( tagReport.getTagName() );
+        } else {
+            sink.text(tagReport.getTagName());
         }
         sink.tableCell_();
         sink.tableCell();
-        sink.text( String.valueOf( tagReport.getTagCount() ) );
+        sink.text(String.valueOf(tagReport.getTagCount()));
         sink.tableCell_();
         sink.tableCell();
-        String [] tags = tagReport.getTagStrings();
-        if ( tags != null )
-        {
+        String[] tags = tagReport.getTagStrings();
+        if (tags != null) {
             // Output each tag string
-            for ( int i = 0; i < tags.length; ++i )
-            {
-                if ( i > 0 )
-                {
+            for (int i = 0; i < tags.length; ++i) {
+                if (i > 0) {
                     // Insert comma before each tag except for the first one.
-                    sink.text( ", " );
+                    sink.text(", ");
                 }
-                sink.text( tags[i] );
+                sink.text(tags[i]);
             }
         }
         sink.tableCell_();
@@ -189,51 +176,46 @@ public class ReportGenerator
     /**
      * @param tagReports a collection of tagReports to be detailed in this section.
      */
-    private void doDetailSection( Collection<TagReport> tagReports )
-    {
+    private void doDetailSection(Collection<TagReport> tagReports) {
         sink.paragraph();
-        sink.text( bundle.getString( "report.taglist.detail.description" ) );
+        sink.text(bundle.getString("report.taglist.detail.description"));
         sink.paragraph_();
 
-        for ( TagReport tagReport : tagReports )
-        {
-            doTagDetailedPart( tagReport );
+        for (TagReport tagReport : tagReports) {
+            doTagDetailedPart(tagReport);
         }
     }
 
     /**
      * @param tagReport to tagReport to detail.
      */
-    private void doTagDetailedPart( TagReport tagReport )
-    {
+    private void doTagDetailedPart(TagReport tagReport) {
         // Create detailed section only if the "showEmptyTags" flag is set or the tag contains 1 or more occurrences.
-        if ( !showEmptyDetails && tagReport.getTagCount() <= 0 )
-        {
+        if (!showEmptyDetails && tagReport.getTagCount() <= 0) {
             return;
         }
 
         sink.section2();
         sink.sectionTitle2();
-        sink.anchor( tagReport.getHTMLSafeLinkName() );
-        sink.text( tagReport.getTagName() );
+        sink.anchor(tagReport.getHTMLSafeLinkName());
+        sink.text(tagReport.getTagName());
         sink.anchor_();
         sink.sectionTitle2_();
         sink.paragraph();
         sink.bold();
-        sink.text( bundle.getString( "report.taglist.detail.numberOfOccurrences" ) + ' ' + tagReport.getTagCount() );
+        sink.text(bundle.getString("report.taglist.detail.numberOfOccurrences") + ' ' + tagReport.getTagCount());
         sink.bold_();
         sink.paragraph_();
 
         Collection<FileReport> fileReports = tagReport.getFileReports();
-        SortedSet<FileReport> sortedFileReports = new TreeSet<>( fileReports );
+        SortedSet<FileReport> sortedFileReports = new TreeSet<>(fileReports);
 
         // MTAGLIST-38 - sink table before generating each file report in order
         //               to align the columns correctly.
         sink.table();
 
-        for ( FileReport sortedFileReport : sortedFileReports )
-        {
-            doFileDetailedPart( sortedFileReport );
+        for (FileReport sortedFileReport : sortedFileReports) {
+            doFileDetailedPart(sortedFileReport);
         }
         sink.table_();
 
@@ -243,19 +225,17 @@ public class ReportGenerator
     /**
      * @param fileReport the FileReport to output for this detailed tag report.
      */
-    private void doFileDetailedPart( FileReport fileReport )
-    {
+    private void doFileDetailedPart(FileReport fileReport) {
         sink.tableRow();
         sink.tableHeaderCell();
-        sink.text( fileReport.getClassName() );
+        sink.text(fileReport.getClassName());
         sink.tableHeaderCell_();
         sink.tableHeaderCell();
-        sink.text( bundle.getString( "report.taglist.detail.line" ) );
+        sink.text(bundle.getString("report.taglist.detail.line"));
         sink.tableHeaderCell_();
         sink.tableRow_();
-        for ( Integer integer : fileReport.getLineIndexes() )
-        {
-            doCommentLine( fileReport, integer );
+        for (Integer integer : fileReport.getLineIndexes()) {
+            doCommentLine(fileReport, integer);
         }
     }
 
@@ -263,46 +243,40 @@ public class ReportGenerator
      * @param fileReport the FileReport for the current tag's comment.
      * @param lineNumber the line number of the current tag's comment.
      */
-    private void doCommentLine( FileReport fileReport, Integer lineNumber )
-    {
+    private void doCommentLine(FileReport fileReport, Integer lineNumber) {
         boolean linked = false;
-        
+
         sink.tableRow();
         sink.tableCell();
-        sink.text( fileReport.getComment( lineNumber ) );
+        sink.text(fileReport.getComment(lineNumber));
         sink.tableCell_();
         sink.tableCell();
-        if ( xrefLocation != null )
-        {
+        if (xrefLocation != null) {
             String fileLink = xrefLocation + "/" + fileReport.getClassNameWithSlash() + ".html";
-            File xrefFile = new File( siteOutputDirectory, fileLink.substring( 2 ) );
+            File xrefFile = new File(siteOutputDirectory, fileLink.substring(2));
 
             // Link only if file exists in xref
-            if ( xrefFile.exists() )
-            {
-                sink.link( fileLink + "#L" + lineNumber );
+            if (xrefFile.exists()) {
+                sink.link(fileLink + "#L" + lineNumber);
                 linked = true;
             }
         }
         // If the file was not linked to xref and there is a test xref location check it
-        if ( !linked && testXrefLocation != null )
-        {
+        if (!linked && testXrefLocation != null) {
             String testFileLink = testXrefLocation + "/" + fileReport.getClassNameWithSlash() + ".html";
-            File testXrefFile = new File( siteOutputDirectory, testFileLink.substring( 2 ) );
-            
+            File testXrefFile = new File(siteOutputDirectory, testFileLink.substring(2));
+
             // Link only if file exists in test xref
-            if ( testXrefFile.exists() )
-            {
-                sink.link( testFileLink + "#L" + lineNumber );
+            if (testXrefFile.exists()) {
+                sink.link(testFileLink + "#L" + lineNumber);
                 linked = true;
             }
         }
 
-        sink.text( String.valueOf( lineNumber ) );
-        
+        sink.text(String.valueOf(lineNumber));
+
         // Was a xref or test-xref link created?
-        if ( linked )
-        {
+        if (linked) {
             sink.link_();
         }
         sink.tableCell_();
@@ -314,8 +288,7 @@ public class ReportGenerator
      *
      * @param xrefLocation the location of the source code cross reference.
      */
-    public void setXrefLocation( String xrefLocation )
-    {
+    public void setXrefLocation(String xrefLocation) {
         this.xrefLocation = xrefLocation;
     }
 
@@ -324,8 +297,7 @@ public class ReportGenerator
      *
      * @return the source code cross reference location.
      */
-    public String getXrefLocation()
-    {
+    public String getXrefLocation() {
         return xrefLocation;
     }
 
@@ -334,8 +306,7 @@ public class ReportGenerator
      *
      * @return the test code cross reference location.
      */
-    public String getTestXrefLocation()
-    {
+    public String getTestXrefLocation() {
         return testXrefLocation;
     }
 
@@ -344,8 +315,7 @@ public class ReportGenerator
      *
      * @param testXrefLocation the location of the test code cross reference.
      */
-    public void setTestXrefLocation( String testXrefLocation )
-    {
+    public void setTestXrefLocation(String testXrefLocation) {
         this.testXrefLocation = testXrefLocation;
     }
 }

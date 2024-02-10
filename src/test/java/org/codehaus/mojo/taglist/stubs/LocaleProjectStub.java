@@ -26,23 +26,19 @@ import org.codehaus.plexus.PlexusTestCase;
 
 /**
  * The Maven Project stub file for testing the plugin new tag classes configuration.
- * 
+ *
  * This stub is used to get the test and source file directories.  This
  * allows the TagList plugin unit tests run against the unit test directories
  * instead of using the default project directories.
  */
-public class LocaleProjectStub
-    extends org.apache.maven.plugin.testing.stubs.MavenProjectStub
-{	
-	public List<String> getCompileSourceRoots()
-	{
-		return Collections.singletonList(
-				PlexusTestCase.getBasedir() + "/target/test-classes/unit/locale-test/java-sources" );
-	}
+public class LocaleProjectStub extends org.apache.maven.plugin.testing.stubs.MavenProjectStub {
+    public List<String> getCompileSourceRoots() {
+        return Collections.singletonList(
+                PlexusTestCase.getBasedir() + "/target/test-classes/unit/locale-test/java-sources");
+    }
 
-	public List<String> getTestCompileSourceRoots()
-	{
-		return Collections.singletonList(
-				PlexusTestCase.getBasedir() + "/target/test-classes/unit/locale-test/test-sources" );
-	}	
+    public List<String> getTestCompileSourceRoots() {
+        return Collections.singletonList(
+                PlexusTestCase.getBasedir() + "/target/test-classes/unit/locale-test/test-sources");
+    }
 }

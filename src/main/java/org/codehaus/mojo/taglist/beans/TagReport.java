@@ -28,12 +28,10 @@ import java.util.Map;
 
 /**
  * Report of the scan for a specific tag.
- * 
+ *
  * @author <a href="mailto:bellingard.NO-SPAM@gmail.com">Fabrice Bellingard </a>
  */
-public class TagReport
-        implements Comparable<TagReport>
-{
+public class TagReport implements Comparable<TagReport> {
 
     /**
      * Tag Class display name.
@@ -62,12 +60,11 @@ public class TagReport
 
     /**
      * Constructor.
-     * 
+     *
      * @param displayName the tag class's name.
      * @param linkName a HTML safe link name for this report.
      */
-    public TagReport( final String displayName, final String linkName )
-    {
+    public TagReport(final String displayName, final String linkName) {
         this.displayName = displayName;
         this.fileReportsMap = new HashMap<>();
         this.linkName = linkName;
@@ -76,22 +73,18 @@ public class TagReport
 
     /**
      * Returns the FileReport object corresponding to this file. If it does not exist yet, it will be created.
-     * 
+     *
      * @param file the file being analyzed.
      * @param encoding the character encoding of the file
      * @return a FileReport object for this file.
      */
-    public FileReport getFileReport( File file, String encoding )
-    {
-        FileReport report = fileReportsMap.get( file );
-        if ( report != null )
-        {
+    public FileReport getFileReport(File file, String encoding) {
+        FileReport report = fileReportsMap.get(file);
+        if (report != null) {
             return report;
-        }
-        else
-        {
-            FileReport newFileReport = new FileReport( file, encoding );
-            fileReportsMap.put( file, newFileReport );
+        } else {
+            FileReport newFileReport = new FileReport(file, encoding);
+            fileReportsMap.put(file, newFileReport);
             return newFileReport;
         }
     }
@@ -101,46 +94,40 @@ public class TagReport
      *
      * @return a Collection of FileReport objects.
      */
-    public Collection<FileReport> getFileReports()
-    {
+    public Collection<FileReport> getFileReports() {
         return fileReportsMap.values();
     }
 
     /**
      * Returns the name of the tag class that was looked for.
-     * 
+     *
      * @return the name of the tag class.
      */
-    public String getTagName()
-    {
+    public String getTagName() {
         return displayName;
     }
-    
+
     /**
      * Returns a HTML safe link name for this tag report.
-     * 
+     *
      * @return a HTML safe link name.
      */
-    public String getHTMLSafeLinkName()
-    {
+    public String getHTMLSafeLinkName() {
         return linkName;
     }
 
     /**
      * Gives the number of comments found for that tag.
-     * 
+     *
      * @return the number of comments.
      */
-    public int getTagCount()
-    {
-        if ( tagCount > -1 )
-        {
+    public int getTagCount() {
+        if (tagCount > -1) {
             return tagCount;
         }
         // tagCount was not computed yet
         tagCount = 0;
-        for ( FileReport fileReport : fileReportsMap.values() )
-        {
+        for (FileReport fileReport : fileReportsMap.values()) {
             tagCount += fileReport.getLineIndexes().size();
         }
         return tagCount;
@@ -151,70 +138,58 @@ public class TagReport
      *
      * @see Comparable#compareTo(Object)
      */
-    public int compareTo( TagReport o )
-    {
-        if ( o != null )
-        {
-            return this.getTagName().compareTo( o.getTagName() );
-        }
-        else
-        {
+    public int compareTo(TagReport o) {
+        if (o != null) {
+            return this.getTagName().compareTo(o.getTagName());
+        } else {
             return 0;
         }
     }
-    
-    /** Add a tag string to this tag class. 
+
+    /** Add a tag string to this tag class.
      *  Each tag class contains 1 or more tag strings that are used
-     *  for matching 'todo' strings in the scanned code. 
-     *  
+     *  for matching 'todo' strings in the scanned code.
+     *
      * @param tagString the tag string to add.
      */
-    public void addTagString ( final String tagString )
-    {
-        if ( tagString != null )
-        {
-            tagStrings.add( tagString );
+    public void addTagString(final String tagString) {
+        if (tagString != null) {
+            tagStrings.add(tagString);
         }
     }
-    
+
     /** Get a list of tag strings used by this tag report.
-     * 
+     *
      * @return a list of tag strings.
      */
-    public String [] getTagStrings ()
-    {
-        
-        String [] strings = null;
-        
-        if ( tagStrings.size() > 0 )
-        {
-            strings = new String [tagStrings.size()];
+    public String[] getTagStrings() {
 
-            for ( int i = 0; i < tagStrings.size(); ++i )
-            {
-                strings[i] = tagStrings.get( i );
+        String[] strings = null;
+
+        if (tagStrings.size() > 0) {
+            strings = new String[tagStrings.size()];
+
+            for (int i = 0; i < tagStrings.size(); ++i) {
+                strings[i] = tagStrings.get(i);
             }
         }
-        
-        return ( strings );
-        
+
+        return (strings);
     }
-    
+
     /**
      * {@inheritDoc}
      *
      * @see Object#equals(Object)
      */
-    public boolean equals( Object r )
-    {
-        // In Java 5 the PriorityQueue.remove method uses the 
+    public boolean equals(Object r) {
+        // In Java 5 the PriorityQueue.remove method uses the
         // compareTo method, while in Java 6 it uses the equals method.
-        if ( !( r instanceof TagReport ) )
-        {
+        if (!(r instanceof TagReport)) {
             return false;
         }
 
-        return ( this.compareTo( (TagReport) r ) == 0 );
+        return (this.compareTo((TagReport) r) == 0);
     }
 
     /**
@@ -222,10 +197,8 @@ public class TagReport
      *
      * @see Object#hashCode()
      */
-    public int hashCode() 
-    {
+    public int hashCode() {
         assert false : "hashCode not designed";
-        return 1; // any arbitrary constant will do 
+        return 1; // any arbitrary constant will do
     }
-
 }

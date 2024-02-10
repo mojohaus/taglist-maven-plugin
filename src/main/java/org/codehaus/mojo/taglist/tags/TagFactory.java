@@ -23,8 +23,7 @@ package org.codehaus.mojo.taglist.tags;
  *  defined in the pom.xml.
  *
  */
-public class TagFactory
-{
+public class TagFactory {
     /**
      * The XML name of the generic tag (case sensitive).
      */
@@ -38,7 +37,6 @@ public class TagFactory
      */
     private static final String regexTag = "regEx";
 
-
     /**
      * Create a tag based on a tag type string.
      *
@@ -47,29 +45,20 @@ public class TagFactory
      * @return the new tag. NULL if the tagType is unknown.
      * @throws InvalidTagException if the tagType is unknown
      */
-    public static AbsTag createTag( final String tagType, final String rule )
-            throws InvalidTagException
-    {
+    public static AbsTag createTag(final String tagType, final String rule) throws InvalidTagException {
         AbsTag tag;
 
-        if ( genericTag.equals( tagType ) )
-        {
-            tag = new GenericTag( rule );
-        }
-        else if ( ignorecaseTag.equals( tagType ) )
-        {
-            tag = new IgnoreCaseTag( rule );
-        }
-        else if ( regexTag.equals( tagType ) )
-        {
-            tag = new RegExTag( rule );
-        }
-        else 
-        {
-            throw new InvalidTagException( tagType );
+        if (genericTag.equals(tagType)) {
+            tag = new GenericTag(rule);
+        } else if (ignorecaseTag.equals(tagType)) {
+            tag = new IgnoreCaseTag(rule);
+        } else if (regexTag.equals(tagType)) {
+            tag = new RegExTag(rule);
+        } else {
+            throw new InvalidTagException(tagType);
         }
 
-        return ( tag );
+        return (tag);
     }
 
     /**
@@ -77,16 +66,14 @@ public class TagFactory
      *
      * @return the default tag type string
      */
-    public static String getDefaultTagType()
-    {
-        return ( genericTag );
+    public static String getDefaultTagType() {
+        return (genericTag);
     }
-    
+
     /** Private constructor.  This is a utility class.
-     * 
+     *
      */
-    private TagFactory ()
-    {
+    private TagFactory() {
         // Do nothing
     }
 }
