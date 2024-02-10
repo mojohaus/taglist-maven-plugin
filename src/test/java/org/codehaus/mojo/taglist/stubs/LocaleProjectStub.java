@@ -26,7 +26,7 @@ import org.codehaus.plexus.PlexusTestCase;
 
 /**
  * The Maven Project stub file for testing the plugin new tag classes configuration.
- *
+ * <p>
  * This stub is used to get the test and source file directories.  This
  * allows the TagList plugin unit tests run against the unit test directories
  * instead of using the default project directories.

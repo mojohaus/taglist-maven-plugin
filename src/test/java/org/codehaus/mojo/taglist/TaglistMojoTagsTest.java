@@ -28,16 +28,6 @@ import java.io.File;
  */
 public class TaglistMojoTagsTest extends AbstractTaglistMojoTestCase {
 
-    /** {@inheritDoc} */
-    protected void setUp() throws Exception {
-        super.setUp();
-    }
-
-    /** {@inheritDoc} */
-    protected void tearDown() throws Exception {
-        super.tearDown();
-    }
-
     /**
      * Test the default tags.
      *
@@ -55,11 +45,11 @@ public class TaglistMojoTagsTest extends AbstractTaglistMojoTestCase {
 
         // Check to see that @todo has one occurance.
         String expected = "\">@todo</a></td><td>1</td>";
-        assertTrue("Incorrect default @todo tag result.", htmlString.indexOf(expected) != -1);
+        assertTrue("Incorrect default @todo tag result.", htmlString.contains(expected));
 
         // Check to see that @todo has one occurance.
         expected = "\">TODO</a></td><td>1</td>";
-        assertTrue("Incorrect default TODO tag result.", htmlString.indexOf(expected) != -1);
+        assertTrue("Incorrect default TODO tag result.", htmlString.contains(expected));
     }
 
     /**
@@ -79,11 +69,11 @@ public class TaglistMojoTagsTest extends AbstractTaglistMojoTestCase {
 
         // Check to see that C++ style tag has one occurrence.
         String expected = "\">c_style_tag</a></td><td>1</td>";
-        assertTrue("Incorrect C style tag result.", htmlString.indexOf(expected) != -1);
+        assertTrue("Incorrect C style tag result.", htmlString.contains(expected));
 
         // Check to see that tag has the correct text.
         expected = "<td>This is a C style tag.</td>";
-        assertTrue("Incorrect C style tag text.", htmlString.indexOf(expected) != -1);
+        assertTrue("Incorrect C style tag text.", htmlString.contains(expected));
     }
 
     /**
@@ -102,16 +92,16 @@ public class TaglistMojoTagsTest extends AbstractTaglistMojoTestCase {
 
         // Check to see that C++ style tag has one occurrence.
         String expected = "\">c++_style_tag</a></td><td>1</td>";
-        assertTrue("Incorrect C++ style tag result.", htmlString.indexOf(expected) != -1);
+        assertTrue("Incorrect C++ style tag result.", htmlString.contains(expected));
 
         // Check to see that tag has the correct text.
         expected = "<td>This is a C++ style tag.</td>";
-        assertTrue("Incorrect C++ style tag text.", htmlString.indexOf(expected) != -1);
+        assertTrue("Incorrect C++ style tag text.", htmlString.contains(expected));
     }
 
     /**
      * Test the JavaDoc single line style tags.
-     *
+     * <p>
      * This tests java doc comments that contain the tag on one line only.
      *
      * @throws Exception
@@ -128,16 +118,16 @@ public class TaglistMojoTagsTest extends AbstractTaglistMojoTestCase {
 
         // Check to see that JavaDoc single style tag has one occurrence.
         String expected = "\">javadoc_single_style_tag</a></td><td>1</td>";
-        assertTrue("Incorrect JavaDoc single style tag result.", htmlString.indexOf(expected) != -1);
+        assertTrue("Incorrect JavaDoc single style tag result.", htmlString.contains(expected));
 
         // Check to see that tag has the correct text.
         expected = "<td>This is a JavaDoc single style tag.</td>";
-        assertTrue("Incorrect JavaDoc single style tag text.", htmlString.indexOf(expected) != -1);
+        assertTrue("Incorrect JavaDoc single style tag text.", htmlString.contains(expected));
     }
 
     /**
      * Test the JavaDoc multi line style tags.
-     *
+     * <p>
      * This test java doc comments that contain the tag on the second line
      * or later of the java doc comment.
      *
@@ -155,16 +145,16 @@ public class TaglistMojoTagsTest extends AbstractTaglistMojoTestCase {
 
         // Check to see that JavaDoc style tag has one occurrence.
         String expected = "\">javadoc_multi_style_tag</a></td><td>1</td>";
-        assertTrue("Incorrect JavaDoc multi style tag result.", htmlString.indexOf(expected) != -1);
+        assertTrue("Incorrect JavaDoc multi style tag result.", htmlString.contains(expected));
 
         // Check to see that tag has the correct text.
         expected = "<td>This is a JavaDoc multi style tag.</td>";
-        assertTrue("Incorrect JavaDoc multi style tag text.", htmlString.indexOf(expected) != -1);
+        assertTrue("Incorrect JavaDoc multi style tag text.", htmlString.contains(expected));
     }
 
     /**
      * Test the tags not at start of line.
-     *
+     * <p>
      * E.g. // This is a comment about @todo line.   &lt;-- @todo didn't start line
      *
      * @throws Exception
@@ -180,12 +170,12 @@ public class TaglistMojoTagsTest extends AbstractTaglistMojoTestCase {
 
         // Check to see a tag not at the start of a line does not show up.
         String expected = "<td>not_start_of_line_tag</td><td>0</td>";
-        assertTrue("Incorrect tag not at start of line tag result.", htmlString.indexOf(expected) != -1);
+        assertTrue("Incorrect tag not at start of line tag result.", htmlString.contains(expected));
     }
 
     /**
      * Test the source code with variables that match tag name.
-     *
+     * <p>
      * This test makes sure that source code with variable names
      * that match to "tag" do not show up in the results.
      *
@@ -203,6 +193,6 @@ public class TaglistMojoTagsTest extends AbstractTaglistMojoTestCase {
 
         // Check to see a source code variable does not show up.
         String expected = "<td>source_code_variable_tag</td><td>0</td>";
-        assertTrue("Incorrect source code variable tag result.", htmlString.indexOf(expected) != -1);
+        assertTrue("Incorrect source code variable tag result.", htmlString.contains(expected));
     }
 }

@@ -28,16 +28,6 @@ import java.io.File;
  */
 public class TaglistMojoLocalesTest extends AbstractTaglistMojoTestCase {
 
-    /** {@inheritDoc} */
-    protected void setUp() throws Exception {
-        super.setUp();
-    }
-
-    /** {@inheritDoc} */
-    protected void tearDown() throws Exception {
-        super.tearDown();
-    }
-
     /**
      * Test when locale is set to English.
      *
@@ -55,15 +45,15 @@ public class TaglistMojoLocalesTest extends AbstractTaglistMojoTestCase {
 
         // Check to see that all three lines of the comment are captured.
         String expected1 = "<td>Should match under Locale en  1 of 3.</td>";
-        assertTrue("Missing tag result #1.", htmlString.indexOf(expected1) != -1);
+        assertTrue("Missing tag result #1.", htmlString.contains(expected1));
         String expected2 = "<td>Should match under Locale en  2 of 3.</td>";
-        assertTrue("Missing tag result #2.", htmlString.indexOf(expected2) != -1);
+        assertTrue("Missing tag result #2.", htmlString.contains(expected2));
         String expected3 = "<td>Should match under Locale en  3 of 3.</td>";
-        assertTrue("Missing tag result #3.", htmlString.indexOf(expected3) != -1);
+        assertTrue("Missing tag result #3.", htmlString.contains(expected3));
 
         // Check to see that all three lines of the comment are captured.
         String expectedCount = "<tag name=\"EnglishLocale\" count=\"3\">";
-        assertTrue("Incorrect tag count.", xmlString.indexOf(expectedCount) != -1);
+        assertTrue("Incorrect tag count.", xmlString.contains(expectedCount));
     }
 
     /**
@@ -83,12 +73,12 @@ public class TaglistMojoLocalesTest extends AbstractTaglistMojoTestCase {
 
         // Check to see that all three lines of the comment are captured.
         String expected1 = "<td>Should match under Locale tr  1 of 2.</td>";
-        assertTrue("Missing tag result #1.", htmlString.indexOf(expected1) != -1);
+        assertTrue("Missing tag result #1.", htmlString.contains(expected1));
         String expected2 = "<td>Should match under Locale tr  2 of 2.</td>";
-        assertTrue("Missing tag result #2.", htmlString.indexOf(expected2) != -1);
+        assertTrue("Missing tag result #2.", htmlString.contains(expected2));
 
         // Check to see that all three lines of the comment are captured.
         String expectedCount = "<tag name=\"Turkish Locale\" count=\"2\">";
-        assertTrue("Incorrect tag count.", xmlString.indexOf(expectedCount) != -1);
+        assertTrue("Incorrect tag count.", xmlString.contains(expectedCount));
     }
 }

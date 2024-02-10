@@ -24,11 +24,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /** The regular expression tag class.
- *
+ * <p>
  *  This class defines a regular express tag search.  This tag
  *  will match if the regular express string listed is found within
  *  the scanned lines.
- *
+ * <p>
  *  Example POM:
  *  <pre>
  *   &lt;project&gt;
@@ -106,15 +106,15 @@ public class RegExTag extends AbsTag {
     }
 
     /** Return the length of the last matched tag.
-     *
+     * <p>
      * A regular expression tag might be 10 characters; however,
      * the matched string may only be 5.
-     *
+     * <p>
      * Example:
      *    regEx tag:       a*b    (tag length = 3)
-     *
+     * <p>
      *    matched comment: aaabbb (comment length = 6)
-     *
+     * <p>
      * In the above example, this function will return 6.
      *
      * @return the length of the last matched tag.

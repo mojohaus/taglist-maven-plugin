@@ -22,11 +22,11 @@ package org.codehaus.mojo.taglist.tags;
 import java.util.Locale;
 
 /** The generic tag class.
- *
+ * <p>
  *  This class defines a generic "case sensitive" exact match tag.  This tag
  *  will only match if the exact string listed is found within
  *  the scanned lines.
- *
+ * <p>
  *  Example POM:
  *  <pre>
  *   &lt;project &gt;
@@ -85,7 +85,7 @@ public class GenericTag extends AbsTag {
     }
 
     /** Return the length of the last matched tag.
-     *
+     * <p>
      * In the case of a generic tag, this is always the length of the tag.
      *
      * @return the length of the last matched tag.

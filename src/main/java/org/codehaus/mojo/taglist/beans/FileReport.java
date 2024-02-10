@@ -21,15 +21,14 @@ package org.codehaus.mojo.taglist.beans;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.nio.file.Files;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.SortedSet;
 import java.util.TreeSet;
 
 /**
@@ -104,7 +103,7 @@ public class FileReport implements Comparable<FileReport> {
      * @return a reader with the current file encoding.
      */
     private Reader getReader(File fileToRead) throws IOException {
-        InputStream in = new FileInputStream(fileToRead);
+        InputStream in = Files.newInputStream(fileToRead.toPath());
         return (encoding == null) ? new InputStreamReader(in) : new InputStreamReader(in, encoding);
     }
 
@@ -155,9 +154,7 @@ public class FileReport implements Comparable<FileReport> {
      * @return Collection of Integer.
      */
     public Collection<Integer> getLineIndexes() {
-        SortedSet<Integer> lineIndexes = new TreeSet<>();
-        lineIndexes.addAll(tagListing.keySet());
-        return lineIndexes;
+        return new TreeSet<>(tagListing.keySet());
     }
 
     /**

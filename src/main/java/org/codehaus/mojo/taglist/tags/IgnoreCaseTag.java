@@ -22,11 +22,11 @@ package org.codehaus.mojo.taglist.tags;
 import java.util.Locale;
 
 /** The ignore case tag class.
- *
+ * <p>
  *  This class defines a "case insensitive" match tag.  This tag
  *  will match if the characters (upper or lower case) in the string listed is found within
  *  the scanned lines.
- *
+ * <p>
  *  Example POM:
  *  <pre>
  *   &lt;project&gt;
@@ -90,7 +90,7 @@ public class IgnoreCaseTag extends AbsTag {
     }
 
     /** Return the length of the last matched tag.
-     *
+     * <p>
      * In the case of a ignore case tag, this is always the length of the tag.
      *
      * @return the length of the last matched tag.

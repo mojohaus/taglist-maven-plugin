@@ -23,6 +23,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -202,13 +203,13 @@ public class TagListReport extends AbstractMavenReport {
 
         // User entered no tags and no tagOptions, then default tags
         if ((tags == null || tags.length == 0)
-                && (tagListOptions == null || tagListOptions.getTagClasses().size() == 0)) {
+                && (tagListOptions == null || tagListOptions.getTagClasses().isEmpty())) {
             tags = new String[] {"@todo", "TODO", "FIXME"};
         }
 
         if (StringUtils.isEmpty(getInputEncoding())) {
             getLog().warn("File encoding has not been set, using platform encoding "
-                    + System.getProperty("file.encoding") + ", i.e. build is platform dependent!");
+                    + Charset.defaultCharset().displayName() + ", i.e. build is platform dependent!");
         }
 
         // Create the tag classes
@@ -232,7 +233,7 @@ public class TagListReport extends AbstractMavenReport {
         }
 
         // If the new style of tag options were used, add them
-        if (tagListOptions != null && tagListOptions.getTagClasses().size() > 0) {
+        if (tagListOptions != null && !tagListOptions.getTagClasses().isEmpty()) {
             // Scan each tag class
             for (org.codehaus.mojo.taglist.options.TagClass tcOption : tagListOptions.getTagClasses()) {
                 // Store the tag class display name.
@@ -242,7 +243,7 @@ public class TagListReport extends AbstractMavenReport {
                 for (Tag tagOption : tcOption.getTags()) {
                     // If a match type is not specified use default.
                     String matchType = tagOption.getMatchType();
-                    if (matchType == null || matchType.length() == 0) {
+                    if (matchType == null || matchType.isEmpty()) {
                         matchType = TagFactory.getDefaultTagType();
                     }
 
