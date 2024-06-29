@@ -201,12 +201,6 @@ public class TagListReport extends AbstractMavenReport {
     protected void executeReport(Locale locale) throws MavenReportException {
         this.currentLocale = locale;
 
-        // User entered no tags and no tagOptions, then default tags
-        if ((tags == null || tags.length == 0)
-                && (tagListOptions == null || tagListOptions.getTagClasses().isEmpty())) {
-            tags = new String[] {"@todo", "TODO", "FIXME"};
-        }
-
         if (StringUtils.isEmpty(getInputEncoding())) {
             getLog().warn("File encoding has not been set, using platform encoding "
                     + Charset.defaultCharset().displayName() + ", i.e. build is platform dependent!");
@@ -219,16 +213,7 @@ public class TagListReport extends AbstractMavenReport {
         if (tags != null && tags.length > 0) {
             getLog().warn("Using legacy tag format.  This is not recommended.");
             for (String tag : tags) {
-                TagClass tc = new TagClass(tag);
-                try {
-                    AbsTag newTag = TagFactory.createTag("exact", tag);
-                    tc.addTag(newTag);
-
-                    tagClasses.add(tc);
-                } catch (InvalidTagException e) {
-                    // This should be impossible since exact is supported.
-                    getLog().error("Invalid tag type used.  tag type: exact");
-                }
+                tagClasses.add(createTagClass(tag));
             }
         }
 
@@ -260,6 +245,13 @@ public class TagListReport extends AbstractMavenReport {
                 // Add this new tag class to the container.
                 tagClasses.add(tc);
             }
+        }
+
+        // default tags
+        if (tagClasses.isEmpty()) {
+            tagClasses.add(createTagClass("@todo"));
+            tagClasses.add(createTagClass("TODO"));
+            tagClasses.add(createTagClass("FIXME"));
         }
 
         // let's proceed to the analysis
@@ -295,6 +287,17 @@ public class TagListReport extends AbstractMavenReport {
 
         // Generate the XML report
         generateXmlReport(tagReports);
+    }
+
+    private TagClass createTagClass(String tag) {
+        TagClass tc = new TagClass(tag);
+        try {
+            AbsTag newTag = TagFactory.createTag("exact", tag);
+            tc.addTag(newTag);
+        } catch (InvalidTagException e) {
+            // This should be impossible since exact is supported.
+        }
+        return tc;
     }
 
     /**

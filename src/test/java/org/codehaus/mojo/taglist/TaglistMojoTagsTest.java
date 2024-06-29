@@ -50,6 +50,10 @@ public class TaglistMojoTagsTest extends AbstractTaglistMojoTestCase {
         // Check to see that @todo has one occurance.
         expected = "\">TODO</a></td><td>1</td>";
         assertTrue("Incorrect default TODO tag result.", htmlString.contains(expected));
+
+        // Check to see that @FIXME has one occurance.
+        expected = "\">FIXME</a></td><td>1</td>";
+        assertTrue("Incorrect default FIXME tag result.", htmlString.contains(expected));
     }
 
     /**
