@@ -4,7 +4,8 @@ package com;
   *
   * @todo: This is the default tag #1.
   * TODO: This is the default tag #2.
-  * 
+  * FIXME: This is the default tag #3.
+  *
   */
 class Tags
 {
