@@ -122,6 +122,8 @@ public class ReportGenerator {
         sink.paragraph_();
 
         sink.table();
+        sink.tableRows(null, false);
+
         sink.tableRow();
         sink.tableHeaderCell();
         sink.text(bundle.getString("report.taglist.summary.tag"));
@@ -133,9 +135,11 @@ public class ReportGenerator {
         sink.text(bundle.getString("report.taglist.summary.tagstrings"));
         sink.tableHeaderCell_();
         sink.tableRow_();
+
         for (TagReport tagReport : tagReports) {
             doTagSummary(tagReport);
         }
+        sink.tableRows_();
         sink.table_();
     }
 
@@ -213,10 +217,13 @@ public class ReportGenerator {
         // MTAGLIST-38 - sink table before generating each file report in order
         //               to align the columns correctly.
         sink.table();
+        sink.tableRows(null, false);
 
         for (FileReport sortedFileReport : sortedFileReports) {
             doFileDetailedPart(sortedFileReport);
         }
+
+        sink.tableRows_();
         sink.table_();
 
         sink.section2_();
