@@ -34,7 +34,8 @@
         <artifactId>taglist-maven-plugin</artifactId>
         <configuration>
          <project implementation="org.codehaus.mojo.taglist.stubs.BasicConfigProjectStub"/>
-          <outputDirectory>${basedir}/target/test-classes/unit/basic-config-test/outputDirectory</outputDirectory>
+          <outputDirectory>${basedir}/target/test-classes/unit/basic-config-test/outputDirectory-empty-comments-disabled</outputDirectory>
+          <skipEmptyReport>true</skipEmptyReport>
           <emptyComments>false</emptyComments>
           <tags>
             <tag>@empty_comment</tag>
