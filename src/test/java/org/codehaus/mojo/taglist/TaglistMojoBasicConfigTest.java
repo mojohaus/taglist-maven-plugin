@@ -127,11 +127,9 @@ public class TaglistMojoBasicConfigTest extends AbstractTaglistMojoTestCase {
 
         mojo.execute();
 
-        String htmlString = super.getGeneratedOutput(mojo);
-
-        // Check to see that there was zero tags found
-        String expected = "<td>@empty_comment</td><td>0</td>";
-        assertTrue("Missing tag result.", htmlString.contains(expected));
+        File outputDirectory = mojo.getReportOutputDirectory();
+        assertNotNull(outputDirectory);
+        assertFalse(outputDirectory.exists());
     }
 
     /**

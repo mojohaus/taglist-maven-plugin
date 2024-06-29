@@ -25,6 +25,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.LineNumberReader;
 import java.io.Reader;
+import java.io.UncheckedIOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -33,7 +34,6 @@ import java.util.Locale;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.maven.plugin.logging.Log;
-import org.apache.maven.reporting.MavenReportException;
 import org.codehaus.mojo.taglist.beans.FileReport;
 import org.codehaus.mojo.taglist.beans.TagReport;
 import org.codehaus.mojo.taglist.tags.TagClass;
@@ -106,11 +106,6 @@ public class FileAnalyser {
     private final boolean emptyCommentsOn;
 
     /**
-     * String used to indicate that there is no comment after the tag.
-     */
-    private final String noCommentString;
-
-    /**
      * ArrayList of tag classes.
      */
     private final List<TagClass> tagClasses;
@@ -128,7 +123,6 @@ public class FileAnalyser {
         sourceDirs = report.getSourceDirs();
         encoding = report.getInputEncoding();
         locale = report.getLocale();
-        noCommentString = report.getBundle().getString("report.taglist.nocomment");
         this.tagClasses = tagClasses;
         this.includes = report.getIncludesCommaSeparated();
         this.excludes = report.getExcludesCommaSeparated();
@@ -138,9 +132,8 @@ public class FileAnalyser {
      * Execute the analysis for the configuration given by the TagListReport.
      *
      * @return a collection of TagReport objects.
-     * @throws MavenReportException the Maven report exception.
      */
-    public Collection<TagReport> execute() throws MavenReportException {
+    public Collection<TagReport> execute() {
         List<File> fileList = findFilesToScan();
 
         for (File file : fileList) {
@@ -162,16 +155,16 @@ public class FileAnalyser {
      * Gives the list of files to scan.
      *
      * @return a List of File objects.
-     * @throws MavenReportException the Maven report exception.
      */
-    private List<File> findFilesToScan() throws MavenReportException {
+    private List<File> findFilesToScan() {
         List<File> filesList = new ArrayList<>();
         try {
             for (String sourceDir : sourceDirs) {
                 filesList.addAll(FileUtils.getFiles(new File(sourceDir), includes, excludes));
             }
         } catch (IOException e) {
-            throw new MavenReportException("Error while trying to find the files to scan.", e);
+            // TODO - fix with Doxia 2.x - canGenerateReport will have a checked exception
+            throw new UncheckedIOException("Error while trying to find the files to scan.", e);
         }
         return filesList;
     }
@@ -219,11 +212,7 @@ public class FileAnalyser {
                         firstLine = StringUtils.removeEnd(firstLine, "*/"); // MTAGLIST-35
                         if (firstLine.isEmpty() || ":".equals(firstLine)) {
                             // this is not a valid comment tag: nothing is written there
-                            if (emptyCommentsOn) {
-                                comment.append("--");
-                                comment.append(noCommentString);
-                                comment.append("--");
-                            } else {
+                            if (!emptyCommentsOn) {
                                 continue;
                             }
                         } else {

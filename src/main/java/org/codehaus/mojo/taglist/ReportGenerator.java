@@ -253,9 +253,13 @@ public class ReportGenerator {
     private void doCommentLine(FileReport fileReport, Integer lineNumber) {
         boolean linked = false;
 
+        String comment = fileReport.getComment(lineNumber);
+        if (comment == null || comment.isEmpty()) {
+            comment = "--" + bundle.getString("report.taglist.nocomment") + "--";
+        }
         sink.tableRow();
         sink.tableCell();
-        sink.text(fileReport.getComment(lineNumber));
+        sink.text(comment);
         sink.tableCell_();
         sink.tableCell();
         if (xrefLocation != null) {

@@ -170,11 +170,9 @@ public class TaglistMojoTagsTest extends AbstractTaglistMojoTestCase {
         // Run the TagList mojo
         mojo.execute();
 
-        String htmlString = super.getGeneratedOutput(mojo);
-
-        // Check to see a tag not at the start of a line does not show up.
-        String expected = "<td>not_start_of_line_tag</td><td>0</td>";
-        assertTrue("Incorrect tag not at start of line tag result.", htmlString.contains(expected));
+        File outputDirectory = mojo.getReportOutputDirectory();
+        assertNotNull(outputDirectory);
+        assertFalse(outputDirectory.exists());
     }
 
     /**
@@ -193,10 +191,8 @@ public class TaglistMojoTagsTest extends AbstractTaglistMojoTestCase {
         // Run the TagList mojo
         mojo.execute();
 
-        String htmlString = super.getGeneratedOutput(mojo);
-
-        // Check to see a source code variable does not show up.
-        String expected = "<td>source_code_variable_tag</td><td>0</td>";
-        assertTrue("Incorrect source code variable tag result.", htmlString.contains(expected));
+        File outputDirectory = mojo.getReportOutputDirectory();
+        assertNotNull(outputDirectory);
+        assertFalse(outputDirectory.exists());
     }
 }

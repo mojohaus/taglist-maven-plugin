@@ -33,12 +33,8 @@
       <plugin>
         <artifactId>taglist-maven-plugin</artifactId>
         <configuration>
-         <project implementation="org.codehaus.mojo.taglist.stubs.TagsProjectStub"/>
-          <outputDirectory>${basedir}/target/test-classes/unit/tag-test/outputDirectory-not-start-line-tags</outputDirectory>
-          <skipEmptyReport>true</skipEmptyReport>
-          <tags>
-            <tag>not_start_of_line_tag</tag>
-          </tags>
+         <project implementation="org.codehaus.mojo.taglist.stubs.NoSourcesProjectStub"/>
+          <outputDirectory>${basedir}/target/test-classes/unit/no-sources-test/outputDirectory</outputDirectory>
         </configuration>
       </plugin>
     </plugins>

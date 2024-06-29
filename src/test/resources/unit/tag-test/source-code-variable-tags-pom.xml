@@ -34,7 +34,8 @@
         <artifactId>taglist-maven-plugin</artifactId>
         <configuration>
          <project implementation="org.codehaus.mojo.taglist.stubs.TagsProjectStub"/>
-          <outputDirectory>${basedir}/target/test-classes/unit/tag-test/outputDirectory</outputDirectory>
+          <outputDirectory>${basedir}/target/test-classes/unit/tag-test/outputDirectory-source-code-variable-tags</outputDirectory>
+          <skipEmptyReport>true</skipEmptyReport>
           <tags>
             <tag>source_code_variable_tag</tag>
           </tags>
