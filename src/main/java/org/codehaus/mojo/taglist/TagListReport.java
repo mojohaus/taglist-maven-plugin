@@ -38,7 +38,6 @@ import org.apache.maven.plugins.annotations.ResolutionScope;
 import org.apache.maven.project.MavenProject;
 import org.apache.maven.reporting.AbstractMavenReport;
 import org.apache.maven.reporting.MavenReportException;
-import org.apache.maven.shared.utils.io.FileUtils;
 import org.codehaus.mojo.taglist.beans.FileReport;
 import org.codehaus.mojo.taglist.beans.TagReport;
 import org.codehaus.mojo.taglist.options.Tag;
@@ -51,6 +50,7 @@ import org.codehaus.mojo.taglist.tags.AbsTag;
 import org.codehaus.mojo.taglist.tags.InvalidTagException;
 import org.codehaus.mojo.taglist.tags.TagClass;
 import org.codehaus.mojo.taglist.tags.TagFactory;
+import org.codehaus.plexus.util.FileUtils;
 import org.codehaus.plexus.util.PathTool;
 import org.codehaus.plexus.util.StringUtils;
 
