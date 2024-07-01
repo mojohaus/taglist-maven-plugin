@@ -21,16 +21,23 @@ package org.codehaus.mojo.taglist.beans;
 
 import java.io.File;
 
-import org.codehaus.plexus.PlexusTestCase;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Tests for file report.
  *
  * @author Dennis Lundberg
  */
-public class FileReportTestCase extends PlexusTestCase {
-    public void testGetClassName() {
-        File file = new File(getBasedir() + "/src/test/resources/org/codehaus/mojo/taglist/beans/XYjavatest.java");
+class FileReportTestCase {
+
+    @Test
+    void testGetClassName() throws Exception {
+
+        File file = new File(getClass()
+                .getResource("/org/codehaus/mojo/taglist/beans/XYjavatest.java")
+                .toURI());
         FileReport fileReport = new FileReport(file, "UTF-8");
         assertEquals("org.codehaus.mojo.taglist.beans.XYjavatest", fileReport.getClassName());
     }
