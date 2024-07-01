@@ -35,9 +35,18 @@
         <configuration>
          <project implementation="org.codehaus.mojo.taglist.stubs.TagsProjectStub"/>
           <outputDirectory>${basedir}/target/test-classes/unit/tag-test/outputDirectory</outputDirectory>
-          <tags>
-            <tag>javadoc_single_style_tag</tag>
-          </tags>
+          <tagListOptions>
+            <tagClasses>
+              <tagClass>
+                <displayName>javadoc_single_style_tag</displayName>
+                <tags>
+                  <tag>
+                    <matchString>javadoc_single_style_tag</matchString>
+                  </tag>
+                </tags>
+              </tagClass>
+            </tagClasses>
+          </tagListOptions>
         </configuration>
       </plugin>
     </plugins>

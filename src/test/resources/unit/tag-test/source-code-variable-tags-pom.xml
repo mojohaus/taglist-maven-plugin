@@ -36,9 +36,18 @@
          <project implementation="org.codehaus.mojo.taglist.stubs.TagsProjectStub"/>
           <outputDirectory>${basedir}/target/test-classes/unit/tag-test/outputDirectory-source-code-variable-tags</outputDirectory>
           <skipEmptyReport>true</skipEmptyReport>
-          <tags>
-            <tag>source_code_variable_tag</tag>
-          </tags>
+          <tagListOptions>
+            <tagClasses>
+              <tagClass>
+                <displayName>source_code_variable_tag</displayName>
+                <tags>
+                  <tag>
+                    <matchString>source_code_variable_tag</matchString>
+                  </tag>
+                </tags>
+              </tagClass>
+            </tagClasses>
+          </tagListOptions>
         </configuration>
       </plugin>
     </plugins>

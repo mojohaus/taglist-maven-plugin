@@ -36,9 +36,18 @@
          <project implementation="org.codehaus.mojo.taglist.stubs.BasicConfigProjectStub"/>
           <outputDirectory>${basedir}/target/test-classes/unit/basic-config-test/outputDirectory</outputDirectory>
           <showEmptyDetails>false</showEmptyDetails>
-          <tags>
-            <tag>@create_output</tag>
-          </tags>
+          <tagListOptions>
+            <tagClasses>
+              <tagClass>
+                <displayName>@create_output</displayName>
+                <tags>
+                  <tag>
+                    <matchString>@create_output</matchString>
+                  </tag>
+                </tags>
+              </tagClass>
+            </tagClasses>
+          </tagListOptions>
         </configuration>
       </plugin>
     </plugins>

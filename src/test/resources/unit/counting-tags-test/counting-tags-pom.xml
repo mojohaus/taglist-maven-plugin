@@ -33,15 +33,52 @@
       <plugin>
         <artifactId>taglist-maven-plugin</artifactId>
         <configuration>
-         <project implementation="org.codehaus.mojo.taglist.stubs.CountingTagsProjectStub"/>
+          <project implementation="org.codehaus.mojo.taglist.stubs.CountingTagsProjectStub" />
           <outputDirectory>${basedir}/target/test-classes/unit/counting-tags-test/outputDirectory</outputDirectory>
-          <tags>
-            <tag>TODO</tag>
-            <tag>&lt;todo</tag>
-            <tag>FIXME</tag>
-            <tag>DOCUMENT_ME</tag>
-            <tag>NOT_YET_DOCUMENTED</tag>
-          </tags>
+          <tagListOptions>
+            <tagClasses>
+              <tagClass>
+                <displayName>TODO</displayName>
+                <tags>
+                  <tag>
+                    <matchString>TODO</matchString>
+                  </tag>
+                </tags>
+              </tagClass>
+              <tagClass>>
+                <displayName>&lt;todo</displayName>
+                <tags>
+                  <tag>
+                    <matchString>&lt;todo</matchString>
+                  </tag>
+                </tags>
+              </tagClass>
+              <tagClass>
+                <displayName>FIXME</displayName>
+                <tags>
+                  <tag>
+                    <matchString>FIXME</matchString>
+                  </tag>
+                </tags>
+              </tagClass>
+              <tagClass>
+                <displayName>DOCUMENT_ME</displayName>
+                <tags>
+                  <tag>
+                    <matchString>DOCUMENT_ME</matchString>
+                  </tag>
+                </tags>
+              </tagClass>
+              <tagClass>
+                <displayName>NOT_YET_DOCUMENTED</displayName>
+                <tags>
+                  <tag>
+                    <matchString>NOT_YET_DOCUMENTED</matchString>
+                  </tag>
+                </tags>
+              </tagClass>
+            </tagClasses>
+          </tagListOptions>
         </configuration>
       </plugin>
     </plugins>
