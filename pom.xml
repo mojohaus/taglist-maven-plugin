@@ -308,7 +308,6 @@
               <goal>xsd</goal>
               <goal>xpp3-writer</goal>
             </goals>
-            <phase>generate-sources</phase>
             <configuration>
               <version>1.0.0</version>
               <models>
@@ -322,10 +321,23 @@
               <goal>java</goal>
               <goal>xsd</goal>
             </goals>
-            <phase>generate-sources</phase>
             <configuration>
               <version>1.0.0</version>
               <models>
+                <model>src/main/mdo/TagListOptions.mdo</model>
+              </models>
+            </configuration>
+          </execution>
+          <execution>
+            <id>modello-docs</id>
+            <goals>
+              <goal>xdoc</goal>
+            </goals>
+            <phase>pre-site</phase>
+            <configuration>
+              <version>1.0.0</version>
+              <models>
+                <model>src/main/mdo/TagListOutput.mdo</model>
                 <model>src/main/mdo/TagListOptions.mdo</model>
               </models>
             </configuration>
