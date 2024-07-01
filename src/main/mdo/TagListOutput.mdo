@@ -17,8 +17,11 @@ KIND, either express or implied.  See the License for the
 specific language governing permissions and limitations
 under the License.
 -->
-<model xml.namespace="org.codehaus.mojo.taglist-maven-plugin">
-  <id>TaglistOutput</id>
+<model xmlns="http://codehaus-plexus.github.io/MODELLO/2.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://codehaus-plexus.github.io/MODELLO/2.0.0 https://codehaus-plexus.github.io/modello/xsd/modello-2.0.0.xsd"
+       xml.namespace="https://www.mojohaus.org/TAGLISTOUTPUT/${version}"
+       xml.schemaLocation="https://www.mojohaus.org/taglist-maven-plugin/xsd/taglistOutput-${version}.xsd">
+  <id>taglistOutput</id>
   <name>TaglistOutput</name>
   <description><![CDATA[Model for TagList XML output.]]></description>
   <defaults>
@@ -37,7 +40,7 @@ under the License.
         <field>
           <name>tags</name>
           <version>1.0.0</version>
-          <association xml.associationTagName="tag">
+          <association xml.tagName="tag">
             <type>TagListXMLTag</type>
             <multiplicity>*</multiplicity>
           </association>
@@ -67,7 +70,7 @@ under the License.
           <name>files</name>
           <version>1.0.0</version>
           <required>true</required>
-          <association xml.associationTagName="file">
+          <association xml.tagName="file">
             <type>TagListXMLFile</type>
             <multiplicity>*</multiplicity>
           </association>
@@ -95,7 +98,7 @@ under the License.
         <field>
           <name>comments</name>
           <version>1.0.0</version>
-          <association xml.associationTagName="comment">
+          <association xml.tagName="comment">
             <type>TagListXMLComment</type>
             <multiplicity>*</multiplicity>
           </association>

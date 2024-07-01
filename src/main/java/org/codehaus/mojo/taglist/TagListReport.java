@@ -92,7 +92,9 @@ public class TagListReport extends AbstractMavenReport {
     private String[] excludes;
 
     /**
-     * Specifies the directory where the xml output will be generated.
+     * Specifies the directory where the xml {@code taglist.xml} output will be generated.
+     * <br>
+     * The xml report has a <a href="taglistOutput.html">format</a>.
      *
      * @since 2.3
      */
@@ -184,6 +186,7 @@ public class TagListReport extends AbstractMavenReport {
      * <br/>
      * <br/>
      * For complete examples see the <a href="usage.html"><b>Usage</b></a> page. <br/>
+     * Type description <a href="taglistOptions.html"><b>taglistOptions</b></a>
      *
      * @since 2.4
      */

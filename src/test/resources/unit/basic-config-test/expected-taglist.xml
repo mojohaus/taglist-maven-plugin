@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<report xmlns="org.codehaus.mojo.taglist-maven-plugin">
+<report xsi:schemaLocation="https://www.mojohaus.org/TAGLISTOUTPUT/1.0.0 https://www.mojohaus.org/taglist-maven-plugin/xsd/taglistOutput-1.0.0.xsd"
+        xmlns="https://www.mojohaus.org/TAGLISTOUTPUT/1.0.0"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <tags>
     <tag name="@create_output" count="1">
       <files>

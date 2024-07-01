@@ -17,7 +17,10 @@ KIND, either express or implied.  See the License for the
 specific language governing permissions and limitations
 under the License.
 -->
-<model xsd.namespace="http://modello.codehaus.org/MODELLO/1.0.0" xml.schemaLocation="http://modello.codehaus.org/xsd/modello-1.0.0.xsd" xml.namespace="org.codehaus.mojo.taglist-maven-plugin" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://modello.codehaus.org/MODELLO/1.0.0 http://modello.codehaus.org/xsd/modello-1.0.0.xsd" xmlns="http://modello.codehaus.org/MODELLO/1.0.0">
+<model xmlns="http://codehaus-plexus.github.io/MODELLO/2.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+			 xsi:schemaLocation="http://codehaus-plexus.github.io/MODELLO/2.0.0 https://codehaus-plexus.github.io/modello/xsd/modello-2.0.0.xsd"
+			 xml.namespace="https://www.mojohaus.org/TAGLISTOPTIONS/${version}"
+			 xml.schemaLocation="https://www.mojohaus.org/taglist-maven-plugin/xsd/taglistOptions-${version}.xsd">
 	<id>taglistOptions</id>
 	<name>taglistOptions</name>
 	<description><![CDATA[Model for TagList Options.]]></description>
@@ -81,9 +84,10 @@ under the License.
 				<field>
 					<name>matchType</name>
 					<required>false</required>
-					<description><![CDATA[The type of comparison to perform on the string.  Options:  exact, ignoreCase, regEx   Default = exact.]]></description>
+					<description><![CDATA[The type of comparison to perform on the string.  Options:  exact, ignoreCase, regEx.]]></description>
 					<version>1.0.0</version>
 					<type>String</type>
+					<defaultValue>exact</defaultValue>
 				</field>
 			</fields>
 		</class>
