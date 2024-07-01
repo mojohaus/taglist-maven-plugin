@@ -89,23 +89,3 @@ mvn site
   ...
 </project>
 +---+
-
-    For backwards compatibility with versions prior to the 2.4 release, the legacy tags configuration is supported;
-    however, only exact matching
-    is used with legacy configuration.
-
-+---+
-
-<project>
-  ...
-        <configuration>
-          <tags>
-            <tag>TODO</tag>
-            <tag>FIXME</tag>
-            <tag>@todo</tag>
-            <tag>@deprecated</tag>
-          </tags>
-        </configuration>
-  ...
-</project>
-+---+

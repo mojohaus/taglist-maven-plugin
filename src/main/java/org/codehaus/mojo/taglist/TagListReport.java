@@ -190,8 +190,6 @@ public class TagListReport extends AbstractMavenReport {
     @Parameter
     private org.codehaus.mojo.taglist.options.TagListOptions tagListOptions;
 
-    private String[] tags;
-
     /**
      * Skip generating report if no tags found in sources.
      *
@@ -261,14 +259,6 @@ public class TagListReport extends AbstractMavenReport {
 
         // Create the tag classes
         List<TagClass> tagClasses = new ArrayList<>();
-
-        // If any old style tags were used, then add each tag as a tag class
-        if (tags != null && tags.length > 0) {
-            getLog().warn("Using legacy tag format.  This is not recommended.");
-            for (String tag : tags) {
-                tagClasses.add(createTagClass(tag));
-            }
-        }
 
         // If the new style of tag options were used, add them
         if (tagListOptions != null && !tagListOptions.getTagClasses().isEmpty()) {

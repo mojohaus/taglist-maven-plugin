@@ -36,10 +36,26 @@
          <project implementation="org.codehaus.mojo.taglist.stubs.BasicConfigProjectStub"/>
           <outputDirectory>${basedir}/target/test-classes/unit/basic-config-test/outputDirectory</outputDirectory>
           <emptyComments>true</emptyComments>
-          <tags>
-            <tag>@empty_no_colons</tag>
-            <tag>@empty_colons</tag>
-          </tags>
+          <tagListOptions>
+            <tagClasses>
+              <tagClass>
+                <displayName>@empty_no_colons</displayName>
+                <tags>
+                  <tag>
+                    <matchString>@empty_no_colons</matchString>
+                  </tag>
+                </tags>
+              </tagClass>
+              <tagClass>
+                <displayName>@empty_colons</displayName>
+                <tags>
+                  <tag>
+                    <matchString>@empty_colons</matchString>
+                  </tag>
+                </tags>
+              </tagClass>
+            </tagClasses>
+          </tagListOptions>
         </configuration>
       </plugin>
     </plugins>

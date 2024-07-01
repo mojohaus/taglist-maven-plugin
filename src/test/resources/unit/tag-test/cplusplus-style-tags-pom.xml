@@ -35,9 +35,18 @@
         <configuration>
          <project implementation="org.codehaus.mojo.taglist.stubs.TagsProjectStub"/>
           <outputDirectory>${basedir}/target/test-classes/unit/tag-test/outputDirectory</outputDirectory>
-          <tags>
-            <tag>c++_style_tag</tag>
-          </tags>
+          <tagListOptions>
+            <tagClasses>
+              <tagClass>
+                <displayName>c++_style_tag</displayName>
+                <tags>
+                  <tag>
+                    <matchString>c++_style_tag</matchString>
+                  </tag>
+                </tags>
+              </tagClass>
+            </tagClasses>
+          </tagListOptions>
         </configuration>
       </plugin>
     </plugins>

@@ -36,9 +36,18 @@
          <project implementation="org.codehaus.mojo.taglist.stubs.TagsProjectStub"/>
           <outputDirectory>${basedir}/target/test-classes/unit/tag-test/outputDirectory-not-start-line-tags</outputDirectory>
           <skipEmptyReport>true</skipEmptyReport>
-          <tags>
-            <tag>not_start_of_line_tag</tag>
-          </tags>
+          <tagListOptions>
+            <tagClasses>
+              <tagClass>
+                <displayName>not_start_of_line_tag</displayName>
+                <tags>
+                  <tag>
+                    <matchString>not_start_of_line_tag</matchString>
+                  </tag>
+                </tags>
+              </tagClass>
+            </tagClasses>
+          </tagListOptions>
         </configuration>
       </plugin>
     </plugins>
