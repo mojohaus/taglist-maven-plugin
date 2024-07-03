@@ -1,0 +1,7 @@
+org.codehaus.mojo.taglist
+org.codehaus.mojo.taglist_maven_plugin
+org.codehaus.mojo.taglist.beans
+org.codehaus.mojo.taglist.options
+org.codehaus.mojo.taglist.output
+org.codehaus.mojo.taglist.output.io.xpp3
+org.codehaus.mojo.taglist.tags
