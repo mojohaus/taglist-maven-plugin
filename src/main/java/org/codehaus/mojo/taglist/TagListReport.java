@@ -134,12 +134,6 @@ public class TagListReport extends AbstractMavenReport {
     private File testXrefLocation;
 
     /**
-     * The projects in the reactor for aggregation report.
-     */
-    @Parameter(readonly = true, defaultValue = "${reactorProjects}")
-    private List<MavenProject> reactorProjects;
-
-    /**
      * Whether to build an aggregated report at the root, or build individual reports.
      */
     @Parameter(defaultValue = "false", property = "taglists.aggregate")
