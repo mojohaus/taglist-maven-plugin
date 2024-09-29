@@ -25,7 +25,7 @@ import java.util.ResourceBundle;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import org.apache.maven.doxia.sink.Sink;
+import org.apache.maven.reporting.AbstractMavenReportRenderer;
 import org.codehaus.mojo.taglist.beans.FileReport;
 import org.codehaus.mojo.taglist.beans.TagReport;
 
@@ -34,7 +34,7 @@ import org.codehaus.mojo.taglist.beans.TagReport;
  *
  * @author <a href="mailto:bellingard.NO-SPAM@gmail.com">Fabrice Bellingard </a>
  */
-public class ReportGenerator {
+public class ReportRender extends AbstractMavenReportRenderer {
     /**
      * The source code cross reference path.
      */
@@ -44,11 +44,6 @@ public class ReportGenerator {
      * The test code cross reference path.
      */
     private String testXrefLocation;
-
-    /**
-     * The sink used in this Maven build to generated the tag list page.
-     */
-    private final Sink sink;
 
     /**
      * The resource bundle used in this Maven build.
@@ -76,30 +71,22 @@ public class ReportGenerator {
      * @param report     the TagListReport object used in this build.
      * @param tagReports a collection of tagReports to output.
      */
-    public ReportGenerator(TagListReport report, Collection<TagReport> tagReports) {
-        sortedTagReports = new TreeSet<>(tagReports);
+    public ReportRender(TagListReport report, Collection<TagReport> tagReports) {
+        super(report.getSink());
+        this.sortedTagReports = new TreeSet<>(tagReports);
         this.bundle = report.getBundle();
-        this.sink = report.getSink();
         this.siteOutputDirectory = report.getReportOutputDirectory();
         this.showEmptyDetails = report.isShowEmptyDetails();
     }
 
-    /**
-     * Generates the whole report using each tag reports made during the analysis.
-     */
-    public void generateReport() {
-        sink.head();
-        sink.title();
-        sink.text(bundle.getString("report.taglist.header"));
-        sink.title_();
-        sink.head_();
+    @Override
+    public String getTitle() {
+        return bundle.getString("report.taglist.header");
+    }
 
-        sink.body();
-        sink.section1();
-
-        sink.sectionTitle1();
-        sink.text(bundle.getString("report.taglist.mainTitle"));
-        sink.sectionTitle1_();
+    @Override
+    protected void renderBody() {
+        startSection(bundle.getString("report.taglist.mainTitle"));
 
         // Summary section
         doSummarySection(sortedTagReports);
@@ -107,10 +94,7 @@ public class ReportGenerator {
         // Detail section
         doDetailSection(sortedTagReports);
 
-        sink.section1_();
-        sink.body_();
-        sink.flush();
-        sink.close();
+        endSection();
     }
 
     /**
