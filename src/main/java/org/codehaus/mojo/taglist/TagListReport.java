@@ -72,11 +72,6 @@ public class TagListReport extends AbstractMavenReport {
     private String sourceFileLocale;
 
     /**
-     * Default locale used if the source file locale is null.
-     */
-    private static final String DEFAULT_SOURCE_FILE_LOCALE = "en";
-
-    /**
      * List of files to include. Specified as fileset patterns which are relative to the source directory.
      *
      * @since 3.0.0
@@ -145,11 +140,6 @@ public class TagListReport extends AbstractMavenReport {
     private boolean aggregate;
 
     /**
-     * The locale used for rendering the page.
-     */
-    private Locale currentLocale;
-
-    /**
      * This parameter indicates whether to generate details for tags with zero occurrences.
      *
      * @since 2.2
@@ -211,7 +201,6 @@ public class TagListReport extends AbstractMavenReport {
      */
     @Override
     protected void executeReport(Locale locale) throws MavenReportException {
-        this.currentLocale = locale;
 
         if (StringUtils.isEmpty(getInputEncoding())) {
             getLog().warn("File encoding has not been set, using platform encoding "
@@ -221,10 +210,11 @@ public class TagListReport extends AbstractMavenReport {
         executeAnalysis();
 
         // Renders the report
-        ReportRender generator = new ReportRender(this, tagReportsResult);
-        generator.setXrefLocation(constructXrefLocation(false));
-        generator.setTestXrefLocation(constructXrefLocation(true));
-        generator.render();
+        TaglistReportRenderer renderer = new TaglistReportRenderer(this, tagReportsResult);
+        renderer.setXrefLocation(constructXrefLocation(false));
+        renderer.setTestXrefLocation(constructXrefLocation(true));
+        renderer.setBundle(getBundle(locale));
+        renderer.render();
 
         // Generate the XML report
         generateXmlReport(tagReportsResult);
@@ -544,10 +534,6 @@ public class TagListReport extends AbstractMavenReport {
      * @return The Locale of the source files.
      */
     public Locale getSourceFileLocale() {
-        // The locale string should never be null.
-        if (sourceFileLocale == null) {
-            sourceFileLocale = DEFAULT_SOURCE_FILE_LOCALE;
-        }
         return new Locale(sourceFileLocale);
     }
 
@@ -576,16 +562,6 @@ public class TagListReport extends AbstractMavenReport {
      */
     public boolean isShowEmptyDetails() {
         return showEmptyDetails;
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @see org.apache.maven.reporting.AbstractMavenReport#getOutputDirectory()
-     */
-    @Override
-    protected String getOutputDirectory() {
-        return super.getOutputDirectory();
     }
 
     /**
@@ -625,15 +601,6 @@ public class TagListReport extends AbstractMavenReport {
     @Override
     public String getOutputName() {
         return "taglist";
-    }
-
-    /**
-     * Returns the correct resource bundle according to the locale.
-     *
-     * @return the bundle corresponding to the locale used for rendering the report.
-     */
-    public ResourceBundle getBundle() {
-        return getBundle(currentLocale);
     }
 
     /**

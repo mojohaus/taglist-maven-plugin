@@ -72,7 +72,7 @@ public class FileAnalyser {
     /**
      * The Locale of the files to analyze.
      */
-    private final Locale soucreFileLocale;
+    private final Locale sourceFileLocale;
 
     /**
      * The directories to analyze.
@@ -121,7 +121,7 @@ public class FileAnalyser {
         log = report.getLog();
         sourceDirs = report.getSourceDirs();
         encoding = report.getInputEncoding();
-        soucreFileLocale = report.getSourceFileLocale();
+        sourceFileLocale = report.getSourceFileLocale();
         this.tagClasses = tagClasses;
         this.includes = report.getIncludesCommaSeparated();
         this.excludes = report.getExcludesCommaSeparated();
@@ -188,7 +188,7 @@ public class FileAnalyser {
                 int index;
                 // look for a tag on this line
                 for (TagClass tagClass : tagClasses) {
-                    index = tagClass.tagMatchContains(currentLine, soucreFileLocale);
+                    index = tagClass.tagMatchContains(currentLine, sourceFileLocale);
                     if (index != TagClass.NO_MATCH) {
                         // there's a tag on this line
                         String commentType = extractCommentType(currentLine, index);
@@ -241,7 +241,7 @@ public class FileAnalyser {
                                     // try to look if the next line is not a new tag
                                     boolean newTagFound = false;
                                     for (TagClass tc : tagClasses) {
-                                        if (tc.tagMatchStartsWith(currentComment, soucreFileLocale)) {
+                                        if (tc.tagMatchStartsWith(currentComment, sourceFileLocale)) {
                                             newTagFound = true;
                                             break;
                                         }

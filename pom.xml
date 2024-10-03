@@ -105,7 +105,7 @@
 
   <properties>
     <project.build.outputTimestamp>2024-07-03T21:22:33Z</project.build.outputTimestamp>
-    <doxiaVersion>2.0.0-M12</doxiaVersion>
+    <doxiaVersion>2.0.0</doxiaVersion>
     <reportingApiVersion>4.0.0-M12</reportingApiVersion>
     <reportingImplVersion>4.0.0-M15</reportingImplVersion>
     <mavenResolverVersion>1.4.1</mavenResolverVersion>
@@ -336,8 +336,13 @@
   <reporting>
     <plugins>
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jxr-plugin</artifactId>
+      </plugin>
+      <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>taglist-maven-plugin</artifactId>
+        <!--        <version>3.1.0</version>-->
         <version>${project.version}</version>
         <configuration>
           <tagListOptions>

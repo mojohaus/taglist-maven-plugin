@@ -42,10 +42,11 @@ public abstract class AbstractTaglistMojoTestCase extends AbstractMojoTestCase {
 
         TagListReport mojo = (TagListReport) lookupMojo("taglist", pluginXmlFile);
         assertNotNull("Mojo not found.", mojo);
+        File outputDirectory = (File) getVariableValueFromObject(mojo, "outputDirectory");
         setVariableValueToObject(mojo, "inputEncoding", TEST_ENCODING);
         setVariableValueToObject(mojo, "includes", new String[] {"**/*.java"});
-        setVariableValueToObject(mojo, "xmlOutputDirectory", new File(mojo.getOutputDirectory(), "taglist"));
-        setVariableValueToObject(mojo, "siteDirectory", new File(mojo.getOutputDirectory(), "non-existing"));
+        setVariableValueToObject(mojo, "xmlOutputDirectory", new File(outputDirectory, "taglist"));
+        setVariableValueToObject(mojo, "siteDirectory", new File(outputDirectory, "non-existing"));
         setVariableValueToObject(mojo, "reactorProjects", singletonList(getVariableValueFromObject(mojo, "project")));
         setVariableValueToObject(mojo, "repoSession", repositorySystemSession);
         setVariableValueToObject(
@@ -54,6 +55,10 @@ public abstract class AbstractTaglistMojoTestCase extends AbstractMojoTestCase {
                 repositorySystem.newResolutionRepositories(
                         repositorySystemSession, Collections.singletonList(remoteRepository)));
         setVariableValueToObject(mojo, "mojoExecution", new MojoExecution(new Plugin(), "taglist", "default"));
+
+        if (getVariableValueFromObject(mojo, "sourceFileLocale") == null) {
+            setVariableValueToObject(mojo, "sourceFileLocale", "en");
+        }
 
         return mojo;
     }
