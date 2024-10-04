@@ -164,11 +164,7 @@ public class TaglistReportRenderer extends AbstractMavenReportRenderer {
 
         startSection(tagReport.getTagName(), tagReport.getHTMLSafeLinkName());
 
-        sink.paragraph();
-        sink.bold();
-        sink.text(bundle.getString("report.taglist.detail.numberOfOccurrences") + ' ' + tagReport.getTagCount());
-        sink.bold_();
-        sink.paragraph_();
+        paragraph(bundle.getString("report.taglist.detail.numberOfOccurrences") + ' ' + tagReport.getTagCount());
 
         Collection<FileReport> fileReports = tagReport.getFileReports();
         SortedSet<FileReport> sortedFileReports = new TreeSet<>(fileReports);

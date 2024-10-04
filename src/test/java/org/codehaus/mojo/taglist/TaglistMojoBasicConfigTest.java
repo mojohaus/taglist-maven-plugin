@@ -102,7 +102,7 @@ public class TaglistMojoBasicConfigTest extends AbstractTaglistMojoTestCase {
         String htmlString = super.getGeneratedOutput(mojo);
 
         // Check to see that there was only one occurrence.
-        String expected = "<b>Number of occurrences found in the code: 1</b>";
+        String expected = "Number of occurrences found in the code: 1";
         assertTrue("Missing tag result.", htmlString.contains(expected));
 
         // Use the resource bundle to determine what the no comment string
