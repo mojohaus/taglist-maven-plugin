@@ -64,7 +64,7 @@ import org.codehaus.plexus.util.StringUtils;
 @Mojo(name = "taglist", requiresDependencyResolution = ResolutionScope.COMPILE)
 public class TagListReport extends AbstractMavenReport {
     /**
-     * Specifies the Locale of the source files.
+     * Specifies the Locale of the source files. Syntax is like "en", "en_US" or "en_US_win".
      *
      * @since 2.4
      */
@@ -528,13 +528,39 @@ public class TagListReport extends AbstractMavenReport {
         }
     }
 
+    void setSourceFileLocale(String sourceFileLocale) {
+        this.sourceFileLocale = sourceFileLocale;
+    }
+
     /**
      * Returns the Locale of the source files.
      *
      * @return The Locale of the source files.
      */
     public Locale getSourceFileLocale() {
-        return new Locale(sourceFileLocale);
+        String[] items = sourceFileLocale.split("_");
+        if (items.length > 3) {
+            getLog().warn("Invalid java.util.Locale format '" + sourceFileLocale
+                    + "' for 'sourceFileLocale' use ROOT locale");
+            return Locale.ROOT;
+        }
+
+        String language = "";
+        String country = "";
+        String variant = "";
+
+        if (items.length > 0) {
+            language = items[0];
+        }
+
+        if (items.length > 1) {
+            country = items[1];
+        }
+
+        if (items.length > 2) {
+            variant = items[2];
+        }
+        return new Locale(language, country, variant);
     }
 
     /**
