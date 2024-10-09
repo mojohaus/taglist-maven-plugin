@@ -106,7 +106,7 @@
   <properties>
     <project.build.outputTimestamp>2024-07-03T21:22:33Z</project.build.outputTimestamp>
     <doxiaVersion>1.12.0</doxiaVersion>
-    <doxia-sitetoolsVersion>1.11.1</doxia-sitetoolsVersion>
+    <doxia-sitetoolsVersion>2.0.0</doxia-sitetoolsVersion>
 
     <!-- override plugins -->
     <taglist-maven-plugin.version>${project.version}</taglist-maven-plugin.version>
