@@ -116,6 +116,8 @@ public class FileAnalyser {
      * @param tagClasses the array of tag classes to use for searching
      */
     public FileAnalyser(TagListReport report, List<TagClass> tagClasses) {
+        // TODO - direct class TagListReport should not be used,
+        //  we can add a separate args or new class/interface for group of args
         multipleLineCommentsOn = report.isMultipleLineComments();
         emptyCommentsOn = report.isEmptyComments();
         log = report.getLog();

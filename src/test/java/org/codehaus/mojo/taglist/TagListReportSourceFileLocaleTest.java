@@ -17,8 +17,8 @@ class TagListReportSourceFileLocaleTest {
                 of("en", new Locale("en")),
                 of("en_US", new Locale("en", "US")),
                 of("en_US_win", new Locale("en", "US", "win")),
-                of("en_US_win_XX", Locale.ROOT),
-                of("", Locale.ROOT));
+                of("en_US_win_XX", Locale.ENGLISH),
+                of("", Locale.ENGLISH));
     }
 
     @ParameterizedTest

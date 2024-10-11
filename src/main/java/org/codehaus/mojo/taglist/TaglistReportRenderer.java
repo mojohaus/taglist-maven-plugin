@@ -51,9 +51,9 @@ public class TaglistReportRenderer extends AbstractMavenReportRenderer {
     private ResourceBundle bundle;
 
     /**
-     * The output path of the site.
+     * The output path of the report.
      */
-    private final File siteOutputDirectory;
+    private final File reportOutputDirectory;
 
     /**
      * A list of sorted tag reports.
@@ -74,7 +74,7 @@ public class TaglistReportRenderer extends AbstractMavenReportRenderer {
     public TaglistReportRenderer(TagListReport report, Collection<TagReport> tagReports) {
         super(report.getSink());
         this.sortedTagReports = new TreeSet<>(tagReports);
-        this.siteOutputDirectory = report.getReportOutputDirectory();
+        this.reportOutputDirectory = report.getReportOutputDirectory();
         this.showEmptyDetails = report.isShowEmptyDetails();
     }
 
@@ -208,7 +208,7 @@ public class TaglistReportRenderer extends AbstractMavenReportRenderer {
         String link = null;
         if (xrefLocation != null) {
             String fileLink = xrefLocation + "/" + fileReport.getClassNameWithSlash() + ".html";
-            File xrefFile = new File(siteOutputDirectory, fileLink.substring(2));
+            File xrefFile = new File(reportOutputDirectory, fileLink.substring(2));
 
             // Link only if file exists in xref
             if (xrefFile.exists()) {
@@ -218,7 +218,7 @@ public class TaglistReportRenderer extends AbstractMavenReportRenderer {
         // If the file was not linked to xref and there is a test xref location check it
         if (link == null && testXrefLocation != null) {
             String testFileLink = testXrefLocation + "/" + fileReport.getClassNameWithSlash() + ".html";
-            File testXrefFile = new File(siteOutputDirectory, testFileLink.substring(2));
+            File testXrefFile = new File(reportOutputDirectory, testFileLink.substring(2));
 
             // Link only if file exists in test xref
             if (testXrefFile.exists()) {

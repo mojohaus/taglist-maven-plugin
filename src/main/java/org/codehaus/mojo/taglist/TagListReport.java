@@ -68,6 +68,7 @@ public class TagListReport extends AbstractMavenReport {
      *
      * @since 2.4
      */
+    // TODO rename to sourceFilesLocale
     @Parameter(property = "sourceFileLocale", defaultValue = "en")
     private String sourceFileLocale;
 
@@ -539,10 +540,10 @@ public class TagListReport extends AbstractMavenReport {
      */
     public Locale getSourceFileLocale() {
         String[] items = sourceFileLocale.split("_");
-        if (items.length > 3) {
+        if (sourceFileLocale.isEmpty() || items.length > 3) {
             getLog().warn("Invalid java.util.Locale format '" + sourceFileLocale
-                    + "' for 'sourceFileLocale' use ROOT locale");
-            return Locale.ROOT;
+                    + "' for 'sourceFileLocale' using 'ENGLISH' locale");
+            return Locale.ENGLISH;
         }
 
         String language = "";
