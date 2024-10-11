@@ -108,7 +108,7 @@
     <doxiaVersion>2.0.0</doxiaVersion>
     <reportingApiVersion>4.0.0</reportingApiVersion>
     <reportingImplVersion>4.0.0-M15</reportingImplVersion>
-    <mavenResolverVersion>1.4.1</mavenResolverVersion>
+    <mavenResolverVersion>1.9.22</mavenResolverVersion>
 
     <!-- override plugins -->
     <taglist-maven-plugin.version>${project.version}</taglist-maven-plugin.version>
