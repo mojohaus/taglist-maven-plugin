@@ -102,7 +102,7 @@ public class TaglistMojoBasicConfigTest extends AbstractTaglistMojoTestCase {
         String htmlString = super.getGeneratedOutput(mojo);
 
         // Check to see that there was only one occurrence.
-        String expected = "<b>Number of occurrences found in the code: 1</b>";
+        String expected = "Number of occurrences found in the code: 1";
         assertTrue("Missing tag result.", htmlString.contains(expected));
 
         // Use the resource bundle to determine what the no comment string
@@ -213,11 +213,11 @@ public class TaglistMojoBasicConfigTest extends AbstractTaglistMojoTestCase {
         assertTrue("Incorrect count for the not in code tag.", htmlString.contains(expected));
 
         // Check to see show empty tags in code section details exist (they should).
-        expected = "\">@show_empty_details_tag_in_code</a></h3>";
+        expected = "<h2>@show_empty_details_tag_not_in_code</h2>";
         assertTrue("Missing tag details for the in code tag.", htmlString.contains(expected));
 
         // Check to see show empty tags not in code section details exist (they should).
-        expected = "\">@show_empty_details_tag_not_in_code</a></h3>";
+        expected = "<h2>@show_empty_details_tag_not_in_code</h2>";
         assertTrue("Missing tag details for the not in code tag.", htmlString.contains(expected));
     }
 
@@ -245,11 +245,11 @@ public class TaglistMojoBasicConfigTest extends AbstractTaglistMojoTestCase {
         assertTrue("Incorrect count for the not in code tag.", htmlString.contains(expected));
 
         // Check to see show empty tags in code section details exist (they should).
-        expected = "\">@show_empty_details_tag_in_code</a></h3>";
+        expected = "<h2>@show_empty_details_tag_in_code</h2>";
         assertTrue("Missing tag details for the in code tag.", htmlString.contains(expected));
 
         // Check to see show empty tags not in code section details do NOT exist (they should not).
-        expected = "\">@show_empty_details_tag_not_in_code</a></h3>";
+        expected = "<h2>@show_empty_details_tag_not_in_code</h2>";
         assertFalse("Unexpected tag details for the not in code tag.", htmlString.contains(expected));
     }
 

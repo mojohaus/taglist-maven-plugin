@@ -25,7 +25,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.LineNumberReader;
 import java.io.Reader;
-import java.io.UncheckedIOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -73,7 +72,7 @@ public class FileAnalyser {
     /**
      * The Locale of the files to analyze.
      */
-    private final Locale locale;
+    private final Locale sourceFileLocale;
 
     /**
      * The directories to analyze.
@@ -117,12 +116,14 @@ public class FileAnalyser {
      * @param tagClasses the array of tag classes to use for searching
      */
     public FileAnalyser(TagListReport report, List<TagClass> tagClasses) {
+        // TODO - direct class TagListReport should not be used,
+        //  we can add a separate args or new class/interface for group of args
         multipleLineCommentsOn = report.isMultipleLineComments();
         emptyCommentsOn = report.isEmptyComments();
         log = report.getLog();
         sourceDirs = report.getSourceDirs();
         encoding = report.getInputEncoding();
-        locale = report.getLocale();
+        sourceFileLocale = report.getSourceFileLocale();
         this.tagClasses = tagClasses;
         this.includes = report.getIncludesCommaSeparated();
         this.excludes = report.getExcludesCommaSeparated();
@@ -133,7 +134,7 @@ public class FileAnalyser {
      *
      * @return a collection of TagReport objects.
      */
-    public Collection<TagReport> execute() {
+    public Collection<TagReport> execute() throws IOException {
         List<File> fileList = findFilesToScan();
 
         for (File file : fileList) {
@@ -156,15 +157,10 @@ public class FileAnalyser {
      *
      * @return a List of File objects.
      */
-    private List<File> findFilesToScan() {
+    private List<File> findFilesToScan() throws IOException {
         List<File> filesList = new ArrayList<>();
-        try {
-            for (String sourceDir : sourceDirs) {
-                filesList.addAll(FileUtils.getFiles(new File(sourceDir), includes, excludes));
-            }
-        } catch (IOException e) {
-            // TODO - fix with Doxia 2.x - canGenerateReport will have a checked exception
-            throw new UncheckedIOException("Error while trying to find the files to scan.", e);
+        for (String sourceDir : sourceDirs) {
+            filesList.addAll(FileUtils.getFiles(new File(sourceDir), includes, excludes));
         }
         return filesList;
     }
@@ -173,8 +169,8 @@ public class FileAnalyser {
      * Access an input reader that uses the current file encoding.
      *
      * @param file the file to open in the reader.
-     * @throws IOException the IO exception.
      * @return a reader with the current file encoding.
+     * @throws IOException the IO exception.
      */
     private Reader getReader(File file) throws IOException {
         InputStream in = Files.newInputStream(file.toPath());
@@ -194,7 +190,7 @@ public class FileAnalyser {
                 int index;
                 // look for a tag on this line
                 for (TagClass tagClass : tagClasses) {
-                    index = tagClass.tagMatchContains(currentLine, locale);
+                    index = tagClass.tagMatchContains(currentLine, sourceFileLocale);
                     if (index != TagClass.NO_MATCH) {
                         // there's a tag on this line
                         String commentType = extractCommentType(currentLine, index);
@@ -247,7 +243,7 @@ public class FileAnalyser {
                                     // try to look if the next line is not a new tag
                                     boolean newTagFound = false;
                                     for (TagClass tc : tagClasses) {
-                                        if (tc.tagMatchStartsWith(currentComment, locale)) {
+                                        if (tc.tagMatchStartsWith(currentComment, sourceFileLocale)) {
                                             newTagFound = true;
                                             break;
                                         }
