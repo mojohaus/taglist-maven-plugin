@@ -226,7 +226,17 @@ public class TaglistReportRenderer extends AbstractMavenReportRenderer {
             }
         }
 
-        tableRow(new String[] {comment, createLinkPatternedText(String.valueOf(lineNumber), link)});
+        // we can not use convenience method here ...
+        // https://github.com/mojohaus/taglist-maven-plugin/issues/165
+        sink.tableRow();
+
+        sink.tableCell();
+        text(comment);
+        sink.tableCell_();
+
+        tableCell(createLinkPatternedText(String.valueOf(lineNumber), link));
+
+        sink.tableRow_();
     }
 
     /**
