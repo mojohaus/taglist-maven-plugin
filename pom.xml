@@ -107,7 +107,7 @@
     <project.build.outputTimestamp>2024-10-12T20:00:49Z</project.build.outputTimestamp>
     <doxiaVersion>2.0.0</doxiaVersion>
     <reportingApiVersion>4.0.0</reportingApiVersion>
-    <reportingImplVersion>4.0.0-M15</reportingImplVersion>
+    <reportingImplVersion>4.0.0</reportingImplVersion>
     <mavenResolverVersion>1.4.1</mavenResolverVersion>
 
     <!-- override plugins -->
