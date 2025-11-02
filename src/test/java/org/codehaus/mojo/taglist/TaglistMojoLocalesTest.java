@@ -21,19 +21,24 @@ package org.codehaus.mojo.taglist;
 
 import java.io.File;
 
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 /**
  * Test the Taglist mojo locale support
  *
  * @version $Id$
  */
-public class TaglistMojoLocalesTest extends AbstractTaglistMojoTestCase {
+class TaglistMojoLocalesTest extends AbstractTaglistMojoTestCase {
 
     /**
      * Test when locale is set to English.
      *
      * @throws Exception
      */
-    public void testEnglishLocale() throws Exception {
+    @Test
+    void englishLocale() throws Exception {
         File pluginXmlFile = new File(getBasedir(), "/src/test/resources/unit/locale-test/english-locale.xml");
         TagListReport mojo = super.getTagListReport(pluginXmlFile);
 
@@ -45,15 +50,15 @@ public class TaglistMojoLocalesTest extends AbstractTaglistMojoTestCase {
 
         // Check to see that all three lines of the comment are captured.
         String expected1 = "<td>Should match under Locale en  1 of 3.</td>";
-        assertTrue("Missing tag result #1.", htmlString.contains(expected1));
+        assertTrue(htmlString.contains(expected1), "Missing tag result #1.");
         String expected2 = "<td>Should match under Locale en  2 of 3.</td>";
-        assertTrue("Missing tag result #2.", htmlString.contains(expected2));
+        assertTrue(htmlString.contains(expected2), "Missing tag result #2.");
         String expected3 = "<td>Should match under Locale en  3 of 3.</td>";
-        assertTrue("Missing tag result #3.", htmlString.contains(expected3));
+        assertTrue(htmlString.contains(expected3), "Missing tag result #3.");
 
         // Check to see that all three lines of the comment are captured.
         String expectedCount = "<tag name=\"EnglishLocale\" count=\"3\">";
-        assertTrue("Incorrect tag count.", xmlString.contains(expectedCount));
+        assertTrue(xmlString.contains(expectedCount), "Incorrect tag count.");
     }
 
     /**
@@ -61,7 +66,8 @@ public class TaglistMojoLocalesTest extends AbstractTaglistMojoTestCase {
      *
      * @throws Exception
      */
-    public void testTurkishLocale() throws Exception {
+    @Test
+    void turkishLocale() throws Exception {
         File pluginXmlFile = new File(getBasedir(), "/src/test/resources/unit/locale-test/turkish-locale.xml");
         TagListReport mojo = super.getTagListReport(pluginXmlFile);
 
@@ -73,12 +79,12 @@ public class TaglistMojoLocalesTest extends AbstractTaglistMojoTestCase {
 
         // Check to see that all three lines of the comment are captured.
         String expected1 = "<td>Should match under Locale tr  1 of 2.</td>";
-        assertTrue("Missing tag result #1.", htmlString.contains(expected1));
+        assertTrue(htmlString.contains(expected1), "Missing tag result #1.");
         String expected2 = "<td>Should match under Locale tr  2 of 2.</td>";
-        assertTrue("Missing tag result #2.", htmlString.contains(expected2));
+        assertTrue(htmlString.contains(expected2), "Missing tag result #2.");
 
         // Check to see that all three lines of the comment are captured.
         String expectedCount = "<tag name=\"Turkish Locale\" count=\"2\">";
-        assertTrue("Incorrect tag count.", xmlString.contains(expectedCount));
+        assertTrue(xmlString.contains(expectedCount), "Incorrect tag count.");
     }
 }

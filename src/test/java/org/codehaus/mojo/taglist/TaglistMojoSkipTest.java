@@ -2,9 +2,15 @@ package org.codehaus.mojo.taglist;
 
 import java.io.File;
 
-public class TaglistMojoSkipTest extends AbstractTaglistMojoTestCase {
+import org.junit.jupiter.api.Test;
 
-    public void testNoSourcesDirectory() throws Exception {
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+class TaglistMojoSkipTest extends AbstractTaglistMojoTestCase {
+
+    @Test
+    void noSourcesDirectory() throws Exception {
         File pluginXmlFile = new File(getBasedir(), "src/test/resources/unit/no-sources-test/default-pom.xml");
 
         TagListReport mojo = super.getTagListReport(pluginXmlFile);

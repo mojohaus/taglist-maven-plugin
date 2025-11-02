@@ -16,6 +16,8 @@ import org.eclipse.aether.repository.LocalRepository;
 import org.eclipse.aether.repository.RemoteRepository;
 
 import static java.util.Collections.singletonList;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public abstract class AbstractTaglistMojoTestCase extends AbstractMojoTestCase {
     public static final String TEST_ENCODING = "UTF-8";
@@ -28,7 +30,7 @@ public abstract class AbstractTaglistMojoTestCase extends AbstractMojoTestCase {
      * @throws Exception in case of non-existing pluginXmlFile or mojo not found.
      */
     protected TagListReport getTagListReport(File pluginXmlFile) throws Exception {
-        assertTrue("Cannot find plugin file.", pluginXmlFile.exists());
+        assertTrue(pluginXmlFile.exists(), "Cannot find plugin file.");
 
         DefaultRepositorySystemSession repositorySystemSession = new DefaultRepositorySystemSession();
         RepositorySystem repositorySystem = lookup(RepositorySystem.class);
@@ -41,7 +43,7 @@ public abstract class AbstractTaglistMojoTestCase extends AbstractMojoTestCase {
                 new RemoteRepository.Builder("central", "default", "https://repo.maven.apache.org/maven2").build();
 
         TagListReport mojo = (TagListReport) lookupMojo("taglist", pluginXmlFile);
-        assertNotNull("Mojo not found.", mojo);
+        assertNotNull(mojo, "Mojo not found.");
         File outputDirectory = (File) getVariableValueFromObject(mojo, "outputDirectory");
         setVariableValueToObject(mojo, "inputEncoding", TEST_ENCODING);
         setVariableValueToObject(mojo, "includes", new String[] {"**/*.java"});
@@ -75,7 +77,7 @@ public abstract class AbstractTaglistMojoTestCase extends AbstractMojoTestCase {
 
         String filename = mojo.getOutputName() + ".html";
         File outputHtml = new File(outputDir, filename);
-        assertTrue("Cannont find output html file", outputHtml.exists());
+        assertTrue(outputHtml.exists(), "Cannont find output html file");
         return readFileContentWithoutNewLine(outputHtml);
     }
 
@@ -91,7 +93,7 @@ public abstract class AbstractTaglistMojoTestCase extends AbstractMojoTestCase {
 
         String filename = mojo.getOutputName() + ".xml";
         File outputXML = new File(outputDir, filename);
-        assertTrue("Cannont find output xml file", outputXML.exists());
+        assertTrue(outputXML.exists(), "Cannont find output xml file");
         return readFileContentWithoutNewLine(outputXML);
     }
 

@@ -21,12 +21,17 @@ package org.codehaus.mojo.taglist;
 
 import java.io.File;
 
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 /**
  * Test the Taglist mojo tags displayed on the website.
  *
  * @version $Id$
  */
-public class TaglistMojoCountingTagsTest extends AbstractTaglistMojoTestCase {
+class TaglistMojoCountingTagsTest extends AbstractTaglistMojoTestCase {
 
     /**
      * Test the counting tags example from the TagList website.
@@ -36,7 +41,8 @@ public class TaglistMojoCountingTagsTest extends AbstractTaglistMojoTestCase {
      *
      * @throws Exception
      */
-    public void testCountingTags() throws Exception {
+    @Test
+    void countingTags() throws Exception {
         File pluginXmlFile =
                 new File(getBasedir(), "/src/test/resources/unit/counting-tags-test/counting-tags-pom.xml");
         TagListReport mojo = super.getTagListReport(pluginXmlFile);
@@ -47,22 +53,22 @@ public class TaglistMojoCountingTagsTest extends AbstractTaglistMojoTestCase {
 
         // Check that NOT_YET_DOCUMENTED does not show up.
         String expected = "<td>NOT_YET_DOCUMENTED</td><td>0</td>";
-        assertTrue("Incorrect NOT_YET_DOCUMENTED tag result.", htmlString.contains(expected));
+        assertTrue(htmlString.contains(expected), "Incorrect NOT_YET_DOCUMENTED tag result.");
 
         // Check that FIXME has one tag.
         expected = "\">FIXME</a></td><td>1</td>";
-        assertTrue("Incorrect FIXME tag result.", htmlString.contains(expected));
+        assertTrue(htmlString.contains(expected), "Incorrect FIXME tag result.");
 
         // Check that DOCUMENT_ME does not show up.
         expected = "<td>DOCUMENT_ME</td><td>0</td>";
-        assertTrue("Incorrect NOT_YET_DOCUMENTED tag result.", htmlString.contains(expected));
+        assertTrue(htmlString.contains(expected), "Incorrect NOT_YET_DOCUMENTED tag result.");
 
         // Check that <todo has one tag.
         expected = "\">&lt;todo</a></td><td>1</td>";
-        assertTrue("Incorrect <todo tag result.", htmlString.contains(expected));
+        assertTrue(htmlString.contains(expected), "Incorrect <todo tag result.");
 
         // Check that @todo does not show up anywhere in the output.
         String notExpected = "@todo";
-        assertFalse("Incorrect @todo tag result.", htmlString.contains(notExpected));
+        assertFalse(htmlString.contains(notExpected), "Incorrect @todo tag result.");
     }
 }
