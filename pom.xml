@@ -88,7 +88,7 @@
   </developers>
 
   <prerequisites>
-    <maven>${mavenVersion}</maven>
+    <maven>3.9.0</maven>
   </prerequisites>
 
   <scm>
@@ -105,10 +105,12 @@
 
   <properties>
     <project.build.outputTimestamp>2026-09-11T20:39:40Z</project.build.outputTimestamp>
+    <mavenVersion>3.9.16</mavenVersion>
+    <minimalMavenBuildVersion>3.9.0</minimalMavenBuildVersion>
     <doxiaVersion>2.1.0</doxiaVersion>
     <reportingApiVersion>4.0.0</reportingApiVersion>
     <reportingImplVersion>4.0.0</reportingImplVersion>
-    <mavenResolverVersion>1.4.1</mavenResolverVersion>
+    <mavenResolverVersion>1.9.27</mavenResolverVersion>
 
     <!-- override plugins -->
     <taglist-maven-plugin.version>${project.version}</taglist-maven-plugin.version>
