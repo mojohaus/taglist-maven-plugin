@@ -33,7 +33,6 @@
       <plugin>
         <artifactId>taglist-maven-plugin</artifactId>
         <configuration>
-         <project implementation="org.codehaus.mojo.taglist.stubs.NoSourcesProjectStub"/>
           <outputDirectory>${basedir}/target/test-classes/unit/no-sources-test/outputDirectory</outputDirectory>
         </configuration>
       </plugin>

@@ -19,38 +19,41 @@ package org.codehaus.mojo.taglist;
  * under the License.
  */
 
-import java.io.File;
+import org.apache.maven.api.plugin.testing.InjectMojo;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Test the Taglist mojo new tag class configurations.
  *
  * @version $Id$
  */
-public class TaglistMojoTagClassesTest extends AbstractTaglistMojoTestCase {
+class TaglistMojoTagClassesTest extends AbstractTaglistMojoTestCase {
 
     /**
      * Test that the default match type is exact.
      *
      * @throws Exception
      */
-    public void testDefaultExactMatch() throws Exception {
-        File pluginXmlFile =
-                new File(getBasedir(), "/src/test/resources/unit/tag-classes-test/default-exact-match.xml");
-        TagListReport mojo = super.getTagListReport(pluginXmlFile);
+    @Test
+    @InjectMojo(goal = "taglist", pom = "src/test/resources/unit/tag-classes-test/default-exact-match.xml")
+    void testDefaultExactMatch(TagListReport mojo) throws Exception {
+        getTagListReport(mojo, "tag-classes-test");
 
         // Run the TagList mojo
         mojo.execute();
 
-        String htmlString = super.getGeneratedOutput(mojo);
-        String xmlString = super.getGeneratedXMLOutput(mojo);
+        String htmlString = getGeneratedOutput(mojo);
+        String xmlString = getGeneratedXMLOutput(mojo);
 
         // Check to see that all three lines of the comment are captured.
         String expected = "<td>This is the tag for the exact match default 1 of 1.</td>";
-        assertTrue("Missing tag result.", htmlString.contains(expected));
+        assertTrue(htmlString.contains(expected), "Missing tag result.");
 
         // Check to see that all three lines of the comment are captured.
         String expectedCount = "<tag name=\"Test Exact Matches (default)\" count=\"1\">";
-        assertTrue("Incorrect tag count.", xmlString.contains(expectedCount));
+        assertTrue(xmlString.contains(expectedCount), "Incorrect tag count.");
     }
 
     /**
@@ -58,23 +61,24 @@ public class TaglistMojoTagClassesTest extends AbstractTaglistMojoTestCase {
      *
      * @throws Exception
      */
-    public void testExactMatch() throws Exception {
-        File pluginXmlFile = new File(getBasedir(), "/src/test/resources/unit/tag-classes-test/exact-match.xml");
-        TagListReport mojo = super.getTagListReport(pluginXmlFile);
+    @Test
+    @InjectMojo(goal = "taglist", pom = "src/test/resources/unit/tag-classes-test/exact-match.xml")
+    void testExactMatch(TagListReport mojo) throws Exception {
+        getTagListReport(mojo, "tag-classes-test");
 
         // Run the TagList mojo
         mojo.execute();
 
-        String htmlString = super.getGeneratedOutput(mojo);
-        String xmlString = super.getGeneratedXMLOutput(mojo);
+        String htmlString = getGeneratedOutput(mojo);
+        String xmlString = getGeneratedXMLOutput(mojo);
 
         // Check to see that all three lines of the comment are captured.
         String expected = "<td>This is hte tag for the exact match 1 of 1.</td>";
-        assertTrue("Missing tag result.", htmlString.contains(expected));
+        assertTrue(htmlString.contains(expected), "Missing tag result.");
 
         // Check to see that all three lines of the comment are captured.
         String expectedCount = "<tag name=\"Test Exact Matches (configured)\" count=\"1\">";
-        assertTrue("Incorrect tag count.", xmlString.contains(expectedCount));
+        assertTrue(xmlString.contains(expectedCount), "Incorrect tag count.");
     }
 
     /**
@@ -82,27 +86,28 @@ public class TaglistMojoTagClassesTest extends AbstractTaglistMojoTestCase {
      *
      * @throws Exception
      */
-    public void testIgnoreCaseMatch() throws Exception {
-        File pluginXmlFile = new File(getBasedir(), "/src/test/resources/unit/tag-classes-test/ignorecase-match.xml");
-        TagListReport mojo = super.getTagListReport(pluginXmlFile);
+    @Test
+    @InjectMojo(goal = "taglist", pom = "src/test/resources/unit/tag-classes-test/ignorecase-match.xml")
+    void testIgnoreCaseMatch(TagListReport mojo) throws Exception {
+        getTagListReport(mojo, "tag-classes-test");
 
         // Run the TagList mojo
         mojo.execute();
 
-        String htmlString = super.getGeneratedOutput(mojo);
-        String xmlString = super.getGeneratedXMLOutput(mojo);
+        String htmlString = getGeneratedOutput(mojo);
+        String xmlString = getGeneratedXMLOutput(mojo);
 
         // Check to see that all three lines of the comment are captured.
         String expected1 = "<td>ignore case 1 of 3.</td>";
-        assertTrue("Missing tag result #1.", htmlString.contains(expected1));
+        assertTrue(htmlString.contains(expected1), "Missing tag result #1.");
         String expected2 = "<td>ignore case 2 of 3.</td>";
-        assertTrue("Missing tag result #2.", htmlString.contains(expected2));
+        assertTrue(htmlString.contains(expected2), "Missing tag result #2.");
         String expected3 = "<td>ignore case 3 of 3.</td>";
-        assertTrue("Missing tag result #3.", htmlString.contains(expected3));
+        assertTrue(htmlString.contains(expected3), "Missing tag result #3.");
 
         // Check to see that all three lines of the comment are captured.
         String expectedCount = "<tag name=\"Test IgnoreCase Matches (configured)\" count=\"3\">";
-        assertTrue("Incorrect tag count.", xmlString.contains(expectedCount));
+        assertTrue(xmlString.contains(expectedCount), "Incorrect tag count.");
     }
 
     /**
@@ -110,26 +115,27 @@ public class TaglistMojoTagClassesTest extends AbstractTaglistMojoTestCase {
      *
      * @throws Exception
      */
-    public void testRegExMatch() throws Exception {
-        File pluginXmlFile = new File(getBasedir(), "/src/test/resources/unit/tag-classes-test/regex-match.xml");
-        TagListReport mojo = super.getTagListReport(pluginXmlFile);
+    @Test
+    @InjectMojo(goal = "taglist", pom = "src/test/resources/unit/tag-classes-test/regex-match.xml")
+    void testRegExMatch(TagListReport mojo) throws Exception {
+        getTagListReport(mojo, "tag-classes-test");
 
         // Run the TagList mojo
         mojo.execute();
 
-        String htmlString = super.getGeneratedOutput(mojo);
-        String xmlString = super.getGeneratedXMLOutput(mojo);
+        String htmlString = getGeneratedOutput(mojo);
+        String xmlString = getGeneratedXMLOutput(mojo);
 
         // Check to see that all three lines of the comment are captured.
         String expected1 = "<td>reg ex match 1 of 3.</td>";
-        assertTrue("Missing tag result #1.", htmlString.contains(expected1));
+        assertTrue(htmlString.contains(expected1), "Missing tag result #1.");
         String expected2 = "<td>reg ex match 2 of 3.</td>";
-        assertTrue("Missing tag result #2.", htmlString.contains(expected2));
+        assertTrue(htmlString.contains(expected2), "Missing tag result #2.");
         String expected3 = "<td>reg ex match 3 of 3.</td>";
-        assertTrue("Missing tag result #3.", htmlString.contains(expected3));
+        assertTrue(htmlString.contains(expected3), "Missing tag result #3.");
 
         // Check to see that all three lines of the comment are captured.
         String expectedCount = "<tag name=\"Test RegEx Matches (configured)\" count=\"3\">";
-        assertTrue("Incorrect tag count.", xmlString.contains(expectedCount));
+        assertTrue(xmlString.contains(expectedCount), "Incorrect tag count.");
     }
 }

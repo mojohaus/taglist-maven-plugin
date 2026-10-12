@@ -33,7 +33,6 @@
       <plugin>
         <artifactId>taglist-maven-plugin</artifactId>
         <configuration>
-          <project implementation="org.codehaus.mojo.taglist.stubs.TagListProjectStub"/>
           <outputDirectory>${basedir}/target/test-classes/unit/aggregate-test/outputDirectory</outputDirectory>
           <aggregate>true</aggregate>
           <tags>
