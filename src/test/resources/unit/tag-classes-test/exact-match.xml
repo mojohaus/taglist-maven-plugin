@@ -31,7 +31,6 @@
 			<plugin>
 				<artifactId>taglist-maven-plugin</artifactId>
 				<configuration>
-					<project implementation="org.codehaus.mojo.taglist.stubs.TagClassesProjectStub"/>
 					<outputDirectory>${basedir}/target/test-classes/unit/tag-classes-test/outputDirectory</outputDirectory>
 					<tagListOptions>
 						<tagClasses>

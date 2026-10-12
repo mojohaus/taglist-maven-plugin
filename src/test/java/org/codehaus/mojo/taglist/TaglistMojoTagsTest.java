@@ -21,39 +21,46 @@ package org.codehaus.mojo.taglist;
 
 import java.io.File;
 
+import org.apache.maven.api.plugin.testing.InjectMojo;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 /**
  * Test the Taglist mojo tags.
  *
  * @version $Id$
  */
-public class TaglistMojoTagsTest extends AbstractTaglistMojoTestCase {
+class TaglistMojoTagsTest extends AbstractTaglistMojoTestCase {
 
     /**
      * Test the default tags.
      *
      * @throws Exception
      */
-    public void testDefaultTags() throws Exception {
-        File pluginXmlFile = new File(getBasedir(), "/src/test/resources/unit/tag-test/default-tags-pom.xml");
-
-        TagListReport mojo = super.getTagListReport(pluginXmlFile);
+    @Test
+    @InjectMojo(goal = "taglist", pom = "src/test/resources/unit/tag-test/default-tags-pom.xml")
+    void testDefaultTags(TagListReport mojo) throws Exception {
+        getTagListReport(mojo, "tag-test");
 
         // Run the TagList mojo
         mojo.execute();
 
-        String htmlString = super.getGeneratedOutput(mojo);
+        String htmlString = getGeneratedOutput(mojo);
 
         // Check to see that @todo has one occurance.
         String expected = "\">@todo</a></td><td>1</td>";
-        assertTrue("Incorrect default @todo tag result.", htmlString.contains(expected));
+        assertTrue(htmlString.contains(expected), "Incorrect default @todo tag result.");
 
         // Check to see that @todo has one occurance.
         expected = "\">TODO</a></td><td>1</td>";
-        assertTrue("Incorrect default TODO tag result.", htmlString.contains(expected));
+        assertTrue(htmlString.contains(expected), "Incorrect default TODO tag result.");
 
         // Check to see that @FIXME has one occurance.
         expected = "\">FIXME</a></td><td>1</td>";
-        assertTrue("Incorrect default FIXME tag result.", htmlString.contains(expected));
+        assertTrue(htmlString.contains(expected), "Incorrect default FIXME tag result.");
     }
 
     /**
@@ -62,22 +69,23 @@ public class TaglistMojoTagsTest extends AbstractTaglistMojoTestCase {
      *
      * @throws Exception
      */
-    public void testCTags() throws Exception {
-        File pluginXmlFile = new File(getBasedir(), "/src/test/resources/unit/tag-test/c-style-tags-pom.xml");
-        TagListReport mojo = super.getTagListReport(pluginXmlFile);
+    @Test
+    @InjectMojo(goal = "taglist", pom = "src/test/resources/unit/tag-test/c-style-tags-pom.xml")
+    void testCTags(TagListReport mojo) throws Exception {
+        getTagListReport(mojo, "tag-test");
 
         // Run the TagList mojo
         mojo.execute();
 
-        String htmlString = super.getGeneratedOutput(mojo);
+        String htmlString = getGeneratedOutput(mojo);
 
         // Check to see that C++ style tag has one occurrence.
         String expected = "\">c_style_tag</a></td><td>1</td>";
-        assertTrue("Incorrect C style tag result.", htmlString.contains(expected));
+        assertTrue(htmlString.contains(expected), "Incorrect C style tag result.");
 
         // Check to see that tag has the correct text.
         expected = "<td>This is a C style tag.</td>";
-        assertTrue("Incorrect C style tag text.", htmlString.contains(expected));
+        assertTrue(htmlString.contains(expected), "Incorrect C style tag text.");
     }
 
     /**
@@ -85,22 +93,23 @@ public class TaglistMojoTagsTest extends AbstractTaglistMojoTestCase {
      *
      * @throws Exception
      */
-    public void testCPlusPlusTags() throws Exception {
-        File pluginXmlFile = new File(getBasedir(), "/src/test/resources/unit/tag-test/cplusplus-style-tags-pom.xml");
-        TagListReport mojo = super.getTagListReport(pluginXmlFile);
+    @Test
+    @InjectMojo(goal = "taglist", pom = "src/test/resources/unit/tag-test/cplusplus-style-tags-pom.xml")
+    void testCPlusPlusTags(TagListReport mojo) throws Exception {
+        getTagListReport(mojo, "tag-test");
 
         // Run the TagList mojo
         mojo.execute();
 
-        String htmlString = super.getGeneratedOutput(mojo);
+        String htmlString = getGeneratedOutput(mojo);
 
         // Check to see that C++ style tag has one occurrence.
         String expected = "\">c++_style_tag</a></td><td>1</td>";
-        assertTrue("Incorrect C++ style tag result.", htmlString.contains(expected));
+        assertTrue(htmlString.contains(expected), "Incorrect C++ style tag result.");
 
         // Check to see that tag has the correct text.
         expected = "<td>This is a C++ style tag.</td>";
-        assertTrue("Incorrect C++ style tag text.", htmlString.contains(expected));
+        assertTrue(htmlString.contains(expected), "Incorrect C++ style tag text.");
     }
 
     /**
@@ -110,23 +119,23 @@ public class TaglistMojoTagsTest extends AbstractTaglistMojoTestCase {
      *
      * @throws Exception
      */
-    public void testJavaDocSingleTags() throws Exception {
-        File pluginXmlFile =
-                new File(getBasedir(), "/src/test/resources/unit/tag-test/javadoc-single-style-tags-pom.xml");
-        TagListReport mojo = super.getTagListReport(pluginXmlFile);
+    @Test
+    @InjectMojo(goal = "taglist", pom = "src/test/resources/unit/tag-test/javadoc-single-style-tags-pom.xml")
+    void testJavaDocSingleTags(TagListReport mojo) throws Exception {
+        getTagListReport(mojo, "tag-test");
 
         // Run the TagList mojo
         mojo.execute();
 
-        String htmlString = super.getGeneratedOutput(mojo);
+        String htmlString = getGeneratedOutput(mojo);
 
         // Check to see that JavaDoc single style tag has one occurrence.
         String expected = "\">javadoc_single_style_tag</a></td><td>1</td>";
-        assertTrue("Incorrect JavaDoc single style tag result.", htmlString.contains(expected));
+        assertTrue(htmlString.contains(expected), "Incorrect JavaDoc single style tag result.");
 
         // Check to see that tag has the correct text.
         expected = "<td>This is a JavaDoc single style tag.</td>";
-        assertTrue("Incorrect JavaDoc single style tag text.", htmlString.contains(expected));
+        assertTrue(htmlString.contains(expected), "Incorrect JavaDoc single style tag text.");
     }
 
     /**
@@ -137,23 +146,23 @@ public class TaglistMojoTagsTest extends AbstractTaglistMojoTestCase {
      *
      * @throws Exception
      */
-    public void testJavaDocMultiTags() throws Exception {
-        File pluginXmlFile =
-                new File(getBasedir(), "/src/test/resources/unit/tag-test/javadoc-multi-style-tags-pom.xml");
-        TagListReport mojo = super.getTagListReport(pluginXmlFile);
+    @Test
+    @InjectMojo(goal = "taglist", pom = "src/test/resources/unit/tag-test/javadoc-multi-style-tags-pom.xml")
+    void testJavaDocMultiTags(TagListReport mojo) throws Exception {
+        getTagListReport(mojo, "tag-test");
 
         // Run the TagList mojo
         mojo.execute();
 
-        String htmlString = super.getGeneratedOutput(mojo);
+        String htmlString = getGeneratedOutput(mojo);
 
         // Check to see that JavaDoc style tag has one occurrence.
         String expected = "\">javadoc_multi_style_tag</a></td><td>1</td>";
-        assertTrue("Incorrect JavaDoc multi style tag result.", htmlString.contains(expected));
+        assertTrue(htmlString.contains(expected), "Incorrect JavaDoc multi style tag result.");
 
         // Check to see that tag has the correct text.
         expected = "<td>This is a JavaDoc multi style tag.</td>";
-        assertTrue("Incorrect JavaDoc multi style tag text.", htmlString.contains(expected));
+        assertTrue(htmlString.contains(expected), "Incorrect JavaDoc multi style tag text.");
     }
 
     /**
@@ -163,9 +172,10 @@ public class TaglistMojoTagsTest extends AbstractTaglistMojoTestCase {
      *
      * @throws Exception
      */
-    public void testNotAtStartOfLineTags() throws Exception {
-        File pluginXmlFile = new File(getBasedir(), "/src/test/resources/unit/tag-test/not-start-line-tags-pom.xml");
-        TagListReport mojo = super.getTagListReport(pluginXmlFile);
+    @Test
+    @InjectMojo(goal = "taglist", pom = "src/test/resources/unit/tag-test/not-start-line-tags-pom.xml")
+    void testNotAtStartOfLineTags(TagListReport mojo) throws Exception {
+        getTagListReport(mojo, "tag-test");
 
         // Run the TagList mojo
         mojo.execute();
@@ -183,10 +193,10 @@ public class TaglistMojoTagsTest extends AbstractTaglistMojoTestCase {
      *
      * @throws Exception
      */
-    public void testSourceCodeVariablesTags() throws Exception {
-        File pluginXmlFile =
-                new File(getBasedir(), "/src/test/resources/unit/tag-test/source-code-variable-tags-pom.xml");
-        TagListReport mojo = super.getTagListReport(pluginXmlFile);
+    @Test
+    @InjectMojo(goal = "taglist", pom = "src/test/resources/unit/tag-test/source-code-variable-tags-pom.xml")
+    void testSourceCodeVariablesTags(TagListReport mojo) throws Exception {
+        getTagListReport(mojo, "tag-test");
 
         // Run the TagList mojo
         mojo.execute();
