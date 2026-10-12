@@ -38,7 +38,7 @@ class TaglistMojoLocalesTest extends AbstractTaglistMojoTestCase {
      */
     @Test
     @InjectMojo(goal = "taglist", pom = "src/test/resources/unit/locale-test/english-locale.xml")
-    void testEnglishLocale(TagListReport mojo) throws Exception {
+    void englishLocale(TagListReport mojo) throws Exception {
         getTagListReport(mojo, "locale-test");
 
         // Run the TagList mojo
@@ -67,7 +67,7 @@ class TaglistMojoLocalesTest extends AbstractTaglistMojoTestCase {
      */
     @Test
     @InjectMojo(goal = "taglist", pom = "src/test/resources/unit/locale-test/turkish-locale.xml")
-    void testTurkishLocale(TagListReport mojo) throws Exception {
+    void turkishLocale(TagListReport mojo) throws Exception {
         getTagListReport(mojo, "locale-test");
 
         // Run the TagList mojo

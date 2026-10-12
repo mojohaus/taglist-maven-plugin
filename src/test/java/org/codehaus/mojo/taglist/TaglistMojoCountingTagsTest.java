@@ -42,7 +42,7 @@ class TaglistMojoCountingTagsTest extends AbstractTaglistMojoTestCase {
      */
     @Test
     @InjectMojo(goal = "taglist", pom = "src/test/resources/unit/counting-tags-test/counting-tags-pom.xml")
-    void testCountingTags(TagListReport mojo) throws Exception {
+    void countingTags(TagListReport mojo) throws Exception {
         getTagListReport(mojo, "counting-tags-test");
 
         // Run the TagList mojo

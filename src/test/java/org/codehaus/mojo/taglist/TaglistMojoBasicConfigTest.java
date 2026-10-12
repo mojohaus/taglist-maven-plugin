@@ -46,7 +46,7 @@ class TaglistMojoBasicConfigTest extends AbstractTaglistMojoTestCase {
      */
     @Test
     @InjectMojo(goal = "taglist", pom = "src/test/resources/unit/basic-config-test/create-output-pom.xml")
-    void testCreateTagListOutput(TagListReport mojo) throws Exception {
+    void createTagListOutput(TagListReport mojo) throws Exception {
         getTagListReport(mojo, "basic-config-test");
 
         // Run the TagList mojo
@@ -68,7 +68,7 @@ class TaglistMojoBasicConfigTest extends AbstractTaglistMojoTestCase {
     @InjectMojo(
             goal = "taglist",
             pom = "src/test/resources/unit/basic-config-test/multiple-line-comments-enabled-pom.xml")
-    void testMultipleLineCommentsEnabled(TagListReport mojo) throws Exception {
+    void multipleLineCommentsEnabled(TagListReport mojo) throws Exception {
         getTagListReport(mojo, "basic-config-test");
 
         // Run the TagList mojo
@@ -90,7 +90,7 @@ class TaglistMojoBasicConfigTest extends AbstractTaglistMojoTestCase {
     @InjectMojo(
             goal = "taglist",
             pom = "src/test/resources/unit/basic-config-test/multiple-line-comments-disabled-pom.xml")
-    void testMultipleLineCommentsDisabled(TagListReport mojo) throws Exception {
+    void multipleLineCommentsDisabled(TagListReport mojo) throws Exception {
         getTagListReport(mojo, "basic-config-test");
 
         // Run the TagList mojo
@@ -109,7 +109,7 @@ class TaglistMojoBasicConfigTest extends AbstractTaglistMojoTestCase {
      */
     @Test
     @InjectMojo(goal = "taglist", pom = "src/test/resources/unit/basic-config-test/empty-comments-enabled-pom.xml")
-    void testEmptyCommentsEnabled(TagListReport mojo) throws Exception {
+    void emptyCommentsEnabled(TagListReport mojo) throws Exception {
         getTagListReport(mojo, "basic-config-test");
 
         mojo.execute();
@@ -136,7 +136,7 @@ class TaglistMojoBasicConfigTest extends AbstractTaglistMojoTestCase {
      */
     @Test
     @InjectMojo(goal = "taglist", pom = "src/test/resources/unit/basic-config-test/empty-comments-disabled-pom.xml")
-    void testEmptyCommentsDisabled(TagListReport mojo) throws Exception {
+    void emptyCommentsDisabled(TagListReport mojo) throws Exception {
         getTagListReport(mojo, "basic-config-test");
 
         mojo.execute();
@@ -153,7 +153,7 @@ class TaglistMojoBasicConfigTest extends AbstractTaglistMojoTestCase {
      */
     @Test
     @InjectMojo(goal = "taglist", pom = "src/test/resources/unit/basic-config-test/colons-pom.xml")
-    void testColonInComment(TagListReport mojo) throws Exception {
+    void colonInComment(TagListReport mojo) throws Exception {
         getTagListReport(mojo, "basic-config-test");
 
         mojo.execute();
@@ -181,7 +181,7 @@ class TaglistMojoBasicConfigTest extends AbstractTaglistMojoTestCase {
      */
     @Test
     @InjectMojo(goal = "taglist", pom = "src/test/resources/unit/basic-config-test/empty-colons-pom.xml")
-    void testColonInEmptyComment(TagListReport mojo) throws Exception {
+    void colonInEmptyComment(TagListReport mojo) throws Exception {
         getTagListReport(mojo, "basic-config-test");
 
         mojo.execute();
@@ -213,7 +213,7 @@ class TaglistMojoBasicConfigTest extends AbstractTaglistMojoTestCase {
      */
     @Test
     @InjectMojo(goal = "taglist", pom = "src/test/resources/unit/basic-config-test/show-empty-details-enabled-pom.xml")
-    void testShowEmptyDetailsEnabled(TagListReport mojo) throws Exception {
+    void showEmptyDetailsEnabled(TagListReport mojo) throws Exception {
         getTagListReport(mojo, "basic-config-test");
 
         mojo.execute();
@@ -244,7 +244,7 @@ class TaglistMojoBasicConfigTest extends AbstractTaglistMojoTestCase {
      */
     @Test
     @InjectMojo(goal = "taglist", pom = "src/test/resources/unit/basic-config-test/show-empty-details-disabled-pom.xml")
-    void testShowEmptyDetailsDisabled(TagListReport mojo) throws Exception {
+    void showEmptyDetailsDisabled(TagListReport mojo) throws Exception {
         getTagListReport(mojo, "basic-config-test");
 
         mojo.execute();
@@ -271,7 +271,7 @@ class TaglistMojoBasicConfigTest extends AbstractTaglistMojoTestCase {
 
     @Test
     @InjectMojo(goal = "taglist", pom = "src/test/resources/unit/basic-config-test/xml-output-pom.xml")
-    void testXmlFile(TagListReport mojo) throws Exception {
+    void xmlFile(TagListReport mojo) throws Exception {
         getTagListReport(mojo, "basic-config-test");
         mojo.execute();
 
