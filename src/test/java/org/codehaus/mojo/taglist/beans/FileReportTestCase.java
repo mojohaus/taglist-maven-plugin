@@ -33,7 +33,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class FileReportTestCase {
 
     @Test
-    void testGetClassName() throws Exception {
+    void getClassName() throws Exception {
 
         File file = new File(getClass()
                 .getResource("/org/codehaus/mojo/taglist/beans/XYjavatest.java")

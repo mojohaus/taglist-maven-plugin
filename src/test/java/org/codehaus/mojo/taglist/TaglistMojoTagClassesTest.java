@@ -38,7 +38,7 @@ class TaglistMojoTagClassesTest extends AbstractTaglistMojoTestCase {
      */
     @Test
     @InjectMojo(goal = "taglist", pom = "src/test/resources/unit/tag-classes-test/default-exact-match.xml")
-    void testDefaultExactMatch(TagListReport mojo) throws Exception {
+    void defaultExactMatch(TagListReport mojo) throws Exception {
         getTagListReport(mojo, "tag-classes-test");
 
         // Run the TagList mojo
@@ -63,7 +63,7 @@ class TaglistMojoTagClassesTest extends AbstractTaglistMojoTestCase {
      */
     @Test
     @InjectMojo(goal = "taglist", pom = "src/test/resources/unit/tag-classes-test/exact-match.xml")
-    void testExactMatch(TagListReport mojo) throws Exception {
+    void exactMatch(TagListReport mojo) throws Exception {
         getTagListReport(mojo, "tag-classes-test");
 
         // Run the TagList mojo
@@ -88,7 +88,7 @@ class TaglistMojoTagClassesTest extends AbstractTaglistMojoTestCase {
      */
     @Test
     @InjectMojo(goal = "taglist", pom = "src/test/resources/unit/tag-classes-test/ignorecase-match.xml")
-    void testIgnoreCaseMatch(TagListReport mojo) throws Exception {
+    void ignoreCaseMatch(TagListReport mojo) throws Exception {
         getTagListReport(mojo, "tag-classes-test");
 
         // Run the TagList mojo
@@ -117,7 +117,7 @@ class TaglistMojoTagClassesTest extends AbstractTaglistMojoTestCase {
      */
     @Test
     @InjectMojo(goal = "taglist", pom = "src/test/resources/unit/tag-classes-test/regex-match.xml")
-    void testRegExMatch(TagListReport mojo) throws Exception {
+    void regExMatch(TagListReport mojo) throws Exception {
         getTagListReport(mojo, "tag-classes-test");
 
         // Run the TagList mojo

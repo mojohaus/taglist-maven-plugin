@@ -42,7 +42,7 @@ class TaglistMojoTagsTest extends AbstractTaglistMojoTestCase {
      */
     @Test
     @InjectMojo(goal = "taglist", pom = "src/test/resources/unit/tag-test/default-tags-pom.xml")
-    void testDefaultTags(TagListReport mojo) throws Exception {
+    void defaultTags(TagListReport mojo) throws Exception {
         getTagListReport(mojo, "tag-test");
 
         // Run the TagList mojo
@@ -71,7 +71,7 @@ class TaglistMojoTagsTest extends AbstractTaglistMojoTestCase {
      */
     @Test
     @InjectMojo(goal = "taglist", pom = "src/test/resources/unit/tag-test/c-style-tags-pom.xml")
-    void testCTags(TagListReport mojo) throws Exception {
+    void cTags(TagListReport mojo) throws Exception {
         getTagListReport(mojo, "tag-test");
 
         // Run the TagList mojo
@@ -95,7 +95,7 @@ class TaglistMojoTagsTest extends AbstractTaglistMojoTestCase {
      */
     @Test
     @InjectMojo(goal = "taglist", pom = "src/test/resources/unit/tag-test/cplusplus-style-tags-pom.xml")
-    void testCPlusPlusTags(TagListReport mojo) throws Exception {
+    void cPlusPlusTags(TagListReport mojo) throws Exception {
         getTagListReport(mojo, "tag-test");
 
         // Run the TagList mojo
@@ -121,7 +121,7 @@ class TaglistMojoTagsTest extends AbstractTaglistMojoTestCase {
      */
     @Test
     @InjectMojo(goal = "taglist", pom = "src/test/resources/unit/tag-test/javadoc-single-style-tags-pom.xml")
-    void testJavaDocSingleTags(TagListReport mojo) throws Exception {
+    void javaDocSingleTags(TagListReport mojo) throws Exception {
         getTagListReport(mojo, "tag-test");
 
         // Run the TagList mojo
@@ -148,7 +148,7 @@ class TaglistMojoTagsTest extends AbstractTaglistMojoTestCase {
      */
     @Test
     @InjectMojo(goal = "taglist", pom = "src/test/resources/unit/tag-test/javadoc-multi-style-tags-pom.xml")
-    void testJavaDocMultiTags(TagListReport mojo) throws Exception {
+    void javaDocMultiTags(TagListReport mojo) throws Exception {
         getTagListReport(mojo, "tag-test");
 
         // Run the TagList mojo
@@ -174,7 +174,7 @@ class TaglistMojoTagsTest extends AbstractTaglistMojoTestCase {
      */
     @Test
     @InjectMojo(goal = "taglist", pom = "src/test/resources/unit/tag-test/not-start-line-tags-pom.xml")
-    void testNotAtStartOfLineTags(TagListReport mojo) throws Exception {
+    void notAtStartOfLineTags(TagListReport mojo) throws Exception {
         getTagListReport(mojo, "tag-test");
 
         // Run the TagList mojo
@@ -195,7 +195,7 @@ class TaglistMojoTagsTest extends AbstractTaglistMojoTestCase {
      */
     @Test
     @InjectMojo(goal = "taglist", pom = "src/test/resources/unit/tag-test/source-code-variable-tags-pom.xml")
-    void testSourceCodeVariablesTags(TagListReport mojo) throws Exception {
+    void sourceCodeVariablesTags(TagListReport mojo) throws Exception {
         getTagListReport(mojo, "tag-test");
 
         // Run the TagList mojo
