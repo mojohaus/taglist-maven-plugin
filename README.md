@@ -6,6 +6,8 @@
 
 ## Contributing
 
+See [AGENTS.md](AGENTS.md) for build, test and pull request conventions.
+
 ### Creating Issues
 
 If you find a problem please create an
