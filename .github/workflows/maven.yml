@@ -23,9 +23,6 @@ jobs:
   build:
     name: Verify
     uses: mojohaus/.github/.github/workflows/maven-verify.yml@master
-    with:
-      ff-goal: 'install'         # site use project version for reporting
-      verify-goal: 'install'     # should be the same as for first build
 
 #  deploy:
 #    name: Deploy
