@@ -1,10 +1,6 @@
- ------
- Usage
- ------
- Fabrice Bellingard
- ------
+title: Usage
+author: Fabrice Bellingard
 
+# Usage
 
-Usage
-
-  Please see the {{./{usage.html}usage page}}.
+Please see the [usage page](./usage.html).
