@@ -1,19 +1,19 @@
- ------
- Counting Tags
- ------
- Dennis Lundberg
- ------
- 2007-08-09
- ------
+---
+title: Counting Tags
+author:
+  - Dennis Lundberg
+date: 2007-08-09
+---
 
 Counting Tags
+=============
 
-  This example is meant to show you how the Taglist Maven Plugin works, when it
-  finds and counts tags in your code.
+This example is meant to show you how the Taglist Maven Plugin works, when it
+finds and counts tags in your code.
 
-  Let us configure the plugin in the <<<pom.xml>>> file like this:
+Let us configure the plugin in the `pom.xml` file like this:
 
-+---+
+```xml
 <project>
   ...
   <reporting>
@@ -67,11 +67,11 @@ Counting Tags
   </reporting>
   ...
 </project>
-+---+
+```
 
-  The Java file we are analyzing is this one:
+The Java file we are analyzing is this one:
 
-+---+
+```java
 package taglist;
 
 /**
@@ -100,22 +100,22 @@ public class Issue
     // @todo Implement this later
   }
 }
-+---+
+```
 
-  We'll go through the lines in the code and explain what happens and why.
+We'll go through the lines in the code and explain what happens and why.
 
-  <<Line 4:>> This line will <not> be counted, because <emptyComments> is set to false and it is empty - it isn't
-  followed by a desciptive text.
+**Line 4:** This line will *not* be counted, because *emptyComments* is set to false and it is empty - it isn't
+followed by a desciptive text.
 
-  <<Line 10:>> This line will be counted.
+**Line 10:** This line will be counted.
 
-  <<Line 12:>> This line will <not> be counted, because it is located at the end
-  of the line with other text before it.
+**Line 12:** This line will *not* be counted, because it is located at the end
+of the line with other text before it.
 
-  <<Line 17:>> This line will be counted.
+**Line 17:** This line will be counted.
 
-  <<Line 22:>> This line will <not> be counted, because it appears in the middle
-  of the line with other text before it.
+**Line 22:** This line will *not* be counted, because it appears in the middle
+of the line with other text before it.
 
-  <<Line 26:>> This line will <not> be counted, because the text <<<@todo>>> is
-  not one of the configured tags.
+**Line 26:** This line will *not* be counted, because the text `@todo` is
+not one of the configured tags.

@@ -1,21 +1,24 @@
- ------
- Usage
- ------
- Fabrice Bellingard
- ------
+---
+title: Usage
+author:
+  - Fabrice Bellingard
+---
 
 Usage
+=====
 
-*Available Configuration Options
- 
- You can refer to the {{{./taglist-mojo.html}goal documentation}} to discover
- the different configuration options for this plugin.
+Available Configuration Options
+-------------------------------
 
-*How to Use
+You can refer to the [goal documentation](./taglist-mojo.html) to discover
+the different configuration options for this plugin.
 
-  In your <<<pom.xml>>>, insert this segment:
+How to Use
+----------
 
-+---+
+In your `pom.xml`, insert this segment:
+
+```xml
 <project>
   ...
   <build>
@@ -33,24 +36,24 @@ Usage
   </reporting>
   ...
 </project>
-+---+
+```
 
-  NOTE: 
-  If you like having cross references included you need to define the 
-  taglist-maven-plugin after {{{https://maven.apache.org/jxr/maven-jxr-plugin/}maven-jxr-plugin}}
-  otherwise you will get a warning (See also {{{./faq.html}FAQ}}).
+NOTE:
+If you like having cross references included you need to define the
+taglist-maven-plugin after [maven-jxr-plugin](https://maven.apache.org/jxr/maven-jxr-plugin/)
+otherwise you will get a warning (See also [FAQ](./faq.html)).
 
-  The report will be generated when executing the <<<site>>> life cycle phase,
-  like this:
+The report will be generated when executing the `site` life cycle phase,
+like this:
 
--------------------
+```sh
 mvn site
--------------------
+```
 
-  The TagList plugin allows tags to be found using three matching methods:  exact match, ignore case match, and 
-  regular expression match.  The matched tags are grouped into tag classes.  For instance:
+The TagList plugin allows tags to be found using three matching methods: exact match, ignore case match, and
+regular expression match. The matched tags are grouped into tag classes. For instance:
 
-+---+
+```xml
 <project>
   ...
   <build>
@@ -87,6 +90,6 @@ mvn site
   </reporting>
   ...
 </project>
-+---+
+```
 
-  See also type description {{{./taglistOptions.html}taglistOptions}}.
+See also type description [taglistOptions](./taglistOptions.html).
