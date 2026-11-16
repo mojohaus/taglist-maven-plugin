@@ -388,8 +388,7 @@ public class TagListReport extends AbstractMavenReport {
         if (StringUtils.isEmpty(relativePath)) {
             relativePath = ".";
         }
-        relativePath = relativePath + "/" + location.getName();
-        return relativePath;
+        return relativePath + "/" + location.getName();
     }
 
     /**

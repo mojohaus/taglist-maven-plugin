@@ -70,7 +70,7 @@ public class TagClass {
     /**
      * The last tag to successfully match.
      */
-    private AbsTag lastSuccessfulTagMatch = null;
+    private AbsTag lastSuccessfulTagMatch;
 
     /**
      * A unique ID counter for the tag classes.
@@ -96,7 +96,7 @@ public class TagClass {
      * @return the tag class's tag report.
      */
     public TagReport getTagReport() {
-        return (classTagReport);
+        return classTagReport;
     }
 
     /** Add a tag to this tag class.
@@ -176,9 +176,9 @@ public class TagClass {
      */
     public String getLastTagMatchString() {
         if (lastSuccessfulTagMatch == null) {
-            return ("");
+            return "";
         } else {
-            return (lastSuccessfulTagMatch.tagString);
+            return lastSuccessfulTagMatch.tagString;
         }
     }
 
@@ -195,9 +195,9 @@ public class TagClass {
      */
     public int getLastTagMatchStringLength() {
         if (lastSuccessfulTagMatch == null) {
-            return (0);
+            return 0;
         } else {
-            return (lastSuccessfulTagMatch.getLastTagMatchLength());
+            return lastSuccessfulTagMatch.getLastTagMatchLength();
         }
     }
 
@@ -206,6 +206,6 @@ public class TagClass {
      * @return the tag class display name.
      */
     public String getDisplayName() {
-        return (classDisplayName);
+        return classDisplayName;
     }
 }

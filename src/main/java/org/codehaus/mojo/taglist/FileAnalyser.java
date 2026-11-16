@@ -174,7 +174,7 @@ public class FileAnalyser {
      */
     private Reader getReader(File file) throws IOException {
         InputStream in = Files.newInputStream(file.toPath());
-        return (encoding == null) ? new InputStreamReader(in) : new InputStreamReader(in, encoding);
+        return encoding == null ? new InputStreamReader(in) : new InputStreamReader(in, encoding);
     }
 
     /**

@@ -174,7 +174,7 @@ public class TagReport implements Comparable<TagReport> {
             }
         }
 
-        return (strings);
+        return strings;
     }
 
     /**
@@ -189,7 +189,7 @@ public class TagReport implements Comparable<TagReport> {
             return false;
         }
 
-        return (this.compareTo((TagReport) r) == 0);
+        return this.compareTo((TagReport) r) == 0;
     }
 
     /**

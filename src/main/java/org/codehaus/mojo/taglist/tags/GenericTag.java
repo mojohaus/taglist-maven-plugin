@@ -65,7 +65,7 @@ public class GenericTag extends AbsTag {
             result = currentLine.indexOf(tagString);
         }
 
-        return (result);
+        return result;
     }
 
     /** Check to see if the string starts with this tag.
@@ -81,7 +81,7 @@ public class GenericTag extends AbsTag {
             result = currentLine.startsWith(tagString);
         }
 
-        return (result);
+        return result;
     }
 
     /** Return the length of the last matched tag.
@@ -91,7 +91,7 @@ public class GenericTag extends AbsTag {
      * @return the length of the last matched tag.
      */
     public int getLastTagMatchLength() {
-        return (tagString.length());
+        return tagString.length();
     }
 
     /** Constructor.
