@@ -57,7 +57,7 @@ public class RegExTag extends AbsTag {
     private final Pattern pattern;
 
     /** The length of the last regEx comment tag match */
-    private int lastMatchedCommentTagLength = 0;
+    private int lastMatchedCommentTagLength;
 
     /** Check to see if the string contains this tag.
      *  If there is a match, return the index within the string; otherwise,
@@ -82,7 +82,7 @@ public class RegExTag extends AbsTag {
             }
         }
 
-        return (result);
+        return result;
     }
 
     /** Check to see if the string starts with this tag.
@@ -102,7 +102,7 @@ public class RegExTag extends AbsTag {
             }
         }
 
-        return (result);
+        return result;
     }
 
     /** Return the length of the last matched tag.
@@ -120,7 +120,7 @@ public class RegExTag extends AbsTag {
      * @return the length of the last matched tag.
      */
     public int getLastTagMatchLength() {
-        return (lastMatchedCommentTagLength);
+        return lastMatchedCommentTagLength;
     }
 
     /** Constructor.

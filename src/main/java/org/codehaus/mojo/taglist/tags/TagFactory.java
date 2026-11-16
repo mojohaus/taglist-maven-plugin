@@ -23,7 +23,7 @@ package org.codehaus.mojo.taglist.tags;
  *  defined in the pom.xml.
  *
  */
-public class TagFactory {
+public final class TagFactory {
     /**
      * The XML name of the generic tag (case sensitive).
      */
@@ -58,7 +58,7 @@ public class TagFactory {
             throw new InvalidTagException(tagType);
         }
 
-        return (tag);
+        return tag;
     }
 
     /**
@@ -67,7 +67,7 @@ public class TagFactory {
      * @return the default tag type string
      */
     public static String getDefaultTagType() {
-        return (genericTag);
+        return genericTag;
     }
 
     /** Private constructor.  This is a utility class.

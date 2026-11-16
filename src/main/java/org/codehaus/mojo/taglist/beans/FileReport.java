@@ -104,7 +104,7 @@ public class FileReport implements Comparable<FileReport> {
      */
     private Reader getReader(File fileToRead) throws IOException {
         InputStream in = Files.newInputStream(fileToRead.toPath());
-        return (encoding == null) ? new InputStreamReader(in) : new InputStreamReader(in, encoding);
+        return encoding == null ? new InputStreamReader(in) : new InputStreamReader(in, encoding);
     }
 
     /**
@@ -191,7 +191,7 @@ public class FileReport implements Comparable<FileReport> {
         if (!(r instanceof FileReport)) {
             return false;
         }
-        return (this.compareTo((FileReport) r) == 0);
+        return this.compareTo((FileReport) r) == 0;
     }
 
     /**

@@ -69,7 +69,7 @@ public class IgnoreCaseTag extends AbsTag {
             result = currentLine.toLowerCase(locale).indexOf(tagString.toLowerCase(locale));
         }
 
-        return (result);
+        return result;
     }
 
     /** Check to see if the string starts with this tag.
@@ -86,7 +86,7 @@ public class IgnoreCaseTag extends AbsTag {
             result = currentLine.toLowerCase(locale).startsWith(tagString.toLowerCase(locale));
         }
 
-        return (result);
+        return result;
     }
 
     /** Return the length of the last matched tag.
@@ -96,7 +96,7 @@ public class IgnoreCaseTag extends AbsTag {
      * @return the length of the last matched tag.
      */
     public int getLastTagMatchLength() {
-        return (tagString.length());
+        return tagString.length();
     }
 
     /** Constructor.
