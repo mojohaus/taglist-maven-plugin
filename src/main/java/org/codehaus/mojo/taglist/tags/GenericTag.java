@@ -57,6 +57,7 @@ public class GenericTag extends AbsTag {
      *  @return the index within the string of the matched tag, or TagClass.NO_MATCH
      *  if not match was found.
      */
+    @Override
     public int contains(final String currentLine, final Locale locale) {
         int result = AbsTag.NO_MATCH;
 
@@ -74,6 +75,7 @@ public class GenericTag extends AbsTag {
      *  @param locale the Locale of the currentLine.
      *  @return true if the string starts with this tag.
      */
+    @Override
     public boolean startsWith(final String currentLine, final Locale locale) {
         boolean result = false;
 
@@ -90,6 +92,7 @@ public class GenericTag extends AbsTag {
      *
      * @return the length of the last matched tag.
      */
+    @Override
     public int getLastTagMatchLength() {
         return tagString.length();
     }

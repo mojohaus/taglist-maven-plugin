@@ -172,6 +172,7 @@ public class FileReport implements Comparable<FileReport> {
      *
      * @see Comparable#compareTo(Object)
      */
+    @Override
     public int compareTo(FileReport o) {
         if (o != null) {
             return this.getClassName().compareTo(o.getClassName());
@@ -185,6 +186,7 @@ public class FileReport implements Comparable<FileReport> {
      *
      * @see Object#equals(Object)
      */
+    @Override
     public boolean equals(Object r) {
         // In Java 5 the PriorityQueue.remove method uses the
         // compareTo method, while in Java 6 it uses the equals method.
@@ -199,6 +201,7 @@ public class FileReport implements Comparable<FileReport> {
      *
      * @see Object#hashCode()
      */
+    @Override
     public int hashCode() {
         assert false : "hashCode not designed";
         return 1; // any arbitrary constant will do

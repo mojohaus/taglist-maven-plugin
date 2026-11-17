@@ -138,6 +138,7 @@ public class TagReport implements Comparable<TagReport> {
      *
      * @see Comparable#compareTo(Object)
      */
+    @Override
     public int compareTo(TagReport o) {
         if (o != null) {
             return this.getTagName().compareTo(o.getTagName());
@@ -182,6 +183,7 @@ public class TagReport implements Comparable<TagReport> {
      *
      * @see Object#equals(Object)
      */
+    @Override
     public boolean equals(Object r) {
         // In Java 5 the PriorityQueue.remove method uses the
         // compareTo method, while in Java 6 it uses the equals method.
@@ -197,6 +199,7 @@ public class TagReport implements Comparable<TagReport> {
      *
      * @see Object#hashCode()
      */
+    @Override
     public int hashCode() {
         assert false : "hashCode not designed";
         return 1; // any arbitrary constant will do
