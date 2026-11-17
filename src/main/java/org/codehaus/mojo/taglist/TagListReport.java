@@ -385,7 +385,7 @@ public class TagListReport extends AbstractMavenReport {
     private String getRelativePath(File location) {
         String relativePath =
                 PathTool.getRelativePath(getReportOutputDirectory().getAbsolutePath(), location.getAbsolutePath());
-        if (relativePath == null || relativePath.isEmpty()) {
+        if (StringUtils.isEmpty(relativePath)) {
             relativePath = ".";
         }
         return relativePath + "/" + location.getName();
