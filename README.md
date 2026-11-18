@@ -1,6 +1,6 @@
 # MojoHaus TagList Maven Plugin
 
-[![Apache License, Version 2.0, January 2004](https://img.shields.io/github/license/mojohaus/versions-maven-plugin.svg?label=License)](https://www.apache.org/licenses/)
+[![Apache License, Version 2.0, January 2004](https://img.shields.io/github/license/mojohaus/taglist-maven-plugin.svg?label=License)](https://www.apache.org/licenses/)
 [![Maven Central](https://img.shields.io/maven-central/v/org.codehaus.mojo/taglist-maven-plugin.svg?label=Maven%20Central)](https://search.maven.org/artifact/org.codehaus.mojo/taglist-maven-plugin)
 [![GitHub CI](https://github.com/mojohaus/taglist-maven-plugin/actions/workflows/maven.yml/badge.svg)](https://github.com/mojohaus/taglist-maven-plugin/actions/workflows/maven.yml)
 
