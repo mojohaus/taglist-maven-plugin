@@ -14,7 +14,7 @@ what the code and the POMs do not make obvious.
   the classes and XSDs are generated under `target/generated-sources/modello` and must not be
   edited. The `pre-site` phase also generates their xdoc.
 - The report texts are in `src/main/resources/taglist-report*.properties` for `en`, `de` and `fr`.
-- The site is built from `src/site` (`apt` pages and the FAQ in `fml`).
+- The site is built from `src/site/markdown` (Markdown pages, including the FAQ).
 
 ## Build gates
 
@@ -53,10 +53,10 @@ what the code and the POMs do not make obvious.
 
 ## Continuous integration and pull requests
 
-- `.github/workflows/maven.yml` calls the shared `maven-verify.yml@v5` workflow from
-  `apache/maven-gh-actions-shared`, with `install` as the goal, because the site build uses the
-  project version for reporting. Branches in this repository build under the push event, so look at
-  the push run for a pull request from a same-repository branch.
+- `.github/workflows/maven.yml` calls the shared `maven-verify.yml` workflow of `mojohaus/.github`
+  (a wrapper around the Apache `maven-gh-actions-shared` workflow), whose default build goal is
+  `-P "?run-its" verify`. Branches in this repository build under the push event, so look at the
+  push run for a pull request from a same-repository branch.
 - Pull requests are squash- or rebase-merged; merge commits are disabled. Release Drafter builds
   the release notes from the titles and labels, so the title should describe the change for a
   user.
