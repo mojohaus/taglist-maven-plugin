@@ -1,8 +1,6 @@
----
 title: Usage
 author:
-  - Fabrice Bellingard
----
+- Fabrice Bellingard
 
 Usage
 =====
@@ -30,7 +28,7 @@ In your `pom.xml`, insert this segment:
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>taglist-maven-plugin</artifactId>
-        <version>${project.version}</version>
+        <version><!-- latest release --></version>
       </plugin>
     </plugins>
   </reporting>
@@ -65,7 +63,6 @@ regular expression match. The matched tags are grouped into tag classes. For ins
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>taglist-maven-plugin</artifactId>
-        <version>${project.version}</version>
         <configuration>
           <tagListOptions>
             <tagClasses>
@@ -93,3 +90,37 @@ regular expression match. The matched tags are grouped into tag classes. For ins
 ```
 
 See also type description [taglistOptions](./taglistOptions.html).
+
+Other Options
+-------------
+
+These parameters change what the report scans and how it presents the result; the
+[goal documentation](./taglist-mojo.html) describes each one in full.
+
+* `includes` and `excludes`: the source files to scan, as patterns relative to the source directories. Only
+  `**/*.java` is scanned by default.
+* `skipTestSources`: leave the test sources out of the report.
+* `skipEmptyReport` (property `taglist.skipEmptyReport`): do not generate the report when no tags are found.
+* `showEmptyDetails`: also list the tags that have no occurrences.
+* `linkXRef` (property `taglists.linkXRef`), `xrefLocation` and `testXrefLocation`: link the tag line numbers to
+  the source cross-reference of the JXR plugin.
+* `aggregate` (property `taglists.aggregate`): build one report at the root of a multi-module project instead of one
+  per module.
+* `inputEncoding` (property `encoding`): the encoding of the source files. Without it, the platform encoding is
+  used and the plugin logs a warning.
+
+```xml
+<configuration>
+  <inputEncoding>UTF-8</inputEncoding>
+  <includes>
+    <include>**/*.java</include>
+  </includes>
+  <excludes>
+    <exclude>**/generated/**</exclude>
+  </excludes>
+  <skipTestSources>true</skipTestSources>
+</configuration>
+```
+
+The report is also written as XML, to `target/taglist/taglist.xml` by default (see
+[taglistOutput](./taglistOutput.html)).

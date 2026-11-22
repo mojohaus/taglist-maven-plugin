@@ -60,7 +60,7 @@ Some causes of this condition:
   POM reporting section.
 - *Maven bug*: in some versions of Maven, the report plugins execution order is erroneously
   changed from the order defined in the POM file.
-  Please follow [the JIRA issue](http://jira.codehaus.org/browse/MNG-2258) for more information and updated status.
+  Please follow [the JIRA issue](https://issues.apache.org/jira/browse/MNG-2258) for more information and updated status.
 
 To resolve this error, check that the report plugins order is correct in the POM. If you cannot modify the POM order,
 or if doing so does not resolve the problem, a workaround is to execute the "site" goal twice. The first time

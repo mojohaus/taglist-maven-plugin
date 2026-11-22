@@ -1,9 +1,7 @@
----
 title: Counting Tags
 author:
-  - Dennis Lundberg
+- Dennis Lundberg
 date: 2007-08-09
----
 
 Counting Tags
 =============
@@ -21,9 +19,8 @@ Let us configure the plugin in the `pom.xml` file like this:
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>taglist-maven-plugin</artifactId>
-        <version>${project.version}</version>
         <configuration>
-          <encoding>UTF-8</encoding>
+          <inputEncoding>UTF-8</inputEncoding>
           <sourceFileLocale>en</sourceFileLocale>
           <emptyComments>false</emptyComments>
           <tagListOptions>
@@ -105,7 +102,7 @@ public class Issue
 We'll go through the lines in the code and explain what happens and why.
 
 **Line 4:** This line will *not* be counted, because *emptyComments* is set to false and it is empty - it isn't
-followed by a desciptive text.
+followed by a descriptive text.
 
 **Line 10:** This line will be counted.
 
