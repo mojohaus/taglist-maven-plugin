@@ -106,7 +106,7 @@ public class TagListReport extends AbstractMavenReport {
     private boolean multipleLineComments;
 
     /**
-     * This parameter indicates whether to look for tags even if they don't have a comment.
+     * This parameter indicates whether to count tags that are not followed by a descriptive text.
      */
     @Parameter(defaultValue = "true")
     private boolean emptyComments;

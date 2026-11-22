@@ -1,48 +1,35 @@
-# MojoHaus TagList Maven Plugin
+# MojoHaus Taglist Maven Plugin
 
 [![Apache License, Version 2.0, January 2004](https://img.shields.io/github/license/mojohaus/taglist-maven-plugin.svg?label=License)](https://www.apache.org/licenses/)
-[![Maven Central](https://img.shields.io/maven-central/v/org.codehaus.mojo/taglist-maven-plugin.svg?label=Maven%20Central)](https://search.maven.org/artifact/org.codehaus.mojo/taglist-maven-plugin)
-[![GitHub CI](https://github.com/mojohaus/taglist-maven-plugin/actions/workflows/maven.yml/badge.svg)](https://github.com/mojohaus/taglist-maven-plugin/actions/workflows/maven.yml)
+[![Maven Central](https://img.shields.io/maven-central/v/org.codehaus.mojo/taglist-maven-plugin.svg?label=Maven%20Central)](https://central.sonatype.com/artifact/org.codehaus.mojo/taglist-maven-plugin)
+[![GitHub CI](https://github.com/mojohaus/taglist-maven-plugin/actions/workflows/maven.yml/badge.svg?branch=master)](https://github.com/mojohaus/taglist-maven-plugin/actions/workflows/maven.yml)
+
+The Taglist Maven Plugin generates a report on the tags found in the source code, such as `@todo` or
+`// TODO`, grouped into tag classes of your choice. It requires Maven 3.9.0 or later and Java 8 or later.
+
+Add it to the `reporting` section of your `pom.xml` and run `mvn site`:
+
+```xml
+<reporting>
+  <plugins>
+    <plugin>
+      <groupId>org.codehaus.mojo</groupId>
+      <artifactId>taglist-maven-plugin</artifactId>
+      <version><!-- latest release --></version>
+    </plugin>
+  </plugins>
+</reporting>
+```
+
+The [plugin site](https://www.mojohaus.org/taglist-maven-plugin/) has the
+[usage guide](https://www.mojohaus.org/taglist-maven-plugin/usage.html), the
+[goal parameters](https://www.mojohaus.org/taglist-maven-plugin/taglist-mojo.html) and the
+[FAQ](https://www.mojohaus.org/taglist-maven-plugin/faq.html).
 
 ## Contributing
 
-See [AGENTS.md](AGENTS.md) for build, test and pull request conventions.
-
-### Creating Issues
-
-If you find a problem please create an
-[issue in the ticket](https://github.com/mojohaus/taglist-maven-plugin/issues)
-and describe what is going wrong or what you expect to happen.
-If you have a full working example or a log file this is also helpful.
-You should of course describe only a single issue in a single ticket and not
-mixing up several different things into a single issue.
-
-### Creating a Pull Request
-
-Before you create a pull request it is necessary to create an issue in
-the [ticket system](https://github.com/mojohaus/taglist-maven-plugin/issues)
-and describe what the problem is or what kind of feature you would like
-to add. Afterwards you can create an appropriate pull request.
-
-It is required if you want to get a Pull request to be integrated into please
-squash your commits into a single commit which references the issue in the
-commit message which looks like this:
-
-```
-Fixed #Issue
-
- o Description.
-
-```
-
-This makes it simpler to merge it and this will also close the
-appropriate issue automatically in one go. This make the life as
-maintainer a little bit easier.
-
-A pull request has to fulfill only a single ticket and should never
-create/add/fix several issues in one, cause otherwise the history is hard to
-read and to understand and makes the maintenance of the issues and pull request
-hard or to be honest impossible.
+Report problems in the [issue tracker](https://github.com/mojohaus/taglist-maven-plugin/issues). Build,
+test and pull request conventions are in [AGENTS.md](AGENTS.md).
 
 ## Releasing
 

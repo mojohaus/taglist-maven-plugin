@@ -22,7 +22,7 @@ what the code and the POMs do not make obvious.
   `mvn spotless:apply` after editing the README or this file.
 - The parent, `mojo-parent`, sets `maven.compiler.release` to 8, so main code must use the Java 8
   API.
-- The plugin compiles against Maven 3.9.16 (`mavenVersion`) and declares a literal
+- The plugin compiles against the latest Maven 3.9.x (`mavenVersion`) and declares a literal
   `<prerequisites><maven>3.9.0</maven>`; keep the two apart, so raising `mavenVersion` does not
   raise the prerequisite.
 
@@ -54,10 +54,26 @@ what the code and the POMs do not make obvious.
 ## Continuous integration and pull requests
 
 - `.github/workflows/maven.yml` calls the shared `maven-verify.yml` workflow of `mojohaus/.github`
-  (a wrapper around the Apache `maven-gh-actions-shared` workflow), whose default build goal is
-  `-P "?run-its" verify`. Branches in this repository build under the push event, so look at the
+  (the shared build workflow, which builds on Linux, Windows and macOS with several JDKs); its
+  default build goal is `-P "?run-its" verify`. Branches in this repository build under the push event, so look at the
   push run for a pull request from a same-repository branch.
 - Pull requests are squash- or rebase-merged; merge commits are disabled. Release Drafter builds
   the release notes from the titles and labels, so the title should describe the change for a
   user.
+
+## Documentation updates
+
+A change that users or contributors can notice ships with the documentation it affects, in the same
+pull request. A refactor with no visible effect needs none.
+
+- The goal page is generated from the Javadoc of `TagListReport` and the type pages from the
+  `.mdo` descriptions: a new or changed parameter gets a description, its `property` name, its
+  default and an `@since` with the next release version (the Release Drafter draft).
+- `src/site/markdown/index.md` lists the goal and the examples, `usage.md` explains the POM
+  configuration and the other options, `examples/counting-tags.md` shows how tags are counted and
+  `faq.md` holds known failures. These are plain Markdown, so examples carry no filtered version:
+  the first plugin declaration on `usage.md` uses the `<!-- latest release -->` placeholder and the
+  others leave the version out.
+- `src/site/site.xml` holds the menu; `README.md` holds the requirements, a short usage and the
+  release steps; update this file when a convention, build gate or fixture changes.
 
